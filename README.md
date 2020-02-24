@@ -1,2 +1,3 @@
 # homeenv
-ubuntu home env config
+
+home path env config
