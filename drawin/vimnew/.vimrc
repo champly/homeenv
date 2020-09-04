@@ -114,7 +114,7 @@ let mapleader = ","
 	set tabstop=4                   " An indentation every four columns
     set shiftwidth=4
     set softtabstop=4               " Let backspace delete indent
-    set autoindent
+	set autoindent
     set splitright                  " Puts new vsplit windows to the right of the current
     set splitbelow                  " Puts new split windows to the bottom of the current
     set smartindent                 " Open smart indent
@@ -592,7 +592,7 @@ let mapleader = ","
         endif
 	endfunc
 	" 在新tab中打开某个文件
-    noremap <silent> <M-o> :call Open_Explore(2)<CR>
+	noremap <silent> <M-o> :call Open_Explore(2)<CR>
 
 	" 重绘屏幕，当使用 Command+K 误清空屏幕之后可以使用
 	noremap <silent> <M-L> :redraw!<CR>
