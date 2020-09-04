@@ -101,17 +101,17 @@ let mapleader = ","
         endif
     endif
 
-    " if has('mouse')
-        " if has('gui_running') || (&term =~ 'xterm' && !has('mac'))
-            " set mouse=a
-        " else
-            " set mouse=nvi
-        " endif
-    " endif
+	" if has('mouse')
+	"     if has('gui_running') || (&term =~ 'xterm' && !has('mac'))
+	"         set mouse=a
+	"     else
+	"         set mouse=nvi
+	"     endif
+	" endif
 	set mouse=v	
 	
 	set scrolloff=1                 " Minimal number of screen lines to keep above and below the cursor.
-    set tabstop=4                   " An indentation every four columns
+	set tabstop=4                   " An indentation every four columns
     set shiftwidth=4
     set softtabstop=4               " Let backspace delete indent
     set autoindent
