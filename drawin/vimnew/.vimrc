@@ -178,7 +178,7 @@ let mapleader = ","
 		" hi Search guibg=#d78700 guifg=#ffd700
 		" hi CursorLine guibg=#383838 guifg=NONE
 		" " light
-		hi Search guibg=NONE guifg=#ff8700
+		hi Search guibg=#5fff00 guifg=#ff8700
 		" hi CursorLine guibg=#ffffaf guifg=NONE
 	endif
 " }

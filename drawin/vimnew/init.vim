@@ -177,8 +177,9 @@ let mapleader = ","
 		" " dark
 		" hi Search guibg=#d78700 guifg=#ffd700
 		" hi CursorLine guibg=#383838 guifg=NONE
+		
 		" " light
-		hi Search guibg=NONE guifg=#ff8700
+		hi Search guibg=#5fff00 guifg=#ff8700
 		" hi CursorLine guibg=#ffffaf guifg=NONE
 	endif
 " }
@@ -282,10 +283,10 @@ let mapleader = ","
 		" " Always show the signcolumn, otherwise it would shift the text each time
 		" " diagnostics appear/become resolved.
 		if has("patch-8.1.1564")
-		  " Recently vim can merge signcolumn and number column into one
-		  set signcolumn=number
+			" Recently vim can merge signcolumn and number column into one
+			set signcolumn=number
 		else
-		  set signcolumn=yes
+			set signcolumn=yes
 		endif
 
 		" Use tab for trigger completion with characters ahead and navigate.
@@ -298,24 +299,24 @@ let mapleader = ","
 		inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 		function! s:check_back_space() abort
-		  let col = col('.') - 1
-		  return !col || getline('.')[col - 1]	=~# '\s'
+			let col = col('.') - 1
+			return !col || getline('.')[col - 1]	=~# '\s'
 		endfunction
 
 		" Use <c-space> to trigger completion.
 		if has('nvim')
-		  inoremap <silent><expr> <c-space> coc#refresh()
+			inoremap <silent><expr> <c-space> coc#refresh()
 		else
-		  inoremap <silent><expr> <c-@> coc#refresh()
+			inoremap <silent><expr> <c-@> coc#refresh()
 		endif
 
 		" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
 		" position. Coc only does snippet and additional edit on confirm.
 		" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
 		if exists('*complete_info')
-		  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+			inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
 		else
-		  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+			inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 		endif
 
 		" " Use `[g` and `]g` to navigate diagnostics
@@ -335,11 +336,11 @@ let mapleader = ","
 		nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 		function! s:show_documentation()
-		  if (index(['vim','help'], &filetype) >= 0)
-			execute 'h '.expand('<cword>')
-		  else
-			call CocAction('doHover')
-		  endif
+			if (index(['vim','help'], &filetype) >= 0)
+				execute 'h '.expand('<cword>')
+			else
+				call CocAction('doHover')
+			endif
 		endfunction
 
 		" Highlight the symbol and its references when holding the cursor.
@@ -353,11 +354,11 @@ let mapleader = ","
 		" nmap <leader>f  <Plug>(coc-format-selected)
 
 		augroup mygroup
-		  autocmd!
-		  " Setup formatexpr specified filetype(s).
-		  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-		  " Update signature help on jump placeholder.
-		  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+			autocmd!
+			" Setup formatexpr specified filetype(s).
+			autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+			" Update signature help on jump placeholder.
+			autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 		augroup end
 
 		" " Applying codeAction to the selected region.
