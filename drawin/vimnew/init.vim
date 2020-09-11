@@ -523,7 +523,7 @@ let mapleader = ","
 
 		" nnoremap <silent> <leader>b  :Buffers<CR>
 		" nnoremap <silent> <leader>f  :Ripgrep<CR>
-		" nnoremap <silent> <leader>l  :Lines<CR>
+		nnoremap <silent> <leader>l  :Lines<CR>
 		nnoremap <silent> <leader>p  :Files<CR>
 		" nnoremap <silent> <leader>`  :Marks<CR>
 		" nnoremap <silent> <leader>ag :Ag<gR>
@@ -709,6 +709,9 @@ let mapleader = ","
 	" 开启新的无名缓冲区
 	nnoremap <leader>n	:enew<CR>
 	nnoremap <leader>bd :bd!<CR>
+
+	" 毫秒计的等待映射的键序列完成的时间
+	set timeoutlen=300                  
 
 	" [Vim 中正确使用 Alt 映射](http://www.skywind.me/blog/archives/1846)
 	function! Terminal_MetaMode(mode)
