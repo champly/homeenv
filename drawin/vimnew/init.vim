@@ -77,6 +77,9 @@ Plug 'plasticboy/vim-markdown'
 " quick find word
 Plug 'mhinz/vim-grepper'
 
+" This plugin provides a start screen
+Plug 'mhinz/vim-startify'
+
 " Initialize plugin system
 call plug#end()
 
@@ -525,6 +528,7 @@ let mapleader = ","
 		" nnoremap <silent> <leader>f  :Ripgrep<CR>
 		nnoremap <silent> <leader>l  :Lines<CR>
 		nnoremap <silent> <leader>p  :Files<CR>
+		nnoremap <silent> <leader>ff :Rg<CR>
 		" nnoremap <silent> <leader>`  :Marks<CR>
 		" nnoremap <silent> <leader>ag :Ag<gR>
 		" nnoremap <silent> <leader>rg :Ripgrep<CR>
@@ -698,6 +702,55 @@ let mapleader = ","
 	endif
 " }
 
+" vim-startify Config {
+	if isdirectory(expand("~/.vim/bundle/vim-startify"))
+		" " https://github.com/mhinz/vim-startify/issues/374#issuecomment-496481547
+		function! s:center(lines) abort
+			let longest_line   = max(map(copy(a:lines), 'strwidth(v:val)'))
+			let centered_lines = map(copy(a:lines),
+				\ 'repeat(" ", (&columns / 2) - (longest_line / 2)) . v:val')
+			return centered_lines
+		endfunction
+
+		" let g:startify_custom_header = s:center(startify#fortune#cowsay())
+		" let g:startify_custom_footer = s:center(['foo', 'bar', 'baz'])
+		
+		" 是否自动加载目录下的Session.vim, 很好用
+		let g:startify_session_autoload = 1
+		"过滤列表，支持正则表达式  
+		let g:startify_skiplist = [  
+			\ '^/tmp',  
+			\ '^/vender',
+		\ ]
+		" 起始页显示的列表长度
+		let g:startify_files_number = 15
+
+		" http://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20
+		let s:header = [
+			\ '',
+			\ '  ______         __                                      __     __           __            _                        __                             ',
+			\ ' /_  __/___     / /_  ___     ____  _____   ____  ____  / /_   / /_____     / /_  ___     (_)____   __  ______     / /_____     __  ______  __  __ ',
+			\ '  / / / __ \   / __ \/ _ \   / __ \/ ___/  / __ \/ __ \/ __/  / __/ __ \   / __ \/ _ \   / / ___/  / / / / __ \   / __/ __ \   / / / / __ \/ / / / ',
+			\ ' / / / /_/ /  / /_/ /  __/  / /_/ / /     / / / / /_/ / /_   / /_/ /_/ /  / /_/ /  __/  / (__  )  / /_/ / /_/ /  / /_/ /_/ /  / /_/ / /_/ / /_/ /  ',
+			\ '/_/  \____/  /_.___/\___/   \____/_/     /_/ /_/\____/\__/   \__/\____/  /_.___/\___/  /_/____/   \__,_/ .___/   \__/\____/   \__, /\____/\__,_/   ',
+			\ '                                                                                                      /_/                    /____/                ',
+			\ '',
+		\ ]
+
+		let s:footer = [
+            \ '+-------------------------------------------+',
+            \ '|                   ^_^                     |',
+            \ '|    Talk is cheap Show me the code         |',
+            \ '|                                           |',
+            \ '+-------------------------------------------+',
+		\ ]
+		
+		" https://github.com/mhinz/vim-startify/issues/374#issuecomment-496501489
+		let g:startify_custom_header = s:center(s:header)
+		let g:startify_custom_footer = s:center(s:footer)	
+	endif
+" }
+
 " General {
 	" quick open vimrc in a new tab
 	nnoremap <leader>v	:e $MYVIMRC<cr>
@@ -725,7 +778,7 @@ let mapleader = ","
 			return
 		endif
 		function! s:metacode(mode, key)
-			if a:mode == 0
+			If a:mode == 0
 				exec "set <M-".a:key.">=\e".a:key
 			else
 				exec "set <M-".a:key.">=\e]{0}".a:key."~"
