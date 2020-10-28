@@ -234,25 +234,25 @@ if isdirectory(expand("~/.vim/bundle/vim-go"))
 		" https://github.com/fatih/vim-go/blob/bd56f5690807d4a92652fe7a4d10dc08f260564e/doc/vim-go.txt#L938
 		" example:	 au FileType go nmap <leader>r <Plug>(go-run)
 
-		au FileType go nmap <leader>im <Plug>(go-implements)
-		au FileType go nmap <leader>rf <Plug>(go-referrers)
-		au FileType go nmap <leader>if <Plug>(go-info)
-		" au FileType go nmap <Leader>rn <Plug>(go-rename)
-		au FileType go nmap <Leader>ds <Plug>(go-def-split)
-		au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
-		au FileType go nmap <Leader>dt <Plug>(go-def-tab)
+		" au FileType go nmap <leader>im <Plug>(go-implements)
+		" au FileType go nmap <leader>rf <Plug>(go-referrers)
+		" au FileType go nmap <leader>if <Plug>(go-info)
+		" " au FileType go nmap <Leader>rn <Plug>(go-rename)
+		" au FileType go nmap <Leader>ds <Plug>(go-def-split)
+		" au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
+		" au FileType go nmap <Leader>dt <Plug>(go-def-tab)
 	augroup END
 
 	" https://github.com/golang/tools/blob/master/gopls/doc/vim.md#vim-go
-	let g:go_implements_mode = 'gopls'
-	let g:go_def_mode='gopls'
-	let g:go_info_mode='gopls'
+	" let g:go_implements_mode = 'gopls'
+	" let g:go_def_mode='gopls'
+	" let g:go_info_mode='gopls'
 
 	" https://github.com/fatih/vim-go/blob/bd56f5690807d4a92652fe7a4d10dc08f260564e/doc/vim-go.txt#L2589
-	let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-	let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+	" let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+	" let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 
-	let g:go_fmt_command = "goimports"
+	" let g:go_fmt_command = "goimports"
 
 	" highlight
 	let g:go_highlight_array_whitespace_error = 1
@@ -289,6 +289,10 @@ if isdirectory(expand("~/.vim/bundle/vim-go"))
 		autocmd!
 		autocmd FileType qf setlocal wrap
 	augroup END
+
+	" https://github.com/josa42/coc-go/issues/105
+	let g:go_gopls_enabled = 0
+	let g:go_def_mapping_enabled = 0
 endif
 
 
@@ -326,7 +330,7 @@ endif
 " === coc.nvim
 " ===
 if isdirectory(expand("~/.vim/bundle/coc.nvim"))
-	let g:coc_global_extensions = ["coc-json","coc-go","coc-vimlsp","coc-marketplace","coc-explorer","coc-actions","coc-gitignore","coc-prettier","coc-yaml", "coc-translator", "coc-syntax", "coc-git", "coc-snippets"]
+	let g:coc_global_extensions = ["coc-json","coc-vimlsp","coc-marketplace","coc-explorer","coc-actions","coc-gitignore","coc-prettier","coc-yaml", "coc-translator", "coc-syntax", "coc-git"]
 
 	" TextEdit might fail if hidden is not set.
 	set hidden
@@ -340,7 +344,7 @@ if isdirectory(expand("~/.vim/bundle/coc.nvim"))
 
 	" " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 	" " delays and poor user experience.
-	" set updatetime=300 
+	" set updatetime=300
 	" Don't pass messages to |ins-completion-menu|.
 	set shortmess+=c
 
@@ -389,6 +393,10 @@ if isdirectory(expand("~/.vim/bundle/coc.nvim"))
 	nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 	" " GoTo code navigation.
+	nmap <silent> <C-]> <Plug>(coc-definition)
+	nmap <silent> <leader>gy <Plug>(coc-type-definition)
+	nmap <silent> <leader>im <Plug>(coc-implementation)
+	nmap <silent> <leader>rf <Plug>(coc-references)
 	" nmap <silent> gd <Plug>(coc-definition)
 	" nmap <silent> gy <Plug>(coc-type-definition)
 	" nmap <silent> gi <Plug>(coc-implementation)
@@ -484,6 +492,9 @@ if isdirectory(expand("~/.vim/bundle/coc.nvim"))
 	" nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 	nmap ff :CocCommand explorer<CR>
+
+	" https://github.com/golang/tools/blob/master/gopls/doc/vim.md#cocnvim
+	" autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeImport')
 endif
 
 
