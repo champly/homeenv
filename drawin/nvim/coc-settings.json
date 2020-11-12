@@ -9,9 +9,8 @@
     "diagnostic.refreshOnInsertMode": false,
     "diagnostic.refreshAfterSave": false,
     "diagnostic.checkCurrentLine": true,
-    "diagnostic.virtualTextPrefix": " ❯❯❯ ",
+    "diagnostic.virtualTextPrefix": " ✗ ",
     "diagnostic.virtualText": true,
-    "coc.preferences.formatOnSaveFiletypes": ["json", "xml", "markdown"],
     "prettier.tabWidth": 4,
     "list.previousKeymap": "<C-k>",
     "list.nextKeymap": "<C-j>",
@@ -45,7 +44,9 @@
         "value": "\uf89f",
         "variable": "\ue71b"
     },
-    "coc.preferences.hoverTarget": "preview",
+    "coc.preferences.formatOnSaveFiletypes": ["json", "xml", "markdown"],
+    "coc.preferences.messageLevel": "error",
+    "coc.preferences.hoverTarget": "float",
     "coc.preferences.extensionUpdateCheck": "daily",
     "coc.preferences.snippetStatusText": "Ⓢ ",
     "explorer.width": 40,
@@ -66,11 +67,11 @@
     "explorer.file.column.git.icon.ignored": "!",
     "explorer.file.column.git.icon.unmerged": "U",
     "explorer.file.showHiddenFiles": true,
+    "explorer.git.showIgnored": true,
     "explorer.icon.enableNerdfont": true,
-    "explorer.file.column.git.showIgnored": true,
     "explorer.keyMappingMode": "none",
     "explorer.buffer.showHiddenBuffers": false,
-    "explorer.keyMappings": {
+    "explorer.keyMappings.global": {
         "s": "toggleSelection",
         "<cr>": "open",
         "o": ["expandable?", ["expanded?", "collapse", "expand"], "open"],
@@ -114,7 +115,9 @@
             "args": ["-remote=auto"],
             "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
             "filetypes": ["go"],
-            "initializationOptions": {}
+            "initializationOptions": {
+                "completeUnimported": true
+            }
         }
     }
 }

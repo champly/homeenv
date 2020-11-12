@@ -13,4 +13,7 @@ autocmd Filetype markdown inoremap <buffer> m1 #<Space><Enter><Enter><++><Esc>kk
 autocmd Filetype markdown inoremap <buffer> m2 ##<Space><Enter><Enter><++><Esc>kkA
 autocmd Filetype markdown inoremap <buffer> m3 ###<Space><Enter><Enter><++><Esc>kkA
 autocmd Filetype markdown inoremap <buffer> m4 ####<Space><Enter><Enter><++><Esc>kkA
+autocmd Filetype markdown inoremap <buffer> m5 #####<Space><Enter><Enter><++><Esc>kkA
+autocmd Filetype markdown inoremap <buffer> m6 ######<Space><Enter><Enter><++><Esc>kkA
+autocmd Filetype markdown inoremap <buffer> m7 #######<Space><Enter><Enter><++><Esc>kkA
 autocmd Filetype markdown inoremap <buffer> ml --------<Enter>

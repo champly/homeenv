@@ -65,9 +65,13 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
+Plug 'gcmt/wildfire.vim'
 
 " The plug-in visualizes undo history and makes it easier to browse and switch between different undo branches
 Plug 'mbbill/undotree'
+
+" Jump to any location specified by two characters.
+Plug 'justinmk/vim-sneak'
 
 " snipets
 " will modify tab map, so forbide
@@ -75,7 +79,7 @@ Plug 'mbbill/undotree'
 
 " " help you create more human-friendly comments in your code
 " [异常，停用]处理 function <SNR>2_update[1]..<SNR>2_update_impl[53]..<SNR>2_prepare[37]..FileType 自动命令 "*"..function <SNR>64_BetterComments[11]..<SNR>64_AddMatchesGroup 时发生错误:
-" Plug 'jbgutierrez/vim-better-comments' 
+" Plug 'jbgutierrez/vim-better-comments'
 
 " VimWiki is a personal wiki for Vim
 Plug 'vimwiki/vimwiki'
@@ -132,7 +136,7 @@ endif
 "		  set mouse=nvi
 "	  endif
 " endif
-set mouse=v	
+set mouse=v
 
 set scrolloff=1					" Minimal number of screen lines to keep above and below the cursor.
 set tabstop=4					" An indentation every four columns
@@ -151,7 +155,9 @@ set noexpandtab
 
 " " 区分空格和缩进
 set list
-set listchars=tab:\|\ ,trail:▫
+set showbreak=↪\
+" set listchars=tab:\|\ ,trail:▫
+set listchars=tab:▸\ ,trail:·,precedes:←,extends:→
 
 " " 设置json双引号显示
 " let g:vim_json_syntax_conceal = 0
@@ -173,6 +179,10 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 " brew install figlet
 noremap tx :r !figlet
 
+" https://qastack.cn/vi/2801/how-can-i-make-gx-recognise-full-urls-in-vim
+" 使用浏览器打开光标下的链接
+let g:netrw_browsex_viewer = 'google-chrome'
+
 
 
 " ===
@@ -181,6 +191,13 @@ noremap tx :r !figlet
 if has('gui_running')
 	set guifont='SourceCodeProForPowerline-Regular:h13'
 	set guifontwide='SourceCodeProForPowerline-Regular:h13'
+endif
+
+" ctermfg => :help cterm-colors
+" https://github.com/eikenb/terminal-colors look at all color
+" hi Search term=standout ctermfg=0 ctermbg=3
+if has('termguicolors') && ($COLORTERM == 'truecolor' || $COLORTERM == '24bit')
+	set termguicolors
 endif
 
 " 背景透明 没生效
@@ -197,7 +214,7 @@ if isdirectory(expand("~/.vim/bundle/gruvbox"))
 	let g:gruvbox_italic = 1
 	colorscheme gruvbox
 	set background=dark
-	hi Search guibg=NONE guifg=#ff8600
+	" hi Search guibg=NONE guifg=#ff8600
 	" hi CursorLine guibg=#ffffaf guifg=NONE
 	let g:airline_theme = 'gruvbox'
 endif
@@ -216,13 +233,6 @@ endif
 set cursorline
 
 set hlsearch
-" ctermfg => :help cterm-colors
-" https://github.com/eikenb/terminal-colors look at all color
-hi Search term=standout ctermfg=0 ctermbg=3
-
-if has('termguicolors') && ($COLORTERM == 'truecolor' || $COLORTERM == '24bit')
-	set termguicolors
-endif
 
 
 
@@ -230,18 +240,18 @@ endif
 " === vim-go
 " ===
 if isdirectory(expand("~/.vim/bundle/vim-go"))
-	augroup _vim_go_
-		" https://github.com/fatih/vim-go/blob/bd56f5690807d4a92652fe7a4d10dc08f260564e/doc/vim-go.txt#L938
-		" example:	 au FileType go nmap <leader>r <Plug>(go-run)
+	" augroup _vim_go_
+	"     " https://github.com/fatih/vim-go/blob/bd56f5690807d4a92652fe7a4d10dc08f260564e/doc/vim-go.txt#L938
+	"     " example:	 au FileType go nmap <leader>r <Plug>(go-run)
 
-		" au FileType go nmap <leader>im <Plug>(go-implements)
-		" au FileType go nmap <leader>rf <Plug>(go-referrers)
-		" au FileType go nmap <leader>if <Plug>(go-info)
-		" " au FileType go nmap <Leader>rn <Plug>(go-rename)
-		" au FileType go nmap <Leader>ds <Plug>(go-def-split)
-		" au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
-		" au FileType go nmap <Leader>dt <Plug>(go-def-tab)
-	augroup END
+	"     au FileType go nmap <leader>im <Plug>(go-implements)
+	"     au FileType go nmap <leader>rf <Plug>(go-referrers)
+	"     au FileType go nmap <leader>if <Plug>(go-info)
+	"     " au FileType go nmap <Leader>rn <Plug>(go-rename)
+	"     au FileType go nmap <leader>ds <Plug>(go-def-split)
+	"     au FileType go nmap <leader>dv <Plug>(go-def-vertical)
+	"     au FileType go nmap <leader>dt <Plug>(go-def-tab)
+	" augroup END
 
 	" https://github.com/golang/tools/blob/master/gopls/doc/vim.md#vim-go
 	" let g:go_implements_mode = 'gopls'
@@ -275,20 +285,23 @@ if isdirectory(expand("~/.vim/bundle/vim-go"))
 	let g:go_highlight_diagnostic_errors = 1
 	let g:go_highlight_diagnostic_warnings = 1
 
-	let g:go_auto_sameids = 1			" Use this option to highlight all uses of the identifier under the cursor
+	" let g:go_auto_sameids = 1			" Use this option to highlight all uses of the identifier under the cursor
 	let g:go_list_type = "quickfix"		" do not pop up location lists
 	let g:go_list_height = 10			" the height of quickfix and locationlist
 
-	" 切换是否自动显示单词引用
+	" " 切换是否自动显示单词引用
 	" nnoremap <silent> <F3>	  :GoSameIdsAutoToggle<CR>
 	" inoremap <silent> <F3> <C-O>:GoSameIdsAutoToggle<CR>
-	
+
 	" https://github.com/fatih/vim-go/issues/1271
 	" wrap long lines in quickfix
 	augroup quickfix
 		autocmd!
 		autocmd FileType qf setlocal wrap
 	augroup END
+
+	" 减少启动 gopls 的个数
+	let g:go_gopls_options = ['-remote=auto']
 
 	" https://github.com/josa42/coc-go/issues/105
 	let g:go_gopls_enabled = 0
@@ -330,7 +343,22 @@ endif
 " === coc.nvim
 " ===
 if isdirectory(expand("~/.vim/bundle/coc.nvim"))
-	let g:coc_global_extensions = ["coc-json","coc-vimlsp","coc-marketplace","coc-explorer","coc-actions","coc-gitignore","coc-prettier","coc-yaml", "coc-translator", "coc-syntax", "coc-git"]
+	let g:coc_global_extensions = [
+				\ "coc-json",
+				\ "coc-vimlsp",
+				\ "coc-marketplace",
+				\ "coc-explorer",
+				\ "coc-actions",
+				\ "coc-gitignore",
+				\ "coc-prettier",
+				\ "coc-yaml",
+				\ "coc-translator",
+				\ "coc-syntax",
+				\ "coc-git",
+			\ ]
+
+	" coc-explorer
+	" https://github.com/npm/npm/issues/9401#issuecomment-134569585
 
 	" TextEdit might fail if hidden is not set.
 	set hidden
@@ -342,9 +370,9 @@ if isdirectory(expand("~/.vim/bundle/coc.nvim"))
 	" " Give more space for displaying messages.
 	" set cmdheight=2
 
-	" " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-	" " delays and poor user experience.
-	" set updatetime=300
+	" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+	" delays and poor user experience.
+	set updatetime=300
 	" Don't pass messages to |ins-completion-menu|.
 	set shortmess+=c
 
@@ -361,9 +389,9 @@ if isdirectory(expand("~/.vim/bundle/coc.nvim"))
 	" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 	" other plugin before putting this into your config.
 	inoremap <silent><expr> <TAB>
-		  \ pumvisible() ? "\<C-n>" :
-		  \ <SID>check_back_space() ? "\<TAB>" :
-		  \ coc#refresh()
+		\ pumvisible() ? "\<C-n>" :
+		\ <SID>check_back_space() ? "\<TAB>" :
+		\ coc#refresh()
 	inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 	function! s:check_back_space() abort
@@ -392,8 +420,9 @@ if isdirectory(expand("~/.vim/bundle/coc.nvim"))
 	nmap <silent> [g <Plug>(coc-diagnostic-prev)
 	nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
-	" " GoTo code navigation.
+	" GoTo code navigation.
 	nmap <silent> <C-]> <Plug>(coc-definition)
+	" nmap <silent> <C-]> <Plug>(CocTagFunc)
 	nmap <silent> <leader>gy <Plug>(coc-type-definition)
 	nmap <silent> <leader>im <Plug>(coc-implementation)
 	nmap <silent> <leader>rf <Plug>(coc-references)
@@ -401,6 +430,8 @@ if isdirectory(expand("~/.vim/bundle/coc.nvim"))
 	" nmap <silent> gy <Plug>(coc-type-definition)
 	" nmap <silent> gi <Plug>(coc-implementation)
 	" nmap <silent> gr <Plug>(coc-references)
+
+	nmap <silent> <leader>rt <Plug>(coc-refactor)
 
 	" 禁用`vim-go`中的K按键映射 使用coc.nvim的浮动窗口效果更好
 	let g:go_doc_keywordprg_enabled = 0
@@ -494,7 +525,14 @@ if isdirectory(expand("~/.vim/bundle/coc.nvim"))
 	nmap ff :CocCommand explorer<CR>
 
 	" https://github.com/golang/tools/blob/master/gopls/doc/vim.md#cocnvim
-	" autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeImport')
+	autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeImport')
+
+	" https://github.com/neoclide/coc.nvim/blob/a9410fe8b0038d1700b43df36a4745149e92feac/doc/coc.cnx#L880
+	autocmd CursorHold * silent call CocActionAsync('highlight')
+	" hi CocHighlightText ctermfg=black ctermbg=72 guifg=black guibg=#689d6a
+	" hi CoCHoverRange ctermfg=black ctermbg=72 guifg=black guibg=#689d6a
+	hi CocHighlightText guibg=#ff8600 guifg=black
+	" hi CoCHoverRange guibg=NONE guifg=#ff8600
 endif
 
 
@@ -568,7 +606,7 @@ endif
 " ===
 " === vim-table-mode
 " ===
-if isdirectory(expand("~/.vim/bundle/vim-table-mode")) 
+if isdirectory(expand("~/.vim/bundle/vim-table-mode"))
 	noremap <leader>tm :TableModeToggle<CR>
 	"let g:table_mode_disable_mappings = 1
 	let g:table_mode_cell_text_object_i_map = 'k<Bar>'
@@ -618,9 +656,9 @@ endif
 if isdirectory(expand("~/.vim/bundle/ale"))
 	" To specify which linters you want to run for each filetype, use the g:ale_linters variable (:help g:ale_linters).
 	" \ 'go': ['golint', 'golangci-lint','gopls', 'gofmt', 'govet'],
+	" \ 'go': ['gopls'],
 	let g:ale_linters = {
 		\ '*': ['trim_whitespace'],
-		\ 'go': ['gopls'],
 		\ 'python': [],
 		\ 'yaml': ['yamllint'],
 	\ }
@@ -656,10 +694,10 @@ if isdirectory(expand("~/.vim/bundle/rainbow/"))
 	" 使用 vim-devicons 之后文件见有中括号
 	" https://github.com/ryanoasis/vim-devicons/issues/274#issuecomment-513560707
 	let g:rainbow_conf = {
-	\    'separately': {
-	\       'nerdtree': 0
-	\    }
-	\}
+			\ 'separately': {
+			\ 'nerdtree': 0
+			\ }
+		\ }
 endif
 
 
@@ -682,38 +720,12 @@ if isdirectory(expand("~/.vim/bundle/fzf.vim/"))
 	nnoremap <silent> <leader>C  :Commands<CR>
 	nnoremap <silent> <leader>ht :Helptags<CR>
 
-	" Files + devicons
-	function! Fzf_dev()
-		let l:fzf_files_options = '--preview "rougify {2..-1} | head -'.&lines.'"'
+	" https://github.com/junegunn/fzf.vim/blob/ddc377c0d3b886f2046b70d087a4dd89c903fdc2/doc/fzf-vim.txt#L321
+	command! -bang -nargs=* Rg
+			\ call fzf#vim#grep(
+			\   'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
+			\   fzf#vim#with_preview(), <bang>0)
 
-		function! s:files()
-			let l:files = split(system($FZF_DEFAULT_COMMAND), '\n')
-			return s:prepend_icon(l:files)
-		endfunction
-
-		function! s:prepend_icon(candidates)
-			let l:result = []
-			for l:candidate in a:candidates
-				let l:filename = fnamemodify(l:candidate, ':p:t')
-				let l:icon = WebDevIconsGetFileTypeSymbol(l:filename, isdirectory(l:filename))
-				call add(l:result, printf('%s %s', l:icon, l:candidate))
-			endfor
-
-			return l:result
-		endfunction
-
-		function! s:edit_file(item)
-			let l:pos = stridx(a:item, ' ')
-			let l:file_path = a:item[pos+1:-1]
-			execute 'silent e' l:file_path
-		endfunction
-
-		call fzf#run({
-			\ 'source': <sid>files(),
-			\ 'sink':   function('s:edit_file'),
-			\ 'options': '-m ' . l:fzf_files_options,
-			\ 'down':    '40%' })
-	endfunction
 endif
 
 
@@ -824,7 +836,7 @@ endif
 " ===
 if isdirectory(expand("~/.vim/bundle/vimwiki"))
 	let g:vimwiki_list = [{'path': '~/Dropbox/notebook/vimwiki/',
-					  \ 'syntax': 'markdown', 'ext': '.md'}]
+							\ 'syntax': 'markdown', 'ext': '.md'}]
 endif
 
 
@@ -832,7 +844,7 @@ endif
 " ===
 " " === grepper
 " " ===
-if isdirectory(expand("~/.vim/bundle/vim-grepper"))	
+if isdirectory(expand("~/.vim/bundle/vim-grepper"))
 	" 先加载了`g:grepper`才有值
 	runtime plugin/grepper.vim
 
@@ -842,6 +854,38 @@ if isdirectory(expand("~/.vim/bundle/vim-grepper"))
 
 	" Search for the current word
 	nnoremap <leader>* :Grepper -tool ag -cword -noprompt<CR>
+
+	vnoremap <F4> <Esc>:<C-u>Rg -wS '<C-r>=GetVisual('rg')<CR>'  <C-h>
+	nnoremap <expr> <F4> ":Rg -wS " . expand('<cword>') . ' '
+
+	" Get the current visual block for search and replaces
+	" This function passed the visual block through a string escape function
+	" Based on this - https://stackoverflow.com/questions/676600/vim-replace-selected-text/677918#677918
+	function! GetVisual(tool) range
+		" Save the current register and clipboard
+		let reg_save = getreg('"')
+		let regtype_save = getregtype('"')
+		let cb_save = &clipboard
+		set clipboard&
+
+		" Put the current visual selection in the " register
+		normal! ""gvy
+		let selection = getreg('"')
+
+		" Put the saved registers and clipboards back
+		call setreg('"', reg_save, regtype_save)
+		let &clipboard = cb_save
+
+		"Escape any special characters in the selection
+		let l:escaped_selection = EscapeString(selection, a:tool)
+
+		" 删除行尾换行符
+		if strlen(l:escaped_selection) > 2 && l:escaped_selection[-2:] == '\n'
+			let l:escaped_selection = l:escaped_selection[:-3]
+		endif
+
+		return l:escaped_selection
+	endfunction
 endif
 
 
@@ -858,10 +902,10 @@ if isdirectory(expand("~/.vim/bundle/vim-visual-multi"))
 	let g:VM_maps["Add Cursor Down"]			 = '<M-j>'	   " 往下增加光标 Opt+j
 	let g:VM_maps["Add Cursor Up"]				 = '<M-k>'	   " 往上增加光标 Opt+k
 	" let g:VM_maps["Select All"]				   = '\\A'
-	
+
 	" Opt+h Opt+l 在多光标模式下 可以移动单个光标 而不是所有光标
 	noremap <M-h> <Left>
-	noremap <M-l> <Right>	
+	noremap <M-l> <Right>
 endif
 
 
@@ -870,7 +914,7 @@ endif
 " === vim-startify
 " ===
 if isdirectory(expand("~/.vim/bundle/vim-startify"))
-	" " https://github.com/mhinz/vim-startify/issues/374#issuecomment-496481547
+	" https://github.com/mhinz/vim-startify/issues/374#issuecomment-496481547
 	function! s:center(lines) abort
 		let longest_line   = max(map(copy(a:lines), 'strwidth(v:val)'))
 		let centered_lines = map(copy(a:lines),
@@ -880,7 +924,7 @@ if isdirectory(expand("~/.vim/bundle/vim-startify"))
 
 	" let g:startify_custom_header = s:center(startify#fortune#cowsay())
 	" let g:startify_custom_footer = s:center(['foo', 'bar', 'baz'])
-	
+
 	" 是否自动加载目录下的Session.vim, 很好用
 	let g:startify_session_autoload = 1
 	" 过滤列表，支持正则表达式
@@ -910,7 +954,7 @@ if isdirectory(expand("~/.vim/bundle/vim-startify"))
 		\ '|                                           |',
 		\ '+-------------------------------------------+',
 	\ ]
-	
+
 	" https://github.com/mhinz/vim-startify/issues/374#issuecomment-496501489
 	let g:startify_custom_header = s:center(s:header)
 	let g:startify_custom_footer = s:center(s:footer)
@@ -927,6 +971,26 @@ if isdirectory(expand("~/.vim/bundle/vim-floaterm"))
 	" let g:floaterm_winblend = 60
 	nnoremap <silent> <F3> :FloatermToggle<CR>
 	tnoremap <silent> <F3> <C-\><C-n>:FloatermToggle<CR>
+endif
+
+
+
+" ===
+" === vimspector
+" ===
+if isdirectory(expand("~/.vim/bundle/vim-sneak"))
+	" https://tc500.github.io/%E5%B7%A5%E5%85%B7%E9%93%BE/2019/02/08/%E9%AB%98%E6%95%88%E7%9A%84vim/
+	" 开启跳转标签
+	let g:sneak#label = 1
+	" 标签字符序列
+	let g:sneak#target_labels = ";sftunq/SFGHLTUNRMQZ?0123456789"
+	" " f正向查找字符，F反向查找字符
+	nnoremap <silent> f :<C-U>call sneak#wrap('',           1, 0, 1, 1)<CR>
+	nnoremap <silent> F :<C-U>call sneak#wrap('',           1, 1, 1, 1)<CR>
+	xnoremap <silent> f :<C-U>call sneak#wrap(visualmode(), 1, 0, 1, 1)<CR>
+	xnoremap <silent> F :<C-U>call sneak#wrap(visualmode(), 1, 1, 1, 1)<CR>
+	onoremap <silent> f :<C-U>call sneak#wrap(v:operator,   1, 0, 1, 1)<CR>
+	onoremap <silent> F :<C-U>call sneak#wrap(v:operator,   1, 1, 1, 1)<CR>
 endif
 
 
@@ -988,6 +1052,12 @@ function! QuickfixToggle()
 	" call RedrawMiniBufExplorer()
 endfunction
 nnoremap <silent> <leader>q :call QuickfixToggle()<CR>
+
+" quickfix 是最后一个窗口的时候自动关闭
+aug QFClose
+  au!
+  au WinEnter *  if winnr('$') == 1 && &buftype == "quickfix"|q|endif
+aug END
 
 
 
@@ -1130,8 +1200,8 @@ cnoremap <C-f> <Right>
 " 使用 leader+w 在插入和normal模式下保存文件，我经常在 insert 模式下代替 Esc
 inoremap <leader>w  <Esc>:w<CR>
 noremap	 <leader>w  :w<CR>
-inoremap <leader>wq <Esc>:wq<CR>
-noremap  <leader>wq :wq<CR>
+inoremap <leader>wq <Esc>:waq<CR>
+noremap  <leader>wq :waq<CR>
 " 导致关闭quickfix leader q 延迟
 " noremap  <leader>qq :q!<CR>
 
@@ -1155,6 +1225,10 @@ noremap <leader>tp :+tabnext<CR>
 " Press space twice to jump to the next '<++>' and edit it
 noremap <leader><leader>  <Esc>/<++><CR>:nohlsearch<CR>c4l
 inoremap <leader><leader> <Esc>/<++><CR>:nohlsearch<CR>c4l
+
+" https://github.com/neoclide/coc.nvim/issues/1281#issuecomment-718234037
+" https://github.com/neoclide/coc.nvim/issues/1160
+nmap <C-m> <C-w><C-p>
 
 " 插入模式下移动光标位置
 inoremap <C-h> <left>
