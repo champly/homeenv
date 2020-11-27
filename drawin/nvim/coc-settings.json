@@ -1,6 +1,5 @@
 {
     "codeLens.enable": true,
-    "diagnostic.signOffset": 1,
     "diagnostic.errorSign": "\uf467",
     "diagnostic.warningSign": "\uf071",
     "diagnostic.infoSign": "\uf129",
@@ -10,11 +9,15 @@
     "diagnostic.refreshAfterSave": false,
     "diagnostic.checkCurrentLine": true,
     "diagnostic.virtualTextPrefix": " ✗ ",
-    "diagnostic.virtualText": true,
+    "diagnostic.virtualText": false,
     "prettier.tabWidth": 4,
+    "prettier.useTabs": true,
     "list.previousKeymap": "<C-k>",
     "list.nextKeymap": "<C-j>",
     "yaml.format.enable": true,
+    "yaml.schemas": {
+        "kubernetes": "/*.yaml"
+    },
     "suggest.noselect": true,
     "suggest.enablePreselect": false,
     "suggest.completionItemKindLabels": {
@@ -61,16 +64,16 @@
             "expand": true
         }
     ],
-    "explorer.file.column.indent.indentLine": true,
-    "explorer.file.column.git.icon.added": "A",
-    "explorer.file.column.git.icon.modified": "M",
-    "explorer.file.column.git.icon.ignored": "!",
-    "explorer.file.column.git.icon.unmerged": "U",
-    "explorer.file.showHiddenFiles": true,
+    "explorer.git.icon.status.added": "A",
+    "explorer.git.icon.status.modified": "M",
+    "explorer.git.icon.status.ignored": "!",
+    "explorer.git.icon.status.unmerged": "U",
     "explorer.git.showIgnored": true,
+    "explorer.file.column.indent.indentLine": true,
+    "explorer.file.showHiddenFiles": true,
     "explorer.icon.enableNerdfont": true,
-    "explorer.keyMappingMode": "none",
     "explorer.buffer.showHiddenBuffers": false,
+    "explorer.keyMappingMode": "none",
     "explorer.keyMappings.global": {
         "s": "toggleSelection",
         "<cr>": "open",
@@ -112,11 +115,14 @@
     "languageserver": {
         "golang": {
             "command": "~/go/bin/gopls",
-            "args": ["-remote=auto"],
+            "args": ["-mode=stdio"],
             "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
             "filetypes": ["go"],
             "initializationOptions": {
-                "completeUnimported": true
+                "usePlaceholders": true,
+                "codelens": {
+                    "gc_details": true
+                }
             }
         }
     }

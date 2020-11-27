@@ -1,6 +1,6 @@
 " FROM: https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation
-if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
-	silent !curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+if empty(glob('~/.vim/autoload/plug.vim'))
+	silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
@@ -16,6 +16,8 @@ call plug#begin('~/.vim/bundle')
 
 " go language support
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+" Plug 'neovim/nvim-lspconfig'
+" Plug 'nvim-lua/completion-nvim'
 
 " Debugger
 " Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-go'}
@@ -237,6 +239,107 @@ set hlsearch
 
 
 " ===
+" === nvim-lspconfig
+" ===
+if isdirectory(expand("~/.vim/bundle/nvim-lspconfig"))
+"     " https://github.com/golang/tools/blob/master/gopls/doc/vim.md#neovim-v050
+"     lua <<EOF
+" nvim_lsp = require "lspconfig"
+" nvim_lsp.gopls.setup {
+"     cmd = {"gopls", "--mode=stdio"},
+"     rootdir = {},
+"     filetype = {"go"},
+"     settings = {
+"         gopls = {
+"             usePlaceholders = true,
+"             codelens = {
+"                 gc_details = true,
+"             },
+"         },
+"     },
+"     on_attach = require'completion'.on_attach
+" }
+
+
+" -- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#imports
+" function goimports(timeoutms)
+"     local context = { source = { organizeImports = true } }
+"     vim.validate { context = { context, "t", true } }
+
+"     local params = vim.lsp.util.make_range_params()
+"     params.context = context
+
+"     local method = "textDocument/codeAction"
+"     local resp = vim.lsp.buf_request_sync(0, method, params, timeoutms)
+"     if resp and resp[1] then
+"         local result = resp[1].result
+"         if result and result[1] then
+"             local edit = result[1].edit
+"             vim.lsp.util.apply_workspace_edit(edit)
+"         end
+"     end
+
+"     vim.lsp.buf.formatting()
+" end
+" EOF
+" autocmd BufWritePre *.go lua goimports(1000)
+
+"     " https://neovim.io/doc/user/lsp.html
+"     nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+"     nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+"     nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+"     nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+"     nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+"     nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+"     nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+"     nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+"     nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
+
+"     let g:lsp_signs_error = {'text': '✗'}
+"     let g:lsp_signs_warning = {'text': '!'}
+
+	" " https://github.com/neovim/nvim-lspconfig/issues/411#issue-744588783
+"     lua << EOF
+"         nvim_lsp = require "lspconfig"
+"         nvim_lsp.gopls.setup {
+"             cmd = {"gopls"},
+"             settings = {
+"                 gopls = {
+"                     analyses = {
+"                         unusedparams = true,
+"                     },
+"                     staticcheck = true,
+"                 },
+"             },
+"         }
+" EOF
+
+	" augroup LSP | au!
+	"     autocmd BufWritePre *.json,*.yaml lua vim.lsp.buf.formatting_sync(nil, 1000)
+	" augroup END
+
+	" let g:lsp_diagnostics_enabled = 1
+
+	" " show diagnostic signs
+	" let g:lsp_signs_enabled = 1
+	" let g:lsp_signs_error = {'text': '✗'}
+	" let g:lsp_signs_warning = {'text': '!'}
+	" let g:lsp_highlights_enabled = 0
+
+	" " Do not use virtual text, they are far too obtrusive.
+	" let g:lsp_virtual_text_enabled = 0
+	" " echo a diagnostic message at cursor position
+	" let g:lsp_diagnostics_echo_cursor = 0
+	" " show diagnostic in floating window
+	" let g:lsp_diagnostics_float_cursor = 1
+	" " whether to enable highlight a symbol and its references
+	" let g:lsp_highlight_references_enabled = 1
+	" let g:lsp_preview_max_width = 80
+endif
+
+
+
+" ===
 " === vim-go
 " ===
 if isdirectory(expand("~/.vim/bundle/vim-go"))
@@ -355,6 +458,7 @@ if isdirectory(expand("~/.vim/bundle/coc.nvim"))
 				\ "coc-translator",
 				\ "coc-syntax",
 				\ "coc-git",
+				\ "coc-yaml",
 			\ ]
 
 	" coc-explorer
@@ -421,17 +525,17 @@ if isdirectory(expand("~/.vim/bundle/coc.nvim"))
 	nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 	" GoTo code navigation.
-	nmap <silent> <C-]> <Plug>(coc-definition)
-	" nmap <silent> <C-]> <Plug>(CocTagFunc)
+	nmap <silent> <leader>gd <Plug>(coc-definition)
 	nmap <silent> <leader>gy <Plug>(coc-type-definition)
 	nmap <silent> <leader>im <Plug>(coc-implementation)
 	nmap <silent> <leader>rf <Plug>(coc-references)
+	nmap <silent> <leader>rt <Plug>(coc-refactor)
+	" Symbol renaming.
+	nmap <silent> <leader>rn <Plug>(coc-rename)
 	" nmap <silent> gd <Plug>(coc-definition)
 	" nmap <silent> gy <Plug>(coc-type-definition)
 	" nmap <silent> gi <Plug>(coc-implementation)
 	" nmap <silent> gr <Plug>(coc-references)
-
-	nmap <silent> <leader>rt <Plug>(coc-refactor)
 
 	" 禁用`vim-go`中的K按键映射 使用coc.nvim的浮动窗口效果更好
 	let g:go_doc_keywordprg_enabled = 0
@@ -449,8 +553,6 @@ if isdirectory(expand("~/.vim/bundle/coc.nvim"))
 	" Highlight the symbol and its references when holding the cursor.
 	autocmd CursorHold * silent call CocActionAsync('highlight')
 
-	" Symbol renaming.
-	nmap <leader>rn <Plug>(coc-rename)
 
 	" " Formatting selected code.
 	" xmap <leader>f  <Plug>(coc-format-selected)
@@ -533,6 +635,10 @@ if isdirectory(expand("~/.vim/bundle/coc.nvim"))
 	" hi CoCHoverRange ctermfg=black ctermbg=72 guifg=black guibg=#689d6a
 	hi CocHighlightText guibg=#ff8600 guifg=black
 	" hi CoCHoverRange guibg=NONE guifg=#ff8600
+
+	if has("nvim-0.5.0")
+		set tagfunc=CocTagFunc
+	endif
 endif
 
 
@@ -1055,8 +1161,8 @@ nnoremap <silent> <leader>q :call QuickfixToggle()<CR>
 
 " quickfix 是最后一个窗口的时候自动关闭
 aug QFClose
-  au!
-  au WinEnter *  if winnr('$') == 1 && &buftype == "quickfix"|q|endif
+	au!
+	au WinEnter *  if winnr('$') == 1 && &buftype == "quickfix"|q|endif
 aug END
 
 
@@ -1198,8 +1304,8 @@ cnoremap <C-b> <Left>
 cnoremap <C-f> <Right>
 
 " 使用 leader+w 在插入和normal模式下保存文件，我经常在 insert 模式下代替 Esc
-inoremap <leader>w  <Esc>:w<CR>
-noremap	 <leader>w  :w<CR>
+inoremap <leader>w  <Esc>:wa<CR>
+noremap	 <leader>w  :wa<CR>
 inoremap <leader>wq <Esc>:waq<CR>
 noremap  <leader>wq :waq<CR>
 " 导致关闭quickfix leader q 延迟
@@ -1249,3 +1355,4 @@ noremap <C-L> <C-W>l
 " 停止搜索高亮的键映射
 nnoremap <silent> <F2>		:nohlsearch<CR>
 inoremap <silent> <F2> <C-O>:nohlsearch<CR>
+
