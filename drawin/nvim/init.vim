@@ -1,7 +1,15 @@
 " FROM: https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation
-if empty(glob('~/.vim/autoload/plug.vim'))
-	silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+" Install vim-plug if not found
+if has("nvim")
+	if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+		silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+		autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+	endif
+else
+	if empty(glob('~/.vim/autoload/plug.vim'))
+		silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+		autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+	endif
 endif
 
 " Specify a directory for plugins
@@ -16,6 +24,8 @@ call plug#begin('~/.vim/bundle')
 
 " go language support
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
+" neovim 0.5 > lsp
 " Plug 'neovim/nvim-lspconfig'
 " Plug 'nvim-lua/completion-nvim'
 
@@ -79,10 +89,6 @@ Plug 'justinmk/vim-sneak'
 " will modify tab map, so forbide
 " Plug 'SirVer/ultisnips'
 
-" " help you create more human-friendly comments in your code
-" [异常，停用]处理 function <SNR>2_update[1]..<SNR>2_update_impl[53]..<SNR>2_prepare[37]..FileType 自动命令 "*"..function <SNR>64_BetterComments[11]..<SNR>64_AddMatchesGroup 时发生错误:
-" Plug 'jbgutierrez/vim-better-comments'
-
 " VimWiki is a personal wiki for Vim
 Plug 'vimwiki/vimwiki'
 
@@ -105,6 +111,7 @@ call plug#end()
 
 " map the <Leader> key as ",",the default is "\"
 let mapleader = ","
+
 
 
 " ===
@@ -459,6 +466,7 @@ if isdirectory(expand("~/.vim/bundle/coc.nvim"))
 				\ "coc-syntax",
 				\ "coc-git",
 				\ "coc-yaml",
+				\ "coc-rls",
 			\ ]
 
 	" coc-explorer
@@ -1054,11 +1062,11 @@ if isdirectory(expand("~/.vim/bundle/vim-startify"))
 	\ ]
 
 	let s:footer = [
-		\ '+-------------------------------------------+',
-		\ '|                   ^_^                     |',
-		\ '|    Talk is cheap Show me the code         |',
-		\ '|                                           |',
-		\ '+-------------------------------------------+',
+		\ '+---------------------------------------------+',
+		\ '|                   ^_^                       |',
+		\ '|    Talk is cheap. Show me the code.         |',
+		\ '|                                             |',
+		\ '+---------------------------------------------+',
 	\ ]
 
 	" https://github.com/mhinz/vim-startify/issues/374#issuecomment-496501489
@@ -1280,7 +1288,7 @@ noremap <silent> <M-L> :redraw!<CR>
 
 " maxmempattern规定了vim做字符串匹配时使用的最大内存，不是由每行字符数决定的。
 " 默认配置是1000 set maxmempattern?
-set maxmempattern=2000
+set maxmempattern=5000
 
 
 
@@ -1306,8 +1314,8 @@ cnoremap <C-f> <Right>
 " 使用 leader+w 在插入和normal模式下保存文件，我经常在 insert 模式下代替 Esc
 inoremap <leader>w  <Esc>:wa<CR>
 noremap	 <leader>w  :wa<CR>
-inoremap <leader>wq <Esc>:waq<CR>
-noremap  <leader>wq :waq<CR>
+inoremap <leader>wq <Esc>:wq<CR>
+noremap  <leader>wq :wq<CR>
 " 导致关闭quickfix leader q 延迟
 " noremap  <leader>qq :q!<CR>
 

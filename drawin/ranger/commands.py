@@ -216,9 +216,13 @@ class extract_here(Command):
         obj.signal_bind('after', refresh)
         self.fm.loader.add(obj)
 
-class open_with_nvim(Command):
+class open_with_nvim_default(Command):
     def execute(self):
         self.fm.run("cd " + self.fm.thisdir.path + " && nvim")
+
+class open_with_nvim_linux(Command):
+    def execute(self):
+        self.fm.run("cd " + self.fm.thisdir.path + " && GOOS=linux nvim")
 
 class open_with_vscode(Command):
     def execute(self):
