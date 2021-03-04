@@ -76,6 +76,7 @@ Plug 'airblade/vim-gitgutter'
 " tpope plug
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
+" https://gist.github.com/wilon/ac1fc66f4a79e7b0c161c80877c75c94
 Plug 'tpope/vim-surround'
 Plug 'gcmt/wildfire.vim'
 
@@ -128,7 +129,7 @@ set number				" 默认显示数字栏
 set nobackup			" 不需要备份文件，保留撤销文件
 " set foldmethod=indent
 " set nowritebackup		" 编辑的时候不需要备份文件
-" set noswapfile			" 表示不创建临时交换文件
+" set noswapfile		" 表示不创建临时交换文件
 
 if has('persistent_undo')
 	set undofile
@@ -164,7 +165,7 @@ set noexpandtab
 
 " " 区分空格和缩进
 set list
-set showbreak=↪\
+set showbreak=↪\ 
 " set listchars=tab:\|\ ,trail:▫
 set listchars=tab:▸\ ,trail:·,precedes:←,extends:→
 
@@ -266,7 +267,6 @@ if isdirectory(expand("~/.vim/bundle/nvim-lspconfig"))
 "     },
 "     on_attach = require'completion'.on_attach
 " }
-
 
 " -- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#imports
 " function goimports(timeoutms)
@@ -468,6 +468,8 @@ if isdirectory(expand("~/.vim/bundle/coc.nvim"))
 				\ "coc-yaml",
 				\ "coc-rls",
 			\ ]
+	" https://github.com/neoclide/coc.nvim/issues/1789#issuecomment-616133267
+	let g:node_client_debug = 1
 
 	" coc-explorer
 	" https://github.com/npm/npm/issues/9401#issuecomment-134569585
@@ -518,14 +520,10 @@ if isdirectory(expand("~/.vim/bundle/coc.nvim"))
 		inoremap <silent><expr> <c-@> coc#refresh()
 	endif
 
-	" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
-	" position. Coc only does snippet and additional edit on confirm.
-	" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
-	if exists('*complete_info')
-		inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-	else
-		inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-	endif
+	" Make <CR> auto-select the first completion item and notify coc.nvim to
+	" format on enter, <cr> could be remapped by other vim plugin
+	inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 	" Use `[g` and `]g` to navigate diagnostics
 	" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
@@ -553,14 +551,15 @@ if isdirectory(expand("~/.vim/bundle/coc.nvim"))
 	function! s:show_documentation()
 		if (index(['vim','help'], &filetype) >= 0)
 			execute 'h '.expand('<cword>')
+		elseif (coc#rpc#ready())
+			call CocActionAsync('doHover')
 		else
-			call CocAction('doHover')
+			execute '!' . &keywordprg . " " . expand('<cword>')
 		endif
 	endfunction
 
 	" Highlight the symbol and its references when holding the cursor.
 	autocmd CursorHold * silent call CocActionAsync('highlight')
-
 
 	" " Formatting selected code.
 	" xmap <leader>f  <Plug>(coc-format-selected)
@@ -595,6 +594,16 @@ if isdirectory(expand("~/.vim/bundle/coc.nvim"))
 	" xmap ac <Plug>(coc-classobj-a)
 	" omap ac <Plug>(coc-classobj-a)
 
+	" Remap <C-f> and <C-b> for scroll float windows/popups.
+	if has('nvim-0.4.0') || has('patch-8.2.0750')
+		nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+		nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+		inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+		inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+		vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+		vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+	endif
+
 	" " Use CTRL-S for selections ranges.
 	" " Requires 'textDocument/selectionRange' support of LS, ex: coc-tsserver
 	" nmap <silent> <C-s> <Plug>(coc-range-select)
@@ -621,10 +630,10 @@ if isdirectory(expand("~/.vim/bundle/coc.nvim"))
 	" nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
 	" " Show commands.
 	" nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
-	" " Find symbol of current document.
-	" nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
-	" " Search workspace symbols.
-	" nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+	" Find symbol of current document.
+	nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+	" Search workspace symbols.
+	nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
 	" " Do default action for next item.
 	" nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 	" " Do default action for previous item.
@@ -794,7 +803,12 @@ if isdirectory(expand("~/.vim/bundle/ale"))
 	let g:ale_sign_warning = '⚡'
 	let g:ale_lint_on_enter = 0
 
+	let g:ale_statusline_format = ['✗ %d', '⚡ %d', '✔ OK']
+
 	let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+
+	nmap sp <Plug>(ale_previous_wrap)
+	nmap sn <Plug>(ale_next_wrap)
 endif
 
 
@@ -815,6 +829,7 @@ if isdirectory(expand("~/.vim/bundle/rainbow/"))
 endif
 
 
+
 " ===
 " === fzf
 " ===
@@ -826,7 +841,7 @@ if isdirectory(expand("~/.vim/bundle/fzf.vim/"))
 	" nnoremap <silent> <leader>f  :Ripgrep<CR>
 	nnoremap <silent> <leader>l  :Lines<CR>
 	nnoremap <silent> <leader>p  :Files<CR>
-	nnoremap <silent> <leader>ff :Rg<CR>
+	nnoremap <silent> <leader>rg :Rg<CR>
 	" nnoremap <silent> <leader>`  :Marks<CR>
 	" nnoremap <silent> <leader>ag :Ag<gR>
 	" nnoremap <silent> <leader>rg :Ripgrep<CR>
@@ -839,7 +854,6 @@ if isdirectory(expand("~/.vim/bundle/fzf.vim/"))
 			\ call fzf#vim#grep(
 			\   'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
 			\   fzf#vim#with_preview(), <bang>0)
-
 endif
 
 
@@ -865,6 +879,8 @@ if isdirectory(expand("~/.vim/bundle/vim-airline-themes/"))
 	let g:airline#extensions#tabline#left_sep = ' '
 	let g:airline#extensions#tabline#left_alt_sep = '|'
 	let g:airline#extensions#tabline#formatter = 'unique_tail'
+	let g:airline#extensions#ale#error_symbol = "✗"
+	let airline#extensions#ale#warning_symbol = "⚡"
 	if (1 || has("mac")) && !has("gui_macvim")		   " MacVim无法正常显示
 		let g:airline#extensions#tabline#left_sep=''
 		let g:airline#extensions#tabline#left_alt_sep=''
@@ -1047,7 +1063,7 @@ if isdirectory(expand("~/.vim/bundle/vim-startify"))
 		\ '^/vender',
 	\ ]
 	" 起始页显示的列表长度
-	let g:startify_files_number = 15
+	let g:startify_files_number = 10
 
 	" http://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20
 	let s:header = [
@@ -1133,6 +1149,8 @@ endif
 " === markdown-preview.nvim
 " ===
 if isdirectory(expand("~/.vim/bundle/markdown-preview.nvim"))
+	" auto open browser
+	" let g:mkdp_auto_start = 1
 	noremap  <leader>kv :MarkdownPrevie<CR>
 endif
 
@@ -1182,8 +1200,8 @@ aug END
 nnoremap <leader>v	:e $MYVIMRC<cr>
 nnoremap <leader>s	:source $MYVIMRC<cr>
 
-" hidden not save buffer
-set hidden
+" " hidden not save buffer, repeat with coc.nvim
+" set hidden
 
 " 开启新的无名缓冲区
 nnoremap <leader>n  :enew<CR>
@@ -1342,7 +1360,7 @@ inoremap <leader><leader> <Esc>/<++><CR>:nohlsearch<CR>c4l
 
 " https://github.com/neoclide/coc.nvim/issues/1281#issuecomment-718234037
 " https://github.com/neoclide/coc.nvim/issues/1160
-nmap <C-m> <C-w><C-p>
+" nmap <C-m> <C-w><C-p>
 
 " 插入模式下移动光标位置
 inoremap <C-h> <left>
