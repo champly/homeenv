@@ -3,7 +3,7 @@
 wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
 
 # nodejs
-curl -sL https://rpm.nodesource.com/setup_12.x | sudo bash -
+curl -sL https://rpm.nodesource.com/setup_15.x | sudo bash -
 yum clean all && sudo yum makecache fast
 yum install -y gcc-c++ make
 yum install -y nodejs
