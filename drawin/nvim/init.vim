@@ -21,9 +21,11 @@ call plug#begin('~/.vim/bundle')
 " Plug 'preservim/nerdtree'
 " Plug 'Xuyuanp/nerdtree-git-plugin'
 " Plug 'ryanoasis/vim-devicons'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+Plug 'kyazdani42/nvim-web-devicons'
 
 " go language support
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 " neovim 0.5 > lsp
 " Plug 'neovim/nvim-lspconfig'
@@ -50,8 +52,11 @@ Plug 'majutsushi/tagbar'
 Plug 'luochen1990/rainbow'
 
 " fzf
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+" Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+" Plug 'junegunn/fzf.vim'
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 
 " Insert or delete brackets, parens, quotes in pair
 Plug 'jiangmiao/auto-pairs'
@@ -100,12 +105,14 @@ Plug 'dhruvasagar/vim-table-mode'
 
 " quick find word
 Plug 'mhinz/vim-grepper'
+Plug 'brooth/far.vim'
 
 " float terminal
 Plug 'voldikss/vim-floaterm'
 
 " This plugin provides a start screen
-Plug 'mhinz/vim-startify'
+" Plug 'mhinz/vim-startify'
+Plug 'glepnir/dashboard-nvim'
 
 " Initialize plugin system
 call plug#end()
@@ -189,9 +196,22 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 " brew install figlet
 noremap tx :r !figlet
 
-" https://qastack.cn/vi/2801/how-can-i-make-gx-recognise-full-urls-in-vim
 " 使用浏览器打开光标下的链接
-let g:netrw_browsex_viewer = 'google-chrome'
+" https://github.com/vim/vim/issues/4738#issuecomment-714609892
+if has('macunix')
+	function! OpenURLUnderCursor()
+		let s:uri = matchstr(getline('.'), '[a-z]*:\/\/[^ >,;()]*')
+		let s:uri = shellescape(s:uri, 1)
+		if s:uri != ''
+			silent exec "!open '".s:uri."'"
+			:redraw!
+		endif
+	endfunction
+	nnoremap gx :call OpenURLUnderCursor()<CR>
+else
+	" https://qastack.cn/vi/2801/how-can-i-make-gx-recognise-full-urls-in-vim
+	let g:netrw_browsex_viewer = 'google-chrome'
+endif
 
 
 
@@ -247,6 +267,22 @@ set hlsearch
 
 
 " ===
+" === nvim-treesitter
+" ===
+if isdirectory(expand("~/.vim/bundle/nvim-treesitter"))
+	lua <<EOF
+require'nvim-treesitter.configs'.setup {
+	ensure_installed = "maintained",
+	highlight = {
+		enable = true, -- false will disable the whole extension
+	},
+}
+EOF
+end
+
+
+
+" ===
 " === nvim-lspconfig
 " ===
 if isdirectory(expand("~/.vim/bundle/nvim-lspconfig"))
@@ -260,7 +296,7 @@ if isdirectory(expand("~/.vim/bundle/nvim-lspconfig"))
 "     settings = {
 "         gopls = {
 "             usePlaceholders = true,
-"             codelens = {
+"             codelenses = {
 "                 gc_details = true,
 "             },
 "         },
@@ -346,77 +382,77 @@ endif
 
 
 
-" ===
-" === vim-go
-" ===
-if isdirectory(expand("~/.vim/bundle/vim-go"))
-	" augroup _vim_go_
-	"     " https://github.com/fatih/vim-go/blob/bd56f5690807d4a92652fe7a4d10dc08f260564e/doc/vim-go.txt#L938
-	"     " example:	 au FileType go nmap <leader>r <Plug>(go-run)
+" " ===
+" " === vim-go
+" " ===
+" if isdirectory(expand("~/.vim/bundle/vim-go"))
+"     " augroup _vim_go_
+"     "     " https://github.com/fatih/vim-go/blob/bd56f5690807d4a92652fe7a4d10dc08f260564e/doc/vim-go.txt#L938
+"     "     " example:	 au FileType go nmap <leader>r <Plug>(go-run)
 
-	"     au FileType go nmap <leader>im <Plug>(go-implements)
-	"     au FileType go nmap <leader>rf <Plug>(go-referrers)
-	"     au FileType go nmap <leader>if <Plug>(go-info)
-	"     " au FileType go nmap <Leader>rn <Plug>(go-rename)
-	"     au FileType go nmap <leader>ds <Plug>(go-def-split)
-	"     au FileType go nmap <leader>dv <Plug>(go-def-vertical)
-	"     au FileType go nmap <leader>dt <Plug>(go-def-tab)
-	" augroup END
+"     "     au FileType go nmap <leader>im <Plug>(go-implements)
+"     "     au FileType go nmap <leader>rf <Plug>(go-referrers)
+"     "     au FileType go nmap <leader>if <Plug>(go-info)
+"     "     " au FileType go nmap <Leader>rn <Plug>(go-rename)
+"     "     au FileType go nmap <leader>ds <Plug>(go-def-split)
+"     "     au FileType go nmap <leader>dv <Plug>(go-def-vertical)
+"     "     au FileType go nmap <leader>dt <Plug>(go-def-tab)
+"     " augroup END
 
-	" https://github.com/golang/tools/blob/master/gopls/doc/vim.md#vim-go
-	" let g:go_implements_mode = 'gopls'
-	" let g:go_def_mode='gopls'
-	" let g:go_info_mode='gopls'
+"     " https://github.com/golang/tools/blob/master/gopls/doc/vim.md#vim-go
+"     " let g:go_implements_mode = 'gopls'
+"     " let g:go_def_mode='gopls'
+"     " let g:go_info_mode='gopls'
 
-	" https://github.com/fatih/vim-go/blob/bd56f5690807d4a92652fe7a4d10dc08f260564e/doc/vim-go.txt#L2589
-	" let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-	" let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+"     " https://github.com/fatih/vim-go/blob/bd56f5690807d4a92652fe7a4d10dc08f260564e/doc/vim-go.txt#L2589
+"     " let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+"     " let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 
-	" let g:go_fmt_command = "goimports"
+"     " let g:go_fmt_command = "goimports"
 
-	" highlight
-	let g:go_highlight_array_whitespace_error = 1
-	let g:go_highlight_chan_whitespace_error = 1
-	let g:go_highlight_extra_types = 1
-	let g:go_highlight_space_tab_error = 1
-	let g:go_highlight_trailing_whitespace_error = 1
-	let g:go_highlight_operators = 1
-	let g:go_highlight_functions = 1
-	let g:go_highlight_function_parameters = 1
-	let g:go_highlight_function_calls = 1
-	let g:go_highlight_types = 1
-	let g:go_highlight_fields = 1
-	let g:go_highlight_build_constraints = 1
-	let g:go_highlight_generate_tags = 1
-	let g:go_highlight_string_spellcheck = 1
-	let g:go_highlight_format_strings = 1
-	let g:go_highlight_variable_declarations = 0
-	let g:go_highlight_variable_assignments = 0
-	let g:go_highlight_diagnostic_errors = 1
-	let g:go_highlight_diagnostic_warnings = 1
+"     " highlight
+"     let g:go_highlight_array_whitespace_error = 1
+"     let g:go_highlight_chan_whitespace_error = 1
+"     let g:go_highlight_extra_types = 1
+"     let g:go_highlight_space_tab_error = 1
+"     let g:go_highlight_trailing_whitespace_error = 1
+"     let g:go_highlight_operators = 1
+"     let g:go_highlight_functions = 1
+"     let g:go_highlight_function_parameters = 1
+"     let g:go_highlight_function_calls = 1
+"     let g:go_highlight_types = 1
+"     let g:go_highlight_fields = 1
+"     let g:go_highlight_build_constraints = 1
+"     let g:go_highlight_generate_tags = 1
+"     let g:go_highlight_string_spellcheck = 1
+"     let g:go_highlight_format_strings = 1
+"     let g:go_highlight_variable_declarations = 0
+"     let g:go_highlight_variable_assignments = 0
+"     let g:go_highlight_diagnostic_errors = 1
+"     let g:go_highlight_diagnostic_warnings = 1
 
-	" let g:go_auto_sameids = 1			" Use this option to highlight all uses of the identifier under the cursor
-	let g:go_list_type = "quickfix"		" do not pop up location lists
-	let g:go_list_height = 10			" the height of quickfix and locationlist
+"     " let g:go_auto_sameids = 1			" Use this option to highlight all uses of the identifier under the cursor
+"     let g:go_list_type = "quickfix"		" do not pop up location lists
+"     let g:go_list_height = 10			" the height of quickfix and locationlist
 
-	" " 切换是否自动显示单词引用
-	" nnoremap <silent> <F3>	  :GoSameIdsAutoToggle<CR>
-	" inoremap <silent> <F3> <C-O>:GoSameIdsAutoToggle<CR>
+"     " " 切换是否自动显示单词引用
+"     " nnoremap <silent> <F3>	  :GoSameIdsAutoToggle<CR>
+"     " inoremap <silent> <F3> <C-O>:GoSameIdsAutoToggle<CR>
 
-	" https://github.com/fatih/vim-go/issues/1271
-	" wrap long lines in quickfix
-	augroup quickfix
-		autocmd!
-		autocmd FileType qf setlocal wrap
-	augroup END
+"     " https://github.com/fatih/vim-go/issues/1271
+"     " wrap long lines in quickfix
+"     augroup quickfix
+"         autocmd!
+"         autocmd FileType qf setlocal wrap
+"     augroup END
 
-	" 减少启动 gopls 的个数
-	let g:go_gopls_options = ['-remote=auto']
+"     " 减少启动 gopls 的个数
+"     let g:go_gopls_options = ['-remote=auto']
 
-	" https://github.com/josa42/coc-go/issues/105
-	let g:go_gopls_enabled = 0
-	let g:go_def_mapping_enabled = 0
-endif
+"     " https://github.com/josa42/coc-go/issues/105
+"     let g:go_gopls_enabled = 0
+"     let g:go_def_mapping_enabled = 0
+" endif
 
 
 
@@ -467,6 +503,7 @@ if isdirectory(expand("~/.vim/bundle/coc.nvim"))
 				\ "coc-git",
 				\ "coc-yaml",
 				\ "coc-rls",
+				\ "coc-lua",
 			\ ]
 	" https://github.com/neoclide/coc.nvim/issues/1789#issuecomment-616133267
 	let g:node_client_debug = 1
@@ -532,6 +569,8 @@ if isdirectory(expand("~/.vim/bundle/coc.nvim"))
 
 	" GoTo code navigation.
 	nmap <silent> <leader>gd <Plug>(coc-definition)
+	nmap <silent> <leader>gs :call CocAction("jumpDefinition", "split")<CR>
+	nmap <silent> <leader>gv :call CocAction("jumpDefinition", "vsplit")<CR>
 	nmap <silent> <leader>gy <Plug>(coc-type-definition)
 	nmap <silent> <leader>im <Plug>(coc-implementation)
 	nmap <silent> <leader>rf <Plug>(coc-references)
@@ -644,7 +683,9 @@ if isdirectory(expand("~/.vim/bundle/coc.nvim"))
 	nmap ff :CocCommand explorer<CR>
 
 	" https://github.com/golang/tools/blob/master/gopls/doc/vim.md#cocnvim
-	autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeImport')
+	" autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeImport')
+	" use silent! and CocAction ignore this error
+	autocmd BufWritePre *.go silent! call CocAction('runCommand', 'editor.action.organizeImport')
 
 	" https://github.com/neoclide/coc.nvim/blob/a9410fe8b0038d1700b43df36a4745149e92feac/doc/coc.cnx#L880
 	autocmd CursorHold * silent call CocActionAsync('highlight')
@@ -830,31 +871,95 @@ endif
 
 
 
+" " ===
+" " === fzf
+" " ===
+" if isdirectory(expand("~/.vim/bundle/fzf.vim/"))
+"     " [Buffers] Jump to the existing window if possible
+"     let g:fzf_buffers_jump = 1
+
+"     " nnoremap <silent> <leader>b  :Buffers<CR>
+"     " nnoremap <silent> <leader>f  :Ripgrep<CR>
+"     nnoremap <silent> <leader>l  :Lines<CR>
+"     nnoremap <silent> <leader>p  :Files<CR>
+"     nnoremap <silent> <leader>rg :Rg<CR>
+"     " nnoremap <silent> <leader>`  :Marks<CR>
+"     " nnoremap <silent> <leader>ag :Ag<gR>
+"     " nnoremap <silent> <leader>rg :Ripgrep<CR>
+"     nnoremap <silent> <leader>h  :History<CR>
+"     nnoremap <silent> <leader>C  :Commands<CR>
+"     nnoremap <silent> <leader>ht :Helptags<CR>
+
+"     " https://github.com/junegunn/fzf.vim/blob/ddc377c0d3b886f2046b70d087a4dd89c903fdc2/doc/fzf-vim.txt#L321
+"     command! -bang -nargs=* Rg
+"             \ call fzf#vim#grep(
+"             \   'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
+"             \   fzf#vim#with_preview(), <bang>0)
+" endif
+
+
+
+
 " ===
 " === fzf
 " ===
-if isdirectory(expand("~/.vim/bundle/fzf.vim/"))
-	" [Buffers] Jump to the existing window if possible
-	let g:fzf_buffers_jump = 1
+if isdirectory(expand("~/.vim/bundle/telescope.nvim"))
+	nnoremap <leader>ff <cmd>Telescope find_files<cr>
+	nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+	nnoremap <leader>fb <cmd>Telescope file_browser<cr>
+	nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+	lua <<EOF
+	require('telescope').setup{
+  defaults = {
+    vimgrep_arguments = {
+      'rg',
+      '--color=never',
+      '--no-heading',
+      '--with-filename',
+      '--line-number',
+      '--column',
+      '--smart-case'
+    },
+    prompt_position = "bottom",
+    prompt_prefix = "> ",
+    selection_caret = "> ",
+    entry_prefix = "  ",
+    initial_mode = "insert",
+    selection_strategy = "reset",
+    sorting_strategy = "descending",
+    layout_strategy = "horizontal",
+    layout_defaults = {
+      horizontal = {
+        mirror = false,
+      },
+      vertical = {
+        mirror = false,
+      },
+    },
+    file_sorter =  require'telescope.sorters'.get_fuzzy_file,
+    file_ignore_patterns = {},
+    generic_sorter =  require'telescope.sorters'.get_generic_fuzzy_sorter,
+    shorten_path = true,
+    winblend = 0,
+    width = 0.75,
+    preview_cutoff = 120,
+    results_height = 1,
+    results_width = 0.8,
+    border = {},
+    borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
+    color_devicons = true,
+    use_less = true,
+    set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,
+    file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
+    grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new,
+    qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
 
-	" nnoremap <silent> <leader>b  :Buffers<CR>
-	" nnoremap <silent> <leader>f  :Ripgrep<CR>
-	nnoremap <silent> <leader>l  :Lines<CR>
-	nnoremap <silent> <leader>p  :Files<CR>
-	nnoremap <silent> <leader>rg :Rg<CR>
-	" nnoremap <silent> <leader>`  :Marks<CR>
-	" nnoremap <silent> <leader>ag :Ag<gR>
-	" nnoremap <silent> <leader>rg :Ripgrep<CR>
-	nnoremap <silent> <leader>h  :History<CR>
-	nnoremap <silent> <leader>C  :Commands<CR>
-	nnoremap <silent> <leader>ht :Helptags<CR>
-
-	" https://github.com/junegunn/fzf.vim/blob/ddc377c0d3b886f2046b70d087a4dd89c903fdc2/doc/fzf-vim.txt#L321
-	command! -bang -nargs=* Rg
-			\ call fzf#vim#grep(
-			\   'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
-			\   fzf#vim#with_preview(), <bang>0)
-endif
+    -- Developer configurations: Not meant for general override
+    buffer_previewer_maker = require'telescope.previewers'.buffer_previewer_maker
+  }
+}
+EOF
+end
 
 
 
@@ -1021,6 +1126,24 @@ endif
 
 
 " ===
+" === far.vim
+" ===
+if isdirectory(expand("~/.vim/bundle/far.vim"))
+	set lazyredraw            " improve scrolling performance when navigating through large results
+	set regexpengine=1        " use old regexp engine
+	set ignorecase smartcase  " ignore case only when the pattern contains no capital letters
+
+	" shortcut for far.vim find
+	nnoremap <silent> <Find-Shortcut>  :Farf<cr>
+	vnoremap <silent> <Find-Shortcut>  :Farf<cr>
+
+	" shortcut for far.vim replace
+	nnoremap <silent> <Replace-Shortcut>  :Farr<cr>
+	vnoremap <silent> <Replace-Shortcut>  :Farr<cr>
+endif
+
+
+" ===
 " === vim-visual-multi
 " ===
 if isdirectory(expand("~/.vim/bundle/vim-visual-multi"))
@@ -1040,54 +1163,115 @@ endif
 
 
 
+" " ===
+" " === vim-startify
+" " ===
+" if isdirectory(expand("~/.vim/bundle/vim-startify"))
+"     " https://github.com/mhinz/vim-startify/issues/374#issuecomment-496481547
+"     function! s:center(lines) abort
+"         let longest_line   = max(map(copy(a:lines), 'strwidth(v:val)'))
+"         let centered_lines = map(copy(a:lines),
+"             \ 'repeat(" ", (&columns / 2) - (longest_line / 2)) . v:val')
+"         return centered_lines
+"     endfunction
+
+"     " let g:startify_custom_header = s:center(startify#fortune#cowsay())
+"     " let g:startify_custom_footer = s:center(['foo', 'bar', 'baz'])
+
+"     " 是否自动加载目录下的Session.vim, 很好用
+"     let g:startify_session_autoload = 1
+"     " 过滤列表，支持正则表达式
+"     let g:startify_skiplist = [
+"         \ '^/tmp',
+"         \ '^/vender',
+"     \ ]
+"     " 起始页显示的列表长度
+"     let g:startify_files_number = 10
+
+"     " http://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20
+"     let s:header = [
+"         \ '',
+"         \ '  ______         __                                      __     __           __            _                        __                             ',
+"         \ ' /_  __/___     / /_  ___     ____  _____   ____  ____  / /_   / /_____     / /_  ___     (_)____   __  ______     / /_____     __  ______  __  __ ',
+"         \ '  / / / __ \   / __ \/ _ \   / __ \/ ___/  / __ \/ __ \/ __/  / __/ __ \   / __ \/ _ \   / / ___/  / / / / __ \   / __/ __ \   / / / / __ \/ / / / ',
+"         \ ' / / / /_/ /  / /_/ /  __/  / /_/ / /     / / / / /_/ / /_   / /_/ /_/ /  / /_/ /  __/  / (__  )  / /_/ / /_/ /  / /_/ /_/ /  / /_/ / /_/ / /_/ /  ',
+"         \ '/_/  \____/  /_.___/\___/   \____/_/     /_/ /_/\____/\__/   \__/\____/  /_.___/\___/  /_/____/   \__,_/ .___/   \__/\____/   \__, /\____/\__,_/   ',
+"         \ '                                                                                                      /_/                    /____/                ',
+"         \ '',
+"     \ ]
+
+"     let s:footer = [
+"         \ '+---------------------------------------------+',
+"         \ '|                   ^_^                       |',
+"         \ '|    Talk is cheap. Show me the code.         |',
+"         \ '|                                             |',
+"         \ '+---------------------------------------------+',
+"     \ ]
+
+"     " https://github.com/mhinz/vim-startify/issues/374#issuecomment-496501489
+"     let g:startify_custom_header = s:center(s:header)
+"     let g:startify_custom_footer = s:center(s:footer)
+" endif
+
+
+
 " ===
-" === vim-startify
+" === vim-floaterm
 " ===
-if isdirectory(expand("~/.vim/bundle/vim-startify"))
-	" https://github.com/mhinz/vim-startify/issues/374#issuecomment-496481547
-	function! s:center(lines) abort
-		let longest_line   = max(map(copy(a:lines), 'strwidth(v:val)'))
-		let centered_lines = map(copy(a:lines),
-			\ 'repeat(" ", (&columns / 2) - (longest_line / 2)) . v:val')
-		return centered_lines
-	endfunction
+if isdirectory(expand("~/.vim/bundle/dashboard-nvim"))
+	let g:dashboard_footer_icon = "🐬 "
+	let g:dashboard_preview_command = "cat"
+	let g:dashboard_preview_pipeline = "lolcat"
+	let g:dashboard_preview_file = "~/.config/nvim/static/champly.txt"
+	let g:dashboard_preview_file_height = 12
+	let g:dashboard_preview_file_width = 58
+	let g:dashboard_default_executive = "telescope"
+	let g:dashboard_custom_section = {
+		\ "last_session": {
+			\ "description": ["  Recently laset session                  leader s l"],
+			\ "command": "SessionLoad"},
+		\ "find_history": {
+			\ "description": ["  Recently opened files                   leader f h"],
+			\ "command": "DashboardFindHistory"},
+		\ "find_file": {
+			\ "description": ["  Find  File                              leader f f"],
+			\ "command": "Telescope find_files find_command=rg,--hidden,--files"},
+		\ "new_file": {
+			\ "description": ["  File Browser                            leader f b"],
+			\ "command": "Telescope file_browser"},
+		\ "find_word": {
+			\ "description": ["  Find  word                              leader f w"],
+			\ "command": "DashboardFindWord"},
+	\}
+	" let g:dashboard_custom_section = {
+	"     \ "last_session": {
+	"         \ "description": ["  Recently laset session                  leader s l"],
+	"         \ "command": "SessionLoad"},
+	"     \ "find_history": {
+	"         \ "description": ["  Recently opened files                   leader f h"],
+	"         \ "command": "DashboardFindHistory"},
+	"     \ "find_file": {
+	"         \ "description": ["  Find  File                              leader f f"],
+	"         \ "command": "Telescope find_files find_command=rg,--hidden,--files"},
+	"     \ "new_file": {
+	"         \ "description": ["  File Browser                            leader f b"],
+	"         \ "command": "Telescope file_browser"},
+	"     \ "find_word": {
+	"         \ "description": ["  Find  word                              leader f w"],
+	"         \ "command": "DashboardFindWord"},
+	"     \ "find_dotfiles": {
+	"         \ "description": ["  Open Personal dotfiles                  leader f d"],
+	"         \ "command": "Telescope dotfiles path=' .. home ..'/.dotfiles"},
+	"     \ "go_source": {
+	"         \ "description": ["  Find Go Source Code                     leader f s"],
+	"         \ "command": "Telescope gosource"},
+	" \}
 
-	" let g:startify_custom_header = s:center(startify#fortune#cowsay())
-	" let g:startify_custom_footer = s:center(['foo', 'bar', 'baz'])
-
-	" 是否自动加载目录下的Session.vim, 很好用
-	let g:startify_session_autoload = 1
-	" 过滤列表，支持正则表达式
-	let g:startify_skiplist = [
-		\ '^/tmp',
-		\ '^/vender',
-	\ ]
-	" 起始页显示的列表长度
-	let g:startify_files_number = 10
-
-	" http://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20
-	let s:header = [
-		\ '',
-		\ '  ______         __                                      __     __           __            _                        __                             ',
-		\ ' /_  __/___     / /_  ___     ____  _____   ____  ____  / /_   / /_____     / /_  ___     (_)____   __  ______     / /_____     __  ______  __  __ ',
-		\ '  / / / __ \   / __ \/ _ \   / __ \/ ___/  / __ \/ __ \/ __/  / __/ __ \   / __ \/ _ \   / / ___/  / / / / __ \   / __/ __ \   / / / / __ \/ / / / ',
-		\ ' / / / /_/ /  / /_/ /  __/  / /_/ / /     / / / / /_/ / /_   / /_/ /_/ /  / /_/ /  __/  / (__  )  / /_/ / /_/ /  / /_/ /_/ /  / /_/ / /_/ / /_/ /  ',
-		\ '/_/  \____/  /_.___/\___/   \____/_/     /_/ /_/\____/\__/   \__/\____/  /_.___/\___/  /_/____/   \__,_/ .___/   \__/\____/   \__, /\____/\__,_/   ',
-		\ '                                                                                                      /_/                    /____/                ',
-		\ '',
-	\ ]
-
-	let s:footer = [
-		\ '+---------------------------------------------+',
-		\ '|                   ^_^                       |',
-		\ '|    Talk is cheap. Show me the code.         |',
-		\ '|                                             |',
-		\ '+---------------------------------------------+',
-	\ ]
-
-	" https://github.com/mhinz/vim-startify/issues/374#issuecomment-496501489
-	let g:startify_custom_header = s:center(s:header)
-	let g:startify_custom_footer = s:center(s:footer)
+	nnoremap <leader>ss :<C-u>SessionSave<CR>
+	nnoremap <silent> <leader>sl :<C-u>SessionLoad<CR>	
+	nnoremap <silent> <Leader>fh :DashboardFindHistory<CR>
+	nnoremap <silent> <leader>fw :DashboardFindWord<CR>
+	nnoremap <silent> <leader>cn :DashboardNewFile<CR>
 endif
 
 
