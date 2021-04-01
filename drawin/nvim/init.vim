@@ -39,7 +39,7 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'neoclide/coc.nvim' , {'branch': 'release'}
 
 " asynchronous lint engine
-Plug 'dense-analysis/ale'
+" Plug 'dense-analysis/ale'
 
 " annotate plugin: https://github.com/preservim/nerdcommenter#settings
 Plug 'preservim/nerdcommenter'
@@ -66,9 +66,9 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 " theme
-Plug 'tomasiser/vim-code-dark'
+" Plug 'tomasiser/vim-code-dark'
 Plug 'morhetz/gruvbox'
-Plug 'rakr/vim-one'
+" Plug 'rakr/vim-one'
 
 " choice multi line
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
@@ -113,6 +113,9 @@ Plug 'voldikss/vim-floaterm'
 " This plugin provides a start screen
 " Plug 'mhinz/vim-startify'
 Plug 'glepnir/dashboard-nvim'
+
+" debug start time
+" Plug 'dstein64/vim-startuptime'
 
 " Initialize plugin system
 call plug#end()
@@ -226,9 +229,10 @@ endif
 " ctermfg => :help cterm-colors
 " https://github.com/eikenb/terminal-colors look at all color
 " hi Search term=standout ctermfg=0 ctermbg=3
-if has('termguicolors') && ($COLORTERM == 'truecolor' || $COLORTERM == '24bit')
-	set termguicolors
-endif
+" if has('termguicolors') && ($COLORTERM == 'truecolor' || $COLORTERM == '24bit')
+"     set termguicolors
+" endif
+set termguicolors
 
 " 背景透明 没生效
 " highlight Normal ctermbg=None
@@ -814,43 +818,43 @@ endif
 
 
 
-" ===
-" === ale
-" ===
-if isdirectory(expand("~/.vim/bundle/ale"))
-	" To specify which linters you want to run for each filetype, use the g:ale_linters variable (:help g:ale_linters).
-	" \ 'go': ['golint', 'golangci-lint','gopls', 'gofmt', 'govet'],
-	" \ 'go': ['gopls'],
-	let g:ale_linters = {
-		\ '*': ['trim_whitespace'],
-		\ 'python': [],
-		\ 'yaml': ['yamllint'],
-	\ }
-	let g:ale_fixers = {
-		\ 'go': ['gofmt', 'goimports', 'remove_trailing_lines', 'trim_whitespace'],
-	\ }
-	" Use just ESLint for linting and fixing files which end in '.foo.js'
-	let g:ale_pattern_options = {
-		\	'\.foo\.js$': {
-		\		'ale_linters': ['eslint'],
-		\		'ale_fixers': ['eslint'],
-		\	},
-	\ }
+" " ===
+" " === ale
+" " ===
+" if isdirectory(expand("~/.vim/bundle/ale"))
+"     " To specify which linters you want to run for each filetype, use the g:ale_linters variable (:help g:ale_linters).
+"     " \ 'go': ['golint', 'golangci-lint','gopls', 'gofmt', 'govet'],
+"     " \ 'go': ['gopls'],
+"     let g:ale_linters = {
+"         \ '*': ['trim_whitespace'],
+"         \ 'python': [],
+"         \ 'yaml': ['yamllint'],
+"     \ }
+"     let g:ale_fixers = {
+"         \ 'go': ['gofmt', 'goimports', 'remove_trailing_lines', 'trim_whitespace'],
+"     \ }
+"     " Use just ESLint for linting and fixing files which end in '.foo.js'
+"     let g:ale_pattern_options = {
+"         \	'\.foo\.js$': {
+"         \		'ale_linters': ['eslint'],
+"         \		'ale_fixers': ['eslint'],
+"         \	},
+"     \ }
 
-	" nnoremap <leader>at :ALEToggle<CR>
-	map <F7> :ALEToggle<CR>
+"     " nnoremap <leader>at :ALEToggle<CR>
+"     map <F7> :ALEToggle<CR>
 
-	let g:ale_sign_error = '✗'
-	let g:ale_sign_warning = '⚡'
-	let g:ale_lint_on_enter = 0
+"     let g:ale_sign_error = '✗'
+"     let g:ale_sign_warning = '⚡'
+"     let g:ale_lint_on_enter = 0
 
-	let g:ale_statusline_format = ['✗ %d', '⚡ %d', '✔ OK']
+"     let g:ale_statusline_format = ['✗ %d', '⚡ %d', '✔ OK']
 
-	let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+"     let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 
-	nmap sp <Plug>(ale_previous_wrap)
-	nmap sn <Plug>(ale_next_wrap)
-endif
+"     nmap sp <Plug>(ale_previous_wrap)
+"     nmap sn <Plug>(ale_next_wrap)
+" endif
 
 
 
@@ -901,7 +905,7 @@ endif
 
 
 " ===
-" === fzf
+" === telescope.nvim
 " ===
 if isdirectory(expand("~/.vim/bundle/telescope.nvim"))
 	nnoremap <leader>ff <cmd>Telescope find_files<cr>
