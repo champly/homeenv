@@ -22,6 +22,7 @@ call plug#begin('~/.vim/bundle')
 " Plug 'Xuyuanp/nerdtree-git-plugin'
 " Plug 'ryanoasis/vim-devicons'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'kyazdani42/nvim-web-devicons'
 
 " go language support
@@ -57,13 +58,16 @@ Plug 'luochen1990/rainbow'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzy-native.nvim'
 
 " Insert or delete brackets, parens, quotes in pair
 Plug 'jiangmiao/auto-pairs'
 
 " Lean & mean status/tabline for vim that's light as air.
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
+Plug 'akinsho/nvim-bufferline.lua'
+Plug 'glepnir/galaxyline.nvim' , {'branch': 'main'}
 
 " theme
 " Plug 'tomasiser/vim-code-dark'
@@ -114,8 +118,8 @@ Plug 'voldikss/vim-floaterm'
 " Plug 'mhinz/vim-startify'
 Plug 'glepnir/dashboard-nvim'
 
-" debug start time
-" Plug 'dstein64/vim-startuptime'
+" debug
+Plug 'tweekmonster/startuptime.vim'
 
 " Initialize plugin system
 call plug#end()
@@ -233,6 +237,7 @@ endif
 "     set termguicolors
 " endif
 set termguicolors
+set colorcolumn=120
 
 " 背景透明 没生效
 " highlight Normal ctermbg=None
@@ -250,7 +255,7 @@ if isdirectory(expand("~/.vim/bundle/gruvbox"))
 	set background=dark
 	" hi Search guibg=NONE guifg=#ff8600
 	" hi CursorLine guibg=#ffffaf guifg=NONE
-	let g:airline_theme = 'gruvbox'
+	" let g:airline_theme = 'gruvbox'
 endif
 
 " if isdirectory(expand("~/.vim/bundle/vim-one"))
@@ -274,14 +279,7 @@ set hlsearch
 " === nvim-treesitter
 " ===
 if isdirectory(expand("~/.vim/bundle/nvim-treesitter"))
-	lua <<EOF
-require'nvim-treesitter.configs'.setup {
-	ensure_installed = "maintained",
-	highlight = {
-		enable = true, -- false will disable the whole extension
-	},
-}
-EOF
+	lua require("modules.lang.plugins")
 end
 
 
@@ -290,98 +288,7 @@ end
 " === nvim-lspconfig
 " ===
 if isdirectory(expand("~/.vim/bundle/nvim-lspconfig"))
-"     " https://github.com/golang/tools/blob/master/gopls/doc/vim.md#neovim-v050
-"     lua <<EOF
-" nvim_lsp = require "lspconfig"
-" nvim_lsp.gopls.setup {
-"     cmd = {"gopls", "--mode=stdio"},
-"     rootdir = {},
-"     filetype = {"go"},
-"     settings = {
-"         gopls = {
-"             usePlaceholders = true,
-"             codelenses = {
-"                 gc_details = true,
-"             },
-"         },
-"     },
-"     on_attach = require'completion'.on_attach
-" }
-
-" -- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#imports
-" function goimports(timeoutms)
-"     local context = { source = { organizeImports = true } }
-"     vim.validate { context = { context, "t", true } }
-
-"     local params = vim.lsp.util.make_range_params()
-"     params.context = context
-
-"     local method = "textDocument/codeAction"
-"     local resp = vim.lsp.buf_request_sync(0, method, params, timeoutms)
-"     if resp and resp[1] then
-"         local result = resp[1].result
-"         if result and result[1] then
-"             local edit = result[1].edit
-"             vim.lsp.util.apply_workspace_edit(edit)
-"         end
-"     end
-
-"     vim.lsp.buf.formatting()
-" end
-" EOF
-" autocmd BufWritePre *.go lua goimports(1000)
-
-"     " https://neovim.io/doc/user/lsp.html
-"     nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-"     nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-"     nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-"     nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-"     nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
-"     nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-"     nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-"     nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-"     nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-
-"     let g:lsp_signs_error = {'text': '✗'}
-"     let g:lsp_signs_warning = {'text': '!'}
-
-	" " https://github.com/neovim/nvim-lspconfig/issues/411#issue-744588783
-"     lua << EOF
-"         nvim_lsp = require "lspconfig"
-"         nvim_lsp.gopls.setup {
-"             cmd = {"gopls"},
-"             settings = {
-"                 gopls = {
-"                     analyses = {
-"                         unusedparams = true,
-"                     },
-"                     staticcheck = true,
-"                 },
-"             },
-"         }
-" EOF
-
-	" augroup LSP | au!
-	"     autocmd BufWritePre *.json,*.yaml lua vim.lsp.buf.formatting_sync(nil, 1000)
-	" augroup END
-
-	" let g:lsp_diagnostics_enabled = 1
-
-	" " show diagnostic signs
-	" let g:lsp_signs_enabled = 1
-	" let g:lsp_signs_error = {'text': '✗'}
-	" let g:lsp_signs_warning = {'text': '!'}
-	" let g:lsp_highlights_enabled = 0
-
-	" " Do not use virtual text, they are far too obtrusive.
-	" let g:lsp_virtual_text_enabled = 0
-	" " echo a diagnostic message at cursor position
-	" let g:lsp_diagnostics_echo_cursor = 0
-	" " show diagnostic in floating window
-	" let g:lsp_diagnostics_float_cursor = 1
-	" " whether to enable highlight a symbol and its references
-	" let g:lsp_highlight_references_enabled = 1
-	" let g:lsp_preview_max_width = 80
+	lua require("modules.completion.plugins")
 endif
 
 
@@ -912,93 +819,88 @@ if isdirectory(expand("~/.vim/bundle/telescope.nvim"))
 	nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 	nnoremap <leader>fb <cmd>Telescope file_browser<cr>
 	nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-	lua <<EOF
-	require('telescope').setup{
-  defaults = {
-    vimgrep_arguments = {
-      'rg',
-      '--color=never',
-      '--no-heading',
-      '--with-filename',
-      '--line-number',
-      '--column',
-      '--smart-case'
-    },
-    prompt_position = "bottom",
-    prompt_prefix = "> ",
-    selection_caret = "> ",
-    entry_prefix = "  ",
-    initial_mode = "insert",
-    selection_strategy = "reset",
-    sorting_strategy = "descending",
-    layout_strategy = "horizontal",
-    layout_defaults = {
-      horizontal = {
-        mirror = false,
-      },
-      vertical = {
-        mirror = false,
-      },
-    },
-    file_sorter =  require'telescope.sorters'.get_fuzzy_file,
-    file_ignore_patterns = {},
-    generic_sorter =  require'telescope.sorters'.get_generic_fuzzy_sorter,
-    shorten_path = true,
-    winblend = 0,
-    width = 0.75,
-    preview_cutoff = 120,
-    results_height = 1,
-    results_width = 0.8,
-    border = {},
-    borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
-    color_devicons = true,
-    use_less = true,
-    set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,
-    file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
-    grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new,
-    qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
 
-    -- Developer configurations: Not meant for general override
-    buffer_previewer_maker = require'telescope.previewers'.buffer_previewer_maker
-  }
-}
+	lua <<EOF
+	require('telescope').setup {
+		defaults = {
+			prompt_prefix = '🔭 ',
+			prompt_position = 'top',
+			selection_caret = " ",
+			sorting_strategy = 'ascending',
+			results_width = 0.6,
+		},
+		extensions = {
+			fzy_native = {
+				override_generic_sorter = false,
+				override_file_sorter = true,
+			}
+		}
+	}
+	require('telescope').load_extension('fzy_native')
 EOF
 end
 
 
 
-" ===
-" === vim-airline
-" ===
-if isdirectory(expand("~/.vim/bundle/vim-airline-themes/"))
-	if !exists('g:airline_powerline_fonts')
-		let g:airline_powerline_fonts = 1
-		" Use the default set of separators with a few customizations
-		let g:airline_left_sep='›'	" Slightly fancier than '>'
-		let g:airline_right_sep='‹' " Slightly fancier than '<'
-		if (1 || has("mac")) && !has("gui_macvim")		   " MacVim无法正常显示
-			let g:airline_left_sep=''	" Slightly fancier than '>'
-			let g:airline_right_sep='' " Slightly fancier than '<'
-		endif
-	endif
+" " ===
+" " === vim-airline
+" " ===
+" if isdirectory(expand("~/.vim/bundle/vim-airline-themes/"))
+"     if !exists('g:airline_powerline_fonts')
+"         let g:airline_powerline_fonts = 1
+"         " Use the default set of separators with a few customizations
+"         let g:airline_left_sep='›'	" Slightly fancier than '>'
+"         let g:airline_right_sep='‹' " Slightly fancier than '<'
+"         if (1 || has("mac")) && !has("gui_macvim")		   " MacVim无法正常显示
+"             let g:airline_left_sep=''	" Slightly fancier than '>'
+"             let g:airline_right_sep='' " Slightly fancier than '<'
+"         endif
+"     endif
 
-	let g:airline#extensions#tabline#enabled = 1
-	let g:airline#extensions#tabline#buffer_nr_show = 1
-	let g:airline#extensions#tabline#buffer_idx_mode = 3
-	let g:airline#extensions#tabline#left_sep = ' '
-	let g:airline#extensions#tabline#left_alt_sep = '|'
-	let g:airline#extensions#tabline#formatter = 'unique_tail'
-	let g:airline#extensions#ale#error_symbol = "✗"
-	let airline#extensions#ale#warning_symbol = "⚡"
-	if (1 || has("mac")) && !has("gui_macvim")		   " MacVim无法正常显示
-		let g:airline#extensions#tabline#left_sep=''
-		let g:airline#extensions#tabline#left_alt_sep=''
-	endif
+"     let g:airline#extensions#tabline#enabled = 1
+"     let g:airline#extensions#tabline#buffer_nr_show = 1
+"     let g:airline#extensions#tabline#buffer_idx_mode = 3
+"     let g:airline#extensions#tabline#left_sep = ' '
+"     let g:airline#extensions#tabline#left_alt_sep = '|'
+"     let g:airline#extensions#tabline#formatter = 'unique_tail'
+"     let g:airline#extensions#ale#error_symbol = "✗"
+"     let airline#extensions#ale#warning_symbol = "⚡"
+"     if (1 || has("mac")) && !has("gui_macvim")		   " MacVim无法正常显示
+"         let g:airline#extensions#tabline#left_sep=''
+"         let g:airline#extensions#tabline#left_alt_sep=''
+"     endif
 
-	" <Space>1-9 切换到对应的序列
-	for i in range(1, 9)
-		exe printf('nmap <silent> <leader>%d <Plug>AirlineSelectTab%02d', i, i)
-	endfor
+"     " <Space>1-9 切换到对应的序列
+"     for i in range(1, 9)
+"         exe printf('nmap <silent> <leader>%d <Plug>AirlineSelectTab%02d', i, i)
+"     endfor
+" endif
+
+
+
+" ===
+" === Plug galaxyline.nvim
+" ===
+if isdirectory(expand("~/.vim/bundle/galaxyline.nvim"))
+	lua require("modules.ui.eviline")
+end
+
+
+
+" ===
+" === Plug nvim-bufferline.lua
+" ===
+if isdirectory(expand("~/.vim/bundle/nvim-bufferline.lua"))
+	lua require('bufferline').setup({
+				\ options = {
+					\ numbers = "ordinal",
+					\ number_style = "subscript",
+					\ mappings = true,
+					\ modified_icon = '✥',
+					\ buffer_close_icon = '',
+					\ always_show_bufferline = false,
+				\ },
+			\})
 endif
 
 
@@ -1220,7 +1122,7 @@ endif
 
 
 " ===
-" === vim-floaterm
+" === dashboard-nvim
 " ===
 if isdirectory(expand("~/.vim/bundle/dashboard-nvim"))
 	let g:dashboard_footer_icon = "🐬 "
@@ -1518,8 +1420,8 @@ cnoremap <C-b> <Left>
 cnoremap <C-f> <Right>
 
 " 使用 leader+w 在插入和normal模式下保存文件，我经常在 insert 模式下代替 Esc
-inoremap <leader>w  <Esc>:wa<CR>
-noremap	 <leader>w  :wa<CR>
+inoremap <silent> <leader>w  <Esc>:wa<CR>
+noremap	 <silent> <leader>w  :wa<CR>
 inoremap <leader>wq <Esc>:wq<CR>
 noremap  <leader>wq :wq<CR>
 " 导致关闭quickfix leader q 延迟
