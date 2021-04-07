@@ -3,7 +3,7 @@ local colors = require('galaxyline.theme').default
 local condition = require('galaxyline.condition')
 local utils = require 'modules.ui.utils'
 local gls = gl.section
-gl.short_line_list = {'NvimTree', 'vista', 'dbui', 'packer', 'coc-explorer'}
+gl.short_line_list = {'NvimTree', 'vista', 'dbui', 'packer', 'coc-explorer', 'vim-plug', 'tagbar'}
 
 local u = utils.u
 
@@ -20,6 +20,33 @@ local function wide_enough()
 		return true
 	end
 	return false
+end
+
+local function lsp_status(status)
+	local shorter_stat = ''
+	for match in string.gmatch(status, "[^%s]+")  do
+		local err_warn = string.find(match, "^[WE]%d+", 0)
+		if not err_warn then
+			shorter_stat = shorter_stat .. ' ' .. match
+		end
+	end
+	return shorter_stat
+end
+
+
+local function get_coc_lsp()
+	local status = vim.fn['coc#status']()
+	if not status or status == '' then
+		return ''
+	end
+	return lsp_status(status)
+end
+
+function get_diagnostic_info()
+	if vim.fn.exists('*coc#rpc#start_server') == 1 then
+		return get_coc_lsp()
+	end
+	return ''
 end
 
 local icons = {
@@ -178,6 +205,14 @@ gls.left[9] = {
 		condition = condition.buffer_not_empty,
 		highlight = {require('galaxyline.provider_fileinfo').get_file_icon_color, colors.bg}
 	}
+}
+
+gls.left[10] = {
+    CocStatus = {
+     provider = get_diagnostic_info,
+     highlight = {colors.green,colors.bg},
+     -- icon = '  🗱'
+    }
 }
 
 
