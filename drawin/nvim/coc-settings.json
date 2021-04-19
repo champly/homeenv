@@ -6,7 +6,6 @@
 	"diagnostic.hintSign": "\uf864",
 	"diagnostic.displayByAle": false,
 	"diagnostic.refreshOnInsertMode": false,
-	"diagnostic.refreshAfterSave": false,
 	"diagnostic.checkCurrentLine": true,
 	"diagnostic.virtualTextPrefix": " ✗ ",
 	"diagnostic.virtualText": false,
@@ -47,9 +46,18 @@
 		"value": "\uf89f",
 		"variable": "\ue71b"
 	},
-	"coc.preferences.formatOnSaveFiletypes": ["json", "xml", "markdown"],
+	"coc.preferences.formatOnSaveFiletypes": [
+		"json",
+		"vim",
+		"xml",
+		"markdown",
+		"go",
+		"r",
+		"lua",
+		"c",
+		"c++"
+	],
 	"coc.preferences.messageLevel": "error",
-	"coc.preferences.hoverTarget": "float",
 	"coc.preferences.extensionUpdateCheck": "daily",
 	"coc.preferences.snippetStatusText": "Ⓢ ",
 	"explorer.width": 40,
@@ -115,14 +123,17 @@
 	"languageserver": {
 		"golang": {
 			"command": "~/go/bin/gopls",
-			"args": ["-mode=stdio"],
 			"rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
 			"filetypes": ["go"],
 			"initializationOptions": {
-				"usePlaceholders": true,
-				"codelens": {
+				"usePlaceholders": false,
+				"codelenses": {
 					"gc_details": true
-				}
+				},
+				"analyses": {
+					"fieldalignment": false
+				},
+				"allowModfileModifications": true
 			}
 		},
 		"ccls": {
