@@ -783,7 +783,7 @@ endif
 
 
 " ===
-" === fzf
+" === telescope.nvim
 " ===
 if isdirectory(expand("~/.vim/bundle/fzf.vim/"))
 	" [Buffers] Jump to the existing window if possible

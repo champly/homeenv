@@ -35,6 +35,10 @@ sudo pip3 install --upgrade pip
 
 # install npm
 brew install node
+# config taobao registry
+npm config set registry https://registry.npm.taobao.org
+npm config set http-proxy http://127.0.0.1:1080
+npm config set https-proxy http://127.0.0.1:1080
 
 # vim
 # brew remove vim
@@ -42,7 +46,9 @@ brew cleanup
 # brew install vim --with-python3
 
 # neovim
-brew install neovim
+brew install --build-from-source --HEAD luajit
+brew install --build-from-source --HEAD neovim
+# brew install neovim --HEAD
 # pip3 install pynvim
 # npm install -g neovim
 
@@ -67,7 +73,24 @@ brew install gotags
 brew unlink ctags
 brew install --with-jansson --HEAD universal-ctags/universal-ctags/universal-ctags
 
-# ag
+# lolcat
+brew install lolcat
+
+# rg
 brew install ripgrep
+
+# c/c++
+brew install ccls
+
+# rust
+# brew install rust
+# brew install rust-analyzer
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+rustup component add rls rust-analysis rust-src
+
+# graph easy
+# https://juejin.cn/post/6844903510987767815
+brew install graphviz
+cpan Graph:Easy
 
 sh ./link.sh
