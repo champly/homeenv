@@ -53,12 +53,12 @@ Plug 'majutsushi/tagbar'
 Plug 'luochen1990/rainbow'
 
 " fzf
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-" Plug 'nvim-lua/popup.nvim'
-" Plug 'nvim-lua/plenary.nvim'
-" Plug 'nvim-telescope/telescope.nvim'
-" Plug 'nvim-telescope/telescope-fzy-native.nvim'
+" Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+" Plug 'junegunn/fzf.vim'
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzy-native.nvim'
 
 " Insert or delete brackets, parens, quotes in pair
 Plug 'jiangmiao/auto-pairs'
@@ -782,63 +782,63 @@ endif
 
 
 
+" " ===
+" " === fzf
+" " ===
+" if isdirectory(expand("~/.vim/bundle/fzf.vim/"))
+"     " [Buffers] Jump to the existing window if possible
+"     let g:fzf_buffers_jump = 1
+
+"     " nnoremap <silent> <leader>b  :Buffers<CR>
+"     " nnoremap <silent> <leader>f  :Ripgrep<CR>
+"     nnoremap <silent> <leader>l  :Lines<CR>
+"     nnoremap <silent> <leader>ff :Files<CR>
+"     nnoremap <silent> <leader>rg :Rg<CR>
+"     " nnoremap <silent> <leader>`  :Marks<CR>
+"     " nnoremap <silent> <leader>ag :Ag<gR>
+"     " nnoremap <silent> <leader>rg :Ripgrep<CR>
+"     nnoremap <silent> <leader>h  :History<CR>
+"     nnoremap <silent> <leader>C  :Commands<CR>
+"     nnoremap <silent> <leader>ht :Helptags<CR>
+
+"     " https://github.com/junegunn/fzf.vim/blob/ddc377c0d3b886f2046b70d087a4dd89c903fdc2/doc/fzf-vim.txt#L321
+"     command! -bang -nargs=* Rg
+"             \ call fzf#vim#grep(
+"             \   'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
+"             \   fzf#vim#with_preview(), <bang>0)
+" endif
+
+
+
+
 " ===
 " === telescope.nvim
 " ===
-if isdirectory(expand("~/.vim/bundle/fzf.vim/"))
-	" [Buffers] Jump to the existing window if possible
-	let g:fzf_buffers_jump = 1
+if isdirectory(expand("~/.vim/bundle/telescope.nvim"))
+	" nnoremap <leader>ff <cmd>Telescope find_files<cr>
+	" nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+	" nnoremap <leader>fb <cmd>Telescope file_browser<cr>
+	" nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
-	" nnoremap <silent> <leader>b  :Buffers<CR>
-	" nnoremap <silent> <leader>f  :Ripgrep<CR>
-	nnoremap <silent> <leader>l  :Lines<CR>
-	nnoremap <silent> <leader>ff :Files<CR>
-	nnoremap <silent> <leader>rg :Rg<CR>
-	" nnoremap <silent> <leader>`  :Marks<CR>
-	" nnoremap <silent> <leader>ag :Ag<gR>
-	" nnoremap <silent> <leader>rg :Ripgrep<CR>
-	nnoremap <silent> <leader>h  :History<CR>
-	nnoremap <silent> <leader>C  :Commands<CR>
-	nnoremap <silent> <leader>ht :Helptags<CR>
-
-	" https://github.com/junegunn/fzf.vim/blob/ddc377c0d3b886f2046b70d087a4dd89c903fdc2/doc/fzf-vim.txt#L321
-	command! -bang -nargs=* Rg
-			\ call fzf#vim#grep(
-			\   'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
-			\   fzf#vim#with_preview(), <bang>0)
-endif
-
-
-
-
-" " ===
-" " === telescope.nvim
-" " ===
-" if isdirectory(expand("~/.vim/bundle/telescope.nvim"))
-"     nnoremap <leader>ff <cmd>Telescope find_files<cr>
-"     nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-"     nnoremap <leader>fb <cmd>Telescope file_browser<cr>
-"     nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-
-"     lua <<EOF
-"     require('telescope').setup {
-"         defaults = {
-"             prompt_prefix = '🔭 ',
-"             prompt_position = 'top',
-"             selection_caret = " ",
-"             sorting_strategy = 'ascending',
-"             results_width = 0.6,
-"         },
-"         extensions = {
-"             fzy_native = {
-"                 override_generic_sorter = false,
-"                 override_file_sorter = true,
-"             }
-"         }
-"     }
-"     require('telescope').load_extension('fzy_native')
-" EOF
-" end
+	lua <<EOF
+	require('telescope').setup {
+		defaults = {
+			prompt_prefix = '🔭 ',
+			prompt_position = 'top',
+			selection_caret = " ",
+			sorting_strategy = 'ascending',
+			results_width = 0.6,
+		},
+		extensions = {
+			fzy_native = {
+				override_generic_sorter = false,
+				override_file_sorter = true,
+			}
+		}
+	}
+	require('telescope').load_extension('fzy_native')
+EOF
+end
 
 
 
@@ -1125,14 +1125,13 @@ endif
 " === dashboard-nvim
 " ===
 if isdirectory(expand("~/.vim/bundle/dashboard-nvim"))
-	let g:dashboard_footer_icon = "🐬 "
 	" let g:dashboard_preview_command = "cat"
 	" let g:dashboard_preview_pipeline = "lolcat"
 	" let g:dashboard_preview_file = "~/.config/nvim/static/champly.txt"
 	" let g:dashboard_preview_file_height = 12
 	" let g:dashboard_preview_file_width = 58
-	" let g:dashboard_default_executive = "telescope"
-	let g:dashboard_default_executive = "fzf"
+	let g:dashboard_default_executive = "telescope"
+	" let g:dashboard_default_executive = "fzf"
 	
 	let g:dashboard_custom_header = [
 		\ '',
@@ -1147,20 +1146,32 @@ if isdirectory(expand("~/.vim/bundle/dashboard-nvim"))
 		\ '',
 	\ ]
 
+	" let g:dashboard_footer_icon = "🐬 "
+	let g:dashboard_custom_footer = [
+				\ "If you think penguins are fat and waddle, you have never been attacked by one",
+				\ "running at you in excess of 100 miles per hour.",
+				\ "",
+				\ "                                                            -- Linus Torvalds"
+				\ ]
+
 	let g:dashboard_custom_section = {
 		\ "last_session": {
-			\ "description": ["  Recently laset session                  leader s l"],
+			\ "description": ["  Recently laset session                  leader sl"],
 			\ "command": "SessionLoad"},
 		\ "find_history": {
-			\ "description": ["  Recently opened files                   leader f h"],
+			\ "description": ["  Recently opened files                   leader fh"],
 			\ "command": "DashboardFindHistory"},
 		\ "find_file": {
-			\ "description": ["  Find  File                              leader f f"],
+			\ "description": ["  Find  File                              leader ff"],
 			\ "command": "DashboardFindFile"},
 		\ "find_word": {
-			\ "description": ["  Find  word                              leader f w"],
-			\ "command": "Rg"},
+			\ "description": ["  Find  word                              leader fw"],
+			\ "command": "DashboardFindWord"},
+		\ "new_buffer": {
+			\ "description": ["  Create new buffer                       leader n "],
+			\ "command": ":enew"},
 	\}
+
 	" let g:dashboard_custom_section = {
 	"     \ "last_session": {
 	"         \ "description": ["  Recently laset session                  leader s l"],
@@ -1185,11 +1196,15 @@ if isdirectory(expand("~/.vim/bundle/dashboard-nvim"))
 	"         \ "command": "Telescope gosource"},
 	" \}
 
-	nnoremap <leader>ss :<C-u>SessionSave<CR>
+	nnoremap <silent> <leader>ss :<C-u>SessionSave<CR>
 	nnoremap <silent> <leader>sl :<C-u>SessionLoad<CR>	
 	nnoremap <silent> <Leader>fh :DashboardFindHistory<CR>
 	nnoremap <silent> <leader>fw :DashboardFindWord<CR>
 	" nnoremap <silent> <leader>cn :DashboardNewFile<CR>
+	" hi DashboardHeader guifg=blue
+	" hi DashboardCenter guifg=green
+	hi DashboardShortcut guifg=#1E90FF
+	hi DashboardFooter guifg=gray
 endif
 
 
