@@ -23,6 +23,7 @@ call plug#begin('~/.vim/bundle')
 " Plug 'ryanoasis/vim-devicons'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+Plug 'kyazdani42/nvim-tree.lua'
 Plug 'kyazdani42/nvim-web-devicons'
 
 " go language support
@@ -404,7 +405,6 @@ if isdirectory(expand("~/.vim/bundle/coc.nvim"))
 				\ "coc-json",
 				\ "coc-vimlsp",
 				\ "coc-marketplace",
-				\ "coc-explorer",
 				\ "coc-actions",
 				\ "coc-gitignore",
 				\ "coc-prettier",
@@ -591,7 +591,7 @@ if isdirectory(expand("~/.vim/bundle/coc.nvim"))
 	" " Resume latest coc list.
 	" nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
-	nmap ff :CocCommand explorer<CR>
+	" nmap ff :CocCommand explorer<CR>
 
 	" https://github.com/golang/tools/blob/master/gopls/doc/vim.md#cocnvim
 	" autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeImport')
@@ -711,6 +711,17 @@ endif
 
 
 " ===
+" === nvim-tree.lua
+" ===
+if isdirectory(expand("~/.vim/bundle/nvim-tree.lua"))
+	lua require("modules.ui.nvim-tree")
+	" highlight NvimTreeFolderIcon guibg=None
+	nnoremap ff :NvimTreeToggle<CR>
+end
+
+
+
+" ===
 " === web-devicons
 " ===
 " web-devicons {
@@ -820,24 +831,9 @@ if isdirectory(expand("~/.vim/bundle/telescope.nvim"))
 	" nnoremap <leader>fb <cmd>Telescope file_browser<cr>
 	" nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
-	lua <<EOF
-	require('telescope').setup {
-		defaults = {
-			prompt_prefix = '🔭 ',
-			prompt_position = 'top',
-			selection_caret = " ",
-			sorting_strategy = 'ascending',
-			results_width = 0.6,
-		},
-		extensions = {
-			fzy_native = {
-				override_generic_sorter = false,
-				override_file_sorter = true,
-			}
-		}
-	}
-	require('telescope').load_extension('fzy_native')
-EOF
+	lua require("modules.completion.telescope")
+	nnoremap <leader>fs <cmd>Telescope gosource<cr>
+	nnoremap <leader>fd <cmd>Telescope dotfiles<cr>
 end
 
 
@@ -1170,36 +1166,19 @@ if isdirectory(expand("~/.vim/bundle/dashboard-nvim"))
 		\ "new_buffer": {
 			\ "description": ["  Create new buffer                       leader n "],
 			\ "command": ":enew"},
+		\ "find_dotfiles": {
+			\ "description": ["  Open Personal dotfiles                  leader fd"],
+			\ "command": "Telescope dotfiles"},
+		\ "go_source": {
+			\ "description": ["  Find Go Source Code                     leader fs"],
+			\ "command": "Telescope gosource"},
 	\}
-
-	" let g:dashboard_custom_section = {
-	"     \ "last_session": {
-	"         \ "description": ["  Recently laset session                  leader s l"],
-	"         \ "command": "SessionLoad"},
-	"     \ "find_history": {
-	"         \ "description": ["  Recently opened files                   leader f h"],
-	"         \ "command": "DashboardFindHistory"},
-	"     \ "find_file": {
-	"         \ "description": ["  Find  File                              leader f f"],
-	"         \ "command": "Telescope find_files find_command=rg,--hidden,--files"},
-	"     \ "new_file": {
-	"         \ "description": ["  File Browser                            leader f b"],
-	"         \ "command": "Telescope file_browser"},
-	"     \ "find_word": {
-	"         \ "description": ["  Find  word                              leader f w"],
-	"         \ "command": "DashboardFindWord"},
-	"     \ "find_dotfiles": {
-	"         \ "description": ["  Open Personal dotfiles                  leader f d"],
-	"         \ "command": "Telescope dotfiles path=' .. home ..'/.dotfiles"},
-	"     \ "go_source": {
-	"         \ "description": ["  Find Go Source Code                     leader f s"],
-	"         \ "command": "Telescope gosource"},
-	" \}
 
 	nnoremap <silent> <leader>ss :<C-u>SessionSave<CR>
 	nnoremap <silent> <leader>sl :<C-u>SessionLoad<CR>	
 	nnoremap <silent> <Leader>fh :DashboardFindHistory<CR>
 	nnoremap <silent> <leader>fw :DashboardFindWord<CR>
+	nnoremap <silent> <leader>ff :DashboardFindFile<CR>
 	" nnoremap <silent> <leader>cn :DashboardNewFile<CR>
 	" hi DashboardHeader guifg=blue
 	" hi DashboardCenter guifg=green
@@ -1314,8 +1293,8 @@ aug END
 " === General
 " ===
 " quick open vimrc in a new tab
-nnoremap <leader>v	:e $MYVIMRC<cr>
-nnoremap <leader>s	:source $MYVIMRC<cr>
+" nnoremap <leader>v	:e $MYVIMRC<cr>
+" nnoremap <leader>s	:source $MYVIMRC<cr>
 
 " " hidden not save buffer, repeat with coc.nvim
 " set hidden
@@ -1502,3 +1481,5 @@ noremap <C-L> <C-W>l
 nnoremap <silent> <F2>		:nohlsearch<CR>
 inoremap <silent> <F2> <C-O>:nohlsearch<CR>
 
+" cheat-sheet
+" https://www.nerdfonts.com/cheat-sheet

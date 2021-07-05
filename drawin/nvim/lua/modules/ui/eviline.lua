@@ -4,8 +4,49 @@ local condition = require('galaxyline.condition')
 local utils = require 'modules.ui.utils'
 local gls = gl.section
 gl.short_line_list = {'NvimTree', 'vista', 'dbui', 'packer', 'coc-explorer', 'vim-plug', 'tagbar'}
-
 local u = utils.u
+
+local colors = {
+	-- bg = '#202328',
+	bg = '#3e3e3e',
+	fg = '#bbc2cf',
+	yellow = '#ECBE7B',
+	cyan = '#008080',
+	darkblue = '#081633',
+	green = '#98be65',
+	orange = '#FF8800',
+	violet = '#a9a1e1',
+	magenta = '#c678dd',
+	blue = '#51afef',
+	red = '#ec5f67',
+}
+
+local sep = {
+  right_filled = u 'e0b2',
+  left_filled = u 'e0b0',
+  right = u 'e0b3',
+  left = u 'e0b1',
+  -- right_filled = u '2590',
+  -- left_filled = u '258c',
+  -- right = u '2503',
+  -- left = u '2503',
+}
+
+local icons = {
+	locker = u 'f023',
+	unsaved = u 'f693',
+	dos = u 'e70f',
+	unix = u 'f17c',
+	mac = u 'f179',
+	lsp_warn = u 'f071',
+	lsp_error = u 'f46e'
+}
+
+local system_icons = {
+	Darwin = u 'f302',
+	Linux = u 'f17c',
+	Windows = u 'f17a',
+}
 
 local function buffer_not_empty()
 	if vim.fn.empty(vim.fn.expand '%:t') ~= 1 then
@@ -20,6 +61,14 @@ local function wide_enough()
 		return true
 	end
 	return false
+end
+
+local function highlight(group, fg, bg, gui)
+	local cmd = string.format('highlight %s guifg=%s guibg=%s', group, fg, bg)
+	if gui ~= nil then
+		cmd = cmd .. ' gui=' .. gui
+	end
+	vim.cmd(cmd)
 end
 
 local function lsp_status(status)
@@ -42,6 +91,7 @@ local function get_coc_lsp()
 	return lsp_status(status)
 end
 
+
 local function get_diagnostic_info()
 	if vim.fn.exists('*coc#rpc#start_server') == 1 then
 		return get_coc_lsp()
@@ -49,24 +99,10 @@ local function get_diagnostic_info()
 	return ''
 end
 
-local icons = {
-	locker = u 'f023',
-	unsaved = u 'f693',
-	dos = u 'e70f',
-	unix = u 'f17c',
-	mac = u 'f179',
-	lsp_warn = u 'f071',
-	lsp_error = u 'f46e'
-}
-
--- gls.left[1] = {
---     RainbowRed = {
---         provider = function()
---             return '▊ '
---         end,
---         highlight = {colors.blue, colors.bg}
---     }
--- }
+local function get_system_info()
+	-- Darwin/Linux/Windows
+	return system_icons[vim.loop.os_uname().sysname]
+end
 
 gls.left[2] = {
 	ViMode = {
@@ -91,12 +127,13 @@ gls.left[2] = {
 				R = colors.red
 			}
 			local vim_mode = vim.fn.mode()
-			-- vim.api.nvim_command('hi GalaxyViMode guifg=' .. mode_color[vim_mode])
 			vim.api.nvim_command('hi GalaxyViMode guibg=' .. mode_color[vim_mode])
+			highlight("GalaxyViModeInv", mode_color[vim_mode], colors.bg, nil)
 			return '  ' .. alias[vim_mode] .. ' '
 		end,
-		-- highlight = {colors.red, colors.line_bg, 'bold'}
-		highlight = {colors.bg, colors.line_bg, 'bold'}
+		highlight = {colors.bg, colors.line_bg, 'bold'},
+		separator = sep.left_filled,
+		separator_highlight = "GalaxyViModeInv"
 	}
 }
 
@@ -126,7 +163,7 @@ gls.left[4] = {
 			end
 		end,
 		icon = '  ',
-		highlight = {colors.yellow, colors.bg}
+		highlight = {colors.yellow, colors.bg},
 	}
 }
 
@@ -141,7 +178,9 @@ gls.left[5] = {
 			end
 		end,
 		icon = '  ',
-		highlight = {colors.cyan, colors.bg}
+		highlight = {colors.blue, colors.bg},
+		separator = sep.left,
+		separator_highlight = {colors.fg, colors.bg},
 	}
 }
 
@@ -160,7 +199,9 @@ gls.left[7] = {
 	GitBranch = {
 		provider = 'GitBranch',
 		condition = condition.check_git_workspace,
-		highlight = {colors.violet, colors.bg, 'bold'}
+		highlight = {colors.violet, colors.bg, 'bold'},
+		separator = sep.left,
+		separator_highlight = {colors.fg, colors.bg},
 	}
 }
 
@@ -188,7 +229,7 @@ gls.left[8] = {
 			return '  ' .. fname .. ' '
 		end,
 		condition = condition.buffer_not_empty,
-		highlight = {colors.fg, colors.bg, 'bold'}
+		highlight = {colors.fg, colors.bg, 'bold'},
 	}
 }
 
@@ -203,15 +244,31 @@ gls.left[9] = {
 			return ' ' .. icon .. ' '
 		end,
 		condition = condition.buffer_not_empty,
-		highlight = {require('galaxyline.provider_fileinfo').get_file_icon_color, colors.bg}
+		highlight = {require('galaxyline.provider_fileinfo').get_file_icon_color, colors.bg},
+		separator = sep.left,
+		separator_highlight = {colors.fg, colors.bg},
 	}
 }
 
+-- gls.mid[1] = {
+--     ShowLspClient = {
+--         provider = 'GetLspClient',
+--         condition = function ()
+--             local tbl = {['dashboard'] = true, ['']=true}
+--             if tbl[vim.bo.filetype] then
+--                 return false
+--             end
+--             return true
+--         end,
+--         icon = ' LSP:',
+--         highlight = {colors.yellow, colors.bg, 'bold'}
+--     }
+-- }
+
 gls.left[10] = {
-    CocStatus = {
-     provider = get_diagnostic_info,
-     highlight = {colors.orange, colors.bg},
-     -- icon = '  🗱'
+	CocStatus = {
+		provider = get_diagnostic_info,
+		highlight = {colors.orange, colors.bg},
     }
 }
 
@@ -219,7 +276,7 @@ gls.left[10] = {
 gls.right[1] = {
 	LineInfo = {
 		provider = 'LineColumn',
-		separator = ' ',
+		separator = string.format("%s ", sep.right),
 		separator_highlight = {'NONE', colors.bg},
 		highlight = {colors.fg, colors.bg}
 	}
@@ -228,7 +285,7 @@ gls.right[1] = {
 gls.right[2] = {
 	PerCent = {
 		provider = 'LinePercent',
-		separator = ' ',
+		-- separator = ' ',
 		separator_highlight = {'NONE', colors.bg},
 		highlight = {colors.fg, colors.bg, 'bold'}
 	}
@@ -238,7 +295,7 @@ gls.right[3] = {
 	FileEncode = {
 		provider = 'FileEncode',
 		condition = condition.hide_in_width,
-		separator = ' ',
+		separator = string.format("%s", sep.right),
 		separator_highlight = {'NONE', colors.bg},
 		highlight = {colors.green, colors.bg, 'bold'}
 	}
@@ -248,7 +305,7 @@ gls.right[4] = {
 	FileFormat = {
 		provider = 'FileFormat',
 		condition = condition.hide_in_width,
-		separator = ' ',
+		separator = string.format(" %s ", sep.right),
 		separator_highlight = {'NONE', colors.bg},
 		highlight = {colors.green, colors.bg, 'bold'}
 	}
@@ -266,7 +323,9 @@ gls.right[5] = {
 		end,
 		condition = condition.hide_in_width,
 		icon = '   ',
-		highlight = {colors.green, colors.bg}
+		highlight = {colors.green, colors.bg},
+		separator = string.format(" %s", sep.right),
+		separator_highlight = {'NONE', colors.bg},
 	}
 }
 
@@ -302,13 +361,21 @@ gls.right[7] = {
 }
 
 gls.right[8] = {
+	RainbowRed = {
+		provider = get_system_info,
+		highlight = {colors.fg, colors.bg}
+	}
+}
+
+gls.right[9] = {
 	RainbowBlue = {
 		provider = function()
-			return ' ▊'
+			return ' '
 		end,
 		highlight = {colors.blue, colors.bg}
 	}
 }
+
 
 gls.short_line_left[1] = {
 	BufferType = {
@@ -333,3 +400,4 @@ gls.short_line_right[1] = {
 		highlight = {colors.fg, colors.bg}
 	}
 }
+
