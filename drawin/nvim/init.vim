@@ -74,6 +74,8 @@ Plug 'glepnir/galaxyline.nvim' , {'branch': 'main'}
 " Plug 'tomasiser/vim-code-dark'
 Plug 'morhetz/gruvbox'
 " Plug 'rakr/vim-one'
+" Plug 'rktjmp/lush.nvim'
+" Plug 'npxbr/gruvbox.nvim'
 
 " choice multi line
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
@@ -266,6 +268,15 @@ endif
 "     hi CursorLine guibg=#ffffaf guifg=NONE
 "     colorscheme one
 "     let g:airline_theme='one'
+" endif
+
+" if isdirectory(expand("~/.vim/bundle/gruvbox.nvim"))
+"     let g:gruvbox_italic = 1
+"     colorscheme gruvbox
+"     set background=dark
+"     " hi Search guibg=NONE guifg=#ff8600
+"     " hi CursorLine guibg=#ffffaf guifg=NONE
+"     " let g:airline_theme = 'gruvbox'
 " endif
 
 " 设置光标所在行、列高亮
