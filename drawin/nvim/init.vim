@@ -64,6 +64,7 @@ Plug 'nvim-telescope/telescope-fzy-native.nvim'
 
 " Insert or delete brackets, parens, quotes in pair
 Plug 'jiangmiao/auto-pairs'
+Plug 'rcarriga/nvim-notify'
 
 " Lean & mean status/tabline for vim that's light as air.
 " Plug 'vim-airline/vim-airline'
@@ -623,6 +624,15 @@ if isdirectory(expand("~/.vim/bundle/coc.nvim"))
 	if has("nvim-0.5.0")
 		set tagfunc=CocTagFunc
 	endif
+endif
+
+
+
+" ===
+" === nvim-notify
+" ===
+if isdirectory(expand("~/.vim/bundle/nvim-notify"))
+	lua require("modules.ui.notify")
 endif
 
 
@@ -1455,10 +1465,10 @@ cnoremap <C-f> <Right>
 cnoremap w!! w !sudo tee % >/dev/null
 
 " 使用 leader+w 在插入和normal模式下保存文件，我经常在 insert 模式下代替 Esc
-inoremap <silent> <leader>w  <Esc>:wa<CR>
-noremap	 <silent> <leader>w  :wa<CR>
-inoremap <leader>wq <Esc>:wq<CR>
-noremap  <leader>wq :wq<CR>
+" inoremap <silent> <leader>w  <Esc>:wa<CR>
+" noremap	 <silent> <leader>w  :wa<CR>
+" inoremap <leader>wq <Esc>:wq<CR>
+" noremap  <leader>wq :wq<CR>
 " 导致关闭quickfix leader q 延迟
 " noremap  <leader>qq :q!<CR>
 
