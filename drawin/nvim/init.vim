@@ -44,7 +44,8 @@ Plug 'neoclide/coc.nvim' , {'branch': 'release'}
 " Plug 'dense-analysis/ale'
 
 " annotate plugin: https://github.com/preservim/nerdcommenter#settings
-Plug 'preservim/nerdcommenter'
+" Plug 'preservim/nerdcommenter'
+Plug 'tomtom/tcomment_vim'
 
 " class outline viewer
 Plug 'majutsushi/tagbar'
@@ -123,6 +124,8 @@ Plug 'glepnir/dashboard-nvim'
 
 " debug
 Plug 'tweekmonster/startuptime.vim'
+
+Plug 'psliwka/vim-smoothie'
 
 " Initialize plugin system
 call plug#end()
@@ -426,6 +429,7 @@ if isdirectory(expand("~/.vim/bundle/coc.nvim"))
 				\ "coc-yaml",
 				\ "coc-rls",
 				\ "coc-lua",
+				\ "coc-rust-analyzer",
 			\ ]
 	" https://github.com/neoclide/coc.nvim/issues/1789#issuecomment-616133267
 	let g:node_client_debug = 1
@@ -449,9 +453,9 @@ if isdirectory(expand("~/.vim/bundle/coc.nvim"))
 	" Don't pass messages to |ins-completion-menu|.
 	set shortmess+=c
 
-	" " Always show the signcolumn, otherwise it would shift the text each time
-	" " diagnostics appear/become resolved.
-	if has("patch-8.1.1564")
+	" Always show the signcolumn, otherwise it would shift the text each time
+	" diagnostics appear/become resolved.
+	if has("nvim-0.5.0") || has("patch-8.1.1564")
 		" Recently vim can merge signcolumn and number column into one
 		set signcolumn=number
 	else
@@ -474,7 +478,7 @@ if isdirectory(expand("~/.vim/bundle/coc.nvim"))
 
 	" Use <c-space> to trigger completion.
 	if has('nvim')
-		inoremap <silent><expr> <c-o> coc#refresh()
+		inoremap <silent><expr> <c-space> coc#refresh()
 	else
 		inoremap <silent><expr> <c-@> coc#refresh()
 	endif
@@ -510,7 +514,7 @@ if isdirectory(expand("~/.vim/bundle/coc.nvim"))
 	nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 	function! s:show_documentation()
-		if (index(['vim','help'], &filetype) >= 0)
+		if (index(['vim', 'help'], &filetype) >= 0)
 			execute 'h '.expand('<cword>')
 		elseif (coc#rpc#ready())
 			call CocActionAsync('doHover')
@@ -586,11 +590,11 @@ if isdirectory(expand("~/.vim/bundle/coc.nvim"))
 
 	" " Mappings for CoCList
 	" " Show all diagnostics.
-	" nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+	nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
 	" " Manage extensions.
 	" nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
 	" " Show commands.
-	" nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+	nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
 	" Find symbol of current document.
 	nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
 	" Search workspace symbols.
@@ -628,7 +632,7 @@ endif
 " ===
 if isdirectory(expand("~/.vim/bundle/tagbar/"))
 	" map
-	map <leader>f :Tagbar<CR>
+	" map <leader>f :Tagbar<CR>
 
 	" setting
 	let g:tagbar_sort = 0
@@ -902,12 +906,14 @@ if isdirectory(expand("~/.vim/bundle/nvim-bufferline.lua"))
 				\ options = {
 					\ numbers = "ordinal",
 					\ number_style = "subscript",
-					\ mappings = true,
 					\ modified_icon = '✥',
 					\ buffer_close_icon = '',
 					\ always_show_bufferline = false,
 				\ },
 			\})
+	for i in range(1, 9)
+		exe printf('nnoremap <silent><leader>%d <Cmd>BufferLineGoToBuffer %d<CR>', i, i)
+	endfor
 endif
 
 
@@ -956,12 +962,21 @@ endif
 
 
 
+" " ===
+" " === nerdcommenter
+" " ===
+" if isdirectory(expand("~/.vim/bundle/nerdcommenter"))
+"     " 注释的时候自动加个空格,强迫症必配
+"     let g:NERDSpaceDelims = 1
+" endif
+
+
+
 " ===
-" === nerdcommenter
+" === tcomment_vim
 " ===
-if isdirectory(expand("~/.vim/bundle/nerdcommenter"))
-	" 注释的时候自动加个空格,强迫症必配
-	let g:NERDSpaceDelims = 1
+if isdirectory(expand("~/.vim/bundle/tcomment_vim"))
+	" https://github.com/tomtom/tcomment_vim/issues/111#issuecomment-53426063
 endif
 
 
