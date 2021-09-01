@@ -69,7 +69,7 @@ Plug 'rcarriga/nvim-notify'
 " Lean & mean status/tabline for vim that's light as air.
 " Plug 'vim-airline/vim-airline'
 " Plug 'vim-airline/vim-airline-themes'
-Plug 'akinsho/nvim-bufferline.lua'
+Plug 'akinsho/bufferline.nvim'
 Plug 'glepnir/galaxyline.nvim' , {'branch': 'main'}
 
 " theme
@@ -909,13 +909,12 @@ end
 
 
 " ===
-" === Plug nvim-bufferline.lua
+" === Plug bufferline.nvim
 " ===
-if isdirectory(expand("~/.vim/bundle/nvim-bufferline.lua"))
+if isdirectory(expand("~/.vim/bundle/bufferline.nvim"))
 	lua require('bufferline').setup({
 				\ options = {
 					\ numbers = "ordinal",
-					\ number_style = "subscript",
 					\ modified_icon = '✥',
 					\ buffer_close_icon = '',
 					\ always_show_bufferline = false,
