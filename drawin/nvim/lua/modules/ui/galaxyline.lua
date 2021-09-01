@@ -21,8 +21,8 @@ local mode_map = {
 	['t'] = {'TERMINAL', cl.terminal},
 	[''] = {'V-BLOCK', cl.visual},
     [''] = {'S-BLOCK', cl.visual},
-	['Rv'] = {'VIRTUAL'},
-	['rm'] = {'--MORE'}
+	['Rv'] = {'VIRTUAL', cl.visual},
+	['rm'] = {'--MORE', cl.command}
 }
 
 local sep = {
@@ -85,6 +85,7 @@ gl.short_line_list = {'NvimTree', 'vista', 'dbui'}
 gls.left = {{
 	ViMode = {
 		provider = function()
+			print("---->" .. vim.fn.mode())
 			local modehl = mode_hl()
 			highlight('GalaxyViMode', cl.bg, modehl, 'bold')
 			highlight('GalaxyViModeInv', modehl, cl.bg, 'bold')

@@ -115,7 +115,8 @@ gls.left[2] = {
 				V = 'VISUAL',
 				[''] = 'VISUAL-BLOCK',
 				v = 'VISUAL',
-				R = 'REPLACE'
+				R = 'REPLACE',
+				s = 'SUBSTITUTE',
 			}
 			local mode_color = {
 				n = colors.green,
@@ -124,9 +125,13 @@ gls.left[2] = {
 				V = colors.magenta,
 				[''] = colors.magenta,
 				v = colors.magenta,
-				R = colors.red
+				R = colors.red,
+				s = colors.orange,
 			}
 			local vim_mode = vim.fn.mode()
+			if mode_color[vim_mode] == nil then
+				print("------>" .. vim_mode)
+			end
 			vim.api.nvim_command('hi GalaxyViMode guibg=' .. mode_color[vim_mode])
 			highlight("GalaxyViModeInv", mode_color[vim_mode], colors.bg, nil)
 			return '  ' .. alias[vim_mode] .. ' '
