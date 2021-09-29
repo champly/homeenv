@@ -11,7 +11,7 @@ yum install -y nodejs
 npm config set registry https://registry.npm.taobao.org
 
 # nvim
-wget https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
+wget https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
 ./nvim.appimage --appimage-extract
 mv squashfs-root /usr/local/nvim
 
