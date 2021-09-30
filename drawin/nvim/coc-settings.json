@@ -55,12 +55,14 @@
 		"r",
 		"lua",
 		"c",
-		"c++"
+		"c++",
+		"rust"
 	],
 	"coc.preferences.messageLevel": "error",
 	"coc.preferences.extensionUpdateCheck": "daily",
 	"coc.preferences.snippetStatusText": "Ⓢ ",
 	"git.addGBlameToVirtualText": true,
+	"json.schemaDownload.enable": true,
 	"languageserver": {
 		"golang": {
 			"command": "~/go/bin/gopls",

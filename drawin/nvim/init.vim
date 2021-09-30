@@ -44,11 +44,11 @@ Plug 'neoclide/coc.nvim' , {'branch': 'release'}
 " Plug 'dense-analysis/ale'
 
 " annotate plugin: https://github.com/preservim/nerdcommenter#settings
-" Plug 'preservim/nerdcommenter'
-Plug 'tomtom/tcomment_vim'
+Plug 'preservim/nerdcommenter'
+" Plug 'tomtom/tcomment_vim'
 
 " class outline viewer
-Plug 'majutsushi/tagbar'
+" Plug 'majutsushi/tagbar'
 " Plug 'liuchengxu/vista.vim'
 
 " parentheses improved
@@ -148,7 +148,8 @@ set textwidth=120		" 设置自动加上换行符的长度
 set relativenumber		" 显示相对行号
 set number				" 默认显示数字栏
 set nobackup			" 不需要备份文件，保留撤销文件
-" set foldmethod=indent
+set foldmethod=syntax	" 设置折叠语法
+set foldlevelstart=99	" 默认不折叠
 " set nowritebackup		" 编辑的时候不需要备份文件
 " set noswapfile		" 表示不创建临时交换文件
 
@@ -237,12 +238,6 @@ if has('gui_running')
 	set guifontwide='SourceCodeProForPowerline-Regular:h13'
 endif
 
-" ctermfg => :help cterm-colors
-" https://github.com/eikenb/terminal-colors look at all color
-" hi Search term=standout ctermfg=0 ctermbg=3
-" if has('termguicolors') && ($COLORTERM == 'truecolor' || $COLORTERM == '24bit')
-"     set termguicolors
-" endif
 set termguicolors
 set colorcolumn=120
 
@@ -258,8 +253,8 @@ set colorcolumn=120
 
 if isdirectory(expand("~/.vim/bundle/gruvbox"))
 	let g:gruvbox_italic = 1
-	colorscheme gruvbox
 	set background=dark
+	colorscheme gruvbox
 	" hi Search guibg=NONE guifg=#ff8600
 	" hi CursorLine guibg=#ffffaf guifg=NONE
 	" let g:airline_theme = 'gruvbox'
@@ -272,15 +267,6 @@ endif
 "     hi CursorLine guibg=#ffffaf guifg=NONE
 "     colorscheme one
 "     let g:airline_theme='one'
-" endif
-
-" if isdirectory(expand("~/.vim/bundle/gruvbox.nvim"))
-"     let g:gruvbox_italic = 1
-"     colorscheme gruvbox
-"     set background=dark
-"     " hi Search guibg=NONE guifg=#ff8600
-"     " hi CursorLine guibg=#ffffaf guifg=NONE
-"     " let g:airline_theme = 'gruvbox'
 " endif
 
 " 设置光标所在行、列高亮
@@ -640,44 +626,44 @@ endif
 " ===
 " === tagbar
 " ===
-if isdirectory(expand("~/.vim/bundle/tagbar/"))
-	" map
-	" map <leader>f :Tagbar<CR>
-
-	" setting
-	let g:tagbar_sort = 0
-	let g:tagbar_autofocus = 1
-	" let g:tagbar_ctags_bin = 'ctags'
-
-	" FROM: https://github.com/TimothyYe/mydotfiles/blob/master/neovim/.config/nvim/rc/06.tagbar.vim
-	let g:tagbar_type_go = {
-		\ 'ctagstype' : 'go',
-		\ 'kinds'	  : [
-			\ 'p:package',
-			\ 'i:imports:1',
-			\ 'c:constants',
-			\ 'v:variables',
-			\ 't:types',
-			\ 'n:interfaces',
-			\ 'w:fields',
-			\ 'e:embedded',
-			\ 'm:methods',
-			\ 'r:constructor',
-			\ 'f:functions'
-		\ ],
-		\ 'sro' : '.',
-		\ 'kind2scope' : {
-			\ 't' : 'ctype',
-			\ 'n' : 'ntype'
-		\ },
-		\ 'scope2kind' : {
-			\ 'ctype' : 't',
-			\ 'ntype' : 'n'
-		\ },
-		\ 'ctagsbin'  : 'gotags',
-		\ 'ctagsargs' : '-sort -silent'
-	\ }
-endif
+" if isdirectory(expand("~/.vim/bundle/tagbar/"))
+" 	" map
+" 	" map <leader>f :Tagbar<CR>
+"
+" 	" setting
+" 	let g:tagbar_sort = 0
+" 	let g:tagbar_autofocus = 1
+" 	" let g:tagbar_ctags_bin = 'ctags'
+"
+" 	" FROM: https://github.com/TimothyYe/mydotfiles/blob/master/neovim/.config/nvim/rc/06.tagbar.vim
+" 	let g:tagbar_type_go = {
+" 		\ 'ctagstype' : 'go',
+" 		\ 'kinds'	  : [
+" 			\ 'p:package',
+" 			\ 'i:imports:1',
+" 			\ 'c:constants',
+" 			\ 'v:variables',
+" 			\ 't:types',
+" 			\ 'n:interfaces',
+" 			\ 'w:fields',
+" 			\ 'e:embedded',
+" 			\ 'm:methods',
+" 			\ 'r:constructor',
+" 			\ 'f:functions'
+" 		\ ],
+" 		\ 'sro' : '.',
+" 		\ 'kind2scope' : {
+" 			\ 't' : 'ctype',
+" 			\ 'n' : 'ntype'
+" 		\ },
+" 		\ 'scope2kind' : {
+" 			\ 'ctype' : 't',
+" 			\ 'ntype' : 'n'
+" 		\ },
+" 		\ 'ctagsbin'  : 'gotags',
+" 		\ 'ctagsargs' : '-sort -silent'
+" 	\ }
+" endif
 
 
 
@@ -914,7 +900,9 @@ end
 if isdirectory(expand("~/.vim/bundle/bufferline.nvim"))
 	lua require('bufferline').setup({
 				\ options = {
-					\ numbers = "ordinal",
+					\ numbers = function(opts)
+					\	return string.format('%s', opts.ordinal)
+					\ end,
 					\ modified_icon = '✥',
 					\ buffer_close_icon = '',
 					\ always_show_bufferline = false,
@@ -945,7 +933,7 @@ if isdirectory(expand("~/.vim/bundle/vim-gitgutter/"))
 	let g:gitgutter_diff_args = '-w'
 
 	" 有时会出现git左侧状态栏不准确的问题 使用该命令可以强制刷新
-	nmap <silent> <Leader>ll :GitGutterAll<CR>
+	nmap <silent> <leader>ll :GitGutterAll<CR>
 
 	" highlight! link SignColumn LineNr
 	" highlight GitGutterAdd	  guifg=#009900 ctermfg=2
@@ -963,10 +951,10 @@ if isdirectory(expand("~/.vim/bundle/vim-gitgutter/"))
 	let g:gitgutter_sign_removed_first_line = '▔'
 	let g:gitgutter_sign_modified_removed = '▒'
 
-	nnoremap <LEADER>gf :GitGutterFold<CR>
+	nnoremap <leader>gf :GitGutterFold<CR>
 	" nnoremap H :GitGutterPreviewHunk<CR>
-	" nnoremap <LEADER>g- :GitGutterPrevHunk<CR>
-	" nnoremap <LEADER>g= :GitGutterNextHunk<CR>
+	" nnoremap <leader>g- :GitGutterPrevHunk<CR>
+	" nnoremap <leader>g= :GitGutterNextHunk<CR>
 endif
 
 
@@ -974,10 +962,10 @@ endif
 " " ===
 " " === nerdcommenter
 " " ===
-" if isdirectory(expand("~/.vim/bundle/nerdcommenter"))
-"     " 注释的时候自动加个空格,强迫症必配
-"     let g:NERDSpaceDelims = 1
-" endif
+if isdirectory(expand("~/.vim/bundle/nerdcommenter"))
+    " 注释的时候自动加个空格,强迫症必配
+    let g:NERDSpaceDelims = 1
+endif
 
 
 
