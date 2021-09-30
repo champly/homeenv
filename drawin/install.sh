@@ -24,6 +24,7 @@ ln -s ~/Dropbox/config/zsh/zsh_history ~/.zsh_history
 git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/plugins/zsh-syntax-highlighting
 git clone https://github.com/zsh-users/zsh-history-substring-search.git ~/.oh-my-zsh/plugins/zsh-history-substring-search
+git clone https://github.com/zsh-users/zsh-completions.git ~/.oh-my-zsh/plugins/zsh-completions
 source ~/.zshrc
 
 echo "###### install fzf"
@@ -64,6 +65,7 @@ brew install jq
 
 # lazygit
 brew install jesseduffield/lazygit/lazygit
+brew install lazygit
 
 # figlet
 brew install figlet
@@ -73,6 +75,10 @@ brew install gotags
 brew unlink ctags
 brew install --with-jansson --HEAD universal-ctags/universal-ctags/universal-ctags
 
+# golangci-lint
+brew install golangci-lint
+# go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+
 # lolcat
 brew install lolcat
 
@@ -81,6 +87,9 @@ brew install ripgrep
 
 # c/c++
 brew install ccls
+
+# k9s
+brew install k9s
 
 # rust
 # brew install rust

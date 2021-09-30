@@ -12,6 +12,10 @@ rm -rf ~/.config/ranger
 ln -s ~/Dropbox/config/nvim ~/.config/
 ln -s ~/Dropbox/config/ranger ~/.config/
 
+# karabiner
+rm -rf ~/.config/karabiner
+ln -s ~/Dropbox/config/karabiner ~/.config/
+
 # git
 rm -rf ~/.gitconfig
 rm -rf ~/.ssh
