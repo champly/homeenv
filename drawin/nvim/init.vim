@@ -64,6 +64,8 @@ Plug 'nvim-telescope/telescope-fzy-native.nvim'
 
 " Insert or delete brackets, parens, quotes in pair
 Plug 'jiangmiao/auto-pairs'
+
+" notify
 Plug 'rcarriga/nvim-notify'
 
 " Lean & mean status/tabline for vim that's light as air.
@@ -919,9 +921,9 @@ endif
 " === fugitive
 " ===
 if isdirectory(expand("~/.vim/bundle/vim-fugitive/"))
-	nnoremap <silent> <leader>gs :Gstatus<CR>
-	nnoremap <silent> <leader>gb :Gblame<CR>
-	nnoremap <silent> <leader>gl :Glog<CR>
+	" nnoremap <silent> <leader>gs :Gstatus<CR>
+	" nnoremap <silent> <leader>gb :Gblame<CR>
+	" nnoremap <silent> <leader>gl :Glog<CR>
 endif
 
 

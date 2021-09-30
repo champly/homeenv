@@ -7,7 +7,6 @@ require("nvim-tree.events").on_nvim_tree_ready(
 vim.g.nvim_tree_quit_on_open = 1
 vim.g.nvim_tree_indent_markers = 1
 vim.g.nvim_tree_hide_dotfiles = 1
-
 vim.g.nvim_tree_special_files = {}
 
 local tree_cb = require'nvim-tree.config'.nvim_tree_callback
