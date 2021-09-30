@@ -187,6 +187,9 @@ set smartcase
 
 set noexpandtab
 
+" hit-enter
+set cmdheight=2
+
 " " 区分空格和缩进
 set list
 set showbreak=↪\ 
@@ -421,7 +424,7 @@ if isdirectory(expand("~/.vim/bundle/coc.nvim"))
 				\ "coc-rust-analyzer",
 			\ ]
 	" https://github.com/neoclide/coc.nvim/issues/1789#issuecomment-616133267
-	let g:node_client_debug = 1
+	let g:node_client_debug = 0
 
 	" coc-explorer
 	" https://github.com/npm/npm/issues/9401#issuecomment-134569585
