@@ -53,7 +53,7 @@ lspconfig.gopls.setup {
 				fieldalignment = false
 			},
 			allowModfileModifications = true,
-			experimentalWorkspaceModule = true,
+			experimentalWorkspaceModule = false,
 		}
 	}
 }

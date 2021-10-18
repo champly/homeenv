@@ -188,7 +188,7 @@ set smartcase
 set noexpandtab
 
 " hit-enter
-set cmdheight=2
+set cmdheight=1
 
 " " 区分空格和缩进
 set list
@@ -906,7 +906,7 @@ if isdirectory(expand("~/.vim/bundle/bufferline.nvim"))
 	lua require('bufferline').setup({
 				\ options = {
 					\ numbers = function(opts)
-					\	return string.format('%s', opts.ordinal)
+					\	return string.format('%s.', opts.ordinal)
 					\ end,
 					\ modified_icon = '✥',
 					\ buffer_close_icon = '',
