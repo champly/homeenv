@@ -70,7 +70,7 @@
 			"filetypes": ["go"],
 			"initializationOptions": {
 				"usePlaceholders": false,
-				"directoryFilters": ["-tests"],
+				"directoryFilters": ["-node_modules", "-tests"],
 				"codelenses": {
 					"gc_details": true
 				},
