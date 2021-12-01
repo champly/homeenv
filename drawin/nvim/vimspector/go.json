@@ -1,0 +1,15 @@
+{
+	"configurations": {
+		"run": {
+			"adapter": "vscode-go",
+			"configuration": {
+				"name": "Launch Package",
+				"type": "go",
+				"request": "launch",
+				"mode": "debug",
+				"program": "${fileDirname}",
+				"dlvToolPath": "$HOME/go/bin/dlv"
+			}
+		}
+	}
+}

@@ -1,9 +1,3 @@
-require("nvim-tree.events").on_nvim_tree_ready(
-	function()
-		vim.cmd("NvimTreeRefresh")
-    end
-)
-
 vim.g.nvim_tree_quit_on_open = 1
 vim.g.nvim_tree_indent_markers = 1
 -- let g:nvim_tree_special_files = { 'README.md': 1, 'Makefile': 1, 'MAKEFILE': 1 } " List of filenames that gets highlighted with NvimTreeSpecialFile

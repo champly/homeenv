@@ -114,6 +114,7 @@ gls.left = {{
 				return ''
 			end
 			local fname
+			print("fname"..fname)
 			if wide_enough() then
 				fname = vim.fn.fnamemodify(vim.fn.expand '%', ':~:.')
 			else

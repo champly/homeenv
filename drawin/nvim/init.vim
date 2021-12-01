@@ -34,7 +34,8 @@ Plug 'kyazdani42/nvim-web-devicons'
 " Plug 'nvim-lua/completion-nvim'
 
 " Debugger
-" Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-go'}
+" https://github.com/puremourning/vimspector#supported-languages
+Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-go --enable-rust'}
 
 " code-completion engine
 " Plug 'Valloric/YouCompleteMe'
@@ -108,6 +109,9 @@ Plug 'justinmk/vim-sneak'
 
 " VimWiki is a personal wiki for Vim
 Plug 'vimwiki/vimwiki'
+
+" UI Component Library for Neovim.
+Plug 'MunifTanjim/nui.nvim'
 
 " syntax highlighting, matching rules and mapping for the original Markdown and extensions
 Plug 'plasticboy/vim-markdown'
@@ -233,6 +237,13 @@ else
 	let g:netrw_browsex_viewer = 'google-chrome'
 endif
 
+" skip python version check
+" https://zhuanlan.zhihu.com/p/24484514
+" let g:python_host_skip_check=1
+" let g:python_host_prog = '/usr/local/bin/python'
+let g:python3_host_skip_check=1
+let g:python3_host_prog = '/usr/local/bin/python3'
+
 
 
 " ===
@@ -259,6 +270,7 @@ set colorcolumn=120
 if isdirectory(expand("~/.vim/bundle/gruvbox"))
 	let g:gruvbox_italic = 1
 	set background=dark
+	" set background=light
 	colorscheme gruvbox
 	" hi Search guibg=NONE guifg=#ff8600
 	" hi CursorLine guibg=#ffffaf guifg=NONE
@@ -848,6 +860,7 @@ if isdirectory(expand("~/.vim/bundle/telescope.nvim"))
 	" nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 	lua require("modules.completion.telescope")
+	nnoremap <leader>fb <cmd>Telescope buffers<cr>
 	nnoremap <leader>fs <cmd>Telescope gosource<cr>
 	nnoremap <leader>fd <cmd>Telescope dotfiles<cr>
 end
@@ -1230,7 +1243,7 @@ endif
 
 
 " ===
-" === vimspector
+" === vim-sneak
 " ===
 if isdirectory(expand("~/.vim/bundle/vim-sneak"))
 	" https://tc500.github.io/%E5%B7%A5%E5%85%B7%E9%93%BE/2019/02/08/%E9%AB%98%E6%95%88%E7%9A%84vim/
@@ -1252,20 +1265,31 @@ endif
 " ===
 " === vimspector
 " ===
-" let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
-" function! s:read_template_into_buffer(template)
-"     " has to be a function to avoid the extra space fzf#run insers otherwise
-"     execute '0r ~/.config/nvim/vimspector_json/'.a:template
-" endfunction
-" command! -bang -nargs=* LoadVimSpectorJsonTemplate call fzf#run({
-"             \   'source': 'ls -1 ~/.config/nvim/vimspector_json',
-"             \   'down': 20,
-"             \   'sink': function('<sid>read_template_into_buffer')
-"             \ })
-" noremap <leader>lt :tabe .vimspector.json<CR>:LoadVimSpectorJsonTemplate<CR>
-" sign define vimspectorBP text=🛑 texthl=Normal
-" sign define vimspectorBPDisabled text=🚫 texthl=Normal
-" sign define vimspectorPC text=👉 texthl=SpellBad
+if isdirectory(expand("~/.vim/bundle/vimspector"))
+	lua require("modules/ui/vimspector")
+
+	let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
+
+	" " https://github.com/zunpeng/neovim/blob/master/cfgs/plug-cfg/vimspector-cfg.vim
+	" function! s:read_template_into_buffer(template)
+	" "     " has to be a function to avoid the extra space fzf#run insers otherwise
+	" "     " execute '0r ~/.config/nvim/vimspector/'.a:template
+		" execute '0r '.a:template
+	" endfunction
+	" command! -bang -nargs=* LoadVimSpectorJsonTemplate call fzf#run({
+	"             \   'source': 'ls -d -1 ~/.config/nvim/vimspector/*.json',
+	"             \   'down': 20,
+	"             \   'sink': function('<sid>read_template_into_buffer')
+	"             \ })
+	" noremap <leader>dt :tabe .vimspector.json<CR>:LoadVimSpectorJsonTemplate<CR>
+	" noremap <leader>dt :tabe .vimspector.json<CR>:Telescope vimspector<CR>
+	noremap <leader>dt <CR>:lua show_vimspector_list()<CR>
+	noremap <S-s> :VimspectorReset<CR>
+
+	sign define vimspectorBP text=🛑 texthl=Normal
+	sign define vimspectorBPDisabled text=🚫 texthl=Normal
+	sign define vimspectorPC text=👉 texthl=SpellBad
+endif
 
 
 
