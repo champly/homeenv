@@ -47,15 +47,17 @@ brew cleanup
 # brew install vim --with-python3
 
 # neovim
-brew install --build-from-source --HEAD luajit
-brew install --build-from-source --HEAD neovim
+# brew install --build-from-source --HEAD luajit
+# brew install --build-from-source --HEAD neovim
 # brew install neovim --HEAD
-# pip3 install pynvim
+brew install neovim
+pip3 install pynvim
 # npm install -g neovim
 
 # nerd fonts
 brew tap homebrew/cask-fonts
-brew cask install font-sauce-code-pro-nerd-font
+brew install --cask font-sauce-code-pro-nerd-font
+
 
 # ranger
 pip3 install ranger-fm
