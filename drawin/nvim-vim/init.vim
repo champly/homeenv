@@ -1,6 +1,115 @@
-let modules_path = "~/.vim/bundle/"
-lua require("core.pack")
+" FROM: https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation
+" Install vim-plug if not found
+if has("nvim")
+	if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+		silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+		autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+	endif
+else
+	if empty(glob('~/.vim/autoload/plug.vim'))
+		silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+		autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+	endif
+endif
 
+" Specify a directory for plugins
+call plug#begin('~/.vim/bundle')
+
+" Make sure you use single quotes
+
+" " file system explorer
+" Plug 'preservim/nerdtree'
+" Plug 'Xuyuanp/nerdtree-git-plugin'
+" Plug 'ryanoasis/vim-devicons'
+
+" go language support
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
+" neovim 0.5 > lsp
+" Plug 'neovim/nvim-lspconfig'
+" Plug 'nvim-lua/completion-nvim'
+
+" Debugger
+" Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-go'}
+
+" code-completion engine
+" Plug 'Valloric/YouCompleteMe'
+Plug 'neoclide/coc.nvim' , {'branch': 'release'}
+
+" asynchronous lint engine
+Plug 'dense-analysis/ale'
+
+" annotate plugin: https://github.com/preservim/nerdcommenter#settings
+Plug 'preservim/nerdcommenter'
+
+" class outline viewer
+Plug 'majutsushi/tagbar'
+" Plug 'liuchengxu/vista.vim'
+
+" parentheses improved
+Plug 'luochen1990/rainbow'
+
+" fzf
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+" Insert or delete brackets, parens, quotes in pair
+Plug 'jiangmiao/auto-pairs'
+
+" Lean & mean status/tabline for vim that's light as air.
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" theme
+Plug 'tomasiser/vim-code-dark'
+Plug 'morhetz/gruvbox'
+Plug 'rakr/vim-one'
+
+" choice multi line
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+Plug 'terryma/vim-multiple-cursors'
+
+" Git
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+
+" tpope plug
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-repeat'
+" https://gist.github.com/wilon/ac1fc66f4a79e7b0c161c80877c75c94
+Plug 'tpope/vim-surround'
+Plug 'gcmt/wildfire.vim'
+
+" The plug-in visualizes undo history and makes it easier to browse and switch between different undo branches
+Plug 'mbbill/undotree'
+
+" Jump to any location specified by two characters.
+Plug 'justinmk/vim-sneak'
+
+" snipets
+" will modify tab map, so forbide
+" Plug 'SirVer/ultisnips'
+
+" VimWiki is a personal wiki for Vim
+Plug 'vimwiki/vimwiki'
+
+" syntax highlighting, matching rules and mapping for the original Markdown and extensions
+Plug 'plasticboy/vim-markdown'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'dhruvasagar/vim-table-mode'
+
+" quick find word
+Plug 'mhinz/vim-grepper'
+Plug 'brooth/far.vim'
+
+" float terminal
+Plug 'voldikss/vim-floaterm'
+
+" This plugin provides a start screen
+Plug 'mhinz/vim-startify'
+
+" Initialize plugin system
+call plug#end()
 
 " map the <Leader> key as ",",the default is "\"
 let mapleader = ","
@@ -19,8 +128,7 @@ set textwidth=120		" 设置自动加上换行符的长度
 set relativenumber		" 显示相对行号
 set number				" 默认显示数字栏
 set nobackup			" 不需要备份文件，保留撤销文件
-set foldmethod=syntax	" 设置折叠语法
-set foldlevelstart=99	" 默认不折叠
+" set foldmethod=indent
 " set nowritebackup		" 编辑的时候不需要备份文件
 " set noswapfile		" 表示不创建临时交换文件
 
@@ -55,9 +163,6 @@ set ignorecase
 set smartcase
 
 set noexpandtab
-
-" hit-enter
-set cmdheight=1
 
 " " 区分空格和缩进
 set list
@@ -102,18 +207,6 @@ else
 	let g:netrw_browsex_viewer = 'google-chrome'
 endif
 
-" skip python version check
-" https://zhuanlan.zhihu.com/p/24484514
-" let g:python_host_skip_check=1
-" let g:python_host_prog = '/usr/local/bin/python'
-let g:python3_host_skip_check=1
-" Requires Vim compiled with +python3 update `which python3`
-if filereadable("/opt/homebrew/bin/python3")
-	let g:python3_host_prog = '/opt/homebrew/bin/python3'
-else
-	let g:python3_host_prog = '/usr/local/bin/python3'
-endif
-
 
 
 " ===
@@ -124,30 +217,33 @@ if has('gui_running')
 	set guifontwide='SourceCodeProForPowerline-Regular:h13'
 endif
 
-set termguicolors
-set colorcolumn=120
+" ctermfg => :help cterm-colors
+" https://github.com/eikenb/terminal-colors look at all color
+" hi Search term=standout ctermfg=0 ctermbg=3
+if has('termguicolors') && ($COLORTERM == 'truecolor' || $COLORTERM == '24bit')
+	set termguicolors
+endif
 
 " 背景透明 没生效
 " highlight Normal ctermbg=None
 
-" if isdirectory(expand(modules_path .. "vim-code-dark"))
+" if isdirectory(expand("~/.vim/bundle/vim-code-dark"))
 "     colorscheme codedark
 "     let g:airline_theme = 'codedark'
 "     hi Search guibg=#d78700 guifg=#ffd700
 "     hi CursorLine guibg=#383838 guifg=NONE
 " endif
 
-if isdirectory(expand(modules_path .. "gruvbox"))
+if isdirectory(expand("~/.vim/bundle/gruvbox"))
 	let g:gruvbox_italic = 1
-	set background=dark
-	" set background=light
 	colorscheme gruvbox
+	set background=dark
 	" hi Search guibg=NONE guifg=#ff8600
 	" hi CursorLine guibg=#ffffaf guifg=NONE
-	" let g:airline_theme = 'gruvbox'
+	let g:airline_theme = 'gruvbox'
 endif
 
-" if isdirectory(expand(modules_path .. "vim-one"))
+" if isdirectory(expand("~/.vim/bundle/vim-one"))
 "     set background=light		" for the light version
 "     let g:one_allow_italics = 1 " I love italic for comments
 "     hi Search guibg=#5fff00 guifg=#ff8700
@@ -165,101 +261,183 @@ set hlsearch
 
 
 " ===
-" === nvim-treesitter
-" ===
-if isdirectory(expand(modules_path .. "nvim-treesitter"))
-	lua require("modules.lang.plugins")
-end
-
-
-
-" ===
 " === nvim-lspconfig
 " ===
-if isdirectory(expand(modules_path .. "nvim-lspconfig"))
-	lua require("modules.completion.plugins")
+if isdirectory(expand("~/.vim/bundle/nvim-lspconfig"))
+"     " https://github.com/golang/tools/blob/master/gopls/doc/vim.md#neovim-v050
+"     lua <<EOF
+" nvim_lsp = require "lspconfig"
+" nvim_lsp.gopls.setup {
+"     cmd = {"gopls", "--mode=stdio"},
+"     rootdir = {},
+"     filetype = {"go"},
+"     settings = {
+"         gopls = {
+"             usePlaceholders = true,
+"             codelens = {
+"                 gc_details = true,
+"             },
+"         },
+"     },
+"     on_attach = require'completion'.on_attach
+" }
+
+" -- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#imports
+" function goimports(timeoutms)
+"     local context = { source = { organizeImports = true } }
+"     vim.validate { context = { context, "t", true } }
+
+"     local params = vim.lsp.util.make_range_params()
+"     params.context = context
+
+"     local method = "textDocument/codeAction"
+"     local resp = vim.lsp.buf_request_sync(0, method, params, timeoutms)
+"     if resp and resp[1] then
+"         local result = resp[1].result
+"         if result and result[1] then
+"             local edit = result[1].edit
+"             vim.lsp.util.apply_workspace_edit(edit)
+"         end
+"     end
+
+"     vim.lsp.buf.formatting()
+" end
+" EOF
+" autocmd BufWritePre *.go lua goimports(1000)
+
+"     " https://neovim.io/doc/user/lsp.html
+"     nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+"     nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+"     nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+"     nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+"     nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+"     nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+"     nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+"     nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+"     nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
+
+"     let g:lsp_signs_error = {'text': '✗'}
+"     let g:lsp_signs_warning = {'text': '!'}
+
+	" " https://github.com/neovim/nvim-lspconfig/issues/411#issue-744588783
+"     lua << EOF
+"         nvim_lsp = require "lspconfig"
+"         nvim_lsp.gopls.setup {
+"             cmd = {"gopls"},
+"             settings = {
+"                 gopls = {
+"                     analyses = {
+"                         unusedparams = true,
+"                     },
+"                     staticcheck = true,
+"                 },
+"             },
+"         }
+" EOF
+
+	" augroup LSP | au!
+	"     autocmd BufWritePre *.json,*.yaml lua vim.lsp.buf.formatting_sync(nil, 1000)
+	" augroup END
+
+	" let g:lsp_diagnostics_enabled = 1
+
+	" " show diagnostic signs
+	" let g:lsp_signs_enabled = 1
+	" let g:lsp_signs_error = {'text': '✗'}
+	" let g:lsp_signs_warning = {'text': '!'}
+	" let g:lsp_highlights_enabled = 0
+
+	" " Do not use virtual text, they are far too obtrusive.
+	" let g:lsp_virtual_text_enabled = 0
+	" " echo a diagnostic message at cursor position
+	" let g:lsp_diagnostics_echo_cursor = 0
+	" " show diagnostic in floating window
+	" let g:lsp_diagnostics_float_cursor = 1
+	" " whether to enable highlight a symbol and its references
+	" let g:lsp_highlight_references_enabled = 1
+	" let g:lsp_preview_max_width = 80
 endif
 
 
 
-" " ===
-" " === vim-go
-" " ===
-" if isdirectory(expand(modules_path .. "vim-go"))
-"     " augroup _vim_go_
-"     "     " https://github.com/fatih/vim-go/blob/bd56f5690807d4a92652fe7a4d10dc08f260564e/doc/vim-go.txt#L938
-"     "     " example:	 au FileType go nnoremap <leader>r <Plug>(go-run)
+" ===
+" === vim-go
+" ===
+if isdirectory(expand("~/.vim/bundle/vim-go"))
+	" augroup _vim_go_
+	"     " https://github.com/fatih/vim-go/blob/bd56f5690807d4a92652fe7a4d10dc08f260564e/doc/vim-go.txt#L938
+	"     " example:	 au FileType go nmap <leader>r <Plug>(go-run)
 
-"     "     au FileType go nnoremap <leader>im <Plug>(go-implements)
-"     "     au FileType go nnoremap <leader>rf <Plug>(go-referrers)
-"     "     au FileType go nnoremap <leader>if <Plug>(go-info)
-"     "     " au FileType go nnoremap <Leader>rn <Plug>(go-rename)
-"     "     au FileType go nnoremap <leader>ds <Plug>(go-def-split)
-"     "     au FileType go nnoremap <leader>dv <Plug>(go-def-vertical)
-"     "     au FileType go nnoremap <leader>dt <Plug>(go-def-tab)
-"     " augroup END
+	"     au FileType go nmap <leader>im <Plug>(go-implements)
+	"     au FileType go nmap <leader>rf <Plug>(go-referrers)
+	"     au FileType go nmap <leader>if <Plug>(go-info)
+	"     " au FileType go nmap <Leader>rn <Plug>(go-rename)
+	"     au FileType go nmap <leader>ds <Plug>(go-def-split)
+	"     au FileType go nmap <leader>dv <Plug>(go-def-vertical)
+	"     au FileType go nmap <leader>dt <Plug>(go-def-tab)
+	" augroup END
 
-"     " https://github.com/golang/tools/blob/master/gopls/doc/vim.md#vim-go
-"     " let g:go_implements_mode = 'gopls'
-"     " let g:go_def_mode='gopls'
-"     " let g:go_info_mode='gopls'
+	" https://github.com/golang/tools/blob/master/gopls/doc/vim.md#vim-go
+	" let g:go_implements_mode = 'gopls'
+	" let g:go_def_mode='gopls'
+	" let g:go_info_mode='gopls'
 
-"     " https://github.com/fatih/vim-go/blob/bd56f5690807d4a92652fe7a4d10dc08f260564e/doc/vim-go.txt#L2589
-"     " let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-"     " let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+	" https://github.com/fatih/vim-go/blob/bd56f5690807d4a92652fe7a4d10dc08f260564e/doc/vim-go.txt#L2589
+	" let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+	" let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 
-"     " let g:go_fmt_command = "goimports"
+	" let g:go_fmt_command = "goimports"
 
-"     " highlight
-"     let g:go_highlight_array_whitespace_error = 1
-"     let g:go_highlight_chan_whitespace_error = 1
-"     let g:go_highlight_extra_types = 1
-"     let g:go_highlight_space_tab_error = 1
-"     let g:go_highlight_trailing_whitespace_error = 1
-"     let g:go_highlight_operators = 1
-"     let g:go_highlight_functions = 1
-"     let g:go_highlight_function_parameters = 1
-"     let g:go_highlight_function_calls = 1
-"     let g:go_highlight_types = 1
-"     let g:go_highlight_fields = 1
-"     let g:go_highlight_build_constraints = 1
-"     let g:go_highlight_generate_tags = 1
-"     let g:go_highlight_string_spellcheck = 1
-"     let g:go_highlight_format_strings = 1
-"     let g:go_highlight_variable_declarations = 0
-"     let g:go_highlight_variable_assignments = 0
-"     let g:go_highlight_diagnostic_errors = 1
-"     let g:go_highlight_diagnostic_warnings = 1
+	" highlight
+	let g:go_highlight_array_whitespace_error = 1
+	let g:go_highlight_chan_whitespace_error = 1
+	let g:go_highlight_extra_types = 1
+	let g:go_highlight_space_tab_error = 1
+	let g:go_highlight_trailing_whitespace_error = 1
+	let g:go_highlight_operators = 1
+	let g:go_highlight_functions = 1
+	let g:go_highlight_function_parameters = 1
+	let g:go_highlight_function_calls = 1
+	let g:go_highlight_types = 1
+	let g:go_highlight_fields = 1
+	let g:go_highlight_build_constraints = 1
+	let g:go_highlight_generate_tags = 1
+	let g:go_highlight_string_spellcheck = 1
+	let g:go_highlight_format_strings = 1
+	let g:go_highlight_variable_declarations = 0
+	let g:go_highlight_variable_assignments = 0
+	let g:go_highlight_diagnostic_errors = 1
+	let g:go_highlight_diagnostic_warnings = 1
 
-"     " let g:go_auto_sameids = 1			" Use this option to highlight all uses of the identifier under the cursor
-"     let g:go_list_type = "quickfix"		" do not pop up location lists
-"     let g:go_list_height = 10			" the height of quickfix and locationlist
+	" let g:go_auto_sameids = 1			" Use this option to highlight all uses of the identifier under the cursor
+	let g:go_list_type = "quickfix"		" do not pop up location lists
+	let g:go_list_height = 10			" the height of quickfix and locationlist
 
-"     " " 切换是否自动显示单词引用
-"     " nnoremap <silent> <F3>	  :GoSameIdsAutoToggle<CR>
-"     " inoremap <silent> <F3> <C-O>:GoSameIdsAutoToggle<CR>
+	" " 切换是否自动显示单词引用
+	" nnoremap <silent> <F3>	  :GoSameIdsAutoToggle<CR>
+	" inoremap <silent> <F3> <C-O>:GoSameIdsAutoToggle<CR>
 
-"     " https://github.com/fatih/vim-go/issues/1271
-"     " wrap long lines in quickfix
-"     augroup quickfix
-"         autocmd!
-"         autocmd FileType qf setlocal wrap
-"     augroup END
+	" https://github.com/fatih/vim-go/issues/1271
+	" wrap long lines in quickfix
+	augroup quickfix
+		autocmd!
+		autocmd FileType qf setlocal wrap
+	augroup END
 
-"     " 减少启动 gopls 的个数
-"     let g:go_gopls_options = ['-remote=auto']
+	" 减少启动 gopls 的个数
+	let g:go_gopls_options = ['-remote=auto']
 
-"     " https://github.com/josa42/coc-go/issues/105
-"     let g:go_gopls_enabled = 0
-"     let g:go_def_mapping_enabled = 0
-" endif
+	" https://github.com/josa42/coc-go/issues/105
+	let g:go_gopls_enabled = 0
+	let g:go_def_mapping_enabled = 0
+endif
 
 
 
 " ===
 " === YouCompleteMe
 " ===
-" if isdirectory(expand(modules_path .. "YouCompleteMe"))
+" if isdirectory(expand("~/.vim/bundle/YouCompleteMe"))
 	" " https://github.com/ycm-core/YouCompleteMe/issues/2015#issuecomment-189917191
 	" set completeopt-=preview
 
@@ -288,11 +466,12 @@ endif
 " ===
 " === coc.nvim
 " ===
-if isdirectory(expand(modules_path .. "coc.nvim"))
+if isdirectory(expand("~/.vim/bundle/coc.nvim"))
 	let g:coc_global_extensions = [
 				\ "coc-json",
 				\ "coc-vimlsp",
 				\ "coc-marketplace",
+				\ "coc-explorer",
 				\ "coc-actions",
 				\ "coc-gitignore",
 				\ "coc-prettier",
@@ -302,11 +481,9 @@ if isdirectory(expand(modules_path .. "coc.nvim"))
 				\ "coc-git",
 				\ "coc-yaml",
 				\ "coc-rls",
-				\ "coc-lua",
-				\ "coc-rust-analyzer",
 			\ ]
 	" https://github.com/neoclide/coc.nvim/issues/1789#issuecomment-616133267
-	let g:node_client_debug = 0
+	let g:node_client_debug = 1
 
 	" coc-explorer
 	" https://github.com/npm/npm/issues/9401#issuecomment-134569585
@@ -327,9 +504,9 @@ if isdirectory(expand(modules_path .. "coc.nvim"))
 	" Don't pass messages to |ins-completion-menu|.
 	set shortmess+=c
 
-	" Always show the signcolumn, otherwise it would shift the text each time
-	" diagnostics appear/become resolved.
-	if has("nvim-0.5.0") || has("patch-8.1.1564")
+	" " Always show the signcolumn, otherwise it would shift the text each time
+	" " diagnostics appear/become resolved.
+	if has("patch-8.1.1564")
 		" Recently vim can merge signcolumn and number column into one
 		set signcolumn=number
 	else
@@ -352,7 +529,7 @@ if isdirectory(expand(modules_path .. "coc.nvim"))
 
 	" Use <c-space> to trigger completion.
 	if has('nvim')
-		inoremap <silent><expr> <c-space> coc#refresh()
+		inoremap <silent><expr> <c-o> coc#refresh()
 	else
 		inoremap <silent><expr> <c-@> coc#refresh()
 	endif
@@ -388,7 +565,7 @@ if isdirectory(expand(modules_path .. "coc.nvim"))
 	nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 	function! s:show_documentation()
-		if (index(['vim', 'help'], &filetype) >= 0)
+		if (index(['vim','help'], &filetype) >= 0)
 			execute 'h '.expand('<cword>')
 		elseif (coc#rpc#ready())
 			call CocActionAsync('doHover')
@@ -464,11 +641,11 @@ if isdirectory(expand(modules_path .. "coc.nvim"))
 
 	" " Mappings for CoCList
 	" " Show all diagnostics.
-	nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+	" nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
 	" " Manage extensions.
 	" nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
 	" " Show commands.
-	nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+	" nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
 	" Find symbol of current document.
 	nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
 	" Search workspace symbols.
@@ -480,7 +657,7 @@ if isdirectory(expand(modules_path .. "coc.nvim"))
 	" " Resume latest coc list.
 	" nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
-	" nmap ff :CocCommand explorer<CR>
+	nmap ff :CocCommand explorer<CR>
 
 	" https://github.com/golang/tools/blob/master/gopls/doc/vim.md#cocnvim
 	" autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeImport')
@@ -502,55 +679,46 @@ endif
 
 
 " ===
-" === nvim-notify
-" ===
-if isdirectory(expand(modules_path .. "nvim-notify"))
-	lua require("modules.ui.notify")
-endif
-
-
-
-" ===
 " === tagbar
 " ===
-" if isdirectory(expand(modules_path .. "tagbar/"))
-" 	" map
-" 	" map <leader>f :Tagbar<CR>
-"
-" 	" setting
-" 	let g:tagbar_sort = 0
-" 	let g:tagbar_autofocus = 1
-" 	" let g:tagbar_ctags_bin = 'ctags'
-"
-" 	" FROM: https://github.com/TimothyYe/mydotfiles/blob/master/neovim/.config/nvim/rc/06.tagbar.vim
-" 	let g:tagbar_type_go = {
-" 		\ 'ctagstype' : 'go',
-" 		\ 'kinds'	  : [
-" 			\ 'p:package',
-" 			\ 'i:imports:1',
-" 			\ 'c:constants',
-" 			\ 'v:variables',
-" 			\ 't:types',
-" 			\ 'n:interfaces',
-" 			\ 'w:fields',
-" 			\ 'e:embedded',
-" 			\ 'm:methods',
-" 			\ 'r:constructor',
-" 			\ 'f:functions'
-" 		\ ],
-" 		\ 'sro' : '.',
-" 		\ 'kind2scope' : {
-" 			\ 't' : 'ctype',
-" 			\ 'n' : 'ntype'
-" 		\ },
-" 		\ 'scope2kind' : {
-" 			\ 'ctype' : 't',
-" 			\ 'ntype' : 'n'
-" 		\ },
-" 		\ 'ctagsbin'  : 'gotags',
-" 		\ 'ctagsargs' : '-sort -silent'
-" 	\ }
-" endif
+if isdirectory(expand("~/.vim/bundle/tagbar/"))
+	" map
+	map <leader>f :Tagbar<CR>
+
+	" setting
+	let g:tagbar_sort = 0
+	let g:tagbar_autofocus = 1
+	" let g:tagbar_ctags_bin = 'ctags'
+
+	" FROM: https://github.com/TimothyYe/mydotfiles/blob/master/neovim/.config/nvim/rc/06.tagbar.vim
+	let g:tagbar_type_go = {
+		\ 'ctagstype' : 'go',
+		\ 'kinds'	  : [
+			\ 'p:package',
+			\ 'i:imports:1',
+			\ 'c:constants',
+			\ 'v:variables',
+			\ 't:types',
+			\ 'n:interfaces',
+			\ 'w:fields',
+			\ 'e:embedded',
+			\ 'm:methods',
+			\ 'r:constructor',
+			\ 'f:functions'
+		\ ],
+		\ 'sro' : '.',
+		\ 'kind2scope' : {
+			\ 't' : 'ctype',
+			\ 'n' : 'ntype'
+		\ },
+		\ 'scope2kind' : {
+			\ 'ctype' : 't',
+			\ 'ntype' : 'n'
+		\ },
+		\ 'ctagsbin'  : 'gotags',
+		\ 'ctagsargs' : '-sort -silent'
+	\ }
+endif
 
 
 
@@ -579,7 +747,7 @@ endif
 " ===
 " === vim-table-mode
 " ===
-if isdirectory(expand(modules_path .. "vim-table-mode"))
+if isdirectory(expand("~/.vim/bundle/vim-table-mode"))
 	noremap <leader>tm :TableModeToggle<CR>
 	"let g:table_mode_disable_mappings = 1
 	let g:table_mode_cell_text_object_i_map = 'k<Bar>'
@@ -590,7 +758,7 @@ endif
 " ===
 " === NERRDTree
 " ===
-" if isdirectory(expand(modules_path .. "nerdtree"))
+" if isdirectory(expand("~/.vim/bundle/nerdtree"))
 "     " map
 "     map <leader>a :NERDTreeToggle<CR>
 "     map <leader>d :NERDTreeFind<CR>
@@ -609,21 +777,10 @@ endif
 
 
 " ===
-" === nvim-tree.lua
-" ===
-if isdirectory(expand(modules_path .. "nvim-tree.lua"))
-	lua require("modules.ui.nvim-tree")
-	" highlight NvimTreeFolderIcon guibg=None
-	nnoremap ff :NvimTreeToggle<CR>
-end
-
-
-
-" ===
 " === web-devicons
 " ===
 " web-devicons {
-" if isdirectory(expand(modules_path .. "vim-devicons"))
+" if isdirectory(expand("~/.vim/bundle/vim-devicons"))
 "     " 文件夹前面的空格太多 https://github.com/ryanoasis/vim-devicons/issues/257#issuecomment-491274274
 "     " 如果减少的话会和git修改重叠
 "     " let g:WebDevIconsNerdTreeBeforeGlyphPadding = ''
@@ -634,50 +791,50 @@ end
 
 
 
-" " ===
-" " === ale
-" " ===
-" if isdirectory(expand(modules_path .. "ale"))
-"     " To specify which linters you want to run for each filetype, use the g:ale_linters variable (:help g:ale_linters).
-"     " \ 'go': ['golint', 'golangci-lint','gopls', 'gofmt', 'govet'],
-"     " \ 'go': ['gopls'],
-"     let g:ale_linters = {
-"         \ '*': ['trim_whitespace'],
-"         \ 'python': [],
-"         \ 'yaml': ['yamllint'],
-"     \ }
-"     let g:ale_fixers = {
-"         \ 'go': ['gofmt', 'goimports', 'remove_trailing_lines', 'trim_whitespace'],
-"     \ }
-"     " Use just ESLint for linting and fixing files which end in '.foo.js'
-"     let g:ale_pattern_options = {
-"         \	'\.foo\.js$': {
-"         \		'ale_linters': ['eslint'],
-"         \		'ale_fixers': ['eslint'],
-"         \	},
-"     \ }
+" ===
+" === ale
+" ===
+if isdirectory(expand("~/.vim/bundle/ale"))
+	" To specify which linters you want to run for each filetype, use the g:ale_linters variable (:help g:ale_linters).
+	" \ 'go': ['golint', 'golangci-lint','gopls', 'gofmt', 'govet'],
+	" \ 'go': ['gopls'],
+	let g:ale_linters = {
+		\ '*': ['trim_whitespace'],
+		\ 'python': [],
+		\ 'yaml': ['yamllint'],
+	\ }
+	let g:ale_fixers = {
+		\ 'go': ['gofmt', 'goimports', 'remove_trailing_lines', 'trim_whitespace'],
+	\ }
+	" Use just ESLint for linting and fixing files which end in '.foo.js'
+	let g:ale_pattern_options = {
+		\	'\.foo\.js$': {
+		\		'ale_linters': ['eslint'],
+		\		'ale_fixers': ['eslint'],
+		\	},
+	\ }
 
-"     " nnoremap <leader>at :ALEToggle<CR>
-"     map <F7> :ALEToggle<CR>
+	" nnoremap <leader>at :ALEToggle<CR>
+	map <F7> :ALEToggle<CR>
 
-"     let g:ale_sign_error = '✗'
-"     let g:ale_sign_warning = '⚡'
-"     let g:ale_lint_on_enter = 0
+	let g:ale_sign_error = '✗'
+	let g:ale_sign_warning = '⚡'
+	let g:ale_lint_on_enter = 0
 
-"     let g:ale_statusline_format = ['✗ %d', '⚡ %d', '✔ OK']
+	let g:ale_statusline_format = ['✗ %d', '⚡ %d', '✔ OK']
 
-"     let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+	let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 
-"     nmap sp <Plug>(ale_previous_wrap)
-"     nmap sn <Plug>(ale_next_wrap)
-" endif
+	nmap sp <Plug>(ale_previous_wrap)
+	nmap sn <Plug>(ale_next_wrap)
+endif
 
 
 
 " ===
 " === rainbow
 " ===
-if isdirectory(expand(modules_path .. "rainbow/"))
+if isdirectory(expand("~/.vim/bundle/rainbow/"))
 	let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
 
 	" 使用 vim-devicons 之后文件见有中括号
@@ -691,137 +848,89 @@ endif
 
 
 
-" " ===
-" " === fzf
-" " ===
-" if isdirectory(expand(modules_path .. "fzf.vim/"))
-"     " [Buffers] Jump to the existing window if possible
-"     let g:fzf_buffers_jump = 1
+" ===
+" === fzf
+" ===
+if isdirectory(expand("~/.vim/bundle/fzf.vim/"))
+	" [Buffers] Jump to the existing window if possible
+	let g:fzf_buffers_jump = 1
 
-"     " nnoremap <silent> <leader>b  :Buffers<CR>
-"     " nnoremap <silent> <leader>f  :Ripgrep<CR>
-"     nnoremap <silent> <leader>l  :Lines<CR>
-"     nnoremap <silent> <leader>ff :Files<CR>
-"     nnoremap <silent> <leader>rg :Rg<CR>
-"     " nnoremap <silent> <leader>`  :Marks<CR>
-"     " nnoremap <silent> <leader>ag :Ag<gR>
-"     " nnoremap <silent> <leader>rg :Ripgrep<CR>
-"     nnoremap <silent> <leader>h  :History<CR>
-"     nnoremap <silent> <leader>C  :Commands<CR>
-"     nnoremap <silent> <leader>ht :Helptags<CR>
+	" nnoremap <silent> <leader>b  :Buffers<CR>
+	" nnoremap <silent> <leader>f  :Ripgrep<CR>
+	nnoremap <silent> <leader>l  :Lines<CR>
+	nnoremap <silent> <leader>p  :Files<CR>
+	nnoremap <silent> <leader>rg :Rg<CR>
+	" nnoremap <silent> <leader>`  :Marks<CR>
+	" nnoremap <silent> <leader>ag :Ag<gR>
+	" nnoremap <silent> <leader>rg :Ripgrep<CR>
+	nnoremap <silent> <leader>h  :History<CR>
+	nnoremap <silent> <leader>C  :Commands<CR>
+	nnoremap <silent> <leader>ht :Helptags<CR>
 
-"     " https://github.com/junegunn/fzf.vim/blob/ddc377c0d3b886f2046b70d087a4dd89c903fdc2/doc/fzf-vim.txt#L321
-"     command! -bang -nargs=* Rg
-"             \ call fzf#vim#grep(
-"             \   'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
-"             \   fzf#vim#with_preview(), <bang>0)
-" endif
-
+	" https://github.com/junegunn/fzf.vim/blob/ddc377c0d3b886f2046b70d087a4dd89c903fdc2/doc/fzf-vim.txt#L321
+	command! -bang -nargs=* Rg
+			\ call fzf#vim#grep(
+			\   'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
+			\   fzf#vim#with_preview(), <bang>0)
+endif
 
 
 
 " ===
-" === telescope.nvim
+" === vim-airline
 " ===
-if isdirectory(expand(modules_path .. "telescope.nvim"))
-	" nnoremap <leader>ff <cmd>Telescope find_files<cr>
-	" nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-	" nnoremap <leader>fb <cmd>Telescope file_browser<cr>
-	" nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+if isdirectory(expand("~/.vim/bundle/vim-airline-themes/"))
+	if !exists('g:airline_powerline_fonts')
+		let g:airline_powerline_fonts = 1
+		" Use the default set of separators with a few customizations
+		let g:airline_left_sep='›'	" Slightly fancier than '>'
+		let g:airline_right_sep='‹' " Slightly fancier than '<'
+		if (1 || has("mac")) && !has("gui_macvim")		   " MacVim无法正常显示
+			let g:airline_left_sep=''	" Slightly fancier than '>'
+			let g:airline_right_sep='' " Slightly fancier than '<'
+		endif
+	endif
 
-	lua require("modules.completion.telescope")
-	nnoremap <leader>fb <cmd>Telescope buffers<cr>
-	nnoremap <leader>fs <cmd>Telescope gosource<cr>
-	nnoremap <leader>fd <cmd>Telescope dotfiles<cr>
-end
+	let g:airline#extensions#tabline#enabled = 1
+	let g:airline#extensions#tabline#buffer_nr_show = 1
+	let g:airline#extensions#tabline#buffer_idx_mode = 3
+	let g:airline#extensions#tabline#left_sep = ' '
+	let g:airline#extensions#tabline#left_alt_sep = '|'
+	let g:airline#extensions#tabline#formatter = 'unique_tail'
+	let g:airline#extensions#ale#error_symbol = "✗"
+	let airline#extensions#ale#warning_symbol = "⚡"
+	if (1 || has("mac")) && !has("gui_macvim")		   " MacVim无法正常显示
+		let g:airline#extensions#tabline#left_sep=''
+		let g:airline#extensions#tabline#left_alt_sep=''
+	endif
 
-
-
-" " ===
-" " === vim-airline
-" " ===
-" if isdirectory(expand(modules_path .. "vim-airline-themes/"))
-"     if !exists('g:airline_powerline_fonts')
-"         let g:airline_powerline_fonts = 1
-"         " Use the default set of separators with a few customizations
-"         let g:airline_left_sep='›'	" Slightly fancier than '>'
-"         let g:airline_right_sep='‹' " Slightly fancier than '<'
-"         if (1 || has("mac")) && !has("gui_macvim")		   " MacVim无法正常显示
-"             let g:airline_left_sep=''	" Slightly fancier than '>'
-"             let g:airline_right_sep='' " Slightly fancier than '<'
-"         endif
-"     endif
-
-"     let g:airline#extensions#tabline#enabled = 1
-"     let g:airline#extensions#tabline#buffer_nr_show = 1
-"     let g:airline#extensions#tabline#buffer_idx_mode = 3
-"     let g:airline#extensions#tabline#left_sep = ' '
-"     let g:airline#extensions#tabline#left_alt_sep = '|'
-"     let g:airline#extensions#tabline#formatter = 'unique_tail'
-"     let g:airline#extensions#ale#error_symbol = "✗"
-"     let airline#extensions#ale#warning_symbol = "⚡"
-"     if (1 || has("mac")) && !has("gui_macvim")		   " MacVim无法正常显示
-"         let g:airline#extensions#tabline#left_sep=''
-"         let g:airline#extensions#tabline#left_alt_sep=''
-"     endif
-
-"     " <Space>1-9 切换到对应的序列
-"     for i in range(1, 9)
-"         exe printf('nmap <silent> <leader>%d <Plug>AirlineSelectTab%02d', i, i)
-"     endfor
-" endif
-
-
-
-" ===
-" === Plug galaxyline.nvim
-" ===
-if isdirectory(expand(modules_path .. "galaxyline.nvim"))
-	lua require("modules.ui.eviline")
-end
-
-
-
-" ===
-" === Plug bufferline.nvim
-" ===
-if isdirectory(expand(modules_path .. "bufferline.nvim"))
-	lua require('bufferline').setup({
-				\ options = {
-					\ numbers = function(opts)
-					\	return string.format('%s.', opts.ordinal)
-					\ end,
-					\ modified_icon = '✥',
-					\ buffer_close_icon = '',
-					\ always_show_bufferline = false,
-				\ },
-			\})
+	" <Space>1-9 切换到对应的序列
 	for i in range(1, 9)
-		exe printf('nnoremap <silent><leader>%d <Cmd>BufferLineGoToBuffer %d<CR>', i, i)
+		exe printf('nmap <silent> <leader>%d <Plug>AirlineSelectTab%02d', i, i)
 	endfor
 endif
 
 
 
-" " ===
-" " === fugitive
-" " ===
-" if isdirectory(expand(modules_path .. "vim-fugitive/"))
-"     " nnoremap <silent> <leader>gs :Gstatus<CR>
-"     " nnoremap <silent> <leader>gb :Gblame<CR>
-"     " nnoremap <silent> <leader>gl :Glog<CR>
-" endif
+" ===
+" === fugitive
+" ===
+if isdirectory(expand("~/.vim/bundle/vim-fugitive/"))
+	nnoremap <silent> <leader>gs :Gstatus<CR>
+	nnoremap <silent> <leader>gb :Gblame<CR>
+	nnoremap <silent> <leader>gl :Glog<CR>
+endif
 
 
 
 " ===
 " === gitgutter
 " ===
-if isdirectory(expand(modules_path .. "vim-gitgutter/"))
+if isdirectory(expand("~/.vim/bundle/vim-gitgutter/"))
 	let g:gitgutter_diff_args = '-w'
 
 	" 有时会出现git左侧状态栏不准确的问题 使用该命令可以强制刷新
-	nmap <silent> <leader>ll :GitGutterAll<CR>
+	nmap <silent> <Leader>ll :GitGutterAll<CR>
 
 	" highlight! link SignColumn LineNr
 	" highlight GitGutterAdd	  guifg=#009900 ctermfg=2
@@ -839,29 +948,20 @@ if isdirectory(expand(modules_path .. "vim-gitgutter/"))
 	let g:gitgutter_sign_removed_first_line = '▔'
 	let g:gitgutter_sign_modified_removed = '▒'
 
-	nnoremap <leader>gf :GitGutterFold<CR>
+	nnoremap <LEADER>gf :GitGutterFold<CR>
 	" nnoremap H :GitGutterPreviewHunk<CR>
-	" nnoremap <leader>g- :GitGutterPrevHunk<CR>
-	" nnoremap <leader>g= :GitGutterNextHunk<CR>
-endif
-
-
-
-" " ===
-" " === nerdcommenter
-" " ===
-if isdirectory(expand(modules_path .. "nerdcommenter"))
-    " 注释的时候自动加个空格,强迫症必配
-    let g:NERDSpaceDelims = 1
+	" nnoremap <LEADER>g- :GitGutterPrevHunk<CR>
+	" nnoremap <LEADER>g= :GitGutterNextHunk<CR>
 endif
 
 
 
 " ===
-" === tcomment_vim
+" === nerdcommenter
 " ===
-if isdirectory(expand(modules_path .. "tcomment_vim"))
-	" https://github.com/tomtom/tcomment_vim/issues/111#issuecomment-53426063
+if isdirectory(expand("~/.vim/bundle/nerdcommenter"))
+	" 注释的时候自动加个空格,强迫症必配
+	let g:NERDSpaceDelims = 1
 endif
 
 
@@ -869,7 +969,7 @@ endif
 " ===
 " === undotree
 " ===
-if isdirectory(expand(modules_path .. "undotree/"))
+if isdirectory(expand("~/.vim/bundle/undotree/"))
 	nnoremap <Leader>u :UndotreeToggle<CR>
 	" nnoremap <F3>		 :UndotreeToggle<CR>
 	" inoremap <F3> <C-O>:UndotreeToggle<CR>
@@ -882,7 +982,7 @@ endif
 " ===
 " === vimwiki
 " ===
-if isdirectory(expand(modules_path .. "vimwiki"))
+if isdirectory(expand("~/.vim/bundle/vimwiki"))
 	let g:vimwiki_list = [{'path': '~/Dropbox/notebook/vimwiki/',
 							\ 'syntax': 'markdown', 'ext': '.md'}]
 endif
@@ -892,7 +992,7 @@ endif
 " ===
 " " === grepper
 " " ===
-if isdirectory(expand(modules_path .. "vim-grepper"))
+if isdirectory(expand("~/.vim/bundle/vim-grepper"))
 	" 先加载了`g:grepper`才有值
 	runtime plugin/grepper.vim
 
@@ -941,7 +1041,7 @@ endif
 " ===
 " === far.vim
 " ===
-if isdirectory(expand(modules_path .. "far.vim"))
+if isdirectory(expand("~/.vim/bundle/far.vim"))
 	set lazyredraw            " improve scrolling performance when navigating through large results
 	set regexpengine=1        " use old regexp engine
 	set ignorecase smartcase  " ignore case only when the pattern contains no capital letters
@@ -959,7 +1059,7 @@ endif
 " ===
 " === vim-visual-multi
 " ===
-if isdirectory(expand(modules_path .. "vim-visual-multi"))
+if isdirectory(expand("~/.vim/bundle/vim-visual-multi"))
 	let g:VM_show_warnings = 0
 	let g:VM_leader = '\\'
 	let g:VM_maps = {}
@@ -976,73 +1076,33 @@ endif
 
 
 
-" " ===
-" " === vim-startify
-" " ===
-" if isdirectory(expand(modules_path .. "vim-startify"))
-"     " https://github.com/mhinz/vim-startify/issues/374#issuecomment-496481547
-"     function! s:center(lines) abort
-"         let longest_line   = max(map(copy(a:lines), 'strwidth(v:val)'))
-"         let centered_lines = map(copy(a:lines),
-"             \ 'repeat(" ", (&columns / 2) - (longest_line / 2)) . v:val')
-"         return centered_lines
-"     endfunction
-
-"     " let g:startify_custom_header = s:center(startify#fortune#cowsay())
-"     " let g:startify_custom_footer = s:center(['foo', 'bar', 'baz'])
-
-"     " 是否自动加载目录下的Session.vim, 很好用
-"     let g:startify_session_autoload = 1
-"     " 过滤列表，支持正则表达式
-"     let g:startify_skiplist = [
-"         \ '^/tmp',
-"         \ '^/vender',
-"     \ ]
-"     " 起始页显示的列表长度
-"     let g:startify_files_number = 10
-
-"     " http://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20
-"     let s:header = [
-"         \ '',
-"         \ '  ______         __                                      __     __           __            _                        __                             ',
-"         \ ' /_  __/___     / /_  ___     ____  _____   ____  ____  / /_   / /_____     / /_  ___     (_)____   __  ______     / /_____     __  ______  __  __ ',
-"         \ '  / / / __ \   / __ \/ _ \   / __ \/ ___/  / __ \/ __ \/ __/  / __/ __ \   / __ \/ _ \   / / ___/  / / / / __ \   / __/ __ \   / / / / __ \/ / / / ',
-"         \ ' / / / /_/ /  / /_/ /  __/  / /_/ / /     / / / / /_/ / /_   / /_/ /_/ /  / /_/ /  __/  / (__  )  / /_/ / /_/ /  / /_/ /_/ /  / /_/ / /_/ / /_/ /  ',
-"         \ '/_/  \____/  /_.___/\___/   \____/_/     /_/ /_/\____/\__/   \__/\____/  /_.___/\___/  /_/____/   \__,_/ .___/   \__/\____/   \__, /\____/\__,_/   ',
-"         \ '                                                                                                      /_/                    /____/                ',
-"         \ '',
-"     \ ]
-
-"     let s:footer = [
-"         \ '+---------------------------------------------+',
-"         \ '|                   ^_^                       |',
-"         \ '|    Talk is cheap. Show me the code.         |',
-"         \ '|                                             |',
-"         \ '+---------------------------------------------+',
-"     \ ]
-
-"     " https://github.com/mhinz/vim-startify/issues/374#issuecomment-496501489
-"     let g:startify_custom_header = s:center(s:header)
-"     let g:startify_custom_footer = s:center(s:footer)
-" endif
-
-
-
 " ===
-" === dashboard-nvim
+" === vim-startify
 " ===
-if isdirectory(expand(modules_path .. "dashboard-nvim"))
-	" let g:dashboard_preview_command = "cat"
-	" let g:dashboard_preview_pipeline = "lolcat"
-	" let g:dashboard_preview_file = "~/.config/nvim/static/champly.txt"
-	" let g:dashboard_preview_file_height = 12
-	" let g:dashboard_preview_file_width = 58
-	let g:dashboard_default_executive = "telescope"
-	" let g:dashboard_default_executive = "fzf"
-	
-	let g:dashboard_custom_header = [
-		\ '',
-		\ '',
+if isdirectory(expand("~/.vim/bundle/vim-startify"))
+	" https://github.com/mhinz/vim-startify/issues/374#issuecomment-496481547
+	function! s:center(lines) abort
+		let longest_line   = max(map(copy(a:lines), 'strwidth(v:val)'))
+		let centered_lines = map(copy(a:lines),
+			\ 'repeat(" ", (&columns / 2) - (longest_line / 2)) . v:val')
+		return centered_lines
+	endfunction
+
+	" let g:startify_custom_header = s:center(startify#fortune#cowsay())
+	" let g:startify_custom_footer = s:center(['foo', 'bar', 'baz'])
+
+	" 是否自动加载目录下的Session.vim, 很好用
+	let g:startify_session_autoload = 1
+	" 过滤列表，支持正则表达式
+	let g:startify_skiplist = [
+		\ '^/tmp',
+		\ '^/vender',
+	\ ]
+	" 起始页显示的列表长度
+	let g:startify_files_number = 10
+
+	" http://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20
+	let s:header = [
 		\ '',
 		\ '  ______         __                                      __     __           __            _                        __                             ',
 		\ ' /_  __/___     / /_  ___     ____  _____   ____  ____  / /_   / /_____     / /_  ___     (_)____   __  ______     / /_____     __  ______  __  __ ',
@@ -1053,48 +1113,17 @@ if isdirectory(expand(modules_path .. "dashboard-nvim"))
 		\ '',
 	\ ]
 
-	" let g:dashboard_footer_icon = "� "
-	let g:dashboard_custom_footer = [
-				\ "If you think penguins are fat and waddle, you have never been attacked by one",
-				\ "running at you in excess of 100 miles per hour.",
-				\ "",
-				\ "                                                            -- Linus Torvalds"
-				\ ]
+	let s:footer = [
+		\ '+---------------------------------------------+',
+		\ '|                   ^_^                       |',
+		\ '|    Talk is cheap. Show me the code.         |',
+		\ '|                                             |',
+		\ '+---------------------------------------------+',
+	\ ]
 
-	let g:dashboard_custom_section = {
-		\ "last_session": {
-			\ "description": ["  Recently laset session                  leader sl"],
-			\ "command": "SessionLoad"},
-		\ "find_history": {
-			\ "description": ["  Recently opened files                   leader fh"],
-			\ "command": "DashboardFindHistory"},
-		\ "find_file": {
-			\ "description": ["  Find  File                              leader ff"],
-			\ "command": "DashboardFindFile"},
-		\ "find_word": {
-			\ "description": ["  Find  word                              leader fw"],
-			\ "command": "DashboardFindWord"},
-		\ "new_buffer": {
-			\ "description": ["  Create new buffer                       leader n "],
-			\ "command": ":enew"},
-		\ "find_dotfiles": {
-			\ "description": ["  Open Personal dotfiles                  leader fd"],
-			\ "command": "Telescope dotfiles"},
-		\ "go_source": {
-			\ "description": ["  Find Go Source Code                     leader fs"],
-			\ "command": "Telescope gosource"},
-	\}
-
-	nnoremap <silent> <leader>ss :<C-u>SessionSave<CR>
-	nnoremap <silent> <leader>sl :<C-u>SessionLoad<CR>	
-	nnoremap <silent> <Leader>fh :DashboardFindHistory<CR>
-	nnoremap <silent> <leader>fw :DashboardFindWord<CR>
-	nnoremap <silent> <leader>ff :DashboardFindFile<CR>
-	" nnoremap <silent> <leader>cn :DashboardNewFile<CR>
-	" hi DashboardHeader guifg=blue
-	" hi DashboardCenter guifg=green
-	hi DashboardShortcut guifg=#1E90FF
-	hi DashboardFooter guifg=gray
+	" https://github.com/mhinz/vim-startify/issues/374#issuecomment-496501489
+	let g:startify_custom_header = s:center(s:header)
+	let g:startify_custom_footer = s:center(s:footer)
 endif
 
 
@@ -1102,11 +1131,9 @@ endif
 " ===
 " === vim-floaterm
 " ===
-if isdirectory(expand(modules_path .. "vim-floaterm"))
+if isdirectory(expand("~/.vim/bundle/vim-floaterm"))
 	let g:floaterm_title = "zsh $1/$2"
 	let g:floaterm_autoclose = 1
-	let g:floaterm_width = 0.8
-	let g:floaterm_height = 0.8
 	" let g:floaterm_winblend = 60
 	nnoremap <silent> <F3> :FloatermToggle<CR>
 	tnoremap <silent> <F3> <C-\><C-n>:FloatermToggle<CR>
@@ -1115,9 +1142,9 @@ endif
 
 
 " ===
-" === vim-sneak
+" === vimspector
 " ===
-if isdirectory(expand(modules_path .. "vim-sneak"))
+if isdirectory(expand("~/.vim/bundle/vim-sneak"))
 	" https://tc500.github.io/%E5%B7%A5%E5%85%B7%E9%93%BE/2019/02/08/%E9%AB%98%E6%95%88%E7%9A%84vim/
 	" 开启跳转标签
 	let g:sneak#label = 1
@@ -1137,38 +1164,27 @@ endif
 " ===
 " === vimspector
 " ===
-if isdirectory(expand(modules_path .. "vimspector"))
-	lua require("modules/ui/vimspector")
-
-	let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
-
-	" " https://github.com/zunpeng/neovim/blob/master/cfgs/plug-cfg/vimspector-cfg.vim
-	" function! s:read_template_into_buffer(template)
-	" "     " has to be a function to avoid the extra space fzf#run insers otherwise
-	" "     " execute '0r ~/.config/nvim/vimspector/'.a:template
-		" execute '0r '.a:template
-	" endfunction
-	" command! -bang -nargs=* LoadVimSpectorJsonTemplate call fzf#run({
-	"             \   'source': 'ls -d -1 ~/.config/nvim/vimspector/*.json',
-	"             \   'down': 20,
-	"             \   'sink': function('<sid>read_template_into_buffer')
-	"             \ })
-	" noremap <leader>dt :tabe .vimspector.json<CR>:LoadVimSpectorJsonTemplate<CR>
-	" noremap <leader>dt :tabe .vimspector.json<CR>:Telescope vimspector<CR>
-	noremap <leader>dt <CR>:lua show_vimspector_list()<CR>
-	noremap <S-s> :VimspectorReset<CR>
-
-	sign define vimspectorBP text=🛑 texthl=Normal
-	sign define vimspectorBPDisabled text=🚫 texthl=Normal
-	sign define vimspectorPC text=👉 texthl=SpellBad
-endif
+" let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
+" function! s:read_template_into_buffer(template)
+"     " has to be a function to avoid the extra space fzf#run insers otherwise
+"     execute '0r ~/.config/nvim/vimspector_json/'.a:template
+" endfunction
+" command! -bang -nargs=* LoadVimSpectorJsonTemplate call fzf#run({
+"             \   'source': 'ls -1 ~/.config/nvim/vimspector_json',
+"             \   'down': 20,
+"             \   'sink': function('<sid>read_template_into_buffer')
+"             \ })
+" noremap <leader>lt :tabe .vimspector.json<CR>:LoadVimSpectorJsonTemplate<CR>
+" sign define vimspectorBP text=🛑 texthl=Normal
+" sign define vimspectorBPDisabled text=🚫 texthl=Normal
+" sign define vimspectorPC text=👉 texthl=SpellBad
 
 
 
 " ===
 " === markdown-preview.nvim
 " ===
-if isdirectory(expand(modules_path .. "markdown-preview.nvim"))
+if isdirectory(expand("~/.vim/bundle/markdown-preview.nvim"))
 	" auto open browser
 	" let g:mkdp_auto_start = 1
 	noremap  <leader>kv :MarkdownPrevie<CR>
@@ -1217,8 +1233,8 @@ aug END
 " === General
 " ===
 " quick open vimrc in a new tab
-" nnoremap <leader>v	:e $MYVIMRC<cr>
-" nnoremap <leader>s	:source $MYVIMRC<cr>
+nnoremap <leader>v	:e $MYVIMRC<cr>
+nnoremap <leader>s	:source $MYVIMRC<cr>
 
 " " hidden not save buffer, repeat with coc.nvim
 " set hidden
@@ -1349,14 +1365,11 @@ cnoremap <C-e> <End>
 cnoremap <C-b> <Left>
 cnoremap <C-f> <Right>
 
-" 强制写入
-cnoremap w!! w !sudo tee % >/dev/null
-
 " 使用 leader+w 在插入和normal模式下保存文件，我经常在 insert 模式下代替 Esc
-" inoremap <silent> <leader>w  <Esc>:wa<CR>
-" noremap	 <silent> <leader>w  :wa<CR>
-" inoremap <leader>wq <Esc>:wq<CR>
-" noremap  <leader>wq :wq<CR>
+inoremap <leader>w  <Esc>:wa<CR>
+noremap	 <leader>w  :wa<CR>
+inoremap <leader>wq <Esc>:wq<CR>
+noremap  <leader>wq :wq<CR>
 " 导致关闭quickfix leader q 延迟
 " noremap  <leader>qq :q!<CR>
 
@@ -1383,7 +1396,7 @@ inoremap <leader><leader> <Esc>/<++><CR>:nohlsearch<CR>c4l
 
 " https://github.com/neoclide/coc.nvim/issues/1281#issuecomment-718234037
 " https://github.com/neoclide/coc.nvim/issues/1160
-" nnoremap <C-m> <C-w><C-p>
+" nmap <C-m> <C-w><C-p>
 
 " 插入模式下移动光标位置
 inoremap <C-h> <left>
@@ -1405,5 +1418,3 @@ noremap <C-L> <C-W>l
 nnoremap <silent> <F2>		:nohlsearch<CR>
 inoremap <silent> <F2> <C-O>:nohlsearch<CR>
 
-" cheat-sheet
-" https://www.nerdfonts.com/cheat-sheet

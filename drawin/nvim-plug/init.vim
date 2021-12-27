@@ -1,6 +1,144 @@
-let modules_path = "~/.vim/bundle/"
-lua require("core.pack")
+" FROM: https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation
+" Install vim-plug if not found
+if has("nvim")
+	if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+		silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+		autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+	endif
+else
+	if empty(glob('~/.vim/autoload/plug.vim'))
+		silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+		autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+	endif
+endif
 
+
+" Specify a directory for plugins
+call plug#begin('~/.vim/bundle')
+
+let modules_path = "~/.vim/bundle/"
+
+" Make sure you use single quotes
+
+" " file system explorer
+" Plug 'preservim/nerdtree'
+" Plug 'Xuyuanp/nerdtree-git-plugin'
+" Plug 'ryanoasis/vim-devicons'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+Plug 'kyazdani42/nvim-tree.lua'
+Plug 'kyazdani42/nvim-web-devicons'
+
+" go language support
+" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
+" neovim 0.5 > lsp
+" Plug 'neovim/nvim-lspconfig'
+" Plug 'nvim-lua/completion-nvim'
+
+" Debugger
+" https://github.com/puremourning/vimspector#supported-languages
+Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-go --enable-rust'}
+
+" code-completion engine
+" Plug 'Valloric/YouCompleteMe'
+Plug 'neoclide/coc.nvim' , {'branch': 'release'}
+
+" asynchronous lint engine
+" Plug 'dense-analysis/ale'
+
+" annotate plugin: https://github.com/preservim/nerdcommenter#settings
+Plug 'preservim/nerdcommenter'
+" Plug 'tomtom/tcomment_vim'
+
+" class outline viewer
+" Plug 'majutsushi/tagbar'
+" Plug 'liuchengxu/vista.vim'
+
+" parentheses improved
+Plug 'luochen1990/rainbow'
+
+" fzf
+" Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+" Plug 'junegunn/fzf.vim'
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzy-native.nvim'
+
+" Insert or delete brackets, parens, quotes in pair
+Plug 'jiangmiao/auto-pairs'
+
+" notify
+Plug 'rcarriga/nvim-notify'
+
+" Lean & mean status/tabline for vim that's light as air.
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
+Plug 'akinsho/bufferline.nvim'
+Plug 'glepnir/galaxyline.nvim' , {'branch': 'main'}
+
+" theme
+" Plug 'tomasiser/vim-code-dark'
+Plug 'morhetz/gruvbox'
+" Plug 'rakr/vim-one'
+" Plug 'rktjmp/lush.nvim'
+" Plug 'npxbr/gruvbox.nvim'
+
+" choice multi line
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+Plug 'terryma/vim-multiple-cursors'
+
+" Git
+" Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+
+" tpope plug
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-repeat'
+" https://gist.github.com/wilon/ac1fc66f4a79e7b0c161c80877c75c94
+Plug 'tpope/vim-surround'
+Plug 'gcmt/wildfire.vim'
+
+" The plug-in visualizes undo history and makes it easier to browse and switch between different undo branches
+Plug 'mbbill/undotree'
+
+" Jump to any location specified by two characters.
+Plug 'justinmk/vim-sneak'
+
+" snipets
+" will modify tab map, so forbide
+" Plug 'SirVer/ultisnips'
+
+" VimWiki is a personal wiki for Vim
+Plug 'vimwiki/vimwiki'
+
+" UI Component Library for Neovim.
+Plug 'MunifTanjim/nui.nvim'
+
+" syntax highlighting, matching rules and mapping for the original Markdown and extensions
+Plug 'plasticboy/vim-markdown'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'dhruvasagar/vim-table-mode'
+
+" quick find word
+Plug 'mhinz/vim-grepper'
+Plug 'brooth/far.vim'
+
+" float terminal
+Plug 'voldikss/vim-floaterm'
+
+" This plugin provides a start screen
+" Plug 'mhinz/vim-startify'
+Plug 'glepnir/dashboard-nvim'
+
+" debug
+Plug 'tweekmonster/startuptime.vim'
+
+Plug 'psliwka/vim-smoothie'
+
+" Initialize plugin system
+call plug#end()
 
 " map the <Leader> key as ",",the default is "\"
 let mapleader = ","
@@ -130,7 +268,7 @@ set colorcolumn=120
 " 背景透明 没生效
 " highlight Normal ctermbg=None
 
-" if isdirectory(expand(modules_path .. "vim-code-dark"))
+" if isdirectory(expand(modules_path . "vim-code-dark"))
 "     colorscheme codedark
 "     let g:airline_theme = 'codedark'
 "     hi Search guibg=#d78700 guifg=#ffd700
@@ -147,7 +285,7 @@ if isdirectory(expand(modules_path .. "gruvbox"))
 	" let g:airline_theme = 'gruvbox'
 endif
 
-" if isdirectory(expand(modules_path .. "vim-one"))
+" if isdirectory(expand(modules_path . "vim-one"))
 "     set background=light		" for the light version
 "     let g:one_allow_italics = 1 " I love italic for comments
 "     hi Search guibg=#5fff00 guifg=#ff8700
@@ -167,7 +305,7 @@ set hlsearch
 " ===
 " === nvim-treesitter
 " ===
-if isdirectory(expand(modules_path .. "nvim-treesitter"))
+if isdirectory(expand(modules_path . "nvim-treesitter"))
 	lua require("modules.lang.plugins")
 end
 
@@ -176,7 +314,7 @@ end
 " ===
 " === nvim-lspconfig
 " ===
-if isdirectory(expand(modules_path .. "nvim-lspconfig"))
+if isdirectory(expand(modules_path . "nvim-lspconfig"))
 	lua require("modules.completion.plugins")
 endif
 
@@ -185,7 +323,7 @@ endif
 " " ===
 " " === vim-go
 " " ===
-" if isdirectory(expand(modules_path .. "vim-go"))
+" if isdirectory(expand(modules_path . "vim-go"))
 "     " augroup _vim_go_
 "     "     " https://github.com/fatih/vim-go/blob/bd56f5690807d4a92652fe7a4d10dc08f260564e/doc/vim-go.txt#L938
 "     "     " example:	 au FileType go nnoremap <leader>r <Plug>(go-run)
@@ -259,7 +397,7 @@ endif
 " ===
 " === YouCompleteMe
 " ===
-" if isdirectory(expand(modules_path .. "YouCompleteMe"))
+" if isdirectory(expand(modules_path . "YouCompleteMe"))
 	" " https://github.com/ycm-core/YouCompleteMe/issues/2015#issuecomment-189917191
 	" set completeopt-=preview
 
@@ -288,7 +426,7 @@ endif
 " ===
 " === coc.nvim
 " ===
-if isdirectory(expand(modules_path .. "coc.nvim"))
+if isdirectory(expand(modules_path . "coc.nvim"))
 	let g:coc_global_extensions = [
 				\ "coc-json",
 				\ "coc-vimlsp",
@@ -504,7 +642,7 @@ endif
 " ===
 " === nvim-notify
 " ===
-if isdirectory(expand(modules_path .. "nvim-notify"))
+if isdirectory(expand(modules_path . "nvim-notify"))
 	lua require("modules.ui.notify")
 endif
 
@@ -513,7 +651,7 @@ endif
 " ===
 " === tagbar
 " ===
-" if isdirectory(expand(modules_path .. "tagbar/"))
+" if isdirectory(expand(modules_path . "tagbar/"))
 " 	" map
 " 	" map <leader>f :Tagbar<CR>
 "
@@ -579,7 +717,7 @@ endif
 " ===
 " === vim-table-mode
 " ===
-if isdirectory(expand(modules_path .. "vim-table-mode"))
+if isdirectory(expand(modules_path . "vim-table-mode"))
 	noremap <leader>tm :TableModeToggle<CR>
 	"let g:table_mode_disable_mappings = 1
 	let g:table_mode_cell_text_object_i_map = 'k<Bar>'
@@ -590,7 +728,7 @@ endif
 " ===
 " === NERRDTree
 " ===
-" if isdirectory(expand(modules_path .. "nerdtree"))
+" if isdirectory(expand(modules_path . "nerdtree"))
 "     " map
 "     map <leader>a :NERDTreeToggle<CR>
 "     map <leader>d :NERDTreeFind<CR>
@@ -611,7 +749,7 @@ endif
 " ===
 " === nvim-tree.lua
 " ===
-if isdirectory(expand(modules_path .. "nvim-tree.lua"))
+if isdirectory(expand(modules_path . "nvim-tree.lua"))
 	lua require("modules.ui.nvim-tree")
 	" highlight NvimTreeFolderIcon guibg=None
 	nnoremap ff :NvimTreeToggle<CR>
@@ -623,7 +761,7 @@ end
 " === web-devicons
 " ===
 " web-devicons {
-" if isdirectory(expand(modules_path .. "vim-devicons"))
+" if isdirectory(expand(modules_path . "vim-devicons"))
 "     " 文件夹前面的空格太多 https://github.com/ryanoasis/vim-devicons/issues/257#issuecomment-491274274
 "     " 如果减少的话会和git修改重叠
 "     " let g:WebDevIconsNerdTreeBeforeGlyphPadding = ''
@@ -637,7 +775,7 @@ end
 " " ===
 " " === ale
 " " ===
-" if isdirectory(expand(modules_path .. "ale"))
+" if isdirectory(expand(modules_path . "ale"))
 "     " To specify which linters you want to run for each filetype, use the g:ale_linters variable (:help g:ale_linters).
 "     " \ 'go': ['golint', 'golangci-lint','gopls', 'gofmt', 'govet'],
 "     " \ 'go': ['gopls'],
@@ -677,7 +815,7 @@ end
 " ===
 " === rainbow
 " ===
-if isdirectory(expand(modules_path .. "rainbow/"))
+if isdirectory(expand(modules_path . "rainbow/"))
 	let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
 
 	" 使用 vim-devicons 之后文件见有中括号
@@ -694,7 +832,7 @@ endif
 " " ===
 " " === fzf
 " " ===
-" if isdirectory(expand(modules_path .. "fzf.vim/"))
+" if isdirectory(expand(modules_path . "fzf.vim/"))
 "     " [Buffers] Jump to the existing window if possible
 "     let g:fzf_buffers_jump = 1
 
@@ -723,7 +861,7 @@ endif
 " ===
 " === telescope.nvim
 " ===
-if isdirectory(expand(modules_path .. "telescope.nvim"))
+if isdirectory(expand(modules_path . "telescope.nvim"))
 	" nnoremap <leader>ff <cmd>Telescope find_files<cr>
 	" nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 	" nnoremap <leader>fb <cmd>Telescope file_browser<cr>
@@ -740,7 +878,7 @@ end
 " " ===
 " " === vim-airline
 " " ===
-" if isdirectory(expand(modules_path .. "vim-airline-themes/"))
+" if isdirectory(expand(modules_path . "vim-airline-themes/"))
 "     if !exists('g:airline_powerline_fonts')
 "         let g:airline_powerline_fonts = 1
 "         " Use the default set of separators with a few customizations
@@ -776,7 +914,7 @@ end
 " ===
 " === Plug galaxyline.nvim
 " ===
-if isdirectory(expand(modules_path .. "galaxyline.nvim"))
+if isdirectory(expand(modules_path . "galaxyline.nvim"))
 	lua require("modules.ui.eviline")
 end
 
@@ -785,7 +923,7 @@ end
 " ===
 " === Plug bufferline.nvim
 " ===
-if isdirectory(expand(modules_path .. "bufferline.nvim"))
+if isdirectory(expand(modules_path . "bufferline.nvim"))
 	lua require('bufferline').setup({
 				\ options = {
 					\ numbers = function(opts)
@@ -806,7 +944,7 @@ endif
 " " ===
 " " === fugitive
 " " ===
-" if isdirectory(expand(modules_path .. "vim-fugitive/"))
+" if isdirectory(expand(modules_path . "vim-fugitive/"))
 "     " nnoremap <silent> <leader>gs :Gstatus<CR>
 "     " nnoremap <silent> <leader>gb :Gblame<CR>
 "     " nnoremap <silent> <leader>gl :Glog<CR>
@@ -817,7 +955,7 @@ endif
 " ===
 " === gitgutter
 " ===
-if isdirectory(expand(modules_path .. "vim-gitgutter/"))
+if isdirectory(expand(modules_path . "vim-gitgutter/"))
 	let g:gitgutter_diff_args = '-w'
 
 	" 有时会出现git左侧状态栏不准确的问题 使用该命令可以强制刷新
@@ -850,7 +988,7 @@ endif
 " " ===
 " " === nerdcommenter
 " " ===
-if isdirectory(expand(modules_path .. "nerdcommenter"))
+if isdirectory(expand(modules_path . "nerdcommenter"))
     " 注释的时候自动加个空格,强迫症必配
     let g:NERDSpaceDelims = 1
 endif
@@ -860,7 +998,7 @@ endif
 " ===
 " === tcomment_vim
 " ===
-if isdirectory(expand(modules_path .. "tcomment_vim"))
+if isdirectory(expand(modules_path . "tcomment_vim"))
 	" https://github.com/tomtom/tcomment_vim/issues/111#issuecomment-53426063
 endif
 
@@ -869,7 +1007,7 @@ endif
 " ===
 " === undotree
 " ===
-if isdirectory(expand(modules_path .. "undotree/"))
+if isdirectory(expand(modules_path . "undotree/"))
 	nnoremap <Leader>u :UndotreeToggle<CR>
 	" nnoremap <F3>		 :UndotreeToggle<CR>
 	" inoremap <F3> <C-O>:UndotreeToggle<CR>
@@ -882,7 +1020,7 @@ endif
 " ===
 " === vimwiki
 " ===
-if isdirectory(expand(modules_path .. "vimwiki"))
+if isdirectory(expand(modules_path . "vimwiki"))
 	let g:vimwiki_list = [{'path': '~/Dropbox/notebook/vimwiki/',
 							\ 'syntax': 'markdown', 'ext': '.md'}]
 endif
@@ -892,7 +1030,7 @@ endif
 " ===
 " " === grepper
 " " ===
-if isdirectory(expand(modules_path .. "vim-grepper"))
+if isdirectory(expand(modules_path . "vim-grepper"))
 	" 先加载了`g:grepper`才有值
 	runtime plugin/grepper.vim
 
@@ -941,7 +1079,7 @@ endif
 " ===
 " === far.vim
 " ===
-if isdirectory(expand(modules_path .. "far.vim"))
+if isdirectory(expand(modules_path . "far.vim"))
 	set lazyredraw            " improve scrolling performance when navigating through large results
 	set regexpengine=1        " use old regexp engine
 	set ignorecase smartcase  " ignore case only when the pattern contains no capital letters
@@ -959,7 +1097,7 @@ endif
 " ===
 " === vim-visual-multi
 " ===
-if isdirectory(expand(modules_path .. "vim-visual-multi"))
+if isdirectory(expand(modules_path . "vim-visual-multi"))
 	let g:VM_show_warnings = 0
 	let g:VM_leader = '\\'
 	let g:VM_maps = {}
@@ -979,7 +1117,7 @@ endif
 " " ===
 " " === vim-startify
 " " ===
-" if isdirectory(expand(modules_path .. "vim-startify"))
+" if isdirectory(expand(modules_path . "vim-startify"))
 "     " https://github.com/mhinz/vim-startify/issues/374#issuecomment-496481547
 "     function! s:center(lines) abort
 "         let longest_line   = max(map(copy(a:lines), 'strwidth(v:val)'))
@@ -1031,7 +1169,7 @@ endif
 " ===
 " === dashboard-nvim
 " ===
-if isdirectory(expand(modules_path .. "dashboard-nvim"))
+if isdirectory(expand(modules_path . "dashboard-nvim"))
 	" let g:dashboard_preview_command = "cat"
 	" let g:dashboard_preview_pipeline = "lolcat"
 	" let g:dashboard_preview_file = "~/.config/nvim/static/champly.txt"
@@ -1053,7 +1191,7 @@ if isdirectory(expand(modules_path .. "dashboard-nvim"))
 		\ '',
 	\ ]
 
-	" let g:dashboard_footer_icon = "� "
+	" let g:dashboard_footer_icon = "🐬 "
 	let g:dashboard_custom_footer = [
 				\ "If you think penguins are fat and waddle, you have never been attacked by one",
 				\ "running at you in excess of 100 miles per hour.",
@@ -1102,7 +1240,7 @@ endif
 " ===
 " === vim-floaterm
 " ===
-if isdirectory(expand(modules_path .. "vim-floaterm"))
+if isdirectory(expand(modules_path . "vim-floaterm"))
 	let g:floaterm_title = "zsh $1/$2"
 	let g:floaterm_autoclose = 1
 	let g:floaterm_width = 0.8
@@ -1117,7 +1255,7 @@ endif
 " ===
 " === vim-sneak
 " ===
-if isdirectory(expand(modules_path .. "vim-sneak"))
+if isdirectory(expand(modules_path . "vim-sneak"))
 	" https://tc500.github.io/%E5%B7%A5%E5%85%B7%E9%93%BE/2019/02/08/%E9%AB%98%E6%95%88%E7%9A%84vim/
 	" 开启跳转标签
 	let g:sneak#label = 1
@@ -1137,7 +1275,7 @@ endif
 " ===
 " === vimspector
 " ===
-if isdirectory(expand(modules_path .. "vimspector"))
+if isdirectory(expand(modules_path . "vimspector"))
 	lua require("modules/ui/vimspector")
 
 	let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
@@ -1168,7 +1306,7 @@ endif
 " ===
 " === markdown-preview.nvim
 " ===
-if isdirectory(expand(modules_path .. "markdown-preview.nvim"))
+if isdirectory(expand(modules_path . "markdown-preview.nvim"))
 	" auto open browser
 	" let g:mkdp_auto_start = 1
 	noremap  <leader>kv :MarkdownPrevie<CR>
