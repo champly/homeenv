@@ -34,8 +34,9 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 # update pip3
 sudo pip3 install --upgrade pip
 
-# install npm
+# install npm and yarn
 brew install node
+brew install yarn
 # config taobao registry
 npm config set registry https://registry.npm.taobao.org
 npm config set http-proxy http://127.0.0.1:1080
@@ -60,7 +61,8 @@ brew install --cask font-sauce-code-pro-nerd-font
 
 
 # ranger
-pip3 install ranger-fm
+# pip3 install ranger-fm
+brew install ranger
 brew install atool
 brew install highlight
 brew install jq
