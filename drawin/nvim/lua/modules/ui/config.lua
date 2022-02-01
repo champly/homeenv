@@ -146,6 +146,11 @@ function config.galaxyline()
 	require("modules.ui.eviline")
 end
 
+function config.feline_nvim()
+	require("modules.ui.statusline.layout")
+	-- require("modules.ui.statusline.nvchad")
+end
+
 function config.bufferline()
 	-- https://github.com/akinsho/bufferline.nvim#configuration
 	vim.opt.termguicolors = true
@@ -198,6 +203,29 @@ function config.vim_gitgutter()
 	bind.nvim_load_mapping({
 		["n|<leader>ll"] = bind.map_cr("GitGutterAll"):with_silent(),
 		["n|<leader>gf"] = bind.map_cr("GitGutterFold"):with_noremap(),
+	})
+end
+
+function config.gitsigns_nvim()
+	-- vim.cmd [[ highlight link GitSignsCurrentLineBlame Visual ]]
+	require('gitsigns').setup({
+		signs = {
+			add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
+			change       = {hl = 'GitSignsChange', text = '▒', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+			delete       = {hl = 'GitSignsDelete', text = '_', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+			topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+			changedelete = {hl = 'GitSignsChange', text = '░', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+		},
+		current_line_blame = true,
+		current_line_blame_opts = {
+			virt_text = true,
+			virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
+			delay = 0,
+			ignore_whitespace = true,
+		},
+		current_line_blame_formatter_opts = {
+			relative_time = true,
+		}
 	})
 end
 

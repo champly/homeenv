@@ -22,20 +22,13 @@ local popup_options = {
 local get_vimspector_list = function()
 	local results = {}
 
-	local root = os.getenv("HOME") .. "/.config/nvim/vimspector/"
+	local path = vim.fn.stdpath("config") .. "/vimspector"
 
-	local fs = vim.fn.split(vim.fn.globpath(root, "*.json"))
+	local fs = vim.fn.split(vim.fn.globpath(path, "*.json"))
 	for _, f in pairs(fs) do
 		table.insert(results, menu.item(f))
 	end
 	return results
-end
-
-local read = function(file)
-	local f = assert(io.open(file, "r"))
-	local content = f:read("*all")
-	f:close()
-	return content
 end
 
 function _G.show_vimspector_list()

@@ -106,23 +106,37 @@ end
 
 function config.vim_sneak()
 	-- https://tc500.github.io/%E5%B7%A5%E5%85%B7%E9%93%BE/2019/02/08/%E9%AB%98%E6%95%88%E7%9A%84vim/
-	vim.g.sneak = {
-		label = 1, 	-- 开启跳转标签
-		target_labels = ";sftunq/SFGHLTUNRMQZ?0123456789", -- 标签字符序列
-	}
+	-- 开启跳转标签
+	vim.g["sneak#label"] = 1
+	-- 标签字符序列
+	vim.g["sneak#target_labels"] = ";sftunq/SFGHLTUNRMQZ?0123456789"
 	-- f正向查找字符，F反向查找字符
-	-- vim.cmd [[ nnoremap <silent> f :<C-U>call sneak#wrap('',           1, 0, 1, 1)<CR> ]]
-	-- vim.cmd [[ nnoremap <silent> F :<C-U>call sneak#wrap('',           1, 1, 1, 1)<CR> ]]
-	-- vim.cmd [[ xnoremap <silent> f :<C-U>call sneak#wrap(visualmode(), 1, 0, 1, 1)<CR> ]]
-	-- vim.cmd [[ xnoremap <silent> F :<C-U>call sneak#wrap(visualmode(), 1, 1, 1, 1)<CR> ]]
-	-- vim.cmd [[ onoremap <silent> f :<C-U>call sneak#wrap(v:operator,   1, 0, 1, 1)<CR> ]]
-	-- vim.cmd [[ onoremap <silent> F :<C-U>call sneak#wrap(v:operator,   1, 1, 1, 1)<CR> ]]
 	vim.api.nvim_set_keymap("n", "f", ":<C-U>call sneak#wrap('',           1, 0, 1, 1)<CR>", { silent = true, noremap = true })
 	vim.api.nvim_set_keymap("n", "F", ":<C-U>call sneak#wrap('',           1, 0, 1, 1)<CR>", { silent = true, noremap = true })
 	vim.api.nvim_set_keymap("x", "f", ":<C-U>call sneak#wrap(visualmode(), 1, 0, 1, 1)<CR>", { silent = true, noremap = true })
 	vim.api.nvim_set_keymap("x", "F", ":<C-U>call sneak#wrap(visualmode(), 1, 0, 1, 1)<CR>", { silent = true, noremap = true })
 	vim.api.nvim_set_keymap("o", "f", ":<C-U>call sneak#wrap(v:operator,   1, 0, 1, 1)<CR>", { silent = true, noremap = true })
 	vim.api.nvim_set_keymap("o", "F", ":<C-U>call sneak#wrap(v:operator,   1, 0, 1, 1)<CR>", { silent = true, noremap = true })
+	-- vim.cmd [[ map f <Plug>Sneak_s ]]
+	-- vim.cmd [[ map F <Plug>Sneak_S ]]
+end
+
+function config.symbols_outline()
+	vim.g.symbols_outline = {
+		auto_preview = false,
+		relative_width = true,
+		width = 50,
+		keymaps = { -- These keymaps can be a string or a table for multiple keys
+			close = {"<Esc>", "q"},
+			goto_location = "<Cr>",
+			focus_location = "o",
+			hover_symbol = "<C-space>",
+			toggle_preview = "K",
+			rename_symbol = "r",
+			code_actions = "a",
+		},
+	}
+	vim.api.nvim_set_keymap("n", "<Space>o", ":SymbolsOutline<CR>", { noremap = true, silent = true })
 end
 
 return config

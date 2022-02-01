@@ -5,7 +5,6 @@ let g:coc_global_extensions = [
 			\ "coc-actions",
 			\ "coc-gitignore",
 			\ "coc-prettier",
-			\ "coc-yaml",
 			\ "coc-translator",
 			\ "coc-syntax",
 			\ "coc-git",

@@ -9,7 +9,10 @@ function autocmd.load_autocmds()
 			-- 文件打开的时候光标停留在上次关闭时候的位置
 			{"BufReadPost", "*", [[if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif]]};
 		},
-		-- wins = {},
+		wins = {
+			-- Don't show status line on certain windows
+			{"BufEnter,BufRead,BufWinEnter,FileType,WinEnter", "*", "lua require('core.define').hide_statusline()"}
+		},
 		ft = {
 			-- https://github.com/mhinz/vim-grepper/issues/117
 			{"FileType", "qf", "if mapcheck('<esc>', 'n') ==# '' | nnoremap <buffer><silent> <esc> :cclose<bar>lclose<cr> | endif"};

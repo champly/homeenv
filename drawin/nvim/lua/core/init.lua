@@ -15,7 +15,6 @@ local createdir = function ()
 	if vim.fn.isdirectory(global.cache_dir) == 0 then
 		os.execute("mkdir -p " .. global.cache_dir)
 		for _, v in pairs(data_dir) do
-			print("---> create:" .. v)
 			if vim.fn.isdirectory(v) == 0 then
 				os.execute("mkdir -p " .. v)
 			end

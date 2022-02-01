@@ -70,12 +70,13 @@ lang["terryma/vim-multiple-cursors"] = {}
 
 -- Jump to any location specified by two characters.
 lang["justinmk/vim-sneak"] = {
-	-- FIX: not work well
-	-- config = conf.vim_sneak,
-	config = function()
-		local cmd = "source " .. vim.fn.stdpath("config") .. "/lua/modules/lang/sneak.vim"
-		vim.api.nvim_exec(cmd, false)
-	end
+	config = conf.vim_sneak,
+}
+
+-- symbols outline
+lang["simrat39/symbols-outline.nvim"] = {
+	disable = not completion_with_lsp,
+	config = conf.symbols_outline,
 }
 
 return lang

@@ -26,9 +26,13 @@ tools["puremourning/vimspector"] = {
 	},
 }
 
--- Insert or delete brackets, parens, quotes in pair
-tools["jiangmiao/auto-pairs"] = {
-	event = "BufRead",
+-- -- Insert or delete brackets, parens, quotes in pair
+-- tools["jiangmiao/auto-pairs"] = {
+--     event = "BufReadPre",
+-- }
+tools["windwp/nvim-autopairs"] = {
+	event = "BufReadPre",
+	config = conf.autopairs,
 }
 
 -- class outline viewer

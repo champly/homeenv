@@ -3,20 +3,11 @@ local finders = require("telescope.finders")
 local pickers = require("telescope.pickers")
 local make_entry = require("telescope.make_entry")
 local conf = require("telescope.config").values
-local home = os.getenv("HOME")
 
 local dotfiles_list = function (opts)
-	-- local dir = opts.path or ""
-	-- local list = {}
-
-	-- local p = io.popen("rg --files --hidden " .. dir)
-
-	-- for file in p:lines() do
-	--     table.insert(list, file)
-	-- end
 	local list = {}
 
-	local nvim_conf = io.popen("rg --files " .. home .. "/.config/nvim")
+	local nvim_conf = io.popen("rg --files " .. vim.fn.stdpath("config"))
 	for file in nvim_conf:lines() do
 		table.insert(list, file)
 	end

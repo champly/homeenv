@@ -45,6 +45,13 @@ local function load_options()
 		list = true;
 		showbreak = "↪ ";
 		listchars = "tab:▸ ,trail:·,precedes:←,extends:→";
+
+		-- Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+		-- delays and poor user experience.
+		updatetime = 300;
+
+		-- 2总显示最后一个窗口的状态行，1窗口多于一个时显示最后一个窗口的状态行，0不显示最后一个窗口的状态行
+		laststatus = 2;
 	}
 
 	local bw_local = {

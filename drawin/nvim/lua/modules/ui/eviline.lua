@@ -100,6 +100,7 @@ local function get_diagnostic_info()
 end
 
 local function get_system_info()
+
 	-- Darwin/Linux/Windows
 	return system_icons[vim.loop.os_uname().sysname]
 end
@@ -134,7 +135,6 @@ gls.left[2] = {
 			}
 			local vim_mode = vim.fn.mode()
 			if mode_color[vim_mode] == nil then
-				print("------>" .. vim_mode)
 				return 'N/A'
 			end
 			vim.api.nvim_command('hi GalaxyViMode guibg=' .. mode_color[vim_mode])

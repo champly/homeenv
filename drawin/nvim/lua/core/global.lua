@@ -17,4 +17,6 @@ end
 
 global:load_variables()
 
+_G.completion_with_lsp = true
+
 return global
