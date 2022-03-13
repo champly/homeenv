@@ -22,14 +22,14 @@ local colors = {
 }
 
 local sep = {
-  right_filled = u 'e0b2',
-  left_filled = u 'e0b0',
-  right = u 'e0b3',
-  left = u 'e0b1',
-  -- right_filled = u '2590',
-  -- left_filled = u '258c',
-  -- right = u '2503',
-  -- left = u '2503',
+	right_filled = u 'e0b2',
+	left_filled = u 'e0b0',
+	right = u 'e0b3',
+	left = u 'e0b1',
+	-- right_filled = u '2590',
+	-- left_filled = u '258c',
+	-- right = u '2503',
+	-- left = u '2503',
 }
 
 local icons = {

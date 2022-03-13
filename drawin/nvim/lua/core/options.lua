@@ -55,7 +55,7 @@ local function load_options()
 	}
 
 	local bw_local = {
-		textwidth = 120; -- 设置自动加上换行符的长度
+		-- textwidth = 120; -- 设置自动加上换行符的长度
 		colorcolumn = 120;
 		number = true; -- 默认显示数字栏
 		nobackup = true; -- 不需要备份文件，保留撤销文件

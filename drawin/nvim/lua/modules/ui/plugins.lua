@@ -77,4 +77,12 @@ ui["rcarriga/nvim-notify"] = {
 	config = conf.nvim_notify,
 }
 
+-- ui["danilamihailov/beacon.nvim"] = {
+--     config = conf.beacon,
+-- }
+
+ui["folke/which-key.nvim"] = {
+	config = conf.which_key,
+}
+
 return ui

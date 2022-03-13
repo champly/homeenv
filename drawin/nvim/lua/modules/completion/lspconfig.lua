@@ -193,8 +193,18 @@ lspconfig.yamlls.setup {
 --     root_dir = util.root_pattern("compile_commands.json", ".ccls", ".git", ".vim", ".hg"),
 --     -- signle_file_support = true,
 --     init_options = {
+--         -- compilationDatabaseDirectory = "build",
+--         -- index = {
+--         --     threads = 0,
+--         -- },
+--         -- clang = {
+--         --     excludeArgs = {
+--         --         "-frounding-math",
+--         --     },
+--         -- },
 --         cache = {
---             directory = "/tmp/ccls",
+--             -- directory = "/tmp/ccls",
+--             directory = ".ccls-cache",
 --         },
 --     },
 --     on_attach = enhance_attach,

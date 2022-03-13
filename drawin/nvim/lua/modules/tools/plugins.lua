@@ -18,7 +18,7 @@ tools["gcmt/wildfire.vim"] = {}
 -- Debugger
 -- https://github.com/puremourning/vimspector#supported-languages
 tools["puremourning/vimspector"] = {
-	run = './install_gadget.py --enable-go --enable-rust',
+	run = './install_gadget.py --enable-go --enable-rust --no-check-certificate',
 	config = conf.vimspector,
 	requires = {
 		-- UI Component Library for Neovim.

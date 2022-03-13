@@ -44,6 +44,11 @@ completion["hrsh7th/cmp-path"] = {
 	after = "cmp-buffer",
 }
 
+-- completion["hrsh7th/cmp-nvim-lsp-signature-help"] = {
+--     disable = not completion_with_lsp,
+--     after = "nvim-cmp",
+-- }
+
 -- -- TODO: use this replace glepnir/lspsaga.nvim
 -- completion["tami5/lspsaga.nvim"] = {
 --     disable = not completion_with_lsp,
