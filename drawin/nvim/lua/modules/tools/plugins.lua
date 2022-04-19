@@ -42,5 +42,4 @@ tools["windwp/nvim-autopairs"] = {
 -- Smooth scrolling for Vim done right
 tools["psliwka/vim-smoothie"] = {}
 
-
 return tools

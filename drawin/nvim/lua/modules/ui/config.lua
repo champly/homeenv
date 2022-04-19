@@ -15,52 +15,61 @@ function config.dashboard()
 	vim.g.dashboard_default_executive = "telescope"
 	-- vim.g.dashboard_default_executive = "fzf"
 
+	-- vim.cmd [[ hi DashboardHeader guifg=green ]]
+	-- vim.cmd [[ hi DashboardCenter guifg=yellow ]]
 	vim.cmd [[ hi DashboardShortcut guifg=#1E90FF ]]
 	vim.cmd [[ hi DashboardFooter guifg=gray ]]
 
-	vim.g.dashboard_custom_header = {'', '', '',
-									 '  ______         __                                      __     __           __            _                        __                             ',
-									 ' /_  __/___     / /_  ___     ____  _____   ____  ____  / /_   / /_____     / /_  ___     (_)____   __  ______     / /_____     __  ______  __  __ ',
-									 '  / / / __ \\   / __ \\/ _ \\   / __ \\/ ___/  / __ \\/ __ \\/ __/  / __/ __ \\   / __ \\/ _ \\   / / ___/  / / / / __ \\   / __/ __ \\   / / / / __ \\/ / / / ',
-									 ' / / / /_/ /  / /_/ /  __/  / /_/ / /     / / / / /_/ / /_   / /_/ /_/ /  / /_/ /  __/  / (__  )  / /_/ / /_/ /  / /_/ /_/ /  / /_/ / /_/ / /_/ /  ',
-									 '/_/  \\____/  /_.___/\\___/   \\____/_/     /_/ /_/\\____/\\__/   \\__/\\____/  /_.___/\\___/  /_/____/   \\__,_/ .___/   \\__/\\____/   \\__, /\\____/\\__,_/   ',
-									 '                                                                                                      /_/                    /____/                ',
-									 ''}
-
-	-- vim.g.dashboard_footer_icon = "🐬 "
-	vim.g.dashboard_custom_footer = {"If you think penguins are fat and waddle, you have never been attacked by one",
-									 "running at you in excess of 100 miles per hour.", "",
-									 "                                                            -- Linus Torvalds"}
+	vim.g.dashboard_custom_header = {
+		"",
+		"",
+		"",
+		"  ______         __                                      __     __           __            _                        __                             ",
+		" /_  __/___     / /_  ___     ____  _____   ____  ____  / /_   / /_____     / /_  ___     (_)____   __  ______     / /_____     __  ______  __  __ ",
+		"  / / / __ \\   / __ \\/ _ \\   / __ \\/ ___/  / __ \\/ __ \\/ __/  / __/ __ \\   / __ \\/ _ \\   / / ___/  / / / / __ \\   / __/ __ \\   / / / / __ \\/ / / / ",
+		" / / / /_/ /  / /_/ /  __/  / /_/ / /     / / / / /_/ / /_   / /_/ /_/ /  / /_/ /  __/  / (__  )  / /_/ / /_/ /  / /_/ /_/ /  / /_/ / /_/ / /_/ /  ",
+		"/_/  \\____/  /_.___/\\___/   \\____/_/     /_/ /_/\\____/\\__/   \\__/\\____/  /_.___/\\___/  /_/____/   \\__,_/ .___/   \\__/\\____/   \\__, /\\____/\\__,_/   ",
+		"                                                                                                      /_/                    /____/                ",
+		"",
+	}
 
 	vim.g.dashboard_custom_section = {
 		last_session = {
-			description = {"  Recently laset session                  leader sl"},
+			description = { "  Recently laset session                  leader sl" },
 			command = "SessionLoad"
 		},
 		find_history = {
-			description = {"  Recently opened files                   leader fh"},
+			description = { "  Recently opened files                   leader fh" },
 			command = "DashboardFindHistory"
 		},
 		find_file = {
-			description = {"  Find  File                              leader ff"},
+			description = { "  Find  File                              leader ff" },
 			command = "DashboardFindFile"
 		},
 		find_word = {
-			description = {"  Find  word                              leader fw"},
+			description = { "  Find  word                              leader fw" },
 			command = "DashboardFindWord"
 		},
 		new_buffer = {
-			description = {"  Create new buffer                       leader n "},
+			description = { "  Create new buffer                       leader n " },
 			command = "=enew"
 		},
 		find_dotfiles = {
-			description = {"  Open Personal dotfiles                  leader fd"},
+			description = { "  Open Personal dotfiles                  leader fd" },
 			command = "Telescope dotfiles"
 		},
 		go_source = {
-			description = {"  Find Go Source Code                     leader fs"},
+			description = { "  Find Go Source Code                     leader fs" },
 			command = "Telescope gosource"
 		}
+	}
+
+	-- vim.g.dashboard_footer_icon = "🐬 "
+	vim.g.dashboard_custom_footer = {
+		"If you think penguins are fat and waddle, you have never been attacked by one",
+		"running at you in excess of 100 miles per hour.",
+		"",
+		"                                                            -- Linus Torvalds",
 	}
 
 	local bind = require("utils.bind")
@@ -71,15 +80,56 @@ function config.dashboard()
 	})
 end
 
+function config.alpha_nvim()
+	local dashboard = require("alpha.themes.dashboard")
+	dashboard.section.header.val = {
+		"",
+		"",
+		"",
+		"  ______         __                                      __     __           __            _                        __                             ",
+		" /_  __/___     / /_  ___     ____  _____   ____  ____  / /_   / /_____     / /_  ___     (_)____   __  ______     / /_____     __  ______  __  __ ",
+		"  / / / __ \\   / __ \\/ _ \\   / __ \\/ ___/  / __ \\/ __ \\/ __/  / __/ __ \\   / __ \\/ _ \\   / / ___/  / / / / __ \\   / __/ __ \\   / / / / __ \\/ / / / ",
+		" / / / /_/ /  / /_/ /  __/  / /_/ / /     / / / / /_/ / /_   / /_/ /_/ /  / /_/ /  __/  / (__  )  / /_/ / /_/ /  / /_/ /_/ /  / /_/ / /_/ / /_/ /  ",
+		"/_/  \\____/  /_.___/\\___/   \\____/_/     /_/ /_/\\____/\\__/   \\__/\\____/  /_.___/\\___/  /_/____/   \\__,_/ .___/   \\__/\\____/   \\__, /\\____/\\__,_/   ",
+		"                                                                                                      /_/                    /____/                ",
+		"",
+	}
+	dashboard.section.buttons.val = {
+		dashboard.button("<leader>sl", "  Recently laset session", ":SessionLoad<CR>"),
+		dashboard.button("<leader>fh", "  Recently opened files", ":Telescope oldfiles<CR>"),
+		dashboard.button("<leader>ff", "  Find  File", ":Telescope find_file<CR>"),
+		dashboard.button("<leader>fw", "  Find  word", ":Telescope live_grep<CR>"),
+		dashboard.button("<leader> n", "  Create new buffer", ":enew<CR>"),
+		dashboard.button("<leader>fd", "  Open Personal dotfiles", ":Telescope dotfiles<CR>"),
+		dashboard.button("<leader>fs", "  Find Go Source Code", ":Telescope gosource<CR>"),
+	}
+
+	dashboard.section.footer.val = {
+		"If you think penguins are fat and waddle, you have never been attacked by one",
+		"running at you in excess of 100 miles per hour.",
+		"",
+		"                                                            -- Linus Torvalds",
+	}
+
+	require("alpha").setup(dashboard.config)
+
+	local bind = require("utils.bind")
+	bind.nvim_load_mapping({
+		["n|<leader>fh"] = bind.map_cr("Telescope oldfiles"):with_noremap():with_silent(),
+		["n|<leader>fw"] = bind.map_cr("Telescope live_grep"):with_noremap():with_silent(),
+		["n|<leader>ff"] = bind.map_cr("Telescope find_file"):with_noremap():with_silent()
+	})
+end
+
 function config.nvim_tree()
-	vim.g.nvim_tree_indent_markers = 1
+	-- vim.g.nvim_tree_indent_markers = 1
 	-- vim.g.nvim_tree_special_files = { 'README.md': 1, 'Makefile': 1, 'MAKEFILE': 1 } -- List of filenames that gets highlighted with NvimTreeSpecialFile
 	vim.g.nvim_tree_special_files = {}
 
 	local list = {
-		{key = {"<CR>", "o"}, action = "edit"},
-		{key = {"v"}, action = "vsplit"},
-		{key = {"s"}, action = "split"},
+		{ key = { "<CR>", "o" }, action = "edit" },
+		{ key = { "v" }, action = "vsplit" },
+		{ key = { "s" }, action = "split" },
 	}
 
 	vim.g.nvim_tree_icons = {
@@ -111,10 +161,19 @@ function config.nvim_tree()
 	-- https://github.com/kyazdani42/nvim-tree.lua/pull/603
 	-- https://github.com/kyazdani42/nvim-tree.lua/issues/674
 	require("nvim-tree").setup {
-		auto_close = true,
 		update_cwd = true,
 		update_focused_file = {
 			enable = true
+		},
+		renderer = {
+			indent_markers = {
+				enable = true,
+				icons = {
+					corner = "└ ",
+					edge = "│ ",
+					none = "  ",
+				},
+			},
 		},
 		actions = {
 			change_dir = {
@@ -209,7 +268,9 @@ function config.vim_gitgutter()
 end
 
 function config.gitsigns_nvim()
-	-- vim.cmd [[ highlight link GitSignsCurrentLineBlame Visual ]]
+	-- https://github.com/lewis6991/gitsigns.nvim/issues/430
+	vim.cmd [[ highlight gitsignscurrentlineblame guibg=None guifg=#756969]]
+
 	require('gitsigns').setup({
 		signs = {
 			add = {

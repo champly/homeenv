@@ -7,7 +7,9 @@ function autocmd.load_autocmds()
 		-- packer = {},
 		bufs = {
 			-- 文件打开的时候光标停留在上次关闭时候的位置
-			{"BufReadPost", "*", [[if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif]]};
+			{"BufReadPost", "*", [[if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif]]},
+			-- https://github.com/kyazdani42/nvim-tree.lua#tips--reminders
+			{"BufEnter", "*", [[++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif]]},
 		},
 		wins = {
 			-- Don't show status line on certain windows

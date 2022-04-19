@@ -5,7 +5,8 @@ function config.nvim_treesitter()
 	vim.api.nvim_command('set foldexpr=nvim_treesitter#foldexpr()')
 
 	require("nvim-treesitter.configs").setup {
-		ensure_installed = "maintained",
+		ensure_installed = "all",
+		ignore_install = { "swift", "wgsl" },
 		highlight = {
 			enable = true, -- false will disable the whole extension
 		},
@@ -68,9 +69,9 @@ function config.vimwiki()
 end
 
 function config.far_vim()
-	vim.cmd [[ set lazyredraw ]]            -- improve scrolling performance when navigating through large results
-	vim.cmd [[ set regexpengine=1 ]]        -- use old regexp engine
-	vim.cmd [[ set ignorecase smartcase ]]  -- ignore case only when the pattern contains no capital letters
+	vim.cmd [[ set lazyredraw ]] -- improve scrolling performance when navigating through large results
+	vim.cmd [[ set regexpengine=1 ]] -- use old regexp engine
+	vim.cmd [[ set ignorecase smartcase ]] -- ignore case only when the pattern contains no capital letters
 
 	-- -- shortcut for far.vim find
 	-- vim.cmd [[ nnoremap <silent> <Find-Shortcut>  :Farf<cr> ]]
@@ -94,8 +95,8 @@ function config.vim_visual_multi()
 	vim.g.VM_maps = {
 		Undo = "u",
 		Redo = "<C-r>",
-		["Add Cursor Down"] = '<M-j>',	   -- 往下增加光标 Opt+j
-		["Add Cursor Up"] = '<M-k>',	   -- 往上增加光标 Opt+k
+		["Add Cursor Down"] = '<M-j>', -- 往下增加光标 Opt+j
+		["Add Cursor Up"] = '<M-k>', -- 往上增加光标 Opt+k
 		-- ["Select All"] = '\\A',
 	}
 
@@ -125,9 +126,9 @@ function config.symbols_outline()
 	vim.g.symbols_outline = {
 		auto_preview = false,
 		relative_width = true,
-		width = 50,
+		width = 25,
 		keymaps = { -- These keymaps can be a string or a table for multiple keys
-			close = {"<Esc>", "q"},
+			close = { "<Esc>", "q" },
 			goto_location = "<Cr>",
 			focus_location = "o",
 			hover_symbol = "<C-space>",

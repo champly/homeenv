@@ -15,6 +15,10 @@ ui["morhetz/gruvbox"] = {
 ui["glepnir/dashboard-nvim"] = {
 	config = conf.dashboard,
 }
+-- ui["goolord/alpha-nvim"] = {
+--     config = conf.alpha_nvim,
+--     requires = "kyazdani42/nvim-web-devicons",
+-- }
 
 -- file system explorer
 ui["kyazdani42/nvim-tree.lua"] = {
@@ -68,6 +72,7 @@ ui["lewis6991/gitsigns.nvim"] = {
 }
 
 -- float terminal
+-- ui["akinsho/toggleterm.nvim"]
 ui["voldikss/vim-floaterm"] = {
 	config = conf.vim_floaterm,
 }
@@ -81,8 +86,8 @@ ui["rcarriga/nvim-notify"] = {
 --     config = conf.beacon,
 -- }
 
-ui["folke/which-key.nvim"] = {
-	config = conf.which_key,
-}
+-- ui["folke/which-key.nvim"] = {
+--     config = conf.which_key,
+-- }
 
 return ui
