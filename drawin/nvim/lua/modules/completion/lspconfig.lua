@@ -113,12 +113,12 @@ end
 
 -- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#custom-configuration
 lspconfig.gopls.setup {
-	cmd = {"gopls", "serve"},
-	filetypes = {"go", "gomod", "gotmpl"},
+	cmd = { "gopls", "serve" },
+	filetypes = { "go", "gomod", "gotmpl" },
 	root_dir = function(fname)
 		-- https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/gopls.lua
 		-- return util.root_pattern("go.work")(fname) or util.root_pattern("go.mod", ".git", ".vim/", ".hg/")(fname)
-		return util.root_pattern 'go.work'(fname) or util.root_pattern('go.mod', '.git')(fname)
+		return util.root_pattern 'go.work' (fname) or util.root_pattern('go.mod', '.git')(fname)
 	end,
 	settings = {
 		gopls = {
@@ -127,7 +127,7 @@ lspconfig.gopls.setup {
 				gc_details = true,
 			},
 			analyses = {
-				fieldalignment = false
+				fieldalignment = true
 			},
 			allowModfileModifications = true,
 			experimentalWorkspaceModule = false,
@@ -230,7 +230,7 @@ lspconfig.sumneko_lua.setup {
 			},
 			diagnostics = {
 				-- Get the language server to recognize the `vim` global
-				globals = {'vim'},
+				globals = { 'vim' },
 			},
 			workspace = {
 				-- Make the server aware of Neovim runtime files
