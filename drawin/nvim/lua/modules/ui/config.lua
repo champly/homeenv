@@ -7,18 +7,7 @@ function config.gruvbox()
 end
 
 function config.dashboard()
-	-- vim.g=dashboard_preview_command = "cat"
-	-- vim.g.dashboard_preview_pipeline = "lolcat"
-	-- vim.g.dashboard_preview_file = "~/.config/nvim/static/champly.txt"
-	-- vim.g.dashboard_preview_file_height = 12
-	-- vim.g.dashboard_preview_file_width = 58
 	vim.g.dashboard_default_executive = "telescope"
-	-- vim.g.dashboard_default_executive = "fzf"
-
-	-- vim.cmd [[ hi DashboardHeader guifg=green ]]
-	-- vim.cmd [[ hi DashboardCenter guifg=yellow ]]
-	vim.cmd [[ hi DashboardShortcut guifg=#1E90FF ]]
-	vim.cmd [[ hi DashboardFooter guifg=gray ]]
 
 	vim.g.dashboard_custom_header = {
 		"",
@@ -64,13 +53,18 @@ function config.dashboard()
 		}
 	}
 
-	-- vim.g.dashboard_footer_icon = "🐬 "
 	vim.g.dashboard_custom_footer = {
 		"If you think penguins are fat and waddle, you have never been attacked by one",
 		"running at you in excess of 100 miles per hour.",
 		"",
 		"                                                            -- Linus Torvalds",
 	}
+
+	-- vim.cmd [[ hi DashboardHeader guifg=green ]]
+	-- vim.cmd [[ hi DashboardCenter guifg=yellow ]]
+	vim.cmd [[ hi DashboardShortcut guifg=#1E90FF ]]
+	vim.cmd [[ hi DashboardFooter guifg=gray ]]
+
 
 	local bind = require("utils.bind")
 	bind.nvim_load_mapping({
@@ -97,7 +91,7 @@ function config.alpha_nvim()
 	dashboard.section.buttons.val = {
 		dashboard.button("<leader>sl", "  Recently laset session", ":SessionLoad<CR>"),
 		dashboard.button("<leader>fh", "  Recently opened files", ":Telescope oldfiles<CR>"),
-		dashboard.button("<leader>ff", "  Find  File", ":Telescope find_file<CR>"),
+		dashboard.button("<leader>ff", "  Find  File", ":Telescope find_files<CR>"),
 		dashboard.button("<leader>fw", "  Find  word", ":Telescope live_grep<CR>"),
 		dashboard.button("<leader> n", "  Create new buffer", ":enew<CR>"),
 		dashboard.button("<leader>fd", "  Open Personal dotfiles", ":Telescope dotfiles<CR>"),
@@ -111,13 +105,15 @@ function config.alpha_nvim()
 		"                                                            -- Linus Torvalds",
 	}
 
+	dashboard.config.opts.noautocmd = true
+
 	require("alpha").setup(dashboard.config)
 
 	local bind = require("utils.bind")
 	bind.nvim_load_mapping({
 		["n|<leader>fh"] = bind.map_cr("Telescope oldfiles"):with_noremap():with_silent(),
 		["n|<leader>fw"] = bind.map_cr("Telescope live_grep"):with_noremap():with_silent(),
-		["n|<leader>ff"] = bind.map_cr("Telescope find_file"):with_noremap():with_silent()
+		["n|<leader>ff"] = bind.map_cr("Telescope find_files"):with_noremap():with_silent()
 	})
 end
 
@@ -189,9 +185,8 @@ function config.nvim_tree()
 			dotfiles = true
 		},
 		view = {
-			width = "19%",
+			width = 30,
 			side = "left",
-			auto_resize = true,
 			mappings = {
 				list = list
 			}
@@ -351,6 +346,27 @@ function config.nvim_notify()
 	local bind = require("utils.bind")
 	bind.nvim_load_mapping({
 		["n|<leader>s"] = bind.map_cmd("<cmd>lua _save_file()<cr>"):with_noremap():with_silent()
+	})
+end
+
+function config.rainbow()
+	vim.g.rainbow_active = 1 -- set to 0 if you want to enable it later via :RainbowToggle
+
+	-- 使用 vim-devicons 之后文件见有中括号
+	-- https://github.com/ryanoasis/vim-devicons/issues/274#issuecomment-513560707
+	vim.g.rainbow_conf = {
+		separately = {
+			nerdtree = 0
+		}
+	}
+end
+
+function config.nvim_ts_rainbow()
+	-- https://github.com/p00f/nvim-ts-rainbow#installation-and-setup
+	require("nvim-treesitter.configs").setup({
+		rainbow = {
+			enable = true
+		}
 	})
 end
 

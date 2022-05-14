@@ -6,12 +6,6 @@ local format = require("modules.completion.format")
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
--- -- https://github.com/neovim/neovim/issues/13946
--- function _G.reload_lsp()
---     vim.lsp.stop_client(vim.lsp.get_active_clients())
---     vim.cmd [[edit]]
--- end
-
 -- https://github.com/neovim/nvim-lspconfig#debugging
 function _G.open_lsp_log()
 	vim.cmd('e' .. vim.lsp.get_log_path())
@@ -21,22 +15,28 @@ end
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 	vim.lsp.diagnostic.on_publish_diagnostics,
 	{
-		-- Enable underline, use default values
-		underline = true,
-		-- Enable virtual text, override spacing to 4
-		virtual_text = {
-			spacing = 4,
-			prefix = "",
-			-- prefix = " ✗ ",
-		},
-		signs = {
-			enable = true,
-			priority = 20,
-		},
-		-- Disable a feature
-		update_in_insert = false,
-	}
+	-- Enable underline, use default values
+	underline = true,
+	-- Enable virtual text, override spacing to 4
+	virtual_text = {
+		spacing = 4,
+		prefix = "",
+		-- prefix = " ✗ ",
+	},
+	signs = {
+		enable = true,
+		priority = 20,
+	},
+	-- Disable a feature
+	update_in_insert = false,
+}
 )
+
+local signs = { Error = " ", Warn = " ", Hint = " ", Information = " " }
+for type, icon in pairs(signs) do
+	local hl = "DiagnosticSign" .. type
+	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
 
 -- https://github.com/neovim/nvim-lspconfig#keybindings-and-completion
 -- https://github.com/nvim-lua/completion-nvim/issues/337#issuecomment-765563829
@@ -69,7 +69,8 @@ local enhance_attach = function(client, bufnr)
 	api.nvim_set_keymap('n', '<leader>im', ':Telescope lsp_implementations theme=ivy<CR>', opts)
 	-- api.nvim_set_keymap('n', '<leader>im', ':lua require("telescope.builtin").lsp_implementations(require("telescope.themes").get_dropdown({layout_config = { width = 0.99 }}))<CR>', opts)
 	api.nvim_set_keymap('n', '<leader>rf', ':Telescope lsp_references theme=ivy<CR>', opts)
-	api.nvim_set_keymap("n", "<leader>ca", ":Telescope lsp_code_actions theme=ivy<CR>", opts)
+	-- api.nvim_set_keymap("n", "<leader>ca", ":Telescope lsp_code_actions theme=ivy<CR>", opts)
+	api.nvim_set_keymap("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 	api.nvim_set_keymap("n", "<leader>ds", ":Telescope diagnostics theme=ivy<CR>", opts)
 	api.nvim_set_keymap("n", "<leader>bl", ":Telescope lsp_document_symbols theme=ivy<CR>", opts)
 
@@ -91,10 +92,9 @@ local enhance_attach = function(client, bufnr)
 	-- Set autocommands conditional on server_capabilities
 	if client.resolved_capabilities.document_highlight then
 		vim.api.nvim_exec([[
-			" hi LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
-			hi LspReferenceRead guibg=#ff8600 guifg=black
-			hi LspReferenceText guibg=#ff8600 guifg=black
-			hi LspReferenceWrite guibg=#ff8600 guifg=black
+			hi LspReferenceRead guibg=#ff8600 guifg=black gui=NONE
+			hi LspReferenceText guibg=#ff8600 guifg=black gui=NONE
+			hi LspReferenceWrite guibg=#ff8600 guifg=black gui=NONE
 			augroup lsp_document_highlight
 			autocmd! * <buffer>
 			autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
@@ -113,11 +113,10 @@ end
 
 -- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#custom-configuration
 lspconfig.gopls.setup {
-	cmd = { "gopls", "serve" },
+	cmd = { "gopls" },
 	filetypes = { "go", "gomod", "gotmpl" },
 	root_dir = function(fname)
 		-- https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/gopls.lua
-		-- return util.root_pattern("go.work")(fname) or util.root_pattern("go.mod", ".git", ".vim/", ".hg/")(fname)
 		return util.root_pattern 'go.work' (fname) or util.root_pattern('go.mod', '.git')(fname)
 	end,
 	settings = {

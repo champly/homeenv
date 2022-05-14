@@ -12,34 +12,34 @@ end
 
 local function load_options()
 	local global_local = {
-		encoding          = "utf-8";   -- scriptencoding utf-8
-		termguicolors     = true;
-		relativenumber    = true;      -- 显示相对行号
-		foldmethod        = "syntax";  -- 设置折叠语法
-		foldlevelstart    = 99;        -- 默认不折叠
-		undodir           = global.cache_dir .. "undo";
-		undofile          = true;
-		mouse             = "v";
-		scrolloff         = 1;         -- Minimal number of screen lines to keep above and below the cursor.
-		tabstop           = 4;         -- An indentation every four columns
-		shiftwidth        = 4;
-		softtabstop       = 4;         -- Let backspace delete indent
-		autoindent        = true;
-		splitright        = true;      -- Puts new vsplit windows to the right of the current
-		splitbelow        = true;      -- Puts new split windows to the bottom of the current
-		smartindent       = true;      -- Open smart indent
+		encoding       = "utf-8"; -- scriptencoding utf-8
+		termguicolors  = true;
+		relativenumber = true; -- 显示相对行号
+		foldmethod     = "syntax"; -- 设置折叠语法
+		foldlevelstart = 99; -- 默认不折叠
+		undodir        = global.cache_dir .. "undo";
+		undofile       = true;
+		mouse          = "v";
+		scrolloff      = 1; -- Minimal number of screen lines to keep above and below the cursor.
+		tabstop        = 4; -- An indentation every four columns
+		shiftwidth     = 4;
+		softtabstop    = 4; -- Let backspace delete indent
+		autoindent     = true;
+		splitright     = true; -- Puts new vsplit windows to the right of the current
+		splitbelow     = true; -- Puts new split windows to the bottom of the current
+		smartindent    = true; -- Open smart indent
 
 		-- 忽略大小写
-		ignorecase        = true;
-		smartcase         = true;
+		ignorecase = true;
+		smartcase  = true;
 
 		-- 设置光标所在行、列高亮
 		-- cursorcolumn      = true;
-		cursorline        = true;
-		hlsearch          = true;
+		cursorline = true;
+		hlsearch   = true;
 
 		-- hit-enter
-		cmdheight         = 1;
+		cmdheight = 1;
 
 		-- 区分空格和缩进
 		list = true;

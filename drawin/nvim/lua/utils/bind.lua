@@ -56,7 +56,6 @@ function rhs_options:with_nowait()
 	return self
 end
 
-
 local pbind = {}
 
 function pbind.map_cmd(cmd_string)

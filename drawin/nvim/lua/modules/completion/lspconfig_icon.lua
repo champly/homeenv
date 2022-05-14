@@ -25,5 +25,6 @@ local icons = {
 	Operator = "",
 	TypeParameter = "",
 }
- 
-return icons 
+
+return icons
+

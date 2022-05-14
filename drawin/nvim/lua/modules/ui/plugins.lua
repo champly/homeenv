@@ -5,8 +5,10 @@ local conf = require("modules.ui.config")
 -- use 'tomasiser/vim-code-dark'
 -- use 'rakr/vim-one'
 -- use 'rktjmp/lush.nvim'
--- use 'npxbr/gruvbox.nvim'
-ui["morhetz/gruvbox"] = {
+-- ui["morhetz/gruvbox"] = {
+--     config = conf.gruvbox,
+-- }
+ui['ellisonleao/gruvbox.nvim'] = {
 	config = conf.gruvbox,
 }
 
@@ -81,6 +83,17 @@ ui["voldikss/vim-floaterm"] = {
 ui["rcarriga/nvim-notify"] = {
 	config = conf.nvim_notify,
 }
+
+-- -- parentheses improved
+-- ui["luochen1990/rainbow"] = {
+--     event = "BufRead",
+--     config = conf.rainbow,
+-- }
+
+-- ui["p00f/nvim-ts-rainbow"] = {
+--     after = "nvim-treesitter",
+--     config = conf.nvim_ts_rainbow
+-- }
 
 -- ui["danilamihailov/beacon.nvim"] = {
 --     config = conf.beacon,

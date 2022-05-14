@@ -12,6 +12,10 @@ rm -rf ~/.config/ranger
 ln -s ~/Dropbox/config/nvim ~/.config/
 ln -s ~/Dropbox/config/ranger ~/.config/
 
+# clash
+rm -rf ~/.config/clash
+ln -s ~/Dropbox/config/clash ~/.config/
+
 # karabiner
 rm -rf ~/.config/karabiner
 ln -s ~/Dropbox/config/karabiner ~/.config/

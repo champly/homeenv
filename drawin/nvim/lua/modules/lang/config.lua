@@ -1,8 +1,8 @@
 local config = {}
 
 function config.nvim_treesitter()
-	vim.api.nvim_command('set foldmethod=expr')
-	vim.api.nvim_command('set foldexpr=nvim_treesitter#foldexpr()')
+	vim.api.nvim_command [[ set foldmethod=expr ]]
+	vim.api.nvim_command [[set foldexpr=nvim_treesitter#foldexpr()]]
 
 	require("nvim-treesitter.configs").setup {
 		ensure_installed = "all",
@@ -34,18 +34,6 @@ function config.markdown_preview_nvim()
 	vim.api.nvim_set_keymap("n", "<leader>tm", ":TableModeToggle<cr>", {})
 end
 
-function config.rainbow()
-	vim.g.rainbow_active = 1 -- set to 0 if you want to enable it later via :RainbowToggle
-
-	-- 使用 vim-devicons 之后文件见有中括号
-	-- https://github.com/ryanoasis/vim-devicons/issues/274#issuecomment-513560707
-	vim.g.rainbow_conf = {
-		separately = {
-			nerdtree = 0
-		}
-	}
-end
-
 function config.undotree()
 	-- nnoremap <Leader>u :UndotreeToggle<CR>
 	vim.api.nvim_set_keymap("n", "<leader>u", ":UndotreeToggle<cr>", { noremap = true })
@@ -61,9 +49,9 @@ end
 function config.vimwiki()
 	vim.g.vimwiki_list = {
 		{
-			path = '~/Dropbox/notebook/vimwiki/',
-			syntax = 'markdown',
-			ext = '.md'
+			path = "~/Dropbox/notebook/vimwiki/",
+			syntax = "markdown",
+			ext = ".md"
 		}
 	}
 end
@@ -91,12 +79,12 @@ end
 
 function config.vim_visual_multi()
 	vim.g.VM_show_warnings = 0
-	vim.g.VM_leader = '\\'
+	vim.g.VM_leader = "\\"
 	vim.g.VM_maps = {
 		Undo = "u",
 		Redo = "<C-r>",
-		["Add Cursor Down"] = '<M-j>', -- 往下增加光标 Opt+j
-		["Add Cursor Up"] = '<M-k>', -- 往上增加光标 Opt+k
+		["Add Cursor Down"] = "<M-j>", -- 往下增加光标 Opt+j
+		["Add Cursor Up"] = "<M-k>", -- 往上增加光标 Opt+k
 		-- ["Select All"] = '\\A',
 	}
 
@@ -105,27 +93,25 @@ function config.vim_visual_multi()
 	vim.api.nvim_set_keymap("n", "<M-l>", "<Right>", {})
 end
 
-function config.vim_sneak()
-	-- https://tc500.github.io/%E5%B7%A5%E5%85%B7%E9%93%BE/2019/02/08/%E9%AB%98%E6%95%88%E7%9A%84vim/
-	-- 开启跳转标签
-	vim.g["sneak#label"] = 1
-	-- 标签字符序列
-	vim.g["sneak#target_labels"] = ";sftunq/SFGHLTUNRMQZ?0123456789"
-	-- f正向查找字符，F反向查找字符
-	vim.api.nvim_set_keymap("n", "f", ":<C-U>call sneak#wrap('',           1, 0, 1, 1)<CR>", { silent = true, noremap = true })
-	vim.api.nvim_set_keymap("n", "F", ":<C-U>call sneak#wrap('',           1, 0, 1, 1)<CR>", { silent = true, noremap = true })
-	vim.api.nvim_set_keymap("x", "f", ":<C-U>call sneak#wrap(visualmode(), 1, 0, 1, 1)<CR>", { silent = true, noremap = true })
-	vim.api.nvim_set_keymap("x", "F", ":<C-U>call sneak#wrap(visualmode(), 1, 0, 1, 1)<CR>", { silent = true, noremap = true })
-	vim.api.nvim_set_keymap("o", "f", ":<C-U>call sneak#wrap(v:operator,   1, 0, 1, 1)<CR>", { silent = true, noremap = true })
-	vim.api.nvim_set_keymap("o", "F", ":<C-U>call sneak#wrap(v:operator,   1, 0, 1, 1)<CR>", { silent = true, noremap = true })
-	-- vim.cmd [[ map f <Plug>Sneak_s ]]
-	-- vim.cmd [[ map F <Plug>Sneak_S ]]
+function config.hop_nvim()
+	require("hop").setup({
+		keys = ";sftunq/SFGHLTUNRMQZ?0123456789",
+	})
+
+	-- https://github.com/phaazon/hop.nvim#keybindings
+	-- place this in one of your configuration file(s)
+	vim.api.nvim_set_keymap('n', 'f', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = false })<cr>", {})
+	vim.api.nvim_set_keymap('n', 'F', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = false })<cr>", {})
+	vim.api.nvim_set_keymap('v', 'f', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = false })<cr>", {})
+	vim.api.nvim_set_keymap('v', 'F', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = false })<cr>", {})
 end
 
 function config.symbols_outline()
 	vim.g.symbols_outline = {
+		auto_close = true,
 		auto_preview = false,
 		relative_width = true,
+		show_symbol_details = false,
 		width = 25,
 		keymaps = { -- These keymaps can be a string or a table for multiple keys
 			close = { "<Esc>", "q" },

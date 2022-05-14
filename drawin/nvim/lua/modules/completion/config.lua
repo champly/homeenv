@@ -115,17 +115,18 @@ end
 
 function config.telescope()
 	if not packer_plugins["plenary.nvim"].loaded then
-		vim.cmd [[packadd plenary.nvim]]
-		vim.cmd [[packadd popup.nvim]]
-		vim.cmd [[packadd telescope-fzy-native.nvim]]
+		vim.cmd [[ packadd plenary.nvim ]]
+		vim.cmd [[ packadd popup.nvim ]]
+		vim.cmd [[ packadd telescope-fzy-native.nvim ]]
+		vim.cmd [[ packadd telescope-ui-select.nvim ]]
 	end
 
 	-- https://github.com/nvim-telescope/telescope.nvim/blob/master/lua/telescope/config.lua
-	require('telescope').setup {
+	require("telescope").setup {
 		defaults = {
-			prompt_prefix = '🔭 ',
+			prompt_prefix = "🔭 ",
 			selection_caret = " ",
-			sorting_strategy = 'ascending',
+			sorting_strategy = "ascending",
 			layout_strategy = "horizontal",
 			-- winblend = 30,
 			layout_config = {
@@ -138,13 +139,17 @@ function config.telescope()
 			fzy_native = {
 				override_generic_sorter = false,
 				override_file_sorter = true,
+			},
+			["ui-select"] = {
+				require("telescope.themes").get_cursor({})
 			}
 		}
 	}
 
-	require('telescope').load_extension('fzy_native')
-	require('telescope').load_extension('gosource')
-	require('telescope').load_extension('dotfiles')
+	require('telescope').load_extension("fzy_native")
+	require('telescope').load_extension("gosource")
+	require('telescope').load_extension("dotfiles")
+	require('telescope').load_extension("ui-select")
 
 	vim.api.nvim_set_keymap("n", "<leader>fb", ":Telescope buffers<cr>", {})
 	vim.api.nvim_set_keymap("n", "<leader>fs", ":Telescope gosource<cr>", {})

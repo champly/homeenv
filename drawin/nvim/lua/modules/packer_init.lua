@@ -19,11 +19,11 @@ if not present then
 		packer_path,
 	}
 
-	vim.cmd "packadd packer.nvim"
+	vim.cmd [[ packadd packer.nvim ]]
 	present, packer = pcall(require, "packer")
 
 	if present then
-		print "Packer cloned successfully."
+		print("Packer cloned successfully.")
 	else
 		error("Couldn't clone packer !\nPacker path: " .. packer_path .. "\n" .. packer)
 	end

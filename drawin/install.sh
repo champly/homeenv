@@ -59,6 +59,8 @@ pip3 install pynvim
 brew tap homebrew/cask-fonts
 brew install --cask font-sauce-code-pro-nerd-font
 
+# objdump & readelf tools
+brew install binutils
 
 # ranger
 # pip3 install ranger-fm
@@ -95,6 +97,12 @@ brew install ccls
 # k9s
 brew install k9s
 
+# lsp
+yarn global add yaml-language-server
+brew install lua-language-server
+# npm install --save vscode-json-languageservice
+
+
 # rust
 # brew install rust
 # brew install rust-analyzer
@@ -107,3 +115,8 @@ brew install graphviz
 cpan Graph:Easy
 
 sh ./link.sh
+
+# update
+# yarn global upgrade
+# npm outdated -g
+# npm update -g

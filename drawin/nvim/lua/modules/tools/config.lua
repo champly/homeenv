@@ -23,16 +23,37 @@ function config.autopairs()
 
 	if present1 and present2 then
 		autopairs.setup({
-			disable_filetype = { "TelescopePrompt" , "vim" },
+			disable_filetype = { "TelescopePrompt", "vim" },
 		})
 
 		local cmp = require "cmp"
 		cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 	else
 		autopairs.setup({
-			disable_filetype = { "TelescopePrompt" , "vim" },
+			disable_filetype = { "TelescopePrompt", "vim" },
 		})
 	end
+end
+
+function config.smoothie()
+	vim.g.smoothie_remapped_commands = {
+		"<C-D>",
+		"<C-U>",
+		"<C-F>",
+		"<S-Down>",
+		"<PageDown>",
+		"<C-B>",
+		"<S-Up>",
+		"<PageUp>",
+		"z+",
+		"z^",
+		"z<CR>",
+		"z.",
+		"z-",
+		-- "zt",
+		-- "zz",
+		-- "zb",
+	}
 end
 
 return config

@@ -23,12 +23,6 @@ lang["iamcco/markdown-preview.nvim"] = {
 	}
 }
 
--- parentheses improved
-lang["luochen1990/rainbow"] = {
-	event = "BufRead",
-	config = conf.rainbow,
-}
-
 -- annotate plugin: https://github.com/preservim/nerdcommenter#settings
 lang["preservim/nerdcommenter"] = {
 	event = "BufRead",
@@ -57,11 +51,13 @@ lang["vimwiki/vimwiki"] = {
 
 -- quick find word
 lang["brooth/far.vim"] = {
+	event = "BufRead",
 	config = conf.far_vim,
 }
 
 -- choice multi line
 lang["mg979/vim-visual-multi"] = {
+	event = "BufRead",
 	branch = 'master',
 	config = conf.vim_visual_multi,
 }
@@ -69,12 +65,14 @@ lang["mg979/vim-visual-multi"] = {
 lang["terryma/vim-multiple-cursors"] = {}
 
 -- Jump to any location specified by two characters.
-lang["justinmk/vim-sneak"] = {
-	config = conf.vim_sneak,
+lang["phaazon/hop.nvim"] = {
+	event = "BufRead",
+	config = conf.hop_nvim,
 }
 
 -- symbols outline
 lang["simrat39/symbols-outline.nvim"] = {
+	event = "BufRead",
 	disable = not completion_with_lsp,
 	config = conf.symbols_outline,
 }

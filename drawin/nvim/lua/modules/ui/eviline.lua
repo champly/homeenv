@@ -1,9 +1,8 @@
 local gl = require('galaxyline')
-local colors = require('galaxyline.theme').default
 local condition = require('galaxyline.condition')
 local utils = require 'modules.ui.utils'
 local gls = gl.section
-gl.short_line_list = {'NvimTree', 'vista', 'dbui', 'packer', 'coc-explorer', 'vim-plug', 'tagbar'}
+gl.short_line_list = { 'NvimTree', 'vista', 'dbui', 'packer', 'coc-explorer', 'vim-plug', 'tagbar' }
 local u = utils.u
 
 local colors = {
@@ -73,7 +72,7 @@ end
 
 local function lsp_status(status)
 	local shorter_stat = ''
-	for match in string.gmatch(status, "[^%s]+")  do
+	for match in string.gmatch(status, "[^%s]+") do
 		local err_warn = string.find(match, "^[WE]%d+", 0)
 		if not err_warn then
 			shorter_stat = shorter_stat .. ' ' .. match
@@ -82,7 +81,6 @@ local function lsp_status(status)
 	return shorter_stat
 end
 
-
 local function get_coc_lsp()
 	local status = vim.fn['coc#status']()
 	if not status or status == '' then
@@ -90,7 +88,6 @@ local function get_coc_lsp()
 	end
 	return lsp_status(status)
 end
-
 
 local function get_diagnostic_info()
 	if vim.fn.exists('*coc#rpc#start_server') == 1 then
@@ -141,7 +138,7 @@ gls.left[2] = {
 			highlight("GalaxyViModeInv", mode_color[vim_mode], colors.bg, nil)
 			return '  ' .. alias[vim_mode] .. ' '
 		end,
-		highlight = {colors.bg, colors.line_bg, 'bold'},
+		highlight = { colors.bg, colors.line_bg, 'bold' },
 		separator = sep.left_filled,
 		separator_highlight = "GalaxyViModeInv"
 	}
@@ -158,7 +155,7 @@ gls.left[3] = {
 			end
 		end,
 		icon = '   ',
-		highlight = {colors.red, colors.bg}
+		highlight = { colors.red, colors.bg }
 	}
 }
 
@@ -173,7 +170,7 @@ gls.left[4] = {
 			end
 		end,
 		icon = '  ',
-		highlight = {colors.yellow, colors.bg},
+		highlight = { colors.yellow, colors.bg },
 	}
 }
 
@@ -188,9 +185,9 @@ gls.left[5] = {
 			end
 		end,
 		icon = '  ',
-		highlight = {colors.blue, colors.bg},
+		highlight = { colors.blue, colors.bg },
 		separator = sep.left,
-		separator_highlight = {colors.fg, colors.bg},
+		separator_highlight = { colors.fg, colors.bg },
 	}
 }
 
@@ -200,8 +197,8 @@ gls.left[6] = {
 			return '  '
 		end,
 		condition = condition.check_git_workspace,
-		separator_highlight = {'NONE', colors.bg},
-		highlight = {colors.violet, colors.bg, 'bold'}
+		separator_highlight = { 'NONE', colors.bg },
+		highlight = { colors.violet, colors.bg, 'bold' }
 	}
 }
 
@@ -209,9 +206,9 @@ gls.left[7] = {
 	GitBranch = {
 		provider = 'GitBranch',
 		condition = condition.check_git_workspace,
-		highlight = {colors.violet, colors.bg, 'bold'},
+		highlight = { colors.violet, colors.bg, 'bold' },
 		separator = sep.left,
-		separator_highlight = {colors.fg, colors.bg},
+		separator_highlight = { colors.fg, colors.bg },
 	}
 }
 
@@ -239,7 +236,7 @@ gls.left[8] = {
 			return '  ' .. fname .. ' '
 		end,
 		condition = condition.buffer_not_empty,
-		highlight = {colors.fg, colors.bg, 'bold'},
+		highlight = { colors.fg, colors.bg, 'bold' },
 	}
 }
 
@@ -254,9 +251,9 @@ gls.left[9] = {
 			return ' ' .. icon .. ' '
 		end,
 		condition = condition.buffer_not_empty,
-		highlight = {require('galaxyline.provider_fileinfo').get_file_icon_color, colors.bg},
+		highlight = { require('galaxyline.provider_fileinfo').get_file_icon_color, colors.bg },
 		separator = sep.left,
-		separator_highlight = {colors.fg, colors.bg},
+		separator_highlight = { colors.fg, colors.bg },
 	}
 }
 
@@ -278,8 +275,8 @@ gls.left[9] = {
 gls.left[10] = {
 	CocStatus = {
 		provider = get_diagnostic_info,
-		highlight = {colors.orange, colors.bg},
-    }
+		highlight = { colors.orange, colors.bg },
+	}
 }
 
 
@@ -287,8 +284,8 @@ gls.right[1] = {
 	LineInfo = {
 		provider = 'LineColumn',
 		separator = string.format("%s ", sep.right),
-		separator_highlight = {'NONE', colors.bg},
-		highlight = {colors.fg, colors.bg}
+		separator_highlight = { 'NONE', colors.bg },
+		highlight = { colors.fg, colors.bg }
 	}
 }
 
@@ -296,8 +293,8 @@ gls.right[2] = {
 	PerCent = {
 		provider = 'LinePercent',
 		-- separator = ' ',
-		separator_highlight = {'NONE', colors.bg},
-		highlight = {colors.fg, colors.bg, 'bold'}
+		separator_highlight = { 'NONE', colors.bg },
+		highlight = { colors.fg, colors.bg, 'bold' }
 	}
 }
 
@@ -306,8 +303,8 @@ gls.right[3] = {
 		provider = 'FileEncode',
 		condition = condition.hide_in_width,
 		separator = string.format("%s", sep.right),
-		separator_highlight = {'NONE', colors.bg},
-		highlight = {colors.green, colors.bg, 'bold'}
+		separator_highlight = { 'NONE', colors.bg },
+		highlight = { colors.green, colors.bg, 'bold' }
 	}
 }
 
@@ -316,8 +313,8 @@ gls.right[4] = {
 		provider = 'FileFormat',
 		condition = condition.hide_in_width,
 		separator = string.format(" %s ", sep.right),
-		separator_highlight = {'NONE', colors.bg},
-		highlight = {colors.green, colors.bg, 'bold'}
+		separator_highlight = { 'NONE', colors.bg },
+		highlight = { colors.green, colors.bg, 'bold' }
 	}
 }
 
@@ -333,9 +330,9 @@ gls.right[5] = {
 		end,
 		condition = condition.hide_in_width,
 		icon = '   ',
-		highlight = {colors.green, colors.bg},
+		highlight = { colors.green, colors.bg },
 		separator = string.format(" %s", sep.right),
-		separator_highlight = {'NONE', colors.bg},
+		separator_highlight = { 'NONE', colors.bg },
 	}
 }
 
@@ -351,7 +348,7 @@ gls.right[6] = {
 		end,
 		condition = condition.hide_in_width,
 		icon = ' 柳',
-		highlight = {colors.orange, colors.bg}
+		highlight = { colors.orange, colors.bg }
 	}
 }
 gls.right[7] = {
@@ -366,14 +363,14 @@ gls.right[7] = {
 		end,
 		condition = condition.hide_in_width,
 		icon = '  ',
-		highlight = {colors.red, colors.bg}
+		highlight = { colors.red, colors.bg }
 	}
 }
 
 gls.right[8] = {
 	RainbowRed = {
 		provider = get_system_info,
-		highlight = {colors.fg, colors.bg}
+		highlight = { colors.fg, colors.bg }
 	}
 }
 
@@ -382,7 +379,7 @@ gls.right[9] = {
 		provider = function()
 			return ' '
 		end,
-		highlight = {colors.blue, colors.bg}
+		highlight = { colors.blue, colors.bg }
 	}
 }
 
@@ -391,23 +388,22 @@ gls.short_line_left[1] = {
 	BufferType = {
 		provider = 'FileTypeName',
 		separator = ' ',
-		separator_highlight = {'NONE',colors.bg},
-		highlight = {colors.blue, colors.bg, 'bold'}
+		separator_highlight = { 'NONE', colors.bg },
+		highlight = { colors.blue, colors.bg, 'bold' }
 	}
 }
 
 gls.short_line_left[2] = {
 	SFileName = {
-		provider =  'SFileName',
+		provider = 'SFileName',
 		condition = condition.buffer_not_empty,
-		highlight = {colors.fg, colors.bg, 'bold'}
+		highlight = { colors.fg, colors.bg, 'bold' }
 	}
 }
 
 gls.short_line_right[1] = {
 	BufferIcon = {
-		provider= 'BufferIcon',
-		highlight = {colors.fg, colors.bg}
+		provider = 'BufferIcon',
+		highlight = { colors.fg, colors.bg }
 	}
 }
-
