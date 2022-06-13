@@ -32,6 +32,7 @@ ui["kyazdani42/nvim-tree.lua"] = {
 -- use 'vim-airline/vim-airline'
 -- use 'vim-airline/vim-airline-themes'
 ui["akinsho/bufferline.nvim"] = {
+	event = "BufReadPre",
 	config = conf.bufferline,
 	requires = "kyazdani42/nvim-web-devicons",
 }
@@ -76,6 +77,7 @@ ui["lewis6991/gitsigns.nvim"] = {
 -- float terminal
 -- ui["akinsho/toggleterm.nvim"]
 ui["voldikss/vim-floaterm"] = {
+	event = "BufRead",
 	config = conf.vim_floaterm,
 }
 

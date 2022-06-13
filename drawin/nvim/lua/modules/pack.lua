@@ -14,7 +14,6 @@ local load_plugins = function()
 		local tmp = vim.split(vim.fn.globpath(modules_dir, "*/plugins.lua"), "\n")
 
 		for _, f in ipairs(tmp) do
-			-- list[#list+1] = f:sub(#modules_dir - 6, -1)
 			list[#list + 1] = f:sub(#modules_dir - #modules_str + 1, -1) -- add 'modules/' prefix
 		end
 		return list

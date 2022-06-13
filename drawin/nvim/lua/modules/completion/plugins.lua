@@ -2,52 +2,47 @@ local completion = {}
 local conf = require("modules.completion.config")
 
 completion["neovim/nvim-lspconfig"] = {
-	disable = not completion_with_lsp,
 	event = "BufReadPre",
+	disable = not completion_with_lsp,
 	config = conf.nvim_lsp,
 }
 
 -- https://github.com/neovim/nvim-lspconfig/wiki/Autocompletion#nvim-cmp
 completion["hrsh7th/nvim-cmp"] = {
-	disable = not completion_with_lsp,
 	event = "InsertEnter",
+	disable = not completion_with_lsp,
 	config = conf.nvim_cmp,
 }
 
 completion["L3MON4D3/LuaSnip"] = {
-	disable = not completion_with_lsp,
 	after = "nvim-cmp",
+	disable = not completion_with_lsp,
 }
 
 completion["saadparwaiz1/cmp_luasnip"] = {
-	disable = not completion_with_lsp,
 	after = "LuaSnip",
+	disable = not completion_with_lsp,
 }
 
 completion["hrsh7th/cmp-nvim-lua"] = {
-	disable = not completion_with_lsp,
 	after = "cmp_luasnip",
+	disable = not completion_with_lsp,
 }
 
 completion["hrsh7th/cmp-nvim-lsp"] = {
-	disable = not completion_with_lsp,
 	after = "cmp-nvim-lua",
+	disable = not completion_with_lsp,
 }
 
 completion["hrsh7th/cmp-buffer"] = {
-	disable = not completion_with_lsp,
 	after = "cmp-nvim-lsp",
+	disable = not completion_with_lsp,
 }
 
 completion["hrsh7th/cmp-path"] = {
-	disable = not completion_with_lsp,
 	after = "cmp-buffer",
+	disable = not completion_with_lsp,
 }
-
--- completion["hrsh7th/cmp-nvim-lsp-signature-help"] = {
---     disable = not completion_with_lsp,
---     after = "nvim-cmp",
--- }
 
 -- -- TODO: use this replace glepnir/lspsaga.nvim
 -- completion["tami5/lspsaga.nvim"] = {
@@ -56,8 +51,8 @@ completion["hrsh7th/cmp-path"] = {
 -- }
 
 completion["ray-x/lsp_signature.nvim"] = {
-	disable = not completion_with_lsp,
 	after = "nvim-lspconfig",
+	disable = not completion_with_lsp,
 }
 
 -- code-completion engine
@@ -75,6 +70,7 @@ completion["neoclide/coc.nvim"] = {
 -- use 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 completion["nvim-telescope/telescope.nvim"] = {
+	cmd = "Telescope",
 	config = conf.telescope,
 	requires = {
 		{ "nvim-lua/popup.nvim", opt = true },

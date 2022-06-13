@@ -1,23 +1,30 @@
 local tools = {}
 local conf = require("modules.tools.config")
 
--- fzf
--- use { 'junegunn/fzf', run = { -> fzf#install() }
--- use 'junegunn/fzf.vim'
-
 -- debug
-tools["tweekmonster/startuptime.vim"] = {}
+tools["tweekmonster/startuptime.vim"] = {
+	cmd = "StartupTime",
+}
 
 -- tpope plug
-tools["tpope/vim-eunuch"] = {}
-tools["tpope/vim-repeat"] = {}
+tools["tpope/vim-eunuch"] = {
+	event = "BufReadPre",
+}
+tools["tpope/vim-repeat"] = {
+	event = "BufReadPre",
+}
 -- https://gist.github.com/wilon/ac1fc66f4a79e7b0c161c80877c75c94
-tools["tpope/vim-surround"] = {}
-tools["gcmt/wildfire.vim"] = {}
+tools["tpope/vim-surround"] = {
+	event = "BufReadPre",
+}
+tools["gcmt/wildfire.vim"] = {
+	event = "BufReadPre"
+}
 
 -- Debugger
 -- https://github.com/puremourning/vimspector#supported-languages
 tools["puremourning/vimspector"] = {
+	event = "BufReadPre",
 	run = "./install_gadget.py --enable-go --enable-rust --no-check-certificate",
 	config = conf.vimspector,
 	requires = {

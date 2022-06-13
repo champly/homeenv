@@ -13,8 +13,8 @@ lang["nvim-treesitter/nvim-treesitter-textobjects"] = {
 }
 
 lang["iamcco/markdown-preview.nvim"] = {
-	run = 'cd app && yarn install',
-	ft = { 'markdown' },
+	run = "cd app && yarn install",
+	ft = { "markdown" },
 	config = conf.markdown_preview_nvim,
 	requires = {
 		{ "plasticboy/vim-markdown", opt = true },
@@ -30,12 +30,6 @@ lang["preservim/nerdcommenter"] = {
 		vim.g.NERDSpaceDelims = 1
 	end
 }
-
--- lang["tomtom/tcomment_vim"] = {
--- 	config = function()
--- 		-- https://github.com/tomtom/tcomment_vim/issues/111#issuecomment-53426063
--- 	end
--- }
 
 -- The plug-in visualizes undo history and makes it easier to browse and switch between different undo branches
 lang["mbbill/undotree"] = {
@@ -61,7 +55,9 @@ lang["mg979/vim-visual-multi"] = {
 	config = conf.vim_visual_multi,
 }
 
-lang["terryma/vim-multiple-cursors"] = {}
+lang["terryma/vim-multiple-cursors"] = {
+	event = "BufReadPre"
+}
 
 -- Jump to any location specified by two characters.
 lang["phaazon/hop.nvim"] = {
