@@ -1,4 +1,3 @@
-local vim = vim
 local tool = require("utils.tool")
 local autocmd = {}
 

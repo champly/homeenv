@@ -15,21 +15,21 @@ end
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 	vim.lsp.diagnostic.on_publish_diagnostics,
 	{
-	-- Enable underline, use default values
-	underline = true,
-	-- Enable virtual text, override spacing to 4
-	virtual_text = {
-		spacing = 4,
-		prefix = "",
-		-- prefix = " ✗ ",
-	},
-	signs = {
-		enable = true,
-		priority = 20,
-	},
-	-- Disable a feature
-	update_in_insert = false,
-}
+		-- Enable underline, use default values
+		underline = true,
+		-- Enable virtual text, override spacing to 4
+		virtual_text = {
+			spacing = 4,
+			prefix = "",
+			-- prefix = " ✗ ",
+		},
+		signs = {
+			enable = true,
+			priority = 20,
+		},
+		-- Disable a feature
+		update_in_insert = false,
+	}
 )
 
 local signs = { Error = " ", Warn = " ", Hint = " ", Information = " " }
@@ -48,46 +48,22 @@ local enhance_attach = function(client, bufnr)
 	-- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#omnifunc
 	api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
-	-- local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-	-- local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-	-- buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
 	-- Mappings.
 	local opts = { noremap = true, silent = true }
 
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
 	api.nvim_set_keymap('n', '<c-]>', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
 	api.nvim_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-	-- api.nvim_set_keymap('n', '<leader>im', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-	-- api.nvim_set_keymap('n', '<leader>rf', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-	-- api.nvim_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-	-- api.nvim_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
 	api.nvim_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
 
 	-- https://github.com/nvim-telescope/telescope.nvim#neovim-lsp-pickers
 	api.nvim_set_keymap('n', '<leader>im', ':Telescope lsp_implementations theme=ivy<CR>', opts)
-	-- api.nvim_set_keymap('n', '<leader>im', ':lua require("telescope.builtin").lsp_implementations(require("telescope.themes").get_dropdown({layout_config = { width = 0.99 }}))<CR>', opts)
 	api.nvim_set_keymap('n', '<leader>rf', ':Telescope lsp_references theme=ivy<CR>', opts)
 	-- api.nvim_set_keymap("n", "<leader>ca", ":Telescope lsp_code_actions theme=ivy<CR>", opts)
 	api.nvim_set_keymap("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+	-- api.nvim_set_keymap("n", "<leader>ra", "<cmd>lua vim.lsp.buf.range_code_action()<CR>", opts)
 	api.nvim_set_keymap("n", "<leader>ds", ":Telescope diagnostics theme=ivy<CR>", opts)
 	api.nvim_set_keymap("n", "<leader>bl", ":Telescope lsp_document_symbols theme=ivy<CR>", opts)
-
-	-- -- lspsaga keymap
-	-- -- https://github.com/tami5/lspsaga.nvim/blob/main/lua/lspsaga/command.lua#L11
-	-- api.nvim_set_keymap("n", "gx", "<cmd>Lspsaga code_action<cr>", opts)
-	-- api.nvim_set_keymap("x", "gx", ":<c-u>Lspsaga range_code_action<cr>", opts)
-	-- -- api.nvim_set_keymap("n", "K",  "<cmd>Lspsaga hover_doc<cr>", opts)
-	-- api.nvim_set_keymap("n", "go", "<cmd>Lspsaga show_line_diagnostics<cr>", opts)
-	-- api.nvim_set_keymap("n", "<c-j>", "<cmd>Lspsaga diagnostic_jump_next<cr>", opts)
-	-- api.nvim_set_keymap("n", "<c-k>", "<cmd>Lspsaga diagnostic_jump_prev<cr>", opts)
-	-- api.nvim_set_keymap("n", "<leader>gd", "<cmd>Lspsaga preview_definition<cr>", opts)
-	-- api.nvim_set_keymap("n", "<leader>rf", "<cmd>lua require'lspsaga.provider'.lsp_finder()<cr>", opts)
-	-- api.nvim_set_keymap("n", "<leader>rn", "<cmd>Lspsaga rename<cr>", opts)
-	-- -- api.nvim_set_keymap("n", "<leader>im", "<cmd>Lspsaga implement<cr>", opts)
-	-- -- api.nvim_set_keymap("n", "<C-u>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<cr>", opts)
-	-- -- api.nvim_set_keymap("n", "<C-d>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<cr>", opts)
 
 	-- Set autocommands conditional on server_capabilities
 	if client.resolved_capabilities.document_highlight then
@@ -125,6 +101,7 @@ lspconfig.gopls.setup {
 			codelenses = {
 				gc_details = true,
 			},
+			staticcheck = true,
 			analyses = {
 				fieldalignment = true
 			},

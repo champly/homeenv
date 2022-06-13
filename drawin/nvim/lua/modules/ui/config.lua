@@ -7,9 +7,13 @@ function config.gruvbox()
 end
 
 function config.dashboard()
-	vim.g.dashboard_default_executive = "telescope"
+	vim.cmd [[ hi DashboardHeader guifg=yellow ]]
+	vim.cmd [[ hi DashboardCenter guifg=yellow ]]
+	vim.cmd [[ hi DashboardShortcut guifg=#1E90FF ]]
+	vim.cmd [[ hi DashboardFooter guifg=gray ]]
 
-	vim.g.dashboard_custom_header = {
+	local db = require("dashboard")
+	db.custom_header = {
 		"",
 		"",
 		"",
@@ -20,58 +24,61 @@ function config.dashboard()
 		"/_/  \\____/  /_.___/\\___/   \\____/_/     /_/ /_/\\____/\\__/   \\__/\\____/  /_.___/\\___/  /_/____/   \\__,_/ .___/   \\__/\\____/   \\__, /\\____/\\__,_/   ",
 		"                                                                                                      /_/                    /____/                ",
 		"",
+		"",
 	}
-
-	vim.g.dashboard_custom_section = {
-		last_session = {
-			description = { "  Recently laset session                  leader sl" },
-			command = "SessionLoad"
+	db.custom_center = {
+		-- TODO: config Session plugin
+		-- {
+		--     icon = "  ",
+		--     desc = "Recently laset session                  ",
+		--     shortcut = "<leader>sl",
+		--     action = "SessionLoad"
+		-- },
+		{
+			icon = "  ",
+			desc = "Recently opened files                   ",
+			shortcut = "<leader>fh",
+			action = "Telescope oldfiles"
 		},
-		find_history = {
-			description = { "  Recently opened files                   leader fh" },
-			command = "DashboardFindHistory"
+		{
+			icon = "  ",
+			desc = "Find  File                              ",
+			shortcut = "<leader>ff",
+			action = "Telescope find_files"
 		},
-		find_file = {
-			description = { "  Find  File                              leader ff" },
-			command = "DashboardFindFile"
+		{
+			icon = "  ",
+			desc = "Find  word                              ",
+			shortcut = "<leader>fw",
+			action = "Telescope live_grep"
 		},
-		find_word = {
-			description = { "  Find  word                              leader fw" },
-			command = "DashboardFindWord"
+		{
+			icon = "  ",
+			desc = "Create new buffer                       ",
+			shortcut = "<leader> n",
+			action = "enew"
 		},
-		new_buffer = {
-			description = { "  Create new buffer                       leader n " },
-			command = "=enew"
+		{
+			icon = "  ",
+			desc = "Open Personal dotfiles                  ",
+			shortcut = "<leader>fd",
+			action = "Telescope dotfiles"
 		},
-		find_dotfiles = {
-			description = { "  Open Personal dotfiles                  leader fd" },
-			command = "Telescope dotfiles"
+		{
+			icon = "  ",
+			desc = "Find Go Source Code                     ",
+			shortcut = "<leader>fs",
+			action = "Telescope gosource"
 		},
-		go_source = {
-			description = { "  Find Go Source Code                     leader fs" },
-			command = "Telescope gosource"
-		}
 	}
-
-	vim.g.dashboard_custom_footer = {
+	db.custom_footer = {
+		"",
+		"",
 		"If you think penguins are fat and waddle, you have never been attacked by one",
 		"running at you in excess of 100 miles per hour.",
 		"",
 		"                                                            -- Linus Torvalds",
 	}
-
-	-- vim.cmd [[ hi DashboardHeader guifg=green ]]
-	-- vim.cmd [[ hi DashboardCenter guifg=yellow ]]
-	vim.cmd [[ hi DashboardShortcut guifg=#1E90FF ]]
-	vim.cmd [[ hi DashboardFooter guifg=gray ]]
-
-
-	local bind = require("utils.bind")
-	bind.nvim_load_mapping({
-		["n|<leader>fh"] = bind.map_cr("DashboardFindHistory"):with_noremap():with_silent(),
-		["n|<leader>fw"] = bind.map_cr("DashboardFindWord"):with_noremap():with_silent(),
-		["n|<leader>ff"] = bind.map_cr("DashboardFindFile"):with_noremap():with_silent()
-	})
 end
 
 function config.alpha_nvim()
@@ -118,48 +125,13 @@ function config.alpha_nvim()
 end
 
 function config.nvim_tree()
-	-- vim.g.nvim_tree_indent_markers = 1
-	-- vim.g.nvim_tree_special_files = { 'README.md': 1, 'Makefile': 1, 'MAKEFILE': 1 } -- List of filenames that gets highlighted with NvimTreeSpecialFile
-	vim.g.nvim_tree_special_files = {}
-
-	local list = {
-		{ key = { "<CR>", "o" }, action = "edit" },
-		{ key = { "v" }, action = "vsplit" },
-		{ key = { "s" }, action = "split" },
-	}
-
-	vim.g.nvim_tree_icons = {
-		default = '',
-		symlink = '',
-		git = {
-			-- unstaged = "✚",
-			-- staged =  "✚",
-			-- unmerged =  "≠",
-			-- renamed =  "≫",
-			-- untracked = "★",
-			unstaged = "✗",
-			staged = "✓",
-			unmerged = "",
-			-- renamed = "➜",
-			renamed = "≫",
-			untracked = "★",
-			deleted = "≠",
-			ignored = "◌"
-		},
-		lsp = {
-			hint = "",
-			info = "",
-			warning = "",
-			error = ""
-		}
-	}
-
 	-- https://github.com/kyazdani42/nvim-tree.lua/pull/603
 	-- https://github.com/kyazdani42/nvim-tree.lua/issues/674
 	require("nvim-tree").setup {
 		update_cwd = true,
 		update_focused_file = {
-			enable = true
+			enable = true,
+			update_cwd = false
 		},
 		renderer = {
 			indent_markers = {
@@ -170,25 +142,62 @@ function config.nvim_tree()
 					none = "  ",
 				},
 			},
+			icons = {
+				glyphs = {
+					default = '',
+					symlink = '',
+					git = {
+						-- unstaged = "✚",
+						-- staged =  "✚",
+						-- unmerged =  "≠",
+						-- renamed =  "≫",
+						-- untracked = "★",
+						unstaged = "✗",
+						staged = "✓",
+						unmerged = "",
+						-- renamed = "➜",
+						renamed = "≫",
+						untracked = "★",
+						deleted = "≠",
+						ignored = "◌"
+					},
+
+				}
+			},
+			special_files = {}
+		},
+		diagnostics = {
+			enable = false,
+			show_on_dirs = false,
+			icons = {
+				hint = "",
+				info = "",
+				warning = "",
+				error = ""
+			}
+		},
+		filters = {
+			dotfiles = true
 		},
 		actions = {
 			change_dir = {
 				enable = true,
-				global = false,
+				global = false
 			},
 			open_file = {
 				quit_on_open = true,
 				resize_window = true,
 			},
 		},
-		filters = {
-			dotfiles = true
-		},
 		view = {
-			width = 30,
+			width = "20%",
 			side = "left",
 			mappings = {
-				list = list
+				list = {
+					{ key = { "<CR>", "o" }, action = "edit" },
+					{ key = { "v" }, action = "vsplit" },
+					{ key = { "s" }, action = "split" },
+				}
 			}
 		}
 	}
@@ -204,6 +213,7 @@ function config.galaxyline()
 end
 
 function config.feline_nvim()
+	vim.cmd [[ hi StatusLineNC guibg=#696157 gui=none ]]
 	require("modules.ui.statusline.layout")
 	-- require("modules.ui.statusline.nvchad")
 end
@@ -230,12 +240,6 @@ end
 
 function config.vim_gitgutter()
 	vim.g.gitgutter_diff_args = '-w'
-
-	-- highlight! link SignColumn LineNr
-	-- highlight GitGutterAdd	  guifg=#009900 ctermfg=2
-	-- highlight GitGutterChange guifg=#bbbb00 ctermfg=3
-	-- highlight GitGutterDelete guifg=#ff2222 ctermfg=1
-	-- vim.g.gitgutter_set_sign_backgrounds = 1
 
 	vim.g.gitgutter_sign_allow_clobber = 0
 	vim.g.gitgutter_map_keys = 0

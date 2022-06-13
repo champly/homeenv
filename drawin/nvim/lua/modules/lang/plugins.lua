@@ -12,7 +12,6 @@ lang["nvim-treesitter/nvim-treesitter-textobjects"] = {
 	after = "nvim-treesitter"
 }
 
-
 lang["iamcco/markdown-preview.nvim"] = {
 	run = 'cd app && yarn install',
 	ft = { 'markdown' },
@@ -75,6 +74,13 @@ lang["simrat39/symbols-outline.nvim"] = {
 	event = "BufRead",
 	disable = not completion_with_lsp,
 	config = conf.symbols_outline,
+}
+
+lang["folke/trouble.nvim"] = {
+	event = "BufRead",
+	disable = not completion_with_lsp,
+	config = conf.trouble,
+	requires = "kyazdani42/nvim-web-devicons",
 }
 
 return lang

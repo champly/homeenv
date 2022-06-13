@@ -15,55 +15,6 @@ else
 	let g:netrw_browsex_viewer = 'google-chrome'
 endif
 
-" " ===
-" " " === grepper
-" " " ===
-" if isdirectory(expand(modules_path .. "vim-grepper"))
-"     " 先加载了`g:grepper`才有值
-"     runtime plugin/grepper.vim
-
-"     let g:grepper.highlight = 1		" 高亮显示搜索内容
-"     let g:grepper.stop = 1000		" 查找到多少个后就停止搜索
-"     let g:grepper.switch = 0		" 自动切换到quickfix窗口
-
-"     " Search for the current word
-"     nnoremap <leader>* :Grepper -tool ag -cword -noprompt<CR>
-
-"     vnoremap <F4> <Esc>:<C-u>Rg -wS '<C-r>=GetVisual('rg')<CR>'  <C-h>
-"     nnoremap <expr> <F4> ":Rg -wS " . expand('<cword>') . ' '
-
-"     " Get the current visual block for search and replaces
-"     " This function passed the visual block through a string escape function
-"     " Based on this - https://stackoverflow.com/questions/676600/vim-replace-selected-text/677918#677918
-"     function! GetVisual(tool) range
-"         " Save the current register and clipboard
-"         let reg_save = getreg('"')
-"         let regtype_save = getregtype('"')
-"         let cb_save = &clipboard
-"         set clipboard&
-
-"         " Put the current visual selection in the " register
-"         normal! ""gvy
-"         let selection = getreg('"')
-
-"         " Put the saved registers and clipboards back
-"         call setreg('"', reg_save, regtype_save)
-"         let &clipboard = cb_save
-
-"         "Escape any special characters in the selection
-"         let l:escaped_selection = EscapeString(selection, a:tool)
-
-"         " 删除行尾换行符
-"         if strlen(l:escaped_selection) > 2 && l:escaped_selection[-2:] == '\n'
-"             let l:escaped_selection = l:escaped_selection[:-3]
-"         endif
-
-"         return l:escaped_selection
-"     endfunction
-" endif
-
-
-
 " ===
 " === Functions
 " ===

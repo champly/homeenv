@@ -40,8 +40,8 @@ M.icon_styles = {
 
 M.system_icons = {
 	Linux = ' ',
-    Darwin = ' ',
-    Windows = ' ',
+	Darwin = ' ',
+	Windows = ' ',
 }
 
 M.colors = {
@@ -123,7 +123,7 @@ end
 
 M.lsp_status = function(status)
 	local shorter_stat = ''
-	for match in string.gmatch(status, "[^%s]+")  do
+	for match in string.gmatch(status, "[^%s]+") do
 		local err_warn = string.find(match, "^[WE]%d+", 0)
 		if not err_warn then
 			shorter_stat = shorter_stat .. ' ' .. match

@@ -4,22 +4,20 @@ local pickers = require("telescope.pickers")
 local make_entry = require("telescope.make_entry")
 local conf = require("telescope.config").values
 
-local golang_source = function ()
+local golang_source = function()
 	local root = os.getenv("HOME") .. "/go/src/"
 	local result = {}
 
 	local dicts = vim.fn.split(vim.fn.globpath(root, "*"))
 	for _, dict in pairs(dicts) do
 		if vim.fn.isdirectory(dict) then
-			local cdicts = vim.fn.split(vim.fn.globpath(dict, "*"))
-			for _, cdict in pairs(cdicts) do
-				-- local f = vim.fn.split(vim.fn.globpath(cdict, "*.go"))
-				-- if next(f) ~= nil then
-				--     for _, val in pairs(f) do
-						-- table.insert(result, val)
-					-- end
-				-- end
-				table.insert(result, cdict)
+			local organizes = vim.fn.split(vim.fn.globpath(dict, "*"))
+			for _, organize in pairs(organizes) do
+				local projects = vim.fn.split(vim.fn.globpath(organize, "*"))
+				for _, project in pairs(projects) do
+					table.insert(result, project)
+				end
+				table.insert(result, organize)
 			end
 		end
 	end
@@ -27,7 +25,7 @@ local golang_source = function ()
 	return result
 end
 
-local gosource = function (opts)
+local gosource = function(opts)
 	opts = opts or {}
 	local results = golang_source()
 

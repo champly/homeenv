@@ -54,6 +54,12 @@ local load_core = function()
 	disable_distribution_plugins()
 	leader_map()
 
+	-- for neovide
+	-- https://github.com/neovide/neovide#some-nonsense-
+	vim.o.guifont = "SauceCodePro Nerd Font"
+	vim.g.neovide_cursor_vfx_mode = "railgun"
+	vim.g.neovide_fullscreen = "v:true"
+
 	require("core.options")
 	require("core.mapping")
 	require("core.event")

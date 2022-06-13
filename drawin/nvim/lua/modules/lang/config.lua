@@ -6,7 +6,7 @@ function config.nvim_treesitter()
 
 	require("nvim-treesitter.configs").setup {
 		ensure_installed = "all",
-		ignore_install = { "swift", "wgsl" },
+		ignore_install = { "swift", "wgsl", "phpdoc" },
 		highlight = {
 			enable = true, -- false will disable the whole extension
 		},
@@ -39,11 +39,6 @@ function config.undotree()
 	vim.api.nvim_set_keymap("n", "<leader>u", ":UndotreeToggle<cr>", { noremap = true })
 	-- If set to 1, the undotree window will get focus after being opened, otherwise focus will stay in current window.
 	vim.g.undotree_SetFocusWhenToggle = 1
-
-	-- local bind = require("utils.bind")
-	-- bind.nvim_load_mapping({
-	--     ["n|<leader>u"] = bind.map_cr("UndotreeToggle"):with_noremap(),
-	-- })
 end
 
 function config.vimwiki()
@@ -107,11 +102,12 @@ function config.hop_nvim()
 end
 
 function config.symbols_outline()
-	vim.g.symbols_outline = {
-		auto_close = true,
+	require("symbols-outline").setup({
+		highlight_hovered_item = true,
+		auto_close = false,
 		auto_preview = false,
 		relative_width = true,
-		show_symbol_details = false,
+		show_symbol_details = true,
 		width = 25,
 		keymaps = { -- These keymaps can be a string or a table for multiple keys
 			close = { "<Esc>", "q" },
@@ -122,8 +118,46 @@ function config.symbols_outline()
 			rename_symbol = "r",
 			code_actions = "a",
 		},
-	}
+	})
 	vim.api.nvim_set_keymap("n", "<Space>o", ":SymbolsOutline<CR>", { noremap = true, silent = true })
+	vim.cmd [[ hi FocusedSymbol gui=bold guifg=#C678DD ]]
+
+	-- https://github.com/simrat39/symbols-outline.nvim/issues/93#issuecomment-1003566569
+	_G.set_symbols_outline_state = function()
+		vim.g["symbols_outline_state"] = require("symbols-outline").state
+	end
+	vim.cmd [[ autocmd BufEnter * :lua set_symbols_outline_state() ]]
+	vim.cmd [[ autocmd BufEnter * if winnr("$") == 1 && exists("g:symbols_outline_state.outline_buf") && g:symbols_outline_state.outline_buf | quit | endif ]]
+end
+
+function config.trouble()
+	require("trouble").setup({
+		position = "bottom",
+		height = 10,
+		icons = true,
+		action_keys = { -- key mappings for actions in the trouble list
+			-- map to {} to remove a mapping, for example:
+			-- close = {},
+			close = { "q", "esc>" }, -- close the list
+			-- cancel = "<esc>", -- cancel the preview and get back to your last window / buffer / cursor
+			refresh = "r", -- manually refresh
+			jump = { "<cr>", "<tab>" }, -- jump to the diagnostic or open / close folds
+			open_split = { "<c-x>" }, -- open buffer in new split
+			open_vsplit = { "<c-v>" }, -- open buffer in new vsplit
+			open_tab = { "<c-t>" }, -- open buffer in new tab
+			jump_close = { "o" }, -- jump to the diagnostic and close the list
+			toggle_mode = "m", -- toggle between "workspace" and "document" diagnostics mode
+			toggle_preview = "P", -- toggle auto_preview
+			hover = "K", -- opens a small popup with the full multiline message
+			preview = "p", -- preview the diagnostic location
+			close_folds = { "zM", "zm" }, -- close all folds
+			open_folds = { "zR", "zr" }, -- open all folds
+			toggle_fold = { "zA", "za" }, -- toggle fold of current file
+			previous = "k", -- preview item
+			next = "j" -- next item
+		},
+	})
+	vim.api.nvim_set_keymap("n", "<leader>xx", "<cmd>Trouble<cr>", { silent = true, noremap = true })
 end
 
 return config

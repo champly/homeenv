@@ -79,7 +79,7 @@ local function load_options()
 		-- https://zhuanlan.zhihu.com/p/24484514
 		vim.g.python3_host_skip_check = 1
 		if not vim.loop.fs_stat("/usr/local/bin/python3") then
-			vim.g.python3_host_prog = "/opt/homebrew/bin/python3"
+			vim.g.python3_host_prog = "/usr/bin/python3"
 		else
 			vim.g.python3_host_prog = "/usr/local/bin/python3"
 		end
