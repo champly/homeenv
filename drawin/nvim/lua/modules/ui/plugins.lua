@@ -17,10 +17,6 @@ ui['ellisonleao/gruvbox.nvim'] = {
 ui["glepnir/dashboard-nvim"] = {
 	config = conf.dashboard,
 }
--- ui["goolord/alpha-nvim"] = {
---     config = conf.alpha_nvim,
---     requires = "kyazdani42/nvim-web-devicons",
--- }
 
 -- file system explorer
 ui["kyazdani42/nvim-tree.lua"] = {
@@ -57,16 +53,6 @@ ui["airblade/vim-gitgutter"] = {
 	disable = completion_with_lsp,
 	config = conf.vim_gitgutter,
 }
-
--- use with nvim-lspconfig
--- git-blame virtual text
--- ui["f-person/git-blame.nvim"] = {
---     config = function()
---         -- relative date
---         vim.g.gitblame_date_format = "%r"
---         vim.g.gitblame_message_template = "     (<author> <date>) <summary>"
---     end
--- }
 
 ui["lewis6991/gitsigns.nvim"] = {
 	event = "BufReadPre",

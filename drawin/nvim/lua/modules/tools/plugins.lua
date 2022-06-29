@@ -17,8 +17,10 @@ tools["tpope/vim-repeat"] = {
 tools["tpope/vim-surround"] = {
 	event = "BufReadPre",
 }
+
+-- quick choice
 tools["gcmt/wildfire.vim"] = {
-	event = "BufReadPre"
+	event = "BufReadPre",
 }
 
 -- Debugger
@@ -27,16 +29,14 @@ tools["puremourning/vimspector"] = {
 	event = "BufReadPre",
 	run = "./install_gadget.py --enable-go --enable-rust --no-check-certificate",
 	config = conf.vimspector,
+	setup = conf.vimspector_setup,
 	requires = {
 		-- UI Component Library for Neovim.
 		{ "MunifTanjim/nui.nvim", opt = true },
 	},
 }
 
--- -- Insert or delete brackets, parens, quotes in pair
--- tools["jiangmiao/auto-pairs"] = {
---     event = "BufReadPre",
--- }
+-- Insert or delete brackets, parens, quotes in pair
 tools["windwp/nvim-autopairs"] = {
 	event = "BufReadPre",
 	config = conf.autopairs,
@@ -48,7 +48,19 @@ tools["windwp/nvim-autopairs"] = {
 
 -- Smooth scrolling for Vim done right
 tools["psliwka/vim-smoothie"] = {
-	config = conf.smoothie,
+	event = "BufReadPre",
+	setup = conf.smoothie_setup,
 }
+
+tools["monkoose/matchparen.nvim"] = {
+	event = "BufReadPre",
+	config = conf.matchparen,
+}
+
+-- zbirenbaum/copilot.lua
+-- zbirenbaum/copilot-cmp
+-- tools["github/copilot.vim"] = {
+--     cmd = "Copilot",
+-- }
 
 return tools

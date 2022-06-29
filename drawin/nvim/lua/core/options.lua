@@ -85,10 +85,6 @@ local function load_options()
 		end
 	end
 
-	-- https://neovim.io/doc/user/filetype.html
-	vim.g.did_load_filetypes = 0
-	vim.g.do_filetype_lua = 1
-
 	for name, value in pairs(global_local) do
 		vim.o[name] = value
 	end

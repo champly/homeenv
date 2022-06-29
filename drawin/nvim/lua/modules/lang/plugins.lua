@@ -15,7 +15,7 @@ lang["nvim-treesitter/nvim-treesitter-textobjects"] = {
 lang["iamcco/markdown-preview.nvim"] = {
 	run = "cd app && yarn install",
 	ft = { "markdown" },
-	config = conf.markdown_preview_nvim,
+	setup = conf.markdown_preview_nvim_setup,
 	requires = {
 		{ "plasticboy/vim-markdown", opt = true },
 		{ "dhruvasagar/vim-table-mode", opt = true },
@@ -25,7 +25,7 @@ lang["iamcco/markdown-preview.nvim"] = {
 -- annotate plugin: https://github.com/preservim/nerdcommenter#settings
 lang["preservim/nerdcommenter"] = {
 	event = "BufRead",
-	config = function()
+	setup = function()
 		-- 注释的时候自动加个空格,强迫症必配
 		vim.g.NERDSpaceDelims = 1
 	end
@@ -39,30 +39,26 @@ lang["mbbill/undotree"] = {
 
 -- VimWiki is a personal wiki for Vim
 lang["vimwiki/vimwiki"] = {
-	config = conf.vimwiki,
-}
-
--- quick find word
-lang["brooth/far.vim"] = {
 	event = "BufRead",
-	config = conf.far_vim,
+	cmd = {
+		"VimwikiMakeDiaryNote",
+		"VimwikiIndex",
+	},
+	setup = conf.vimwiki_setup,
 }
 
 -- choice multi line
 lang["mg979/vim-visual-multi"] = {
-	event = "BufRead",
-	branch = 'master',
-	config = conf.vim_visual_multi,
-}
-
-lang["terryma/vim-multiple-cursors"] = {
-	event = "BufReadPre"
+	event = "BufReadPre",
+	branch = "master",
+	config = conf.vim_visual_multi_setup,
 }
 
 -- Jump to any location specified by two characters.
 lang["phaazon/hop.nvim"] = {
-	event = "BufRead",
+	event = "BufReadPre",
 	config = conf.hop_nvim,
+	setup = conf.hop_nvim_setup,
 }
 
 -- symbols outline

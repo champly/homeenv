@@ -24,14 +24,12 @@ function config.nvim_treesitter()
 	}
 end
 
-function config.markdown_preview_nvim()
-	-- auto open browser
-	-- vim.g.mkdp_auto_start = 1
+function config.markdown_preview_nvim_setup()
+	-- dhruvasagar/vim-table-mode
 	vim.api.nvim_set_keymap("n", "<leader>kv", ":MarkdownPrevie<CR>", { noremap = true })
 
-	-- dhruvasagar/vim-table-mode
-	vim.g.table_mode_cell_text_object_i_map = "k<Bar>"
 	vim.api.nvim_set_keymap("n", "<leader>tm", ":TableModeToggle<cr>", {})
+	vim.g.table_mode_cell_text_object_i_map = "k<Bar>"
 end
 
 function config.undotree()
@@ -41,7 +39,7 @@ function config.undotree()
 	vim.g.undotree_SetFocusWhenToggle = 1
 end
 
-function config.vimwiki()
+function config.vimwiki_setup()
 	vim.g.vimwiki_list = {
 		{
 			path = "~/Dropbox/notebook/vimwiki/",
@@ -49,30 +47,12 @@ function config.vimwiki()
 			ext = ".md"
 		}
 	}
+
+	vim.api.nvim_set_keymap("n", "<leader>wd", ":VimwikiMakeDiaryNote<cr>", { silent = true })
+	vim.api.nvim_set_keymap("n", "<leader>ww", ":VimwikiIndex<cr>", { silent = true })
 end
 
-function config.far_vim()
-	vim.cmd [[ set lazyredraw ]] -- improve scrolling performance when navigating through large results
-	vim.cmd [[ set regexpengine=1 ]] -- use old regexp engine
-	vim.cmd [[ set ignorecase smartcase ]] -- ignore case only when the pattern contains no capital letters
-
-	-- -- shortcut for far.vim find
-	-- vim.cmd [[ nnoremap <silent> <Find-Shortcut>  :Farf<cr> ]]
-	-- vim.cmd [[ vnoremap <silent> <Find-Shortcut>  :Farf<cr> ]]
-
-	-- -- shortcut for far.vim replace
-	-- vim.cmd [[ nnoremap <silent> <Replace-Shortcut>  :Farr<cr> ]]
-	-- vim.cmd [[ vnoremap <silent> <Replace-Shortcut>  :Farr<cr> ]]
-
-	-- shortcut for far.vim find
-	vim.api.nvim_set_keymap("n", "<Find-Shortcut>", ":Farf<cr>", { silent = true, noremap = true })
-	vim.api.nvim_set_keymap("v", "<Find-Shortcut>", ":Farf<cr>", { silent = true, noremap = true })
-	-- shortcut for far.vim replace
-	vim.api.nvim_set_keymap("n", "<Replace-Shortcut", ":Farr<cr>", { silent = true, noremap = true })
-	vim.api.nvim_set_keymap("v", "<Replace-Shortcut", ":Farr<cr>", { silent = true, noremap = true })
-end
-
-function config.vim_visual_multi()
+function config.vim_visual_multi_setup()
 	vim.g.VM_show_warnings = 0
 	vim.g.VM_leader = "\\"
 	vim.g.VM_maps = {
@@ -81,6 +61,8 @@ function config.vim_visual_multi()
 		["Add Cursor Down"] = "<M-j>", -- 往下增加光标 Opt+j
 		["Add Cursor Up"] = "<M-k>", -- 往上增加光标 Opt+k
 		-- ["Select All"] = '\\A',
+	}
+	vim.g.VM_no_meta_mappings = {
 	}
 
 	-- Opt+h Opt+l 在多光标模式下 可以移动单个光标 而不是所有光标
@@ -92,7 +74,9 @@ function config.hop_nvim()
 	require("hop").setup({
 		keys = ";sftunq/SFGHLTUNRMQZ?0123456789",
 	})
+end
 
+function config.hop_nvim_setup()
 	-- https://github.com/phaazon/hop.nvim#keybindings
 	-- place this in one of your configuration file(s)
 	vim.api.nvim_set_keymap('n', 'f',

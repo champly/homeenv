@@ -52,13 +52,6 @@ aug END
 
 
 
-" ===
-" === General
-" ===
-" quick open vimrc in a new tab
-" nnoremap <leader>v	:e $MYVIMRC<cr>
-" nnoremap <leader>s	:source $MYVIMRC<cr>
-
 " " hidden not save buffer, repeat with coc.nvim
 " set hidden
 

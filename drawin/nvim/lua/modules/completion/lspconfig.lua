@@ -93,7 +93,7 @@ lspconfig.gopls.setup {
 	filetypes = { "go", "gomod", "gotmpl" },
 	root_dir = function(fname)
 		-- https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/gopls.lua
-		return util.root_pattern 'go.work' (fname) or util.root_pattern('go.mod', '.git')(fname)
+		return util.root_pattern("go.work")(fname) or util.root_pattern("go.mod", ".git")(fname)
 	end,
 	settings = {
 		gopls = {
@@ -118,7 +118,7 @@ lspconfig.rust_analyzer.setup {
 		["rust-analyzer"] = {
 			assist = {
 				importGranularity = "module",
-				importPrefix = "by_self",
+				importPrefix = "self",
 			},
 			inlayHints = {
 				enable = true,
@@ -131,9 +131,9 @@ lspconfig.rust_analyzer.setup {
 				typeHintsWithVariable = true,
 				chainingHintsSeparator = "‣",
 			},
-			-- cargo = {
-			--     loadOutDirsFromCheck = true
-			-- },
+			cargo = {
+				loadOutDirsFromCheck = true
+			},
 			procMacro = {
 				enable = true
 			},
@@ -187,30 +187,39 @@ lspconfig.yamlls.setup {
 --     capabilities = capabilities,
 -- }
 
--- -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#sumneko_lua
+-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#sumneko_lua
 local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
--- local sumneko_root_path = "/Users/champly/.config/coc/extensions/coc-lua-data/sumneko-lua-ls"
--- local sumneko_binary = sumneko_root_path .. "/bin/macOS/lua-language-server"
-
+local root_files = {
+	".luarc.json",
+	".luacheckrc",
+	".stylua.toml",
+	"selene.toml",
+	"init.vim",
+}
 lspconfig.sumneko_lua.setup {
 	-- cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
+	root_dir = function(fname)
+		return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
+	end,
 	settings = {
 		Lua = {
 			runtime = {
 				-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-				version = 'LuaJIT',
+				version = "LuaJIT",
 				-- Setup your lua path
 				path = runtime_path,
 			},
 			diagnostics = {
 				-- Get the language server to recognize the `vim` global
-				globals = { 'vim' },
+				globals = { "vim", "packer_plugins" },
+				enable = true,
 			},
 			workspace = {
 				-- Make the server aware of Neovim runtime files
 				library = vim.api.nvim_get_runtime_file("", true),
+				-- library = vim.list_extend({ [vim.fn.expand("$VIMRUNTIME/lua")] = true }, {}),
 			},
 			-- Do not send telemetry data containing a randomized but unique identifier
 			telemetry = {

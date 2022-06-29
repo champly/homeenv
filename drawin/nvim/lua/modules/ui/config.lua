@@ -27,13 +27,12 @@ function config.dashboard()
 		"",
 	}
 	db.custom_center = {
-		-- TODO: config Session plugin
-		-- {
-		--     icon = "  ",
-		--     desc = "Recently laset session                  ",
-		--     shortcut = "<leader>sl",
-		--     action = "SessionLoad"
-		-- },
+		{
+			icon = "  ",
+			desc = "Recently laset session                  ",
+			shortcut = "<leader>sl",
+			action = "SessionLoad"
+		},
 		{
 			icon = "  ",
 			desc = "Recently opened files                   ",
@@ -79,55 +78,13 @@ function config.dashboard()
 		"",
 		"                                                            -- Linus Torvalds",
 	}
+	db.session_directory = "~/Dropbox/config/session"
 
 	vim.api.nvim_set_keymap("n", "<leader>fh", ":Telescope oldfiles<cr>", {})
 	vim.api.nvim_set_keymap("n", "<leader>ff", ":Telescope find_files<cr>", {})
 	vim.api.nvim_set_keymap("n", "<leader>fw", ":Telescope live_grep<cr>", {})
 	vim.api.nvim_set_keymap("n", "<leader>fd", ":Telescope dotfiles<cr>", {})
 	vim.api.nvim_set_keymap("n", "<leader>fs", ":Telescope gosource<cr>", {})
-end
-
-function config.alpha_nvim()
-	local dashboard = require("alpha.themes.dashboard")
-	dashboard.section.header.val = {
-		"",
-		"",
-		"",
-		"  ______         __                                      __     __           __            _                        __                             ",
-		" /_  __/___     / /_  ___     ____  _____   ____  ____  / /_   / /_____     / /_  ___     (_)____   __  ______     / /_____     __  ______  __  __ ",
-		"  / / / __ \\   / __ \\/ _ \\   / __ \\/ ___/  / __ \\/ __ \\/ __/  / __/ __ \\   / __ \\/ _ \\   / / ___/  / / / / __ \\   / __/ __ \\   / / / / __ \\/ / / / ",
-		" / / / /_/ /  / /_/ /  __/  / /_/ / /     / / / / /_/ / /_   / /_/ /_/ /  / /_/ /  __/  / (__  )  / /_/ / /_/ /  / /_/ /_/ /  / /_/ / /_/ / /_/ /  ",
-		"/_/  \\____/  /_.___/\\___/   \\____/_/     /_/ /_/\\____/\\__/   \\__/\\____/  /_.___/\\___/  /_/____/   \\__,_/ .___/   \\__/\\____/   \\__, /\\____/\\__,_/   ",
-		"                                                                                                      /_/                    /____/                ",
-		"",
-	}
-	dashboard.section.buttons.val = {
-		dashboard.button("<leader>sl", "  Recently laset session", ":SessionLoad<CR>"),
-		dashboard.button("<leader>fh", "  Recently opened files", ":Telescope oldfiles<CR>"),
-		dashboard.button("<leader>ff", "  Find  File", ":Telescope find_files<CR>"),
-		dashboard.button("<leader>fw", "  Find  word", ":Telescope live_grep<CR>"),
-		dashboard.button("<leader> n", "  Create new buffer", ":enew<CR>"),
-		dashboard.button("<leader>fd", "  Open Personal dotfiles", ":Telescope dotfiles<CR>"),
-		dashboard.button("<leader>fs", "  Find Go Source Code", ":Telescope gosource<CR>"),
-	}
-
-	dashboard.section.footer.val = {
-		"If you think penguins are fat and waddle, you have never been attacked by one",
-		"running at you in excess of 100 miles per hour.",
-		"",
-		"                                                            -- Linus Torvalds",
-	}
-
-	dashboard.config.opts.noautocmd = true
-
-	require("alpha").setup(dashboard.config)
-
-	local bind = require("utils.bind")
-	bind.nvim_load_mapping({
-		["n|<leader>fh"] = bind.map_cr("Telescope oldfiles"):with_noremap():with_silent(),
-		["n|<leader>fw"] = bind.map_cr("Telescope live_grep"):with_noremap():with_silent(),
-		["n|<leader>ff"] = bind.map_cr("Telescope find_files"):with_noremap():with_silent()
-	})
 end
 
 function config.nvim_tree()

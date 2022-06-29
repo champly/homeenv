@@ -5,8 +5,10 @@ function config.vimspector()
 		vim.cmd [[ packadd nui.nvim ]]
 	end
 	require("modules/tools/vimspector")
+end
 
-	vim.g.vimspector_enable_mappings = 'VISUAL_STUDIO'
+function config.vimspector_setup()
+	vim.g.vimspector_enable_mappings = "VISUAL_STUDIO"
 
 	-- -- https://github.com/zunpeng/neovim/blob/master/cfgs/plug-cfg/vimspector-cfg.vim
 	vim.api.nvim_set_keymap("n", "<leader>dt", "<CR>:lua show_vimspector_list()<CR>", { noremap = true, silent = true })
@@ -35,7 +37,7 @@ function config.autopairs()
 	end
 end
 
-function config.smoothie()
+function config.smoothie_setup()
 	vim.g.smoothie_remapped_commands = {
 		"<C-D>",
 		"<C-U>",
@@ -54,6 +56,14 @@ function config.smoothie()
 		-- "zz",
 		-- "zb",
 	}
+end
+
+function config.matchparen()
+	require("matchparen").setup({
+		on_startup = true, -- Should it be enabled by default
+		hl_group = "MatchParen", -- highlight group for matched characters
+		augroup_name = "matchparen", -- almost no reason to touch this unless there is already augroup with such name
+	})
 end
 
 return config
