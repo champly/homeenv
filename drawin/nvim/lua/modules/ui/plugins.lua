@@ -8,7 +8,7 @@ local conf = require("modules.ui.config")
 -- ui["morhetz/gruvbox"] = {
 --     config = conf.gruvbox,
 -- }
-ui['ellisonleao/gruvbox.nvim'] = {
+ui["ellisonleao/gruvbox.nvim"] = {
 	config = conf.gruvbox,
 }
 

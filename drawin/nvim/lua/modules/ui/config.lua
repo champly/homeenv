@@ -1,9 +1,14 @@
 local config = {}
 
 function config.gruvbox()
-	vim.g.gruvbox_italic = 1
-	vim.cmd("set background=dark")
-	vim.cmd("colorscheme gruvbox")
+	-- vim.g.gruvbox_italic = 1
+	-- vim.cmd("set background=dark")
+	-- vim.cmd("colorscheme gruvbox")
+	require("gruvbox").setup({
+		italic = true,
+	})
+	vim.o.background = "dark"
+	vim.cmd([[ colorscheme gruvbox ]])
 end
 
 function config.dashboard()
@@ -153,7 +158,8 @@ function config.nvim_tree()
 			},
 		},
 		view = {
-			width = "20%",
+			adaptive_size = true,
+			-- width = "16%",
 			side = "left",
 			mappings = {
 				list = {
@@ -189,8 +195,8 @@ function config.bufferline()
 			numbers = function(opts)
 				return string.format('%s.', opts.ordinal)
 			end,
-			modified_icon = '✥',
-			buffer_close_icon = '',
+			modified_icon = "✥",
+			buffer_close_icon = "",
 			always_show_bufferline = false
 		}
 	}
