@@ -6,7 +6,6 @@ end
 
 function config.nvim_cmp()
 	-- https://github.com/neovim/nvim-lspconfig/wiki/Autocompletion#nvim-cmp
-
 	vim.opt.completeopt = "menuone,noselect"
 
 	local cmp = require("cmp")
@@ -106,8 +105,8 @@ end
 
 function config.lspsaga_nvim()
 	local lspsaga = require("lspsaga")
-	lspsaga.setup({
-		code_action_icon = '💡'
+	lspsaga.init_lsp_saga({
+		code_action_icon = "💡"
 	})
 
 	-- vim.cmd [[ highlight link LspSagaFinderSelection guifg='#ff0000' guibg='#00ff00' gui='bold' ]]
@@ -130,9 +129,10 @@ function config.telescope()
 			layout_strategy = "horizontal",
 			-- winblend = 30,
 			layout_config = {
-				prompt_position = 'top',
+				prompt_position = "top",
 				height = 0.8,
 				width = 0.8,
+				scroll_speed = 6,
 			},
 		},
 		extensions = {

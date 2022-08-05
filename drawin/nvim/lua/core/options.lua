@@ -50,8 +50,11 @@ local function load_options()
 		-- delays and poor user experience.
 		updatetime = 300;
 
-		-- 2总显示最后一个窗口的状态行，1窗口多于一个时显示最后一个窗口的状态行，0不显示最后一个窗口的状态行
-		laststatus = 2;
+		-- 0: never
+		-- 1: only if there are at least two windows
+		-- 2: always
+		-- 3: always and ONLY the last window
+		laststatus = 3;
 	}
 
 	local bw_local = {

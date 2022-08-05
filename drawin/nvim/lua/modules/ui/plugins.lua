@@ -72,6 +72,11 @@ ui["rcarriga/nvim-notify"] = {
 	config = conf.nvim_notify,
 }
 
+-- ui["fgheng/winbar.nvim"] = {
+--     event = "BufRead",
+--     config = conf.winbar_nvim,
+-- }
+
 -- -- parentheses improved
 -- ui["luochen1990/rainbow"] = {
 --     event = "BufRead",

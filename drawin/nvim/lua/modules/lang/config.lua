@@ -122,6 +122,7 @@ function config.symbols_outline()
 	vim.cmd [[ autocmd BufEnter * if winnr("$") == 1 && exists("g:symbols_outline_state.outline_buf") && g:symbols_outline_state.outline_buf | quit | endif ]]
 end
 
+-- repeat with telescope
 function config.trouble()
 	require("trouble").setup({
 		position = "bottom",

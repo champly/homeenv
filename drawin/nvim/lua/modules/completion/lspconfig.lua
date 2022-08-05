@@ -52,18 +52,23 @@ local enhance_attach = function(client, bufnr)
 	local opts = { noremap = true, silent = true }
 
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
-	api.nvim_set_keymap('n', '<c-]>', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-	api.nvim_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-	api.nvim_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+	-- api.nvim_set_keymap("n", "<c-]>", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+	api.nvim_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+	api.nvim_set_keymap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
 
 	-- https://github.com/nvim-telescope/telescope.nvim#neovim-lsp-pickers
-	api.nvim_set_keymap('n', '<leader>im', ':Telescope lsp_implementations theme=ivy<CR>', opts)
-	api.nvim_set_keymap('n', '<leader>rf', ':Telescope lsp_references theme=ivy<CR>', opts)
+	api.nvim_set_keymap("n", "<c-]>", ":Telescope lsp_definitions theme=get_cursor<CR>", opts)
+	api.nvim_set_keymap("n", "<leader>im", ":Telescope lsp_implementations theme=ivy<CR>", opts)
+	api.nvim_set_keymap("n", "<leader>rf", ":Telescope lsp_references theme=ivy<CR>", opts)
 	-- api.nvim_set_keymap("n", "<leader>ca", ":Telescope lsp_code_actions theme=ivy<CR>", opts)
 	api.nvim_set_keymap("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 	-- api.nvim_set_keymap("n", "<leader>ra", "<cmd>lua vim.lsp.buf.range_code_action()<CR>", opts)
 	api.nvim_set_keymap("n", "<leader>ds", ":Telescope diagnostics theme=ivy<CR>", opts)
 	api.nvim_set_keymap("n", "<leader>bl", ":Telescope lsp_document_symbols theme=ivy<CR>", opts)
+
+	-- Lspsaga
+	-- api.nvim_set_keymap("n", "K", ":Lspsaga hover_doc<CR>", opts)
+	-- api.nvim_set_keymap("n", "<leader>rn", ":Lspsaga rename<CR>", opts)
 
 	-- Set autocommands conditional on server_capabilities
 	if client.resolved_capabilities.document_highlight then
@@ -79,7 +84,7 @@ local enhance_attach = function(client, bufnr)
 		]], false)
 	end
 
-	require "lsp_signature".on_attach({
+	require("lsp_signature").on_attach({
 		bind = true, -- This is mandatory, otherwise border config won't get registered.
 		handler_opts = {
 			border = "rounded"
@@ -107,6 +112,16 @@ lspconfig.gopls.setup {
 			},
 			allowModfileModifications = true,
 			experimentalWorkspaceModule = false,
+			-- https://github.com/golang/tools/blob/master/gopls/doc/inlayHints.md
+			hints = {
+				assignVariableTypes = true,
+				compositeLiteralFields = true,
+				compositeLiteralTypes = true,
+				constantValues = true,
+				functionTypeParameters = true,
+				parameterNames = true,
+				rangeVariableTypes = true,
+			},
 		}
 	},
 	on_attach = enhance_attach,
@@ -162,30 +177,30 @@ lspconfig.yamlls.setup {
 --     capabilities = capabilities,
 -- }
 
--- -- https://github.com/MaskRay/ccls/wiki/nvim-lspconfig
--- lspconfig.ccls.setup {
---     cmd = { "ccls" },
---     filetypes = { "c", "cc", "cpp", "c++", "objc", "objcpp" },
---     root_dir = util.root_pattern("compile_commands.json", ".ccls", ".git", ".vim", ".hg"),
---     -- signle_file_support = true,
---     init_options = {
---         -- compilationDatabaseDirectory = "build",
---         -- index = {
---         --     threads = 0,
---         -- },
---         -- clang = {
---         --     excludeArgs = {
---         --         "-frounding-math",
---         --     },
---         -- },
---         cache = {
---             -- directory = "/tmp/ccls",
---             directory = ".ccls-cache",
---         },
---     },
---     on_attach = enhance_attach,
---     capabilities = capabilities,
--- }
+-- https://github.com/MaskRay/ccls/wiki/nvim-lspconfig
+lspconfig.ccls.setup {
+	cmd = { "ccls" },
+	filetypes = { "c", "cc", "cpp", "c++", "objc", "objcpp" },
+	root_dir = util.root_pattern("compile_commands.json", ".ccls", ".git", ".vim", ".hg"),
+	-- signle_file_support = true,
+	init_options = {
+		-- compilationDatabaseDirectory = "build",
+		-- index = {
+		--     threads = 0,
+		-- },
+		-- clang = {
+		--     excludeArgs = {
+		--         "-frounding-math",
+		--     },
+		-- },
+		cache = {
+			-- directory = "/tmp/ccls",
+			directory = ".ccls-cache",
+		},
+	},
+	on_attach = enhance_attach,
+	capabilities = capabilities,
+}
 
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#sumneko_lua
 local runtime_path = vim.split(package.path, ';')

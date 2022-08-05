@@ -68,11 +68,11 @@ lang["simrat39/symbols-outline.nvim"] = {
 	config = conf.symbols_outline,
 }
 
-lang["folke/trouble.nvim"] = {
-	event = "BufRead",
-	disable = not completion_with_lsp,
-	config = conf.trouble,
-	requires = "kyazdani42/nvim-web-devicons",
-}
+-- lang["folke/trouble.nvim"] = {
+--     event = "BufRead",
+--     disable = not completion_with_lsp,
+--     config = conf.trouble,
+--     requires = "kyazdani42/nvim-web-devicons",
+-- }
 
 return lang

@@ -6,6 +6,11 @@ function config.gruvbox()
 	-- vim.cmd("colorscheme gruvbox")
 	require("gruvbox").setup({
 		italic = true,
+		overrides = {
+			-- Operator = { fg = colors.orange, italic = config.italic },
+			-- Operator = { fg = "#fe8019", italic = false },
+			Operator = { link = "GruvboxFg1" },
+		}
 	})
 	vim.o.background = "dark"
 	vim.cmd([[ colorscheme gruvbox ]])
@@ -83,7 +88,7 @@ function config.dashboard()
 		"",
 		"                                                            -- Linus Torvalds",
 	}
-	db.session_directory = "~/Dropbox/config/session"
+	db.session_directory = "/Users/champly/Dropbox/config/session"
 
 	vim.api.nvim_set_keymap("n", "<leader>fh", ":Telescope oldfiles<cr>", {})
 	vim.api.nvim_set_keymap("n", "<leader>ff", ":Telescope find_files<cr>", {})
@@ -105,21 +110,21 @@ function config.nvim_tree()
 			indent_markers = {
 				enable = true,
 				icons = {
-					corner = "└ ",
-					edge = "│ ",
-					none = "  ",
+					corner = "└",
+					edge = "│",
+					item = "│",
+					none = " ",
 				},
 			},
 			icons = {
+				show = {
+					file = true,
+					folder = true,
+					folder_arrow = false,
+					git = true,
+				},
 				glyphs = {
-					default = '',
-					symlink = '',
 					git = {
-						-- unstaged = "✚",
-						-- staged =  "✚",
-						-- unmerged =  "≠",
-						-- renamed =  "≫",
-						-- untracked = "★",
 						unstaged = "✗",
 						staged = "✓",
 						unmerged = "",
@@ -129,7 +134,6 @@ function config.nvim_tree()
 						deleted = "≠",
 						ignored = "◌"
 					},
-
 				}
 			},
 			special_files = {}
@@ -320,6 +324,10 @@ function config.nvim_notify()
 	bind.nvim_load_mapping({
 		["n|<leader>s"] = bind.map_cmd("<cmd>lua _save_file()<cr>"):with_noremap():with_silent()
 	})
+end
+
+function config.winbar_nvim()
+	require("winbar").setup()
 end
 
 function config.rainbow()
