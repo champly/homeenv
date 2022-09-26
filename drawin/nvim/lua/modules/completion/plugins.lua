@@ -2,7 +2,7 @@ local completion = {}
 local conf = require("modules.completion.config")
 
 completion["neovim/nvim-lspconfig"] = {
-	event = "BufReadPre",
+	event = "BufRead",
 	disable = not completion_with_lsp,
 	after = "telescope.nvim",
 	config = conf.nvim_lsp,
@@ -50,6 +50,7 @@ completion["neoclide/coc.nvim"] = {
 
 completion["nvim-telescope/telescope.nvim"] = {
 	cmd = "Telescope",
+	event = "BufRead",
 	config = conf.telescope,
 	requires = {
 		{ "nvim-lua/popup.nvim", opt = true },
