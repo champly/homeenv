@@ -2,9 +2,10 @@ local completion = {}
 local conf = require("modules.completion.config")
 
 completion["neovim/nvim-lspconfig"] = {
-	event = "BufRead",
+	-- event = "BufRead",
 	disable = not completion_with_lsp,
 	after = "telescope.nvim",
+	ft = { "go", "lua", "rust", "c", "cpp" },
 	config = conf.nvim_lsp,
 }
 

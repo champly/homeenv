@@ -27,6 +27,7 @@ ui["kyazdani42/nvim-tree.lua"] = {
 -- Lean & mean status/tabline for vim that's light as air.
 -- use 'vim-airline/vim-airline'
 -- use 'vim-airline/vim-airline-themes'
+-- use <leader>fb replace
 ui["akinsho/bufferline.nvim"] = {
 	event = "BufReadPre",
 	config = conf.bufferline,
@@ -71,11 +72,6 @@ ui["voldikss/vim-floaterm"] = {
 ui["rcarriga/nvim-notify"] = {
 	config = conf.nvim_notify,
 }
-
--- ui["fgheng/winbar.nvim"] = {
---     event = "BufRead",
---     config = conf.winbar_nvim,
--- }
 
 -- -- parentheses improved
 -- ui["luochen1990/rainbow"] = {

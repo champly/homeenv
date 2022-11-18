@@ -28,7 +28,7 @@ opt.smartcase      = true
 opt.cursorline     = true
 opt.hlsearch       = true
 -- hit-enter
-opt.cmdheight      = 1
+opt.cmdheight      = 0
 -- 区分空格和缩进
 opt.list           = true
 opt.showbreak      = "↪ "

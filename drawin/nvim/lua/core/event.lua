@@ -10,13 +10,10 @@ function autocmd.load_autocmds()
 			-- https://github.com/kyazdani42/nvim-tree.lua#tips--reminders
 			{ "BufEnter", "*", [[++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif]] },
 		},
-		wins = {
-			-- Don't show status line on certain windows
-			{ "BufEnter,BufRead,BufWinEnter,FileType,WinEnter", "*", "lua require('core.define').hide_statusline()" },
-		},
 		ft = {
 			-- https://github.com/mhinz/vim-grepper/issues/117
-			{ "FileType", "qf", "if mapcheck('<esc>', 'n') ==# '' | nnoremap <buffer><silent> <esc> :cclose<bar>lclose<cr> | endif" };
+			{ "FileType", "qf",
+				"if mapcheck('<esc>', 'n') ==# '' | nnoremap <buffer><silent> <esc> :cclose<bar>lclose<cr> | endif" };
 			-- 在Vim中更改quickfix窗口的默认位置 窗口到最下方
 			-- https://stackoverflow.com/questions/6726783/changing-default-position-of-quickfix-window-in-vim
 			-- 目前的问题是 偶尔需要手动执行 MiniBufExplorer

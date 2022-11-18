@@ -4,7 +4,7 @@ local tool = require("utils.tool")
 function format.lsp_before_save()
 	local defs = {}
 	local ext = vim.fn.expand("%:e")
-	table.insert(defs, { "BufWritePre", "*." .. ext, "lua vim.lsp.buf.formatting_sync(nil, 1000)" })
+	table.insert(defs, { "BufWritePre", "*." .. ext, "lua vim.lsp.buf.format(nil, 1000)" })
 	if ext == "go" then
 		-- autocmd BufWritePre *.go lua goimports(1000)
 		table.insert(defs, { "BufWritePre", "*.go", "lua require('modules.completion.format').OrgImports(1000)" })

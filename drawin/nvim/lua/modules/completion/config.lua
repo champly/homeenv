@@ -4,7 +4,6 @@ function config.nvim_lsp()
 	if not packer_plugins["nui.nvim"].loaded then
 		vim.cmd [[ packadd nui.nvim ]]
 	end
-
 	require("modules.completion.lspconfig")
 end
 

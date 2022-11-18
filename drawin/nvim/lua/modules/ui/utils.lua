@@ -3,6 +3,7 @@ local M = {}
 local function printf(...)
 	print(string.format(...))
 end
+
 local sprintf = string.format
 local function cmdf(...)
 	vim.cmd(sprintf(...))
@@ -13,7 +14,7 @@ M.sprintf = sprintf
 M.cmdf = cmdf
 
 function M.get_cursor_pos()
-	return {vim.fn.line('.'), vim.fn.col('.')}
+	return { vim.fn.line('.'), vim.fn.col('.') }
 end
 
 function M.debounce(func, timeout)
@@ -22,11 +23,12 @@ function M.debounce(func, timeout)
 		if timer_id ~= nil then
 			vim.fn.timer_stop(timer_id)
 		end
-		local args = {...}
+		local args = { ... }
 		local function cb()
 			func(args)
 			timer_id = nil
 		end
+
 		timer_id = vim.fn.timer_start(timeout, cb)
 	end
 end
@@ -36,7 +38,7 @@ function M.throttle(func, timeout)
 	local timer_id
 	local did_call = false
 	return function(...)
-		local args = {...}
+		local args = { ... }
 		if timer_id == nil then
 			func(args)
 			local function cb()
@@ -46,6 +48,7 @@ function M.throttle(func, timeout)
 					did_call = false
 				end
 			end
+
 			timer_id = vim.fn.timer_start(timeout, cb)
 		else
 			did_call = true
@@ -94,7 +97,7 @@ function M.u(code)
 end
 
 function _G.dump(...)
-	local args = {...}
+	local args = { ... }
 	if #args == 1 then
 		print(vim.inspect(args[1]))
 	else
@@ -182,12 +185,5 @@ end
 function M.glob_exists(path)
 	return vim.fn.empty(vim.fn.glob(path)) == 0
 end
-
--- function M.highlight(hl_group, fg, bg, gui)
---   local guifg = fg and ' guifg=' .. fg or ''
---   local guibg = bg and ' guibg=' .. bg or ''
---   local gui = gui and ' gui=' .. gui or ''
---   vim.cmd('highlight ' .. hl_group .. guibg .. guifg .. gui)
--- end
 
 return M

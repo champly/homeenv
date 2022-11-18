@@ -4,11 +4,15 @@ local util = require("lspconfig.util")
 local format = require("modules.completion.format")
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
+if not packer_plugins["cmp-nvim-lsp"].loaded then
+	vim.cmd([[packadd cmp-nvim-lsp]])
+end
+capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+-- capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 -- https://github.com/neovim/nvim-lspconfig#debugging
 function _G.open_lsp_log()
-	vim.cmd('e' .. vim.lsp.get_log_path())
+	vim.cmd("e" .. vim.lsp.get_log_path())
 end
 
 -- https://neovim.io/doc/user/lsp.html
@@ -41,7 +45,7 @@ end
 -- https://github.com/neovim/nvim-lspconfig#keybindings-and-completion
 -- https://github.com/nvim-lua/completion-nvim/issues/337#issuecomment-765563829
 local enhance_attach = function(client, bufnr)
-	if client.resolved_capabilities.document_formatting then
+	if client.server_capabilities.documentHighlightProvider then
 		format.lsp_before_save()
 	end
 
@@ -66,14 +70,14 @@ local enhance_attach = function(client, bufnr)
 	api.nvim_set_keymap("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 	api.nvim_set_keymap("v", "<leader>ra", ":<c-u>lua vim.lsp.buf.range_code_action()<CR>", opts)
 	api.nvim_set_keymap("n", "<leader>ds", ":Telescope diagnostics theme=ivy<CR>", opts)
-	api.nvim_set_keymap("n", "<leader>bl", ":Telescope lsp_document_symbols theme=ivy<CR>", opts)
+	api.nvim_set_keymap("n", "<leader>bl", ":Telescope lsp_document_symbols<CR>", opts)
 
 	-- Lspsaga
 	-- api.nvim_set_keymap("n", "K", ":Lspsaga hover_doc<CR>", opts)
 	-- api.nvim_set_keymap("n", "<leader>rn", ":Lspsaga rename<CR>", opts)
 
 	-- Set autocommands conditional on server_capabilities
-	if client.resolved_capabilities.document_highlight then
+	if client.server_capabilities.documentHighlightProvider then
 		vim.api.nvim_exec([[
 			hi LspReferenceRead guibg=#ff8600 guifg=black gui=NONE
 			hi LspReferenceText guibg=#ff8600 guifg=black gui=NONE
@@ -94,6 +98,7 @@ local enhance_attach = function(client, bufnr)
 	}, bufnr)
 end
 
+
 -- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#custom-configuration
 lspconfig.gopls.setup {
 	cmd = { "gopls" },
@@ -113,7 +118,6 @@ lspconfig.gopls.setup {
 				fieldalignment = true
 			},
 			allowModfileModifications = true,
-			experimentalWorkspaceModule = false,
 			-- https://github.com/golang/tools/blob/master/gopls/doc/inlayHints.md
 			hints = {
 				assignVariableTypes = true,
@@ -130,30 +134,35 @@ lspconfig.gopls.setup {
 	capabilities = capabilities,
 }
 
+-- https://rust-analyzer.github.io/manual.html#nvim-lsp
 lspconfig.rust_analyzer.setup {
 	settings = {
 		["rust-analyzer"] = {
-			assist = {
-				importGranularity = "module",
-				importPrefix = "self",
-			},
-			inlayHints = {
-				enable = true,
-				chainingHints = true,
-				maxLength = 25,
-				parameterHints = true,
-				typeHints = true,
-				hideNamedConstructorHints = false,
-				typeHintsSeparator = "‣",
-				typeHintsWithVariable = true,
-				chainingHintsSeparator = "‣",
+			imports = {
+				granularity = {
+					group = "module",
+				},
+				prefix = "self",
 			},
 			cargo = {
-				loadOutDirsFromCheck = true
+				buildScripts = {
+					enable = true,
+				},
 			},
 			procMacro = {
 				enable = true
 			},
+			-- inlayHints = {
+			--     enable = true,
+			--     chainingHints = true,
+			--     maxLength = 25,
+			--     parameterHints = true,
+			--     typeHints = true,
+			--     hideNamedConstructorHints = false,
+			--     typeHintsSeparator = "‣",
+			--     typeHintsWithVariable = true,
+			--     chainingHintsSeparator = "‣",
+			-- },
 		}
 	},
 	on_attach = enhance_attach,
@@ -179,30 +188,44 @@ lspconfig.yamlls.setup {
 --     capabilities = capabilities,
 -- }
 
--- https://github.com/MaskRay/ccls/wiki/nvim-lspconfig
-lspconfig.ccls.setup {
-	cmd = { "ccls" },
-	filetypes = { "c", "cc", "cpp", "c++", "objc", "objcpp" },
-	root_dir = util.root_pattern("compile_commands.json", ".ccls", ".git", ".vim", ".hg"),
-	-- signle_file_support = true,
-	init_options = {
-		-- compilationDatabaseDirectory = "build",
-		-- index = {
-		--     threads = 0,
-		-- },
-		-- clang = {
-		--     excludeArgs = {
-		--         "-frounding-math",
-		--     },
-		-- },
-		cache = {
-			-- directory = "/tmp/ccls",
-			directory = ".ccls-cache",
-		},
+-- https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/clangd.lua
+lspconfig.clangd.setup({
+	cmd = {
+		"clangd",
+		-- "--background-index",
+		-- "--suggest-missing-includes",
+		-- "--clang-tidy",
+		-- "--header-insertion=iwyu",
 	},
+	single_file_support = true,
 	on_attach = enhance_attach,
 	capabilities = capabilities,
-}
+})
+
+-- -- https://github.com/MaskRay/ccls/wiki/nvim-lspconfig
+-- lspconfig.ccls.setup {
+--     cmd = { "ccls" },
+--     filetypes = { "c", "cc", "cpp", "c++", "objc", "objcpp" },
+--     root_dir = util.root_pattern("compile_commands.json", ".ccls", ".git", ".vim", ".hg"),
+--     -- signle_file_support = true,
+--     init_options = {
+--         -- compilationDatabaseDirectory = "build",
+--         -- index = {
+--         --     threads = 0,
+--         -- },
+--         -- clang = {
+--         --     excludeArgs = {
+--         --         "-frounding-math",
+--         --     },
+--         -- },
+--         cache = {
+--             -- directory = "/tmp/ccls",
+--             directory = ".ccls-cache",
+--         },
+--     },
+--     on_attach = enhance_attach,
+--     capabilities = capabilities,
+-- }
 
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#sumneko_lua
 local runtime_path = vim.split(package.path, ';')

@@ -326,10 +326,6 @@ function config.nvim_notify()
 	})
 end
 
-function config.winbar_nvim()
-	require("winbar").setup()
-end
-
 function config.rainbow()
 	vim.g.rainbow_active = 1 -- set to 0 if you want to enable it later via :RainbowToggle
 
