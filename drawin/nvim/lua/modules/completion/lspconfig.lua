@@ -136,6 +136,10 @@ lspconfig.gopls.setup {
 
 -- https://rust-analyzer.github.io/manual.html#nvim-lsp
 lspconfig.rust_analyzer.setup {
+	-- rustup toolchain install nightly --component rust-analyzer
+	-- cmd = { "rustup", "run", "stable", "rust-analyzer" },
+	cmd = { "rustup", "run", "nightly", "rust-analyzer" },
+	-- cmd = { "rust-analyzer" },
 	settings = {
 		["rust-analyzer"] = {
 			imports = {

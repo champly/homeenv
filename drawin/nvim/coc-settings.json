@@ -60,7 +60,7 @@
 	],
 	"coc.preferences.messageLevel": "error",
 	"coc.preferences.extensionUpdateCheck": "daily",
-	"coc.preferences.snippetStatusText": "Ⓢ ",
+	"snippet.statusText": "Ⓢ ",
 	"git.addGBlameToVirtualText": true,
 	"json.schemaDownload.enable": true,
 	"languageserver": {
@@ -78,7 +78,16 @@
 					"fieldalignment": false
 				},
 				"allowModfileModifications": true,
-				"experimentalWorkspaceModule": false
+				"experimentalWorkspaceModule": false,
+				"hints": {
+					"assignVariableTypes": true,
+					"compositeLiteralFields": true,
+					"compositeLiteralTypes": true,
+					"constantValues": true,
+					"functionTypeParametere": true,
+					"parameterNames": true,
+					"rangeVariableTypes": true
+				}
 			}
 		},
 		"ccls": {
@@ -96,6 +105,11 @@
 					"directory": "/tmp/ccls"
 				}
 			}
+		},
+		"rust": {
+			"command": "rust-analyzer",
+			"filetypes": ["rust"],
+			"rootPatterns": ["Cargo.toml"]
 		}
 	}
 }
