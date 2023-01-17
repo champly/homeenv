@@ -47,10 +47,12 @@ vim.api.nvim_set_keymap("n", " ", "", { noremap = true })
 vim.api.nvim_set_keymap("x", " ", "", { noremap = true })
 
 -- for neovide
--- https://github.com/neovide/neovide#some-nonsense-
+-- https://neovide.dev/configuration.html
 vim.o.guifont = "SauceCodePro Nerd Font"
 vim.g.neovide_cursor_vfx_mode = "railgun"
-vim.g.neovide_fullscreen = "v:true"
+vim.g.neovide_fullscreen = "v:false"
+vim.g.neovide_transparency = 0.9
+-- vim.g.transparency = 0.6
 
 require("core.options")
 require("core.mapping")

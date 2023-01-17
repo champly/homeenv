@@ -305,7 +305,7 @@ end
 function config.nvim_notify()
 	vim.notify = require("notify")
 
-	function _G._save_file()
+	function _G.save_file_with_notify()
 		local ok, msg = pcall(vim.cmd, "silent write!")
 		if ok then
 			vim.notify("Saved " .. vim.fn.expand "%:t", nil, {
@@ -322,7 +322,7 @@ function config.nvim_notify()
 
 	local bind = require("utils.bind")
 	bind.nvim_load_mapping({
-		["n|<leader>s"] = bind.map_cmd("<cmd>lua _save_file()<cr>"):with_noremap():with_silent()
+		["n|<leader>s"] = bind.map_cmd("<cmd>lua save_file_with_notify()<cr>"):with_noremap():with_silent()
 	})
 end
 

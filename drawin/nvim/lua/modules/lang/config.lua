@@ -7,6 +7,7 @@ function config.nvim_treesitter()
 	require("nvim-treesitter.configs").setup {
 		ensure_installed = "all",
 		ignore_install = { "swift", "wgsl", "phpdoc" },
+		-- ensure_installed = { "go", "c", "cpp", "lua", "rust", "vim" },
 		highlight = {
 			enable = true, -- false will disable the whole extension
 		},

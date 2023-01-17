@@ -24,6 +24,16 @@ completion["hrsh7th/nvim-cmp"] = {
 	}
 }
 
+-- winbar use LSP to show your current code context.
+completion["SmiteshP/nvim-navic"] = {
+	requires = "neovim/nvim-lspconfig",
+	config = function()
+		require("nvim-navic").setup {
+			highlight = true,
+		}
+	end
+}
+
 -- completion["glepnir/lspsaga.nvim"] = {
 --     cmd = "Lspsaga",
 --     disable = not completion_with_lsp,

@@ -14,7 +14,7 @@ M.sprintf = sprintf
 M.cmdf = cmdf
 
 function M.get_cursor_pos()
-	return { vim.fn.line('.'), vim.fn.col('.') }
+	return { vim.fn.line("."), vim.fn.col(".") }
 end
 
 function M.debounce(func, timeout)
@@ -72,8 +72,8 @@ end
 
 -- Convert UTF-8 hex code to character
 function M.u(code)
-	if type(code) == 'string' then
-		code = tonumber('0x' .. code)
+	if type(code) == "string" then
+		code = tonumber("0x" .. code)
 	end
 	local c = string.char
 	if code <= 0x7f then
@@ -108,18 +108,18 @@ end
 function M.load(path)
 	local ok, mod = pcall(require, path)
 	if not ok then
-		printf('Error loading module `%s`', path)
+		printf("Error loading module `%s`", path)
 		print(mod)
 	else
 		local loadfunc
-		if type(mod) == 'function' then
+		if type(mod) == "function" then
 			loadfunc = mod
 		elseif mod.setup ~= nil then
 			loadfunc = mod.setup
 		end
 		local ok, err = pcall(loadfunc)
 		if not ok then
-			printf('Error loading module `%s`', path)
+			printf("Error loading module `%s`", path)
 			print(err)
 		end
 	end
@@ -129,10 +129,10 @@ end
 function M.hl_by_name(hl_group)
 	local hl = vim.api.nvim_get_hl_by_name(hl_group, true)
 	if hl.foreground ~= nil then
-		hl.fg = sprintf('#%x', hl.foreground)
+		hl.fg = sprintf("#%x", hl.foreground)
 	end
 	if hl.background ~= nil then
-		hl.bg = sprintf('#%x', hl.background)
+		hl.bg = sprintf("#%x", hl.background)
 	end
 	return hl
 end
@@ -140,14 +140,14 @@ end
 -- Define a new highlight group
 -- TODO: rewrite to `nvim_set_hl()` when API will be stable
 function M.highlight(cfg)
-	local command = 'highlight'
+	local command = "highlight"
 	if cfg.bang == true then
-		command = command .. '!'
+		command = command .. "!"
 	end
 
 	-- :highlight link
-	if #cfg == 2 and type(cfg[1]) == 'string' and type(cfg[2]) == 'string' then
-		command = command .. ' link ' .. cfg[1] .. ' ' .. cfg[2]
+	if #cfg == 2 and type(cfg[1]) == "string" and type(cfg[2]) == "string" then
+		command = command .. " link " .. cfg[1] .. " " .. cfg[2]
 		vim.cmd(command)
 		return
 	end
@@ -157,18 +157,18 @@ function M.highlight(cfg)
 	local style = cfg.gui or cfg[4]
 	local underline = cfg.guisp or cfg[5]
 
-	command = command .. ' ' .. cfg[1]
+	command = command .. " " .. cfg[1]
 	if fg ~= nil then
-		command = command .. ' guifg=' .. fg
+		command = command .. " guifg=" .. fg
 	end
 	if bg ~= nil then
-		command = command .. ' guibg=' .. bg
+		command = command .. " guibg=" .. bg
 	end
 	if style ~= nil then
-		command = command .. ' gui=' .. style
+		command = command .. " gui=" .. style
 	end
 	if underline ~= nil then
-		command = command .. ' guisp=' .. style
+		command = command .. " guisp=" .. style
 	end
 	vim.cmd(command)
 end
@@ -176,10 +176,10 @@ end
 local autocmd_fn_index = 0
 
 function M.autocmd(event_name, pattern, callback)
-	local fn_name = 'lua_autocmd' .. autocmd_fn_index
+	local fn_name = "lua_autocmd" .. autocmd_fn_index
 	autocmd_fn_index = autocmd_fn_index + 1
 	_G[fn_name] = callback
-	cmdf('autocmd %s %s call v:lua.%s()', event_name, pattern, fn_name)
+	cmdf("autocmd %s %s call v:lua.%s()", event_name, pattern, fn_name)
 end
 
 function M.glob_exists(path)

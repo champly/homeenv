@@ -27,4 +27,3 @@ local icons = {
 }
 
 return icons
-

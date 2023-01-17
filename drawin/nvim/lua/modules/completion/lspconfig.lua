@@ -10,11 +10,6 @@ end
 capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 -- capabilities.textDocument.completion.completionItem.snippetSupport = true
 
--- https://github.com/neovim/nvim-lspconfig#debugging
-function _G.open_lsp_log()
-	vim.cmd("e" .. vim.lsp.get_log_path())
-end
-
 -- https://neovim.io/doc/user/lsp.html
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 	vim.lsp.diagnostic.on_publish_diagnostics,
@@ -49,6 +44,10 @@ local enhance_attach = function(client, bufnr)
 		format.lsp_before_save()
 	end
 
+	if client.server_capabilities.documentSymbolProvider then
+		require("nvim-navic").attach(client, bufnr)
+	end
+
 	-- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#omnifunc
 	api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
@@ -68,6 +67,7 @@ local enhance_attach = function(client, bufnr)
 	api.nvim_set_keymap("n", "<leader>im", ":Telescope lsp_implementations theme=ivy<CR>", opts)
 	api.nvim_set_keymap("n", "<leader>rf", ":Telescope lsp_references theme=ivy<CR>", opts)
 	api.nvim_set_keymap("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+	-- !import deprecated when neovim version 0.9
 	api.nvim_set_keymap("v", "<leader>ra", ":<c-u>lua vim.lsp.buf.range_code_action()<CR>", opts)
 	api.nvim_set_keymap("n", "<leader>ds", ":Telescope diagnostics theme=ivy<CR>", opts)
 	api.nvim_set_keymap("n", "<leader>bl", ":Telescope lsp_document_symbols<CR>", opts)
@@ -101,7 +101,7 @@ end
 
 -- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#custom-configuration
 lspconfig.gopls.setup {
-	cmd = { "gopls" },
+	cmd = { "gopls", "-mode=stdio" },
 	filetypes = { "go", "gomod", "gotmpl" },
 	root_dir = function(fname)
 		-- https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/gopls.lua
@@ -201,6 +201,8 @@ lspconfig.clangd.setup({
 		-- "--clang-tidy",
 		-- "--header-insertion=iwyu",
 	},
+	-- filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto' },
+	filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
 	single_file_support = true,
 	on_attach = enhance_attach,
 	capabilities = capabilities,

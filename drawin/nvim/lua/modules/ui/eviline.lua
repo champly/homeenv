@@ -1,8 +1,8 @@
-local gl = require('galaxyline')
-local condition = require('galaxyline.condition')
-local utils = require 'modules.ui.utils'
+local gl = require("galaxyline")
+local condition = require("galaxyline.condition")
+local utils = require("modules.ui.utils")
 local gls = gl.section
-gl.short_line_list = { 'NvimTree', 'vista', 'dbui', 'packer', 'coc-explorer', 'vim-plug', 'tagbar' }
+gl.short_line_list = { "NvimTree", "vista", "dbui", "packer", "coc-explorer", "vim-plug", "tagbar" }
 local u = utils.u
 
 local colors = {

@@ -149,10 +149,10 @@ function config.telescope()
 		}
 	}
 
-	require('telescope').load_extension("fzy_native")
-	require('telescope').load_extension("gosource")
-	require('telescope').load_extension("dotfiles")
-	require('telescope').load_extension("ui-select")
+	require("telescope").load_extension("fzy_native")
+	require("telescope").load_extension("gosource")
+	require("telescope").load_extension("dotfiles")
+	require("telescope").load_extension("ui-select")
 
 	vim.api.nvim_set_keymap("n", "<leader>fb", ":Telescope buffers<cr>", {})
 	vim.api.nvim_set_keymap("n", "<leader>fh", ":Telescope oldfiles<cr>", {})

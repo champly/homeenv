@@ -1,6 +1,7 @@
 local config = require("modules.ui.statusline.config")
 local lsp = require "feline.providers.lsp"
 local lsp_severity = vim.diagnostic.severity
+local navic = require("nvim-navic")
 
 local statusline_style = config.icon_styles["round"]
 -- show short statusline on small screens
@@ -136,9 +137,9 @@ table.insert(components.active[1], {
 	provider = function()
 		local fname
 		if vim.api.nvim_win_get_width(tonumber(winid) or 0) > 30 then
-			fname = vim.fn.fnamemodify(vim.fn.expand '%', ':~:.')
+			fname = vim.fn.fnamemodify(vim.fn.expand "%", ":~:.")
 		else
-			fname = vim.fn.expand '%:t'
+			fname = vim.fn.expand "%:t"
 		end
 		return " " .. fname .. " "
 	end,
@@ -177,6 +178,26 @@ table.insert(components.active[1], {
 			bg = config.colors.lightbg2,
 		}
 	end,
+	right_sep = {
+		str = statusline_style.right,
+		hl = {
+			fg = config.colors.lightbg2,
+			bg = config.colors.statusline_bg
+		}
+	},
+})
+
+table.insert(components.active[1], {
+	provider = function()
+		return navic.get_location()
+	end,
+	enabled = function()
+		return navic.is_available()
+	end,
+	hl = {
+		fg = config.colors.white,
+		bg = config.colors.lightbg2,
+	},
 	right_sep = {
 		str = statusline_style.right,
 		hl = {
@@ -320,11 +341,9 @@ table.insert(components.active[3], {
 		local result, _ = math.modf((current_line / total_line) * 100)
 		return " " .. result .. "%% "
 	end,
-
 	enabled = shortline or function(winid)
 		return vim.api.nvim_win_get_width(tonumber(winid) or 0) > 90
 	end,
-
 	hl = {
 		fg = config.colors.green,
 		bg = config.colors.one_bg,
