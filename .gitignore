@@ -1,3 +1,4 @@
 .DS_Store
 .luarc.json
 packer_compiled.lua
+lazy-lock.json

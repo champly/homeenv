@@ -1,9 +1,6 @@
 local config = {}
 
 function config.vimspector()
-	-- if not packer_plugins["nui.nvim"].loaded then
-	--     vim.cmd [[ packadd nui.nvim ]]
-	-- end
 	require("modules/tools/vimspector")
 end
 
