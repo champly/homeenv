@@ -1,4 +1,3 @@
-local api = vim.api
 local lspconfig = require("lspconfig")
 local util = require("lspconfig.util")
 local format = require("modules.completion.format")
@@ -46,32 +45,32 @@ local enhance_attach = function(client, bufnr)
 	end
 
 	-- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#omnifunc
-	api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+	vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
 	-- Mappings.
 	local opts = { noremap = true, silent = true }
 
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
-	-- api.nvim_set_keymap("n", "<c-]>", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-	api.nvim_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+	-- vim.api.nvim_set_keymap("n", "<c-]>", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+	vim.api.nvim_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
 	-- api.nvim_set_keymap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
 	-- https://muniftanjim.dev/blog/neovim-build-ui-using-nui-nvim/
 	-- https://gist.github.com/MunifTanjim/8d9498c096719bdf4234321230fe3dc7
-	api.nvim_set_keymap("n", "<leader>rn", "<cmd>lua require('modules.completion.nui_lsp').lsp_rename()<CR>", opts)
+	vim.api.nvim_set_keymap("n", "<leader>rn", "<cmd>lua require('modules.completion.nui_lsp').lsp_rename()<CR>", opts)
 
 	-- https://github.com/nvim-telescope/telescope.nvim#neovim-lsp-pickers
-	api.nvim_set_keymap("n", "<c-]>", ":Telescope lsp_definitions theme=get_cursor<CR>", opts)
-	api.nvim_set_keymap("n", "<leader>im", ":Telescope lsp_implementations theme=ivy<CR>", opts)
-	api.nvim_set_keymap("n", "<leader>rf", ":Telescope lsp_references theme=ivy<CR>", opts)
-	api.nvim_set_keymap("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+	vim.api.nvim_set_keymap("n", "<c-]>", ":Telescope lsp_definitions theme=get_cursor<CR>", opts)
+	vim.api.nvim_set_keymap("n", "<leader>im", ":Telescope lsp_implementations theme=ivy<CR>", opts)
+	vim.api.nvim_set_keymap("n", "<leader>rf", ":Telescope lsp_references theme=ivy<CR>", opts)
+	vim.api.nvim_set_keymap("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 	-- !import deprecated when neovim version 0.9
-	api.nvim_set_keymap("v", "<leader>ra", ":<c-u>lua vim.lsp.buf.range_code_action()<CR>", opts)
-	api.nvim_set_keymap("n", "<leader>ds", ":Telescope diagnostics theme=ivy<CR>", opts)
-	api.nvim_set_keymap("n", "<leader>bl", ":Telescope lsp_document_symbols<CR>", opts)
+	vim.api.nvim_set_keymap("v", "<leader>ra", ":<c-u>lua vim.lsp.buf.range_code_action()<CR>", opts)
+	vim.api.nvim_set_keymap("n", "<leader>ds", ":Telescope diagnostics theme=ivy<CR>", opts)
+	vim.api.nvim_set_keymap("n", "<leader>bl", ":Telescope lsp_document_symbols<CR>", opts)
 
 	-- Lspsaga
-	-- api.nvim_set_keymap("n", "K", ":Lspsaga hover_doc<CR>", opts)
-	-- api.nvim_set_keymap("n", "<leader>rn", ":Lspsaga rename<CR>", opts)
+	-- vim.api.nvim_set_keymap("n", "K", ":Lspsaga hover_doc<CR>", opts)
+	-- vim.api.nvim_set_keymap("n", "<leader>rn", ":Lspsaga rename<CR>", opts)
 
 	-- Set autocommands conditional on server_capabilities
 	if client.server_capabilities.documentHighlightProvider then

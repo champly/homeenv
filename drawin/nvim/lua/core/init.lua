@@ -1,18 +1,16 @@
-local global = require "core.global"
-local vim = vim
-
 -- Create cache dir and subs dir
+local cache_dir = os.getenv("HOME") .. "/.cache/nvim/"
 local data_dir = {
-	global.cache_dir .. "backup",
-	global.cache_dir .. "session",
-	global.cache_dir .. "swap",
-	global.cache_dir .. "tags",
-	global.cache_dir .. "undo",
+	cache_dir .. "backup",
+	cache_dir .. "session",
+	cache_dir .. "swap",
+	cache_dir .. "tags",
+	cache_dir .. "undo",
 }
 -- There only check once that If cache_dir exists
 -- Then I don't want to check subs dir exists
-if vim.fn.isdirectory(global.cache_dir) == 0 then
-	os.execute("mkdir -p " .. global.cache_dir)
+if vim.fn.isdirectory(cache_dir) == 0 then
+	os.execute("mkdir -p " .. cache_dir)
 	for _, v in pairs(data_dir) do
 		if vim.fn.isdirectory(v) == 0 then
 			os.execute("mkdir -p " .. v)
@@ -54,23 +52,13 @@ vim.g.neovide_fullscreen = "v:false"
 vim.g.neovide_transparency = 0.9
 -- vim.g.transparency = 0.6
 
+vim.g.completion_with_lsp = true
+
 require("core.options")
-require("core.mapping")
 require("core.event")
+require("core.pack"):boot_strap()
+require("core.mapping")
 
 -- TODO rewrite with lua
 local cmd = "source " .. vim.fn.stdpath("config") .. "/lua/core/other.vim"
 vim.api.nvim_exec(cmd, false)
-
-require("core.pack"):boot_strap()
-
--- -- new packer autoload
--- vim.cmd [[ silent! command PackerClean lua require("modules.pack") require("packer").clean() ]]
--- vim.cmd [[ silent! command PackerCompile lua require("modules.pack") require("packer").compile() ]]
--- vim.cmd [[ silent! command PackerInstall lua require("modules.pack") require("packer").install() ]]
--- vim.cmd [[ silent! command PackerStatus lua require("modules.pack") require("packer").status() ]]
--- vim.cmd [[ silent! command PackerSync lua require("modules.pack") require("packer").sync() ]]
--- vim.cmd [[ silent! command PackerUpdate lua require("modules.pack") require("packer").update() ]]
--- if not vim.loop.fs_stat(vim.fn.stdpath("config") .. "/plugin/packer_compiled.lua") then
---     vim.cmd [[ autocmd VimEnter * PackerSync ]]
--- end

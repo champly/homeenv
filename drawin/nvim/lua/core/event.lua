@@ -1,4 +1,3 @@
-local tool = require("utils.tool")
 local autocmd = {}
 
 function autocmd.load_autocmds()
@@ -22,7 +21,21 @@ function autocmd.load_autocmds()
 		-- yank = {},
 	}
 
-	tool.nvim_create_augroups(definitions)
+	autocmd.nvim_create_augroups(definitions)
+end
+
+function autocmd.nvim_create_augroups(definitions)
+	for group_name, definition in pairs(definitions) do
+		vim.api.nvim_command("augroup " .. group_name)
+		vim.api.nvim_command("autocmd!")
+		for _, def in ipairs(definition) do
+			local command = table.concat(vim.tbl_flatten { "autocmd", def }, " ")
+			vim.api.nvim_command(command)
+		end
+		vim.api.nvim_command("augroup END")
+	end
 end
 
 autocmd.load_autocmds()
+
+return autocmd

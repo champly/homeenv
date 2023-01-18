@@ -1,23 +1,12 @@
-local bind = require("utils.bind")
-local map_cmd = bind.map_cmd
-local map_cr = bind.map_cr
-local map_cu = bind.map_cu
+-- vim map
+vim.api.nvim_set_keymap("n", "Y", "y$", {})
+vim.api.nvim_set_keymap("n", "<leader>n", ":enew<CR>", {})
+vim.api.nvim_set_keymap("n", "<leader>bd", ":bd!<CR>", {})
 
--- default map
-local def_map = {
-	-- vim map
-	["n|Y"]          = map_cmd("y$"),
-	["n|<leader>n"]  = map_cr("enew"),
-	["n|<leader>db"] = map_cr("bd!"),
+-- insert
+vim.api.nvim_set_keymap("n", "<leader>ss", ":<C-u>SessionSave<CR>", {})
+vim.api.nvim_set_keymap("n", "<leader>sl", ":<C-u>SessionLoad<CR>", {})
 
-	-- insert
-	["n|<leader>ss"] = map_cu("SessionSave"),
-	["n|<leader>sl"] = map_cu("SessionLoad"),
-
-	-- Call figlet
-	-- brew install figlet
-	["n|fl"] = map_cmd(":r !figlet "),
-}
-
-bind.nvim_load_mapping(def_map)
-
+-- Call figlet
+-- brew install figlet
+vim.api.nvim_set_keymap("n", "fl", ":r !figlet ", {})

@@ -41,14 +41,14 @@ package({
 package({
 	"feline-nvim/feline.nvim",
 	dependencies = "kyazdani42/nvim-web-devicons",
-	enabled = completion_with_lsp,
+	enabled = vim.g.completion_with_lsp,
 	config = conf.feline_nvim,
 })
 -- ui["windwp/windline.nvim"] = {}
 package({
 	"glepnir/galaxyline.nvim",
 	branch = "main",
-	enabled = not completion_with_lsp,
+	enabled = not vim.g.completion_with_lsp,
 	config = conf.galaxyline,
 })
 
@@ -57,13 +57,13 @@ package({
 package({
 	"airblade/vim-gitgutter",
 	config = conf.vim_gitgutter,
-	enabled = not completion_with_lsp,
+	enabled = not vim.g.completion_with_lsp,
 })
 
 package({
 	"lewis6991/gitsigns.nvim",
 	event = "BufReadPre",
-	enabled = completion_with_lsp,
+	enabled = vim.g.completion_with_lsp,
 	config = conf.gitsigns_nvim,
 })
 

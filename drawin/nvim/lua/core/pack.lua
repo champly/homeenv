@@ -43,12 +43,6 @@ function pack:boot_strap()
 	require("lazy").setup(self.repos, {
 		lockfile = vim.fn.stdpath("config") .. "/lazy-lock.json"
 	})
-
-	for k, v in pairs(self) do
-		if type(v) ~= "function" then
-			self[k] = nil
-		end
-	end
 end
 
 function pack.package(repo)

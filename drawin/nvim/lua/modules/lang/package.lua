@@ -73,14 +73,14 @@ package({
 package({
 	"simrat39/symbols-outline.nvim",
 	event = "BufRead",
-	enabled = completion_with_lsp,
+	enabled = vim.g.completion_with_lsp,
 	config = conf.symbols_outline,
 })
 
 -- package({
 --     "folke/trouble.nvim",
 --     event = "BufRead",
---     enabled = completion_with_lsp,
+--     enabled = vim.g.completion_with_lsp,
 --     config = conf.trouble,
 --     dependencies = "kyazdani42/nvim-web-devicons",
 -- })

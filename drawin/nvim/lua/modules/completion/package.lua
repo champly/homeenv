@@ -4,7 +4,7 @@ local conf = require("modules.completion.config")
 package({
 	"neovim/nvim-lspconfig",
 	-- event = "BufRead",
-	enabled = completion_with_lsp,
+	enabled = vim.g.completion_with_lsp,
 	dependencies = "telescope.nvim",
 	ft = { "go", "lua", "rust", "c", "cpp" },
 	config = conf.nvim_lsp,
@@ -14,7 +14,7 @@ package({
 package({
 	"hrsh7th/nvim-cmp",
 	event = "InsertEnter",
-	enabled = completion_with_lsp,
+	enabled = vim.g.completion_with_lsp,
 	config = conf.nvim_cmp,
 	dependencies = {
 		{ "hrsh7th/cmp-nvim-lsp", dependencies = "nvim-lspconfig" },
@@ -40,14 +40,14 @@ package({
 -- package({
 --	  "glepnir/lspsaga.nvim",
 --     cmd = "Lspsaga",
---     enabled = completion_with_lsp,
+--     enabled = vim.g.completion_with_lsp,
 --     config = conf.lspsaga_nvim,
 -- }
 
 package({
 	"ray-x/lsp_signature.nvim",
 	dependencies = "nvim-lspconfig",
-	enabled = completion_with_lsp,
+	enabled = vim.g.completion_with_lsp,
 })
 
 -- code-completion engine
@@ -55,7 +55,7 @@ package({
 	"neoclide/coc.nvim",
 	event = "BufRead",
 	branch = "release",
-	enabled = not completion_with_lsp,
+	enabled = not vim.g.completion_with_lsp,
 	config = function()
 		local cmd = "source " .. vim.fn.stdpath("config") .. "/lua/modules/completion/coc.vim"
 		vim.api.nvim_exec(cmd, false)

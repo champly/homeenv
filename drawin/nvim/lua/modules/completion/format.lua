@@ -1,5 +1,5 @@
 local format = {}
-local tool = require("utils.tool")
+local tool = require("core.event")
 
 function format.lsp_before_save()
 	local defs = {}

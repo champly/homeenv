@@ -55,82 +55,8 @@ aug END
 " " hidden not save buffer, repeat with coc.nvim
 " set hidden
 
-" 开启新的无名缓冲区
-nnoremap <leader>n  :enew<CR>
-nnoremap <leader>bd :bd!<CR>
-
 " 毫秒计的等待映射的键序列完成的时间
 set timeoutlen=300
-
-" [Vim 中正确使用 Alt 映射](http://www.skywind.me/blog/archives/1846)
-function! Terminal_MetaMode(mode)
-	set ttimeout
-	if $TMUX != ''
-		set ttimeoutlen=30
-	elseif &ttimeoutlen > 80 || &ttimeoutlen <= 0
-		set ttimeoutlen=80
-	endif
-	if has('nvim') || has('gui_running')
-		return
-	endif
-	function! s:metacode(mode, key)
-		if a:mode == 0
-			exec "set <M-".a:key.">=\e".a:key
-		else
-			exec "set <M-".a:key.">=\e]{0}".a:key."~"
-		endif
-	endfunc
-	for i in range(10)
-		call s:metacode(a:mode, nr2char(char2nr('0') + i))
-	endfor
-	for i in range(26)
-		call s:metacode(a:mode, nr2char(char2nr('a') + i))
-		call s:metacode(a:mode, nr2char(char2nr('A') + i))
-	endfor
-	if a:mode != 0
-		for c in [',', '.', '/', ';', '[', ']', '{', '}']
-			call s:metacode(a:mode, c)
-		endfor
-		for c in ['?', ':', '-', '_']
-			call s:metacode(a:mode, c)
-		endfor
-	else
-		for c in [',', '.', '/', ';', '{', '}']
-			call s:metacode(a:mode, c)
-		endfor
-		for c in ['?', ':', '-', '_']
-			call s:metacode(a:mode, c)
-		endfor
-	endif
-endfunc
-command! -nargs=0 -bang VimMetaInit call Terminal_MetaMode(<bang>0)
-
-function! Terminal_MetaMode_LQ(mode)
-	if has('nvim') || has('gui_running')
-		return
-	endif
-	function! s:metacode(mode, key)
-		if a:mode == 0
-			exec "set <M-".a:key.">=\e".a:key
-		else
-			exec "set <M-".a:key.">=\e]{0}".a:key."~"
-		endif
-	endfunc
-	for c in ['h', 'j', 'k', 'l', 'o', 'L']
-		call s:metacode(a:mode, c)
-	endfor
-	if &ttimeout == 0
-		set ttimeout
-	endif
-	if $TMUX != ''
-		set ttimeoutlen=30
-	elseif &ttimeoutlen <= 0
-		set ttimeoutlen=50
-	endif
-endfunc
-" 非0: 定义为更不容易混淆的：<ESC>]{0}x~ 格式（但是需要设置终端软件里每个ALT-x 组合键发送什么）
-" 0: 定义为：<ESC>x 格式 但是需要配合ttimeoutlen使用 否则会误触发
-call Terminal_MetaMode_LQ(1)
 
 " https://zhuanlan.zhihu.com/p/20902166
 " 在当前位置打开文件浏览器

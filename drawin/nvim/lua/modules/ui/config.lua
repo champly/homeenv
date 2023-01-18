@@ -175,10 +175,7 @@ function config.nvim_tree()
 		}
 	}
 
-	local bind = require("utils.bind")
-	bind.nvim_load_mapping({
-		["n|ff"] = bind.map_cr("NvimTreeToggle"):with_noremap()
-	})
+	vim.api.nvim_set_keymap("n", "ff", ":NvimTreeToggle<CR>", { noremap = true })
 end
 
 function config.galaxyline()
@@ -232,11 +229,8 @@ function config.vim_gitgutter()
 	-- -- nnoremap <leader>g= :GitGutterNextHunk<CR>
 
 	-- 有时会出现git左侧状态栏不准确的问题 使用该命令可以强制刷新
-	local bind = require("utils.bind")
-	bind.nvim_load_mapping({
-		["n|<leader>ll"] = bind.map_cr("GitGutterAll"):with_silent(),
-		["n|<leader>gf"] = bind.map_cr("GitGutterFold"):with_noremap()
-	})
+	vim.api.nvim_set_keymap("n", "<leader>ll", ":GitGutterAll<CR>", { silent = true })
+	vim.api.nvim_set_keymap("n", "<leader>gf", ":GitGutterFold<CR>", { noremap = true })
 end
 
 function config.gitsigns_nvim()
@@ -295,11 +289,8 @@ function config.vim_floaterm()
 	vim.g.floaterm_width = 0.8
 	vim.g.floaterm_height = 0.8
 
-	local bind = require("utils.bind")
-	bind.nvim_load_mapping({
-		["n|<F3>"] = bind.map_cr("FloatermToggle"):with_noremap(),
-		["t|<F3>"] = bind.map_cmd("<C-\\><C-n>:FloatermToggle<CR>"):with_noremap()
-	})
+	vim.api.nvim_set_keymap("n", "<F3>", ":FloatermToggle<CR>", { noremap = true })
+	vim.api.nvim_set_keymap("t", "<F3>", "<C-\\><C-n>:FloatermToggle<CR>", { noremap = true })
 end
 
 function config.nvim_notify()
@@ -320,10 +311,7 @@ function config.nvim_notify()
 		end
 	end
 
-	local bind = require("utils.bind")
-	bind.nvim_load_mapping({
-		["n|<leader>s"] = bind.map_cmd("<cmd>lua save_file_with_notify()<cr>"):with_noremap():with_silent()
-	})
+	vim.api.nvim_set_keymap("n", "<leader>s", "<cmd>lua save_file_with_notify()<cr>", { noremap = true, silent = true })
 end
 
 function config.rainbow()
