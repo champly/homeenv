@@ -1,50 +1,62 @@
-local opt = vim.opt
 local cache_dir = os.getenv("HOME") .. "/.cache/nvim/"
 
-opt.encoding       = "utf-8" -- scriptencoding utf-8
-opt.termguicolors  = true
-opt.relativenumber = true -- 显示相对行号
-opt.foldmethod     = "syntax" -- 设置折叠语法
-opt.foldlevelstart = 99 -- 默认不折叠
-opt.backup         = false
-opt.writebackup    = false
-opt.swapfile       = false
-opt.undodir        = cache_dir .. "undo"
-opt.undofile       = true
-opt.mouse          = "v"
-opt.scrolloff      = 1 -- Minimal number of screen lines to keep above and below the cursor.
-opt.tabstop        = 4 -- An indentation every four columns
-opt.shiftwidth     = 4
-opt.softtabstop    = 4 -- Let backspace delete indent
-opt.autoindent     = true
-opt.splitright     = true -- Puts new vsplit windows to the right of the current
-opt.splitbelow     = true -- Puts new split windows to the bottom of the current
-opt.smartindent    = true -- Open smart indent
+vim.g.completion_with_lsp = true
+
+-- for neovide
+-- https://neovide.dev/configuration.html
+vim.o.guifont = "SauceCodePro Nerd Font"
+vim.g.neovide_cursor_vfx_mode = "railgun"
+vim.g.neovide_fullscreen = "v:false"
+vim.g.neovide_transparency = 0.9
+-- vim.g.transparency = 0.6
+
+vim.opt.encoding       = "utf-8" -- scriptencoding utf-8
+vim.opt.termguicolors  = true
+vim.opt.relativenumber = true -- 显示相对行号
+vim.opt.foldmethod     = "syntax" -- 设置折叠语法
+vim.opt.foldlevelstart = 99 -- 默认不折叠
+vim.opt.backup         = false
+vim.opt.writebackup    = false
+vim.opt.swapfile       = false
+vim.opt.undodir        = cache_dir .. "undo"
+vim.opt.undofile       = true
+vim.opt.mouse          = "v"
+vim.opt.scrolloff      = 1 -- Minimal number of screen lines to keep above and below the cursor.
+vim.opt.tabstop        = 4 -- An indentation every four columns
+vim.opt.shiftwidth     = 4
+vim.opt.softtabstop    = 4 -- Let backspace delete indent
+vim.opt.autoindent     = true
+vim.opt.splitright     = true -- Puts new vsplit windows to the right of the current
+vim.opt.splitbelow     = true -- Puts new split windows to the bottom of the current
+vim.opt.smartindent    = true -- Open smart indent
 -- 忽略大小写
-opt.ignorecase     = true
-opt.smartcase      = true
+vim.opt.ignorecase     = true
+vim.opt.smartcase      = true
 -- 设置光标所在行、列高亮
--- opt.cursorcolumn      = true
-opt.cursorline     = true
-opt.hlsearch       = true
+-- vim.opt.cursorcolumn      = true
+vim.opt.cursorline     = true
+vim.opt.hlsearch       = true
 -- hit-enter
-opt.cmdheight      = 0
+vim.opt.cmdheight      = 0
 -- 区分空格和缩进
-opt.list           = true
-opt.showbreak      = "↪ "
-opt.listchars      = "tab:▸ ,trail:·,precedes:←,extends:→"
+vim.opt.list           = true
+vim.opt.showbreak      = "↪ "
+vim.opt.listchars      = "tab:▸ ,trail:·,precedes:←,extends:→"
 -- Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 -- delays and poor user experience.
-opt.updatetime     = 300
+vim.opt.updatetime     = 300
 -- 0: never
 -- 1: only if there are at least two windows
 -- 2: always
 -- 3: always and ONLY the last window
-opt.laststatus     = 3
--- opt.textwidth = 120 -- 设置自动加上换行符的长度
-opt.colorcolumn    = "120"
-opt.number         = true -- 默认显示数字栏
-opt.expandtab      = false -- 选项把插入的 tab 字符替换成特定数目的空格
+vim.opt.laststatus     = 3
+-- vim.opt.textwidth = 120 -- 设置自动加上换行符的长度
+vim.opt.colorcolumn    = "120"
+vim.opt.number         = true -- 默认显示数字栏
+vim.opt.expandtab      = false -- 选项把插入的 tab 字符替换成特定数目的空格
+
+vim.o.timeoutlen = 300 --毫秒计的等待映射的键序列完成的时间
+vim.o.maxmempattern = 5000 -- maxmempattern规定了vim做字符串匹配时使用的最大内存，不是由每行字符数决定的。
 
 if vim.loop.os_uname().sysname == "Darwin" then
 	vim.g.clipboard = {

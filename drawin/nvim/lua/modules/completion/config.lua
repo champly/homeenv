@@ -63,9 +63,9 @@ function config.nvim_cmp()
 		sources = {
 			{ name = "nvim_lsp" },
 			{ name = "luasnip" },
+			{ name = "path" },
 			{ name = "buffer" },
 			{ name = "nvim_lua" },
-			{ name = "path" },
 		},
 		-- https://github.com/hrsh7th/nvim-cmp/issues/381#issuecomment-947895080
 		-- https://github.com/hrsh7th/nvim-cmp/issues/183
@@ -100,6 +100,16 @@ function config.nvim_cmp()
 		--         -- end
 		--     }
 		-- }
+	})
+end
+
+function config.lua_snip()
+	local ls = require("luasnip")
+	ls.config.set_config({
+		delete_check_events = "TextChanged",
+	})
+	require("luasnip.loaders.from_vscode").lazy_load({
+		paths = { "./snippets/" },
 	})
 end
 

@@ -70,6 +70,7 @@ package({
 
 -- zbirenbaum/copilot.lua
 -- zbirenbaum/copilot-cmp
--- tools["github/copilot.vim"] = {
+-- package({
+--    "github/copilot.vim",
 --     cmd = "Copilot",
 -- }

@@ -2,10 +2,11 @@ local package = require("core.pack").package
 local conf = require("modules.ui.config")
 
 -- theme
--- use "tomasiser/vim-code-dark"
--- use "rakr/vim-one"
--- use "rktjmp/lush.nvim"
--- ui["morhetz/gruvbox"] = {
+-- package({"tomasiser/vim-code-dark"})
+-- package({"rakr/vim-one"})
+-- package({"rktjmp/lush.nvim"})
+-- package({
+--     "morhetz/gruvbox",
 --     config = conf.gruvbox,
 -- }
 package({
@@ -14,9 +15,10 @@ package({
 })
 
 -- This plugin provides a start screen
--- use "mhinz/vim-startify"
+-- package({"mhinz/vim-startify"})
 package({
 	"glepnir/dashboard-nvim",
+	event = "VimEnter",
 	config = conf.dashboard,
 })
 
@@ -28,8 +30,8 @@ package({
 })
 
 -- Lean & mean status/tabline for vim that's light as air.
--- use "vim-airline/vim-airline"
--- use "vim-airline/vim-airline-themes"
+-- package({"vim-airline/vim-airline"})
+-- package({"vim-airline/vim-airline-themes"})
 -- use <leader>fb replace
 package({
 	"akinsho/bufferline.nvim",
@@ -37,14 +39,14 @@ package({
 	config = conf.bufferline,
 })
 
--- use 'nvim-lualine/lualine.nvim'
+-- package({"nvim-lualine/lualine.nvim"})
 package({
 	"feline-nvim/feline.nvim",
 	dependencies = "kyazdani42/nvim-web-devicons",
 	enabled = vim.g.completion_with_lsp,
 	config = conf.feline_nvim,
 })
--- ui["windwp/windline.nvim"] = {}
+-- package({"windwp/windline.nvim"})
 package({
 	"glepnir/galaxyline.nvim",
 	branch = "main",
@@ -53,7 +55,7 @@ package({
 })
 
 -- Git
--- use 'tpope/vim-fugitive'
+-- package({"tpope/vim-fugitive"})
 package({
 	"airblade/vim-gitgutter",
 	config = conf.vim_gitgutter,
@@ -68,7 +70,7 @@ package({
 })
 
 -- float terminal
--- ui["akinsho/toggleterm.nvim"]
+-- package({"akinsho/toggleterm.nvim"})
 package({
 	"voldikss/vim-floaterm",
 	event = "BufRead",
@@ -81,21 +83,25 @@ package({
 	config = conf.nvim_notify,
 })
 
--- -- parentheses improved
--- ui["luochen1990/rainbow"] = {
+-- parentheses improved
+-- package({
+--     "luochen1990/rainbow",
 --     event = "BufRead",
 --     config = conf.rainbow,
 -- }
 
--- ui["p00f/nvim-ts-rainbow"] = {
---     after = "nvim-treesitter",
+-- package({
+--     "p00f/nvim-ts-rainbow",
+--     dependencies = "nvim-treesitter",
 --     config = conf.nvim_ts_rainbow
 -- }
 
--- ui["danilamihailov/beacon.nvim"] = {
+-- package({
+--     "danilamihailov/beacon.nvim",
 --     config = conf.beacon,
 -- }
 
--- ui["folke/which-key.nvim"] = {
+-- package({
+--     "folke/which-key.nvim",
 --     config = conf.which_key,
 -- }

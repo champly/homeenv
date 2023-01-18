@@ -1,0 +1,12 @@
+{
+  "mn": {
+    "prefix": "mn",
+    "body": ["---<Enter><Enter>"],
+    "description": "Dividing line"
+  },
+  "mb": {
+    "prefix": "mb",
+    "body": ["****<Space><++><Esc>F*hi"],
+    "description": "Font bold"
+  },
+}

@@ -44,16 +44,6 @@ vim.g.mapleader = ","
 vim.api.nvim_set_keymap("n", " ", "", { noremap = true })
 vim.api.nvim_set_keymap("x", " ", "", { noremap = true })
 
--- for neovide
--- https://neovide.dev/configuration.html
-vim.o.guifont = "SauceCodePro Nerd Font"
-vim.g.neovide_cursor_vfx_mode = "railgun"
-vim.g.neovide_fullscreen = "v:false"
-vim.g.neovide_transparency = 0.9
--- vim.g.transparency = 0.6
-
-vim.g.completion_with_lsp = true
-
 require("core.options")
 require("core.event")
 require("core.pack"):boot_strap()
