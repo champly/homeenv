@@ -62,15 +62,13 @@ require("core.event")
 local cmd = "source " .. vim.fn.stdpath("config") .. "/lua/core/other.vim"
 vim.api.nvim_exec(cmd, false)
 
-require("core.pack"):boot_strap()
-
--- -- new packer autoload
--- vim.cmd [[ silent! command PackerClean lua require("modules.pack") require("packer").clean() ]]
--- vim.cmd [[ silent! command PackerCompile lua require("modules.pack") require("packer").compile() ]]
--- vim.cmd [[ silent! command PackerInstall lua require("modules.pack") require("packer").install() ]]
--- vim.cmd [[ silent! command PackerStatus lua require("modules.pack") require("packer").status() ]]
--- vim.cmd [[ silent! command PackerSync lua require("modules.pack") require("packer").sync() ]]
--- vim.cmd [[ silent! command PackerUpdate lua require("modules.pack") require("packer").update() ]]
--- if not vim.loop.fs_stat(vim.fn.stdpath("config") .. "/plugin/packer_compiled.lua") then
---     vim.cmd [[ autocmd VimEnter * PackerSync ]]
--- end
+-- new packer autoload
+vim.cmd [[ silent! command PackerClean lua require("modules.pack") require("packer").clean() ]]
+vim.cmd [[ silent! command PackerCompile lua require("modules.pack") require("packer").compile() ]]
+vim.cmd [[ silent! command PackerInstall lua require("modules.pack") require("packer").install() ]]
+vim.cmd [[ silent! command PackerStatus lua require("modules.pack") require("packer").status() ]]
+vim.cmd [[ silent! command PackerSync lua require("modules.pack") require("packer").sync() ]]
+vim.cmd [[ silent! command PackerUpdate lua require("modules.pack") require("packer").update() ]]
+if not vim.loop.fs_stat(vim.fn.stdpath("config") .. "/plugin/packer_compiled.lua") then
+	vim.cmd [[ autocmd VimEnter * PackerSync ]]
+end

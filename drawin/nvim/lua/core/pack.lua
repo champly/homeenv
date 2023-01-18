@@ -1,40 +1,61 @@
-local helper = require("core.helper")
-local vim_path = helper.get_config_path()
-local modules_dir = vim_path .. "/lua/modules"
+local pack = {}
+pack.__index = pack
 
-local present, packer = pcall(require, "modules.packer_init")
-if not present then
-	return false
-end
+local modules_dir = vim.fn.stdpath("config") .. "/lua/modules"
 
-local use = packer.use
+function pack:load_modules_packages()
+	self.repos = {}
 
-local load_plugins = function()
-	local get_plugins_list = function()
-		local list = {}
-		local tmp = vim.split(vim.fn.globpath(modules_dir, "*/plugins.lua"), "\n")
-
-		for _, f in ipairs(tmp) do
-			list[#list + 1] = string.match(f, 'lua/(.+).lua$')
-			-- list[#list + 1] = f:sub(#modules_dir - #modules_str + 1, -1) -- add 'modules/' prefix
-		end
-		return list
+	local list = vim.fs.find("package.lua", { path = modules_dir, type = "file", limit = 10 })
+	if #list == 0 then
+		return
 	end
 
-	local repolist = {}
-	for _, m in ipairs(get_plugins_list()) do
-		local repos = require(m:sub(0, #m - 4)) -- remove .lua suffix
-		for repo, conf in pairs(repos) do
-			repolist[#repolist + 1] = vim.tbl_extend("force", { repo }, conf)
+	local disable_modules = {}
+	if vim.fn.exists("g:disable_modules") == 1 then
+		disable_modules = vim.split(vim.g.disable_modules, ",", { trimempty = true })
+	end
+
+	for _, f in pairs(list) do
+		local _, pos = f:find(modules_dir)
+		f = f:sub(pos - #"modules" + 1, #f - #".lua")
+		if not vim.tbl_contains(disable_modules, f) then
+			require(f)
 		end
 	end
-	return repolist
 end
 
-return packer.startup(function()
-	use { "wbthomason/packer.nvim", opt = true }
-
-	for _, repo in ipairs(load_plugins()) do
-		use(repo)
+function pack:boot_strap()
+	local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+	if not vim.loop.fs_stat(lazypath) then
+		vim.fn.system({
+			"git",
+			"clone",
+			"--filter=blob:none",
+			"https://github.com/folke/lazy.nvim.git",
+			"--branch=stable", -- latest stable release
+			lazypath,
+		})
 	end
-end)
+	vim.opt.rtp:prepend(lazypath)
+	self:load_modules_packages()
+
+	require("lazy").setup(self.repos, {
+		lockfile = vim.fn.stdpath("config") .. "/lazy-lock.json"
+	})
+
+	for k, v in pairs(self) do
+		if type(v) ~= "function" then
+			self[k] = nil
+		end
+	end
+end
+
+function pack.package(repo)
+	if not pack.repos then
+		pack.repos = {}
+	end
+	table.insert(pack.repos, repo)
+end
+
+return pack

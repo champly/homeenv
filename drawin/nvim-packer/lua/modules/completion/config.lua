@@ -1,9 +1,9 @@
 local config = {}
 
 function config.nvim_lsp()
-	-- if not packer_plugins["nui.nvim"].loaded then
-	--     vim.cmd [[ packadd nui.nvim ]]
-	-- end
+	if not packer_plugins["nui.nvim"].loaded then
+		vim.cmd [[ packadd nui.nvim ]]
+	end
 	require("modules.completion.lspconfig")
 end
 
@@ -116,12 +116,12 @@ function config.lspsaga_nvim()
 end
 
 function config.telescope()
-	-- if not packer_plugins["plenary.nvim"].loaded then
-	--     vim.cmd [[ packadd plenary.nvim ]]
-	--     vim.cmd [[ packadd popup.nvim ]]
-	--     vim.cmd [[ packadd telescope-fzy-native.nvim ]]
-	--     vim.cmd [[ packadd telescope-ui-select.nvim ]]
-	-- end
+	if not packer_plugins["plenary.nvim"].loaded then
+		vim.cmd [[ packadd plenary.nvim ]]
+		vim.cmd [[ packadd popup.nvim ]]
+		vim.cmd [[ packadd telescope-fzy-native.nvim ]]
+		vim.cmd [[ packadd telescope-ui-select.nvim ]]
+	end
 
 	-- https://github.com/nvim-telescope/telescope.nvim/blob/master/lua/telescope/config.lua
 	require("telescope").setup {

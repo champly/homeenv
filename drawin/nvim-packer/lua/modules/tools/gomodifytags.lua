@@ -1,0 +1,3 @@
+-- TODO: implement AddTags
+-- https://github.com/fatih/gomodifytags
+-- gomodifytags -file ~/Dropbox/go/src/demo/debug/interface.go -line 14,15 -add-tags json
