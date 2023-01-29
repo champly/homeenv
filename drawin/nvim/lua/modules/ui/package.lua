@@ -19,13 +19,13 @@ package({
 package({
 	"glepnir/dashboard-nvim",
 	event = "VimEnter",
+	dependencies = "nvim-tree/nvim-web-devicons",
 	config = conf.dashboard,
 })
 
 -- file system explorer
 package({
-	"kyazdani42/nvim-tree.lua",
-	dependencies = "kyazdani42/nvim-web-devicons",
+	"nvim-tree/nvim-tree.lua",
 	config = conf.nvim_tree,
 })
 
@@ -42,7 +42,7 @@ package({
 -- package({"nvim-lualine/lualine.nvim"})
 package({
 	"feline-nvim/feline.nvim",
-	dependencies = "kyazdani42/nvim-web-devicons",
+	dependencies = "nvim-tree/nvim-web-devicons",
 	enabled = vim.g.completion_with_lsp,
 	config = conf.feline_nvim,
 })

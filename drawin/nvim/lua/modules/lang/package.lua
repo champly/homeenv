@@ -82,5 +82,5 @@ package({
 --     event = "BufRead",
 --     enabled = vim.g.completion_with_lsp,
 --     config = conf.trouble,
---     dependencies = "kyazdani42/nvim-web-devicons",
+--     dependencies = "nvim-tree/nvim-web-devicons",
 -- })

@@ -18,77 +18,96 @@ end
 
 function config.dashboard()
 	vim.cmd [[ hi DashboardHeader guifg=yellow ]]
-	vim.cmd [[ hi DashboardCenter guifg=yellow ]]
-	vim.cmd [[ hi DashboardShortcut guifg=#1E90FF ]]
 	vim.cmd [[ hi DashboardFooter guifg=gray ]]
 
-	local db = require("dashboard")
-	db.custom_header = {
-		"",
-		"",
-		"",
-		"  ______         __                                      __     __           __            _                        __                             ",
-		" /_  __/___     / /_  ___     ____  _____   ____  ____  / /_   / /_____     / /_  ___     (_)____   __  ______     / /_____     __  ______  __  __ ",
-		"  / / / __ \\   / __ \\/ _ \\   / __ \\/ ___/  / __ \\/ __ \\/ __/  / __/ __ \\   / __ \\/ _ \\   / / ___/  / / / / __ \\   / __/ __ \\   / / / / __ \\/ / / / ",
-		" / / / /_/ /  / /_/ /  __/  / /_/ / /     / / / / /_/ / /_   / /_/ /_/ /  / /_/ /  __/  / (__  )  / /_/ / /_/ /  / /_/ /_/ /  / /_/ / /_/ / /_/ /  ",
-		"/_/  \\____/  /_.___/\\___/   \\____/_/     /_/ /_/\\____/\\__/   \\__/\\____/  /_.___/\\___/  /_/____/   \\__,_/ .___/   \\__/\\____/   \\__, /\\____/\\__,_/   ",
-		"                                                                                                      /_/                    /____/                ",
-		"",
-		"",
-	}
-	db.custom_center = {
-		{
-			icon = "  ",
-			desc = "Recently laset session                  ",
-			shortcut = "<leader>sl",
-			action = "SessionLoad"
-		},
-		{
-			icon = "  ",
-			desc = "Recently opened files                   ",
-			shortcut = "<leader>fh",
-			action = "Telescope oldfiles"
-		},
-		{
-			icon = "  ",
-			desc = "Find  File                              ",
-			shortcut = "<leader>ff",
-			action = "Telescope find_files"
-		},
-		{
-			icon = "  ",
-			desc = "Find  word                              ",
-			shortcut = "<leader>fw",
-			action = "Telescope live_grep"
-		},
-		{
-			icon = "  ",
-			desc = "Create new buffer                       ",
-			shortcut = "<leader> n",
-			action = "enew"
-		},
-		{
-			icon = "  ",
-			desc = "Open Personal dotfiles                  ",
-			shortcut = "<leader>fd",
-			action = "Telescope dotfiles"
-		},
-		{
-			icon = "  ",
-			desc = "Find Go Source Code                     ",
-			shortcut = "<leader>fs",
-			action = "Telescope gosource"
-		},
-	}
-	db.custom_footer = {
-		"",
-		"",
-		"If you think penguins are fat and waddle, you have never been attacked by one",
-		"running at you in excess of 100 miles per hour.",
-		"",
-		"                                                            -- Linus Torvalds",
-	}
-	db.session_directory = "/Users/champly/Dropbox/config/session"
+	vim.cmd [[ hi DashboardIcon guifg=yellow ]]
+	vim.cmd [[ hi DashboardDesc guifg=yellow ]]
+	vim.cmd [[ hi DashboardShotCut guifg=#1E90FF ]]
+	vim.cmd [[ hi DashboardKey guifg=#1E90FF ]]
+
+	require("dashboard").setup({
+		theme = "doom",
+		config = {
+			header = {
+				"",
+				"",
+				"",
+				"  ______         __                                      __     __           __            _                        __                             ",
+				" /_  __/___     / /_  ___     ____  _____   ____  ____  / /_   / /_____     / /_  ___     (_)____   __  ______     / /_____     __  ______  __  __ ",
+				"  / / / __ \\   / __ \\/ _ \\   / __ \\/ ___/  / __ \\/ __ \\/ __/  / __/ __ \\   / __ \\/ _ \\   / / ___/  / / / / __ \\   / __/ __ \\   / / / / __ \\/ / / / ",
+				" / / / /_/ /  / /_/ /  __/  / /_/ / /     / / / / /_/ / /_   / /_/ /_/ /  / /_/ /  __/  / (__  )  / /_/ / /_/ /  / /_/ /_/ /  / /_/ / /_/ / /_/ /  ",
+				"/_/  \\____/  /_.___/\\___/   \\____/_/     /_/ /_/\\____/\\__/   \\__/\\____/  /_.___/\\___/  /_/____/   \\__,_/ .___/   \\__/\\____/   \\__, /\\____/\\__,_/   ",
+				"                                                                                                      /_/                    /____/                ",
+				"",
+				"",
+				string.format(
+					"--- [   %s.%s.%s%s   ] ---",
+					vim.version().major,
+					vim.version().minor,
+					vim.version().patch,
+					vim.version().prerelease == true and "-dev" or ""
+				),
+				"",
+				"",
+			},
+			center = {
+				{
+					icon = "  ",
+					desc = "Recently laset session                  ",
+					key = "<leader>sl",
+					-- keymap = "<leader>sl",
+					action = "SessionLoad"
+				},
+				{
+					icon = "  ",
+					desc = "Recently opened files                   ",
+					key = "<leader>fh",
+					action = "Telescope oldfiles"
+				},
+				{
+					icon = "  ",
+					desc = "Find  File                              ",
+					key = "<leader>ff",
+					action = "Telescope find_files"
+				},
+				{
+					icon = "  ",
+					desc = "Find  word                              ",
+					key = "<leader>fw",
+					action = "Telescope live_grep"
+				},
+				{
+					icon = "  ",
+					desc = "Create new buffer                       ",
+					key = "<leader> n",
+					action = "enew"
+				},
+				{
+					icon = "  ",
+					desc = "Open Personal dotfiles                  ",
+					key = "<leader>fd",
+					action = "Telescope dotfiles"
+				},
+				{
+					icon = "  ",
+					desc = "Find Go Source Code                     ",
+					key = "<leader>fs",
+					action = "Telescope gosource"
+				},
+			},
+			footer = {
+				"",
+				"",
+				"If you think penguins are fat and waddle, you have never been attacked by one",
+				"running at you in excess of 100 miles per hour.",
+				"",
+				"                                                            -- Linus Torvalds",
+			}
+		}
+	})
+
+	-- https://github.com/glepnir/dbsession.nvim
+	-- db.session_directory = "/Users/champly/Dropbox/config/session"
 
 	vim.api.nvim_set_keymap("n", "<leader>fh", ":Telescope oldfiles<cr>", {})
 	vim.api.nvim_set_keymap("n", "<leader>ff", ":Telescope find_files<cr>", {})
@@ -98,8 +117,8 @@ function config.dashboard()
 end
 
 function config.nvim_tree()
-	-- https://github.com/kyazdani42/nvim-tree.lua/pull/603
-	-- https://github.com/kyazdani42/nvim-tree.lua/issues/674
+	-- https://github.com/nvim-tree/nvim-tree.lua/pull/603
+	-- https://github.com/nvim-tree/nvim-tree.lua/issues/674
 	require("nvim-tree").setup {
 		update_cwd = true,
 		update_focused_file = {
