@@ -62,9 +62,11 @@ local enhance_attach = function(client, bufnr)
 	vim.api.nvim_set_keymap("n", "<c-]>", ":Telescope lsp_definitions theme=get_cursor<CR>", opts)
 	vim.api.nvim_set_keymap("n", "<leader>im", ":Telescope lsp_implementations theme=ivy<CR>", opts)
 	vim.api.nvim_set_keymap("n", "<leader>rf", ":Telescope lsp_references theme=ivy<CR>", opts)
-	vim.api.nvim_set_keymap("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+	vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { silent = true, buffer = bufnr, noremap = ture })
+	-- vim.api.nvim_set_keymap("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 	-- !import deprecated when neovim version 0.9
-	vim.api.nvim_set_keymap("v", "<leader>ra", ":<c-u>lua vim.lsp.buf.range_code_action()<CR>", opts)
+	-- vim.api.nvim_set_keymap("v", "<leader>ra", ":<c-u>lua vim.lsp.buf.range_code_action()<CR>", opts)
+	-- vim.keymap.set({ "v" }, "<leader>ra", vim.lsp.buf.code_action, { silent = true, buffer = bufnr, noremap = ture })
 	vim.api.nvim_set_keymap("n", "<leader>ds", ":Telescope diagnostics theme=ivy<CR>", opts)
 	vim.api.nvim_set_keymap("n", "<leader>bl", ":Telescope lsp_document_symbols<CR>", opts)
 
