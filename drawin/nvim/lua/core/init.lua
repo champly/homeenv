@@ -49,6 +49,6 @@ require("core.event")
 require("core.pack"):boot_strap()
 require("core.mapping")
 
--- TODO rewrite with lua
-local cmd = "source " .. vim.fn.stdpath("config") .. "/lua/core/other.vim"
-vim.api.nvim_exec(cmd, false)
+-- -- TODO rewrite with lua
+-- local cmd = "source " .. vim.fn.stdpath("config") .. "/lua/core/other.vim"
+-- vim.api.nvim_exec(cmd, false)

@@ -3,9 +3,16 @@ vim.api.nvim_set_keymap("n", "Y", "y$", { noremap = true })
 vim.api.nvim_set_keymap("n", "<leader>n", ":enew<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<leader>bd", ":bd!<CR>", { noremap = true })
 
+-- -- https://www.reddit.com/r/neovim/comments/ro6oye/open_link_from_neovim/
+vim.api.nvim_set_keymap("n", "gx", ":silent execute '!open ' . shellescape(expand('<cfile>'), 1)<CR>", { noremap = true })
+
 -- insert
 vim.api.nvim_set_keymap("n", "<leader>ss", ":<C-u>SessionSave<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<leader>sl", ":<C-u>SessionLoad<CR>", { noremap = true })
+
+-- loop set mouse mode
+vim.api.nvim_set_keymap("n", "<leader>sm", ":lua vim.opt.mouse = vim.opt.mouse._value == 'v' and 'a' or 'v'<CR>",
+	{ noremap = true })
 
 -- Call figlet
 -- brew install figlet
