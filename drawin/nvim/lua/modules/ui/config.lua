@@ -41,7 +41,7 @@ function config.dashboard()
 				"",
 				"",
 				string.format(
-					"--- [   %s.%s.%s%s   ] ---",
+					"v%s.%s.%s%s",
 					vim.version().major,
 					vim.version().minor,
 					vim.version().patch,

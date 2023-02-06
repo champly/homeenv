@@ -5,14 +5,14 @@ package({
 	"nvim-treesitter/nvim-treesitter",
 	event = "BufRead",
 	dependencies = "telescope.nvim",
-	config = conf.nvim_treesitter,
 	build = ":TSUpdate",
+	config = conf.nvim_treesitter,
 })
 
-package({
-	"nvim-treesitter/nvim-treesitter-textobjects",
-	dependencies = "nvim-treesitter"
-})
+-- package({
+--     "nvim-treesitter/nvim-treesitter-textobjects",
+--     dependencies = "nvim-treesitter"
+-- })
 
 package({
 	"iamcco/markdown-preview.nvim",

@@ -143,13 +143,6 @@ function config.symbols_outline()
 	})
 	vim.api.nvim_set_keymap("n", "<Space>o", ":SymbolsOutline<CR>", { noremap = true, silent = true })
 	vim.cmd [[ hi FocusedSymbol gui=bold guifg=#C678DD ]]
-
-	-- https://github.com/simrat39/symbols-outline.nvim/issues/93#issuecomment-1003566569
-	_G.set_symbols_outline_state = function()
-		vim.g["symbols_outline_state"] = require("symbols-outline").state
-	end
-	vim.cmd [[ autocmd BufEnter * :lua set_symbols_outline_state() ]]
-	vim.cmd [[ autocmd BufEnter * if winnr("$") == 1 && exists("g:symbols_outline_state.outline_buf") && g:symbols_outline_state.outline_buf | quit | endif ]]
 end
 
 -- repeat with telescope
