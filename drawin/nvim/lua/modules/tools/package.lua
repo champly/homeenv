@@ -68,6 +68,12 @@ package({
 	config = conf.matchparen,
 })
 
+-- package({
+--     "sbdchd/neoformat",
+--     event = "BufReadPre",
+--     config = conf.neoformat,
+-- })
+
 -- zbirenbaum/copilot.lua
 -- zbirenbaum/copilot-cmp
 -- package({

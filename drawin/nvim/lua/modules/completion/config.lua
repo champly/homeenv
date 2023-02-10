@@ -22,10 +22,10 @@ function config.nvim_cmp()
 				vim_item.kind = string.format("%s %s", icons[vim_item.kind], vim_item.kind)
 
 				vim_item.menu = ({
-					nvim_lsp = "[LSP]",
-					nvim_lua = "[Lua]",
-					buffer = "[BUF]",
-				})[entry.source.name]
+						nvim_lsp = "[LSP]",
+						nvim_lua = "[Lua]",
+						buffer = "[BUF]",
+					})[entry.source.name]
 
 				return vim_item
 			end,
@@ -33,7 +33,7 @@ function config.nvim_cmp()
 		mapping = {
 			["<C-p>"] = cmp.mapping.select_prev_item(),
 			["<C-n>"] = cmp.mapping.select_next_item(),
-			["<C-d>"] = cmp.mapping.scroll_docs(-4),
+			["<C-d>"] = cmp.mapping.scroll_docs( -4),
 			["<C-f>"] = cmp.mapping.scroll_docs(4),
 			["<C-Space>"] = cmp.mapping.complete(),
 			["<C-e>"] = cmp.mapping.close(),
@@ -53,7 +53,7 @@ function config.nvim_cmp()
 			["<S-Tab>"] = function(fallback)
 				if cmp.visible() then
 					cmp.select_prev_item()
-				elseif require("luasnip").jumpable(-1) then
+				elseif require("luasnip").jumpable( -1) then
 					vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
 				else
 					fallback()
@@ -65,7 +65,7 @@ function config.nvim_cmp()
 			{ name = "luasnip" },
 			{ name = "path" },
 			{ name = "buffer" },
-			{ name = "nvim_lua" },
+			-- { name = "nvim_lua" },
 		},
 		-- https://github.com/hrsh7th/nvim-cmp/issues/381#issuecomment-947895080
 		-- https://github.com/hrsh7th/nvim-cmp/issues/183

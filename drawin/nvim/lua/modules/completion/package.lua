@@ -20,19 +20,21 @@ package({
 		"hrsh7th/cmp-nvim-lsp",
 		"hrsh7th/cmp-path",
 		"hrsh7th/cmp-buffer",
-		"L3MON4D3/LuaSnip",
-		"saadparwaiz1/cmp_luasnip",
-		"hrsh7th/cmp-nvim-lua",
+		-- "L3MON4D3/LuaSnip",
+		-- "saadparwaiz1/cmp_luasnip",
+		-- "hrsh7th/cmp-nvim-lua",
 	}
 })
 
--- package({
---     "L3MON4D3/LuaSnip",
---     event = "InsertCharPre",
---     enabled = vim.g.completion_with_lsp,
---     config = conf.lua_snip,
---     dependencies = "saadparwaiz1/cmp_luasnip",
--- })
+package({
+	"L3MON4D3/LuaSnip",
+	event = "InsertCharPre",
+	-- version = "<CurrentMajor>.*",
+	build = "make install_jsregexp",
+	enabled = vim.g.completion_with_lsp,
+	dependencies = "saadparwaiz1/cmp_luasnip",
+	config = conf.lua_snip
+})
 
 -- winbar use LSP to show your current code context.
 package({
@@ -79,9 +81,9 @@ package({
 	event = "BufRead",
 	config = conf.telescope,
 	dependencies = {
-		{ "nvim-lua/plenary.nvim", lazy = true },
-		{ "nvim-lua/popup.nvim", lazy = true },
+		{ "nvim-lua/plenary.nvim",                    lazy = true },
+		{ "nvim-lua/popup.nvim",                      lazy = true },
 		{ "nvim-telescope/telescope-fzy-native.nvim", lazy = true },
-		{ "nvim-telescope/telescope-ui-select.nvim", lazy = true },
+		{ "nvim-telescope/telescope-ui-select.nvim",  lazy = true },
 	}
 })
