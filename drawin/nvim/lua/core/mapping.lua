@@ -44,9 +44,9 @@ vim.api.nvim_set_keymap("n", "sk", ":set splitbelow<CR>:sp<CR>", { noremap = tru
 vim.api.nvim_set_keymap("n", "sj", ":set nosplitbelow<CR>:sp<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "ss", "<C-w>t<C-w>H", { noremap = true })
 vim.api.nvim_set_keymap("n", "sp", "<C-w>t<c-w>K", { noremap = true })
--- Press space twice to jump to the next '<++>' and edit it
-vim.api.nvim_set_keymap("n", "<leader><leader>", "<Esc>/<++><CR>:nohlsearch<CR>c4l", { noremap = true })
-vim.api.nvim_set_keymap("i", "<leader><leader>", "<Esc>/<++><CR>:nohlsearch<CR>c4l", { noremap = true })
+-- -- Press space twice to jump to the next '<++>' and edit it
+-- vim.api.nvim_set_keymap("n", "<leader><leader>", "<Esc>/<++><CR>:nohlsearch<CR>c4l", { noremap = true })
+-- vim.api.nvim_set_keymap("i", "<leader><leader>", "<Esc>/<++><CR>:nohlsearch<CR>c4l", { noremap = true })
 
 -- Tab
 vim.api.nvim_set_keymap("n", "<leader>tu", ":tabe<CR>", { noremap = true })

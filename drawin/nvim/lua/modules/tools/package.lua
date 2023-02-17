@@ -1,12 +1,6 @@
 local package = require("core.pack").package
 local conf = require("modules.tools.config")
 
--- debug
-package({
-	"tweekmonster/startuptime.vim",
-	cmd = "StartupTime",
-})
-
 -- tpope plug
 package({
 	"tpope/vim-eunuch",
@@ -66,6 +60,12 @@ package({
 	"monkoose/matchparen.nvim",
 	event = "BufReadPre",
 	config = conf.matchparen,
+})
+
+package({
+	"glepnir/dbsession.nvim",
+	cmd = { "SessionSave", "SessionLoad" },
+	config = conf.dbsession
 })
 
 -- package({

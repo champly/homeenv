@@ -63,6 +63,13 @@ function config.matchparen()
 	})
 end
 
+function config.dbsession()
+	require("dbsession").setup({
+		dir = "~/Dropbox/config/session",
+		auto_save_on_exit = false,
+	})
+end
+
 function config.neoformat()
 	-- Enable alignment
 	vim.g.neoformat_basic_format_align = 1

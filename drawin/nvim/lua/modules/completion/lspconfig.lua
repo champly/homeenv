@@ -8,24 +8,24 @@ capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 -- https://neovim.io/doc/user/lsp.html
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-	vim.lsp.diagnostic.on_publish_diagnostics,
-	{
-		-- Enable underline, use default values
-		underline = true,
-		-- Enable virtual text, override spacing to 4
-		virtual_text = {
-			spacing = 4,
-			prefix = "",
-			-- prefix = " ✗ ",
-		},
-		signs = {
-			enable = true,
-			priority = 20,
-		},
-		-- Disable a feature
-		update_in_insert = false,
-	}
-)
+		vim.lsp.diagnostic.on_publish_diagnostics,
+		{
+			-- Enable underline, use default values
+			underline = true,
+			-- Enable virtual text, override spacing to 4
+			virtual_text = {
+				spacing = 4,
+				prefix = "",
+				-- prefix = " ✗ ",
+			},
+			signs = {
+				enable = true,
+				priority = 20,
+			},
+			-- Disable a feature
+			update_in_insert = false,
+		}
+	)
 
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 for type, icon in pairs(signs) do
@@ -241,7 +241,7 @@ local root_files = {
 	"selene.toml",
 	"init.vim",
 }
-lspconfig.sumneko_lua.setup {
+lspconfig.lua_ls.setup {
 	-- cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
 	root_dir = function(fname)
 		return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
@@ -256,7 +256,7 @@ lspconfig.sumneko_lua.setup {
 			},
 			diagnostics = {
 				-- Get the language server to recognize the `vim` global
-				globals = { "vim", "packer_plugins" },
+				globals = { "vim" },
 				enable = true,
 			},
 			workspace = {

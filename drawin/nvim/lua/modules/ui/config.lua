@@ -106,9 +106,6 @@ function config.dashboard()
 		}
 	})
 
-	-- https://github.com/glepnir/dbsession.nvim
-	-- db.session_directory = "/Users/champly/Dropbox/config/session"
-
 	vim.api.nvim_set_keymap("n", "<leader>fh", ":Telescope oldfiles<cr>", {})
 	vim.api.nvim_set_keymap("n", "<leader>ff", ":Telescope find_files<cr>", {})
 	vim.api.nvim_set_keymap("n", "<leader>fw", ":Telescope live_grep<cr>", {})
@@ -187,8 +184,8 @@ function config.nvim_tree()
 			mappings = {
 				list = {
 					{ key = { "<CR>", "o" }, action = "edit" },
-					{ key = { "v" }, action = "vsplit" },
-					{ key = { "s" }, action = "split" },
+					{ key = { "v" },         action = "vsplit" },
+					{ key = { "s" },         action = "split" },
 				}
 			}
 		}
