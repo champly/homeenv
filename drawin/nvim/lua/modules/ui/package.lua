@@ -46,6 +46,13 @@ package({
 	enabled = vim.g.completion_with_lsp,
 	config = conf.feline_nvim,
 })
+-- package({
+--     "glepnir/whiskyline.nvim",
+--     dependencies = { "nvim-tree/nvim-web-devicons" },
+--     enabled = vim.g.completion_with_lsp,
+--     config = conf.whiskyline,
+-- })
+
 -- package({"windwp/windline.nvim"})
 package({
 	"glepnir/galaxyline.nvim",

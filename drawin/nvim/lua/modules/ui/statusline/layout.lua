@@ -136,6 +136,7 @@ table.insert(components.active[1], {
 table.insert(components.active[1], {
 	provider = function()
 		local fname
+		---@diagnostic disable-next-line: undefined-global
 		if vim.api.nvim_win_get_width(tonumber(winid) or 0) > 30 then
 			fname = vim.fn.fnamemodify(vim.fn.expand "%", ":~:.")
 		else

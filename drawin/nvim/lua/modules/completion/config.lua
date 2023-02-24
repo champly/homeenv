@@ -1,5 +1,9 @@
 local config = {}
 
+function config.nvim_coc()
+	require("modules.completion.coc")
+end
+
 function config.nvim_lsp()
 	require("modules.completion.lspconfig")
 end
@@ -152,6 +156,7 @@ function config.telescope()
 	require("telescope").load_extension("fzy_native")
 	require("telescope").load_extension("gosource")
 	require("telescope").load_extension("dotfiles")
+	require("telescope").load_extension("vimspector")
 	require("telescope").load_extension("ui-select")
 
 	vim.api.nvim_set_keymap("n", "<leader>fb", ":Telescope buffers<cr>", {})
@@ -160,6 +165,7 @@ function config.telescope()
 	vim.api.nvim_set_keymap("n", "<leader>fw", ":Telescope live_grep<cr>", {})
 	vim.api.nvim_set_keymap("n", "<leader>fd", ":Telescope dotfiles<cr>", {})
 	vim.api.nvim_set_keymap("n", "<leader>fs", ":Telescope gosource<cr>", {})
+	vim.api.nvim_set_keymap("n", "<leader>dt", ":Telescope vimspector<cr>", {})
 end
 
 return config

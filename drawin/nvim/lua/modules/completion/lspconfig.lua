@@ -8,24 +8,24 @@ capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 -- https://neovim.io/doc/user/lsp.html
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-		vim.lsp.diagnostic.on_publish_diagnostics,
-		{
-			-- Enable underline, use default values
-			underline = true,
-			-- Enable virtual text, override spacing to 4
-			virtual_text = {
-				spacing = 4,
-				prefix = "",
-				-- prefix = " ✗ ",
-			},
-			signs = {
-				enable = true,
-				priority = 20,
-			},
-			-- Disable a feature
-			update_in_insert = false,
-		}
-	)
+	vim.lsp.diagnostic.on_publish_diagnostics,
+	{
+		-- Enable underline, use default values
+		underline = true,
+		-- Enable virtual text, override spacing to 4
+		virtual_text = {
+			spacing = 4,
+			prefix = "",
+			-- prefix = " ✗ ",
+		},
+		signs = {
+			enable = true,
+			priority = 20,
+		},
+		-- Disable a feature
+		update_in_insert = false,
+	}
+)
 
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 for type, icon in pairs(signs) do
@@ -63,9 +63,7 @@ local enhance_attach = function(client, bufnr)
 	vim.api.nvim_set_keymap("n", "<leader>im", ":Telescope lsp_implementations theme=ivy<CR>", opts)
 	vim.api.nvim_set_keymap("n", "<leader>rf", ":Telescope lsp_references theme=ivy<CR>", opts)
 	-- !import deprecated when neovim version 0.9
-	vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { silent = true, buffer = bufnr, noremap = ture })
-	-- vim.api.nvim_set_keymap("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-	-- vim.api.nvim_set_keymap("v", "<leader>ra", ":<c-u>lua vim.lsp.buf.range_code_action()<CR>", opts)
+	vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { silent = true, buffer = bufnr, noremap = true })
 	vim.api.nvim_set_keymap("n", "<leader>ds", ":Telescope diagnostics theme=ivy<CR>", opts)
 	vim.api.nvim_set_keymap("n", "<leader>bl", ":Telescope lsp_document_symbols<CR>", opts)
 

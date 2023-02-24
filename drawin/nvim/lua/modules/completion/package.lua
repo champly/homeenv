@@ -60,18 +60,6 @@ package({
 	enabled = vim.g.completion_with_lsp,
 })
 
--- code-completion engine
-package({
-	"neoclide/coc.nvim",
-	event = "BufRead",
-	branch = "release",
-	enabled = not vim.g.completion_with_lsp,
-	config = function()
-		local cmd = "source " .. vim.fn.stdpath("config") .. "/lua/modules/completion/coc.vim"
-		vim.api.nvim_exec(cmd, false)
-	end
-})
-
 -- go language support
 -- use 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
@@ -82,8 +70,17 @@ package({
 	config = conf.telescope,
 	dependencies = {
 		{ "nvim-lua/plenary.nvim",                    lazy = true },
-		{ "nvim-lua/popup.nvim",                      lazy = true },
 		{ "nvim-telescope/telescope-fzy-native.nvim", lazy = true },
 		{ "nvim-telescope/telescope-ui-select.nvim",  lazy = true },
+		{ "nvim-lua/popup.nvim",                      lazy = true },
 	}
+})
+
+-- code-completion engine
+package({
+	"neoclide/coc.nvim",
+	event = "BufRead",
+	branch = "release",
+	enabled = not vim.g.completion_with_lsp,
+	config = conf.nvim_coc,
 })

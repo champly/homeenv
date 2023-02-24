@@ -1,14 +1,9 @@
 local config = {}
 
 function config.gruvbox()
-	-- vim.g.gruvbox_italic = 1
-	-- vim.cmd("set background=dark")
-	-- vim.cmd("colorscheme gruvbox")
 	require("gruvbox").setup({
 		italic = true,
 		overrides = {
-			-- Operator = { fg = colors.orange, italic = config.italic },
-			-- Operator = { fg = "#fe8019", italic = false },
 			Operator = { link = "GruvboxFg1" },
 		}
 	})
@@ -204,6 +199,10 @@ function config.feline_nvim()
 	-- require("modules.ui.statusline.nvchad")
 end
 
+function config.whiskyline()
+	require("whiskyline").setup()
+end
+
 function config.bufferline()
 	-- https://github.com/akinsho/bufferline.nvim#configuration
 	vim.opt.termguicolors = true
@@ -312,6 +311,7 @@ end
 function config.nvim_notify()
 	vim.notify = require("notify")
 
+	---@diagnostic disable-next-line: duplicate-set-field
 	function _G.save_file_with_notify()
 		local ok, msg = pcall(vim.cmd, "silent write!")
 		if ok then

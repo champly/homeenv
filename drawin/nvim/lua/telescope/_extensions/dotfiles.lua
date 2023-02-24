@@ -4,10 +4,11 @@ local pickers = require("telescope.pickers")
 local make_entry = require("telescope.make_entry")
 local conf = require("telescope.config").values
 
-local dotfiles_list = function (opts)
+local dotfiles_list = function()
 	local list = {}
 
 	local nvim_conf = io.popen("rg --files " .. vim.fn.stdpath("config"))
+	---@diagnostic disable-next-line: need-check-nil
 	for file in nvim_conf:lines() do
 		table.insert(list, file)
 	end
@@ -15,9 +16,9 @@ local dotfiles_list = function (opts)
 	return list
 end
 
-local dotfiles = function (opts)
+local dotfiles = function(opts)
 	opts = opts or {}
-	local results = dotfiles_list(opts)
+	local results = dotfiles_list()
 
 	pickers.new(opts, {
 		prompt_title = "Find in dotfiles",
