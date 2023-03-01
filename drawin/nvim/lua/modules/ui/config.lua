@@ -330,6 +330,12 @@ function config.nvim_notify()
 	vim.api.nvim_set_keymap("n", "<leader>s", "<cmd>lua save_file_with_notify()<cr>", { noremap = true, silent = true })
 end
 
+function config.nvim_spectre()
+	-- vim.api.nvim_set_keymap("n", "<leader>S", "<cmd>lua require('spectre').open()<CR>", { noremap = true, silent = true })
+	vim.api.nvim_set_keymap("n", "<leader>S", "<cmd>lua require('spectre').open_visual({select_word=true})<CR>",
+		{ noremap = true, silent = true })
+end
+
 function config.rainbow()
 	vim.g.rainbow_active = 1 -- set to 0 if you want to enable it later via :RainbowToggle
 

@@ -90,6 +90,16 @@ package({
 	config = conf.nvim_notify,
 })
 
+-- search and replace
+package({
+	"windwp/nvim-spectre",
+	dependencies = {
+		"nvim-lua/plenary.nvim",
+		"nvim-tree/nvim-web-devicons",
+	},
+	config = conf.nvim_spectre
+})
+
 -- parentheses improved
 -- package({
 --     "luochen1990/rainbow",

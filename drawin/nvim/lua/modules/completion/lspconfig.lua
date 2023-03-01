@@ -7,6 +7,7 @@ capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 -- capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 -- https://neovim.io/doc/user/lsp.html
+-- https://neovim.io/doc/user/diagnostic.html#vim.diagnostic.config()
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 	vim.lsp.diagnostic.on_publish_diagnostics,
 	{
@@ -14,6 +15,10 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 		underline = true,
 		-- Enable virtual text, override spacing to 4
 		virtual_text = {
+			-- severity = vim.diagnostic.severity.Error,
+			severity = {
+				min = vim.diagnostic.severity.WARN
+			},
 			spacing = 4,
 			prefix = "",
 			-- prefix = " ✗ ",
@@ -65,6 +70,7 @@ local enhance_attach = function(client, bufnr)
 	-- !import deprecated when neovim version 0.9
 	vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { silent = true, buffer = bufnr, noremap = true })
 	vim.api.nvim_set_keymap("n", "<leader>ds", ":Telescope diagnostics theme=ivy<CR>", opts)
+	vim.api.nvim_set_keymap("n", "<leader>do", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 	vim.api.nvim_set_keymap("n", "<leader>bl", ":Telescope lsp_document_symbols<CR>", opts)
 
 	-- Lspsaga
