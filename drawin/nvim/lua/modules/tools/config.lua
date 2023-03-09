@@ -59,8 +59,8 @@ function config.vim_visual_multi_setup()
 	vim.g.VM_maps = {
 		Undo = "u",
 		Redo = "<C-r>",
-		["Add Cursor Down"] = "<M-j>", -- 往下增加光标 Opt+j
-		["Add Cursor Up"] = "<M-k>", -- 往上增加光标 Opt+k
+			["Add Cursor Down"] = "<M-j>", -- 往下增加光标 Opt+j
+			["Add Cursor Up"] = "<M-k>", -- 往上增加光标 Opt+k
 		-- ["Select All"] = '\\A',
 	}
 	vim.g.VM_no_meta_mappings = {
@@ -103,7 +103,8 @@ function config.symbols_outline()
 		show_symbol_details = true,
 		width = 25,
 		wrap = true,
-		keymaps = { -- These keymaps can be a string or a table for multiple keys
+		keymaps = {
+			-- These keymaps can be a string or a table for multiple keys
 			close = { "<Esc>", "q" },
 			goto_location = "<Cr>",
 			focus_location = "o",
@@ -151,26 +152,27 @@ function config.trouble()
 		position = "bottom",
 		height = 10,
 		icons = true,
-		action_keys = { -- key mappings for actions in the trouble list
+		action_keys = {
+			-- key mappings for actions in the trouble list
 			-- map to {} to remove a mapping, for example:
 			-- close = {},
 			close = { "q", "esc>" }, -- close the list
 			-- cancel = "<esc>", -- cancel the preview and get back to your last window / buffer / cursor
-			refresh = "r", -- manually refresh
+			refresh = "r",       -- manually refresh
 			jump = { "<cr>", "<tab>" }, -- jump to the diagnostic or open / close folds
 			open_split = { "<c-x>" }, -- open buffer in new split
 			open_vsplit = { "<c-v>" }, -- open buffer in new vsplit
 			open_tab = { "<c-t>" }, -- open buffer in new tab
 			jump_close = { "o" }, -- jump to the diagnostic and close the list
-			toggle_mode = "m", -- toggle between "workspace" and "document" diagnostics mode
+			toggle_mode = "m",   -- toggle between "workspace" and "document" diagnostics mode
 			toggle_preview = "P", -- toggle auto_preview
-			hover = "K", -- opens a small popup with the full multiline message
-			preview = "p", -- preview the diagnostic location
+			hover = "K",         -- opens a small popup with the full multiline message
+			preview = "p",       -- preview the diagnostic location
 			close_folds = { "zM", "zm" }, -- close all folds
 			open_folds = { "zR", "zr" }, -- open all folds
 			toggle_fold = { "zA", "za" }, -- toggle fold of current file
-			previous = "k", -- preview item
-			next = "j" -- next item
+			previous = "k",      -- preview item
+			next = "j"           -- next item
 		},
 	})
 	vim.api.nvim_set_keymap("n", "<leader>xx", "<cmd>Trouble<cr>", { silent = true, noremap = true })
@@ -229,7 +231,7 @@ end
 
 function config.matchparen()
 	require("matchparen").setup({
-		on_startup = true, -- Should it be enabled by default
+		on_startup = true,     -- Should it be enabled by default
 		hl_group = "MatchParen", -- highlight group for matched characters
 		augroup_name = "matchparen", -- almost no reason to touch this unless there is already augroup with such name
 	})

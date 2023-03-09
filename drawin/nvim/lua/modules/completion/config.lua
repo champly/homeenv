@@ -35,17 +35,17 @@ function config.nvim_cmp()
 			end,
 		},
 		mapping = {
-			["<C-p>"] = cmp.mapping.select_prev_item(),
-			["<C-n>"] = cmp.mapping.select_next_item(),
-			["<C-d>"] = cmp.mapping.scroll_docs( -4),
-			["<C-f>"] = cmp.mapping.scroll_docs(4),
-			["<C-Space>"] = cmp.mapping.complete(),
-			["<C-e>"] = cmp.mapping.close(),
-			["<CR>"] = cmp.mapping.confirm {
+				["<C-p>"] = cmp.mapping.select_prev_item(),
+				["<C-n>"] = cmp.mapping.select_next_item(),
+				["<C-d>"] = cmp.mapping.scroll_docs(-4),
+				["<C-f>"] = cmp.mapping.scroll_docs(4),
+				["<C-Space>"] = cmp.mapping.complete(),
+				["<C-e>"] = cmp.mapping.close(),
+				["<CR>"] = cmp.mapping.confirm {
 				behavior = cmp.ConfirmBehavior.Replace,
 				select = true,
 			},
-			["<Tab>"] = function(fallback)
+				["<Tab>"] = function(fallback)
 				if cmp.visible() then
 					cmp.select_next_item()
 				elseif require("luasnip").expand_or_jumpable() then
@@ -54,10 +54,10 @@ function config.nvim_cmp()
 					fallback()
 				end
 			end,
-			["<S-Tab>"] = function(fallback)
+				["<S-Tab>"] = function(fallback)
 				if cmp.visible() then
 					cmp.select_prev_item()
-				elseif require("luasnip").jumpable( -1) then
+				elseif require("luasnip").jumpable(-1) then
 					vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
 				else
 					fallback()
@@ -128,7 +128,7 @@ end
 
 function config.telescope()
 	-- https://github.com/nvim-telescope/telescope.nvim/blob/master/lua/telescope/config.lua
-	require("telescope").setup {
+	require("telescope").setup({
 		defaults = {
 			prompt_prefix = "🔭 ",
 			selection_caret = " ",
@@ -147,22 +147,28 @@ function config.telescope()
 				override_generic_sorter = false,
 				override_file_sorter = true,
 			},
-			["ui-select"] = {
+				["ui-select"] = {
 				require("telescope.themes").get_cursor({})
+			},
+			live_grep_args = {
+				auto_quoting = true, -- enable/disable auto-quoting
 			}
 		}
-	}
+	})
 
 	require("telescope").load_extension("fzy_native")
 	require("telescope").load_extension("gosource")
 	require("telescope").load_extension("dotfiles")
 	require("telescope").load_extension("vimspector")
 	require("telescope").load_extension("ui-select")
+	require("telescope").load_extension("live_grep_args")
 
 	vim.api.nvim_set_keymap("n", "<leader>fb", ":Telescope buffers<cr>", {})
 	vim.api.nvim_set_keymap("n", "<leader>fh", ":Telescope oldfiles<cr>", {})
 	vim.api.nvim_set_keymap("n", "<leader>ff", ":Telescope find_files<cr>", {})
 	vim.api.nvim_set_keymap("n", "<leader>fw", ":Telescope live_grep<cr>", {})
+	vim.api.nvim_set_keymap("n", "<leader>rg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<cr>",
+		{})
 	vim.api.nvim_set_keymap("n", "<leader>fd", ":Telescope dotfiles<cr>", {})
 	vim.api.nvim_set_keymap("n", "<leader>fs", ":Telescope gosource<cr>", {})
 	vim.api.nvim_set_keymap("n", "<leader>dt", ":Telescope vimspector<cr>", {})

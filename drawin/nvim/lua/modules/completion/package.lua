@@ -69,10 +69,11 @@ package({
 	event = "BufRead",
 	config = conf.telescope,
 	dependencies = {
-		{ "nvim-lua/plenary.nvim",                    lazy = true },
-		{ "nvim-telescope/telescope-fzy-native.nvim", lazy = true },
-		{ "nvim-telescope/telescope-ui-select.nvim",  lazy = true },
-		{ "nvim-lua/popup.nvim",                      lazy = true },
+		{ "nvim-telescope/telescope-live-grep-args.nvim" },
+		{ "nvim-lua/plenary.nvim" },
+		{ "nvim-telescope/telescope-fzy-native.nvim" },
+		{ "nvim-telescope/telescope-ui-select.nvim" },
+		{ "nvim-lua/popup.nvim" },
 	}
 })
 

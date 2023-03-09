@@ -15,10 +15,10 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 		underline = true,
 		-- Enable virtual text, override spacing to 4
 		virtual_text = {
-			-- severity = vim.diagnostic.severity.Error,
-			severity = {
-				min = vim.diagnostic.severity.WARN
-			},
+			severity = vim.diagnostic.severity.ERROR,
+			-- severity = {
+			--     min = vim.diagnostic.severity.WARN
+			-- },
 			spacing = 4,
 			prefix = "",
 			-- prefix = " ✗ ",

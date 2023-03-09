@@ -113,11 +113,7 @@ package({
 	"puremourning/vimspector",
 	event = "BufReadPre",
 	build = "./install_gadget.py --enable-go --enable-rust --no-check-certificate",
-	config = conf.vimspector,
-	dependencies = {
-		-- UI Component Library for Neovim.
-		{ "MunifTanjim/nui.nvim", lazy = true },
-	},
+	init = conf.vimspector
 })
 
 -- Insert or delete brackets, parens, quotes in pair
