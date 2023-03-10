@@ -39,6 +39,7 @@ package({
 -- winbar use LSP to show your current code context.
 package({
 	"SmiteshP/nvim-navic",
+	event = "BufRead",
 	dependencies = "neovim/nvim-lspconfig",
 	config = function()
 		require("nvim-navic").setup {
@@ -56,6 +57,7 @@ package({
 
 package({
 	"ray-x/lsp_signature.nvim",
+	event = "InsertCharPre",
 	dependencies = "nvim-lspconfig",
 	enabled = vim.g.completion_with_lsp,
 })

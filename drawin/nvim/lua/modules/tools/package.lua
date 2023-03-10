@@ -45,7 +45,6 @@ package({
 -- VimWiki is a personal wiki for Vim
 package({
 	"vimwiki/vimwiki",
-	event = "BufRead",
 	cmd = {
 		"VimwikiMakeDiaryNote",
 		"VimwikiIndex",

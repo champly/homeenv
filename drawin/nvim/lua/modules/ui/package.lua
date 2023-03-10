@@ -42,6 +42,7 @@ package({
 -- package({"nvim-lualine/lualine.nvim"})
 package({
 	"feline-nvim/feline.nvim",
+	event = "BufReadPre",
 	dependencies = "nvim-tree/nvim-web-devicons",
 	enabled = vim.g.completion_with_lsp,
 	config = conf.feline_nvim,
@@ -77,12 +78,21 @@ package({
 })
 
 -- float terminal
--- package({"akinsho/toggleterm.nvim"})
 package({
-	"voldikss/vim-floaterm",
-	event = "BufRead",
-	config = conf.vim_floaterm,
+	"akinsho/toggleterm.nvim",
+	version = "*",
+	cmd = { "ToggleTerm" },
+	init = function()
+		vim.api.nvim_set_keymap("n", "<F3>", ":ToggleTerm<CR>", { noremap = true })
+	end,
+	config = conf.toggleterm
 })
+-- package({
+--     "voldikss/vim-floaterm",
+--     event = "BufRead",
+--     cmd = { "FloatermToggle" },
+--     config = conf.vim_floaterm,
+-- })
 
 -- notify
 package({

@@ -59,8 +59,8 @@ function config.vim_visual_multi_setup()
 	vim.g.VM_maps = {
 		Undo = "u",
 		Redo = "<C-r>",
-			["Add Cursor Down"] = "<M-j>", -- 往下增加光标 Opt+j
-			["Add Cursor Up"] = "<M-k>", -- 往上增加光标 Opt+k
+		["Add Cursor Down"] = "<M-j>", -- 往下增加光标 Opt+j
+		["Add Cursor Up"] = "<M-k>", -- 往上增加光标 Opt+k
 		-- ["Select All"] = '\\A',
 	}
 	vim.g.VM_no_meta_mappings = {
