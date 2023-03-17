@@ -1,5 +1,4 @@
 local format = {}
-local tool = require("core.event")
 
 function format.lsp_before_save()
 	local defs = {}
@@ -9,7 +8,7 @@ function format.lsp_before_save()
 		-- autocmd BufWritePre *.go lua goimports(1000)
 		table.insert(defs, { "BufWritePre", "*.go", "lua require('modules.completion.format').OrgImports(1000)" })
 	end
-	tool.nvim_create_augroups({ lsp_before_save = defs })
+	format.nvim_create_augroups({ lsp_before_save = defs })
 end
 
 -- Synchronously organise (Go) imports. Taken from
@@ -26,6 +25,18 @@ function format.OrgImports(wait_ms)
 				vim.lsp.buf.execute_command(r.command)
 			end
 		end
+	end
+end
+
+function format.nvim_create_augroups(definitions)
+	for group_name, definition in pairs(definitions) do
+		vim.api.nvim_command("augroup " .. group_name)
+		vim.api.nvim_command("autocmd!")
+		for _, def in ipairs(definition) do
+			local command = table.concat(vim.tbl_flatten { "autocmd", def }, " ")
+			vim.api.nvim_command(command)
+		end
+		vim.api.nvim_command("augroup END")
 	end
 end
 

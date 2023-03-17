@@ -26,6 +26,9 @@ package({
 -- file system explorer
 package({
 	"nvim-tree/nvim-tree.lua",
+	keys = {
+		"ff",
+	},
 	config = conf.nvim_tree,
 })
 
@@ -103,6 +106,9 @@ package({
 -- search and replace
 package({
 	"windwp/nvim-spectre",
+	keys = {
+		"<leader>S",
+	},
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		"nvim-tree/nvim-web-devicons",

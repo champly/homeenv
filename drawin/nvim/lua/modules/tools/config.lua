@@ -240,7 +240,7 @@ end
 function config.dbsession()
 	require("dbsession").setup({
 		dir = "~/Dropbox/config/session",
-		auto_save_on_exit = false,
+		auto_save_on_exit = true,
 	})
 end
 

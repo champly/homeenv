@@ -5,7 +5,10 @@ package({
 	"neovim/nvim-lspconfig",
 	-- event = "BufRead",
 	enabled = vim.g.completion_with_lsp,
-	dependencies = "telescope.nvim",
+	dependencies = {
+		"telescope.nvim",
+		"MunifTanjim/nui.nvim"
+	},
 	ft = { "go", "lua", "rust", "c", "cpp", "markdown" },
 	config = conf.nvim_lsp,
 })
@@ -48,12 +51,17 @@ package({
 	end
 })
 
--- package({
---	  "glepnir/lspsaga.nvim",
---     cmd = "Lspsaga",
---     enabled = vim.g.completion_with_lsp,
---     config = conf.lspsaga_nvim,
--- }
+package({
+	"glepnir/lspsaga.nvim",
+	event = "BufRead",
+	dependencies = {
+		{ "nvim-tree/nvim-web-devicons" },
+		-- Please make sure you install markdown and markdown_inline parser
+		{ "nvim-treesitter/nvim-treesitter" }
+	},
+	enabled = vim.g.completion_with_lsp and false,
+	config = conf.lspsaga_nvim
+})
 
 package({
 	"ray-x/lsp_signature.nvim",

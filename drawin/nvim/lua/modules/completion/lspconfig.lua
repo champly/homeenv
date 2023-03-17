@@ -41,10 +41,31 @@ end
 -- https://github.com/neovim/nvim-lspconfig#keybindings-and-completion
 -- https://github.com/nvim-lua/completion-nvim/issues/337#issuecomment-765563829
 local enhance_attach = function(client, bufnr)
+	-- client.server_capabilities.semanticTokensProvider = nil
+
 	if client.server_capabilities.documentHighlightProvider then
 		format.lsp_before_save()
+		-- local ext = vim.fn.expand("%:e")
+		-- vim.api.nvim_create_autocmd("BufWritePre", {
+		--     pattern = "*." .. ext,
+		--     callback = function()
+		--         vim.lsp.buf.format(nil, 1000)
+		--     end
+		-- })
+
+		-- -- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#imports
+		-- if ext == "go" then
+		--     vim.api.nvim_create_autocmd("BufWritePre", {
+		--         pattern = "*.go",
+		--         callback = function()
+		--             -- vim.cmd [[ lua vim.lsp.buf.code_action({ context = { only = { "source.organizeImports" } }, apply = true }) ]]
+		--             vim.lsp.buf.code_action({ context = { only = { "source.organizeImports" } }, apply = true })
+		--         end
+		--     })
+		-- end
 	end
 
+	-- winbar use LSP to show your current code context.
 	if client.server_capabilities.documentSymbolProvider then
 		require("nvim-navic").attach(client, bufnr)
 	end
