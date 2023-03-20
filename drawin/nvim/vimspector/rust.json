@@ -1,10 +1,14 @@
+// 1. Compile our Rust project with cargo build, cargo run, cargo test, so that we can produce a binary.
+// 2. Create a .vimspector.json file at the root of your Cargo directory. Replace ${workspaceRootFolderName}
+// 3. Attach CodeLLDB and your Rust application binary to Vimspector in the .vimspector.json file.
 {
 	"configurations": {
 		"launch": {
 			"adapter": "CodeLLDB",
+			"filetypes": [ "rust" ],
 			"configuration": {
 				"request": "launch",
-				"program": "${workspaceRoot}/target/debug/vimspector_test"
+				"program": "${workspaceRoot}/target/debug/${workspaceRootFolderName}"
 			}
 		}
 	}

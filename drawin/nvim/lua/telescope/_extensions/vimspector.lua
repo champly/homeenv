@@ -38,6 +38,14 @@ local vimspector_configuration_list = function(opts)
 				local config_file = selection[1]
 				vim.cmd(string.format(":tabedit .vimspector.json"))
 				vim.cmd(string.format(":0r %s", config_file))
+
+				-- replace ${workspaceRootFolderName}
+				local basename = io.popen("basename `pwd`")
+				---@diagnostic disable-next-line: need-check-nil
+				local folderName = basename:read()
+				---@diagnostic disable-next-line: need-check-nil
+				basename:close()
+				vim.cmd(string.format("silent! :%%s/${workspaceRootFolderName}/%s/g", folderName))
 			end)
 			return true
 		end,

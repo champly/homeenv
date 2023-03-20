@@ -2,7 +2,12 @@ local config = {}
 
 function config.gruvbox()
 	require("gruvbox").setup({
-		italic = true,
+		-- https://github.com/ellisonleao/gruvbox.nvim/issues/220
+		italic = {
+			strings = true,
+			operators = true,
+			comments = true,
+		},
 		overrides = {
 			Operator = { link = "GruvboxFg1" },
 		}
