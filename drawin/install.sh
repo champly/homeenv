@@ -1,5 +1,8 @@
 #!/bin/bash
 
+DropboxInstallPath=~/Library/CloudStorage/Dropbox
+# DropboxInstallPath=~/Dropbox
+
 echo "###### install brew"
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
@@ -19,8 +22,8 @@ sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/i
 echo "###### config zsh"
 rm -rf ~/.zshrc
 rm -rf ~/.zsh_history
-ln -s ~/Dropbox/config/zsh/zshrc ~/.zshrc
-ln -s ~/Dropbox/config/zsh/zsh_history ~/.zsh_history
+ln -s ${DropboxInstallPath}/config/zsh/zshrc ~/.zshrc
+ln -s ${DropboxInstallPath}/config/zsh/zsh_history ~/.zsh_history
 git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/plugins/zsh-syntax-highlighting
 git clone https://github.com/zsh-users/zsh-history-substring-search.git ~/.oh-my-zsh/plugins/zsh-history-substring-search
@@ -55,6 +58,12 @@ brew install neovim
 pip3 install pynvim
 # npm install -g neovim
 
+# tmux
+brew install tmux
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+pip3 install powerline-status
+pip3 install psutil
+
 # nerd fonts
 brew tap homebrew/cask-fonts
 brew install --cask font-sauce-code-pro-nerd-font
@@ -76,10 +85,10 @@ brew install lazygit
 # figlet
 brew install figlet
 
-# tagbar
-brew install gotags
-brew unlink ctags
-brew install --with-jansson --HEAD universal-ctags/universal-ctags/universal-ctags
+# # tagbar
+# brew install gotags
+# brew unlink ctags
+# brew install --with-jansson --HEAD universal-ctags/universal-ctags/universal-ctags
 
 # golangci-lint
 brew install golangci-lint
@@ -102,17 +111,20 @@ yarn global add yaml-language-server
 brew install lua-language-server
 # npm install --save vscode-json-languageservice
 
-
 # rust
 # brew install rust
 # brew install rust-analyzer
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 rustup component add rls rust-analysis rust-src
+# https://rust-lang.github.io/rustup/concepts/components.html
+rustup toolchain install nightly --component rust-analyzer
 
 # graph easy
 # https://juejin.cn/post/6844903510987767815
 brew install graphviz
 cpan Graph:Easy
+
+brew install schappim/ocr/ocr
 
 sh ./link.sh
 
