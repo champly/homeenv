@@ -10,21 +10,21 @@ vim.g.neovide_fullscreen      = "v:false"
 vim.g.neovide_transparency    = 0.9
 -- vim.g.transparency = 0.6
 
-vim.opt.encoding              = "utf-8" -- scriptencoding utf-8
+vim.opt.encoding              = "utf-8"  -- scriptencoding utf-8
 vim.opt.termguicolors         = true
-vim.opt.relativenumber        = true -- 显示相对行号
+vim.opt.relativenumber        = true     -- 显示相对行号
 vim.opt.foldmethod            = "syntax" -- 设置折叠语法
-vim.opt.foldlevelstart        = 99 -- 默认不折叠
+vim.opt.foldlevelstart        = 99       -- 默认不折叠
 vim.opt.backup                = false
 vim.opt.writebackup           = false
 vim.opt.swapfile              = false
 vim.opt.undodir               = cache_dir .. "undo"
 vim.opt.undofile              = true
 vim.opt.mouse                 = "v"
-vim.opt.scrolloff             = 1 -- Minimal number of screen lines to keep above and below the cursor.
-vim.opt.tabstop               = 4 -- An indentation every four columns
+vim.opt.scrolloff             = 1    -- Minimal number of screen lines to keep above and below the cursor.
+vim.opt.tabstop               = 4    -- An indentation every four columns
 vim.opt.shiftwidth            = 4
-vim.opt.softtabstop           = 4 -- Let backspace delete indent
+vim.opt.softtabstop           = 4    -- Let backspace delete indent
 vim.opt.autoindent            = true
 vim.opt.splitright            = true -- Puts new vsplit windows to the right of the current
 vim.opt.splitbelow            = true -- Puts new split windows to the bottom of the current
@@ -52,11 +52,11 @@ vim.opt.updatetime            = 300
 vim.opt.laststatus            = 3
 -- vim.opt.textwidth = 120 -- 设置自动加上换行符的长度
 vim.opt.colorcolumn           = "120"
-vim.opt.number                = true -- 默认显示数字栏
+vim.opt.number                = true  -- 默认显示数字栏
 vim.opt.expandtab             = false -- 选项把插入的 tab 字符替换成特定数目的空格
 
-vim.o.timeoutlen              = 300 --毫秒计的等待映射的键序列完成的时间
-vim.o.maxmempattern           = 5000 -- maxmempattern规定了vim做字符串匹配时使用的最大内存，不是由每行字符数决定的。
+vim.o.timeoutlen              = 300   --毫秒计的等待映射的键序列完成的时间
+vim.o.maxmempattern           = 5000  -- maxmempattern规定了vim做字符串匹配时使用的最大内存，不是由每行字符数决定的。
 
 if vim.loop.os_uname().sysname == "Darwin" then
 	vim.g.clipboard = {

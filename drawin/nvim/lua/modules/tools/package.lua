@@ -20,8 +20,8 @@ package({
 	ft = { "markdown" },
 	init = conf.markdown_preview_nvim_setup,
 	dependencies = {
-		{ "plasticboy/vim-markdown",    lazy = true },
-		{ "dhruvasagar/vim-table-mode", lazy = true },
+		{ "plasticboy/vim-markdown" },
+		{ "dhruvasagar/vim-table-mode" },
 	}
 })
 

@@ -14,6 +14,24 @@ package({
 	config = conf.gruvbox
 })
 
+package({
+	"nvim-telescope/telescope.nvim",
+	cmd = "Telescope",
+	event = "BufRead",
+	config = conf.telescope,
+	dependencies = {
+		{ "nvim-telescope/telescope-live-grep-args.nvim" },
+		{ "nvim-lua/plenary.nvim" },
+		{ "nvim-telescope/telescope-fzy-native.nvim" },
+		{ "nvim-lua/popup.nvim" },
+	}
+})
+
+package({
+	"stevearc/dressing.nvim",
+	config = conf.dressing,
+})
+
 -- This plugin provides a start screen
 -- package({"mhinz/vim-startify"})
 package({
@@ -121,20 +139,20 @@ package({
 --     "luochen1990/rainbow",
 --     event = "BufRead",
 --     config = conf.rainbow,
--- }
+-- })
 
 -- package({
 --     "p00f/nvim-ts-rainbow",
 --     dependencies = "nvim-treesitter",
 --     config = conf.nvim_ts_rainbow
--- }
+-- })
 
 -- package({
 --     "danilamihailov/beacon.nvim",
 --     config = conf.beacon,
--- }
+-- })
 
 -- package({
 --     "folke/which-key.nvim",
 --     config = conf.which_key,
--- }
+-- })

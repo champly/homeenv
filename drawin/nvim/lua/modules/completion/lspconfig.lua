@@ -70,34 +70,6 @@ local enhance_attach = function(client, bufnr)
 		require("nvim-navic").attach(client, bufnr)
 	end
 
-	-- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#omnifunc
-	vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-
-	-- Mappings.
-	local opts = { noremap = true, silent = true }
-
-	-- See `:help vim.lsp.*` for documentation on any of the below functions
-	-- vim.api.nvim_set_keymap("n", "<c-]>", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-	vim.api.nvim_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-	-- api.nvim_set_keymap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-	-- https://muniftanjim.dev/blog/neovim-build-ui-using-nui-nvim/
-	-- https://gist.github.com/MunifTanjim/8d9498c096719bdf4234321230fe3dc7
-	vim.api.nvim_set_keymap("n", "<leader>rn", "<cmd>lua require('modules.completion.nui_lsp').lsp_rename()<CR>", opts)
-
-	-- https://github.com/nvim-telescope/telescope.nvim#neovim-lsp-pickers
-	vim.api.nvim_set_keymap("n", "<c-]>", ":Telescope lsp_definitions theme=get_cursor<CR>", opts)
-	vim.api.nvim_set_keymap("n", "<leader>im", ":Telescope lsp_implementations theme=ivy<CR>", opts)
-	vim.api.nvim_set_keymap("n", "<leader>rf", ":Telescope lsp_references theme=ivy<CR>", opts)
-	-- !import deprecated when neovim version 0.9
-	vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { silent = true, buffer = bufnr, noremap = true })
-	vim.api.nvim_set_keymap("n", "<leader>ds", ":Telescope diagnostics theme=ivy<CR>", opts)
-	vim.api.nvim_set_keymap("n", "<leader>do", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
-	vim.api.nvim_set_keymap("n", "<leader>bl", ":Telescope lsp_document_symbols<CR>", opts)
-
-	-- Lspsaga
-	-- vim.api.nvim_set_keymap("n", "K", ":Lspsaga hover_doc<CR>", opts)
-	-- vim.api.nvim_set_keymap("n", "<leader>rn", ":Lspsaga rename<CR>", opts)
-
 	-- Set autocommands conditional on server_capabilities
 	if client.server_capabilities.documentHighlightProvider then
 		vim.api.nvim_exec([[
@@ -119,6 +91,40 @@ local enhance_attach = function(client, bufnr)
 		}
 	}, bufnr)
 end
+
+-- vim.lsp.set_log_level("debug")
+
+-- -- Global mappings.
+-- -- See `:help vim.diagnostic.*` for documentation on any of the below functions
+vim.keymap.set("n", "<leader>do", vim.diagnostic.open_float)
+-- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+-- vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+-- vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
+
+-- Use LspAttach autocommand to only map the following keys
+-- after the language server attaches to the current buffer
+-- https://github.com/neovim/nvim-lspconfig#suggested-configuration
+vim.api.nvim_create_autocmd("LspAttach", {
+	group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+	callback = function(ev)
+		-- Enable completion triggered by <c-x><c-o>
+		vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
+
+		-- Buffer local mappings.
+		-- See `:help vim.lsp.*` for documentation on any of the below functions
+		local opts = { buffer = ev.buf, silent = true, noremap = true }
+
+		vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+		vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+		vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
+		-- https://github.com/nvim-telescope/telescope.nvim#neovim-lsp-pickers
+		vim.keymap.set("n", "<c-]>", ":Telescope lsp_definitions theme=get_cursor<CR>", opts)
+		vim.keymap.set("n", "<leader>im", ":Telescope lsp_implementations theme=ivy<CR>", opts)
+		vim.keymap.set("n", "<leader>rf", ":Telescope lsp_references theme=ivy<CR>", opts)
+		vim.keymap.set("n", "<leader>ds", ":Telescope diagnostics theme=ivy<CR>", opts)
+		vim.keymap.set("n", "<leader>bl", ":Telescope lsp_document_symbols<CR>", opts)
+	end,
+})
 
 
 -- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#custom-configuration
@@ -195,18 +201,18 @@ lspconfig.rust_analyzer.setup {
 	capabilities = capabilities,
 }
 
-lspconfig.yamlls.setup {
-	settings = {
-		yaml = {
-			schemas = {
-				-- ["https://raw.githubusercontent.com/instrumenta/kubernetes-json-schema/master/v1.18.0-standalone-strict/all.json"] = "/*.k8s.yaml",
-				["kubernetes"] = "/*.yaml",
-			},
-		},
-	},
-	on_attach = enhance_attach,
-	capabilities = capabilities,
-}
+-- lspconfig.yamlls.setup {
+--     settings = {
+--         yaml = {
+--             schemas = {
+--                 -- ["https://raw.githubusercontent.com/instrumenta/kubernetes-json-schema/master/v1.18.0-standalone-strict/all.json"] = "/*.k8s.yaml",
+--                 ["kubernetes"] = "/*.yaml",
+--             },
+--         },
+--     },
+--     on_attach = enhance_attach,
+--     capabilities = capabilities,
+-- }
 
 -- lspconfig.jsonls.setup {
 --     cmd = { "vscode-json-languageserver",  "--stdio" },

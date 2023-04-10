@@ -73,20 +73,6 @@ package({
 -- go language support
 -- use 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
-package({
-	"nvim-telescope/telescope.nvim",
-	cmd = "Telescope",
-	event = "BufRead",
-	config = conf.telescope,
-	dependencies = {
-		{ "nvim-telescope/telescope-live-grep-args.nvim" },
-		{ "nvim-lua/plenary.nvim" },
-		{ "nvim-telescope/telescope-fzy-native.nvim" },
-		{ "nvim-telescope/telescope-ui-select.nvim" },
-		{ "nvim-lua/popup.nvim" },
-	}
-})
-
 -- code-completion engine
 package({
 	"neoclide/coc.nvim",

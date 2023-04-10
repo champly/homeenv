@@ -16,6 +16,76 @@ function config.gruvbox()
 	vim.cmd([[ colorscheme gruvbox ]])
 end
 
+function config.telescope()
+	-- https://github.com/nvim-telescope/telescope.nvim/blob/master/lua/telescope/config.lua
+	require("telescope").setup({
+		defaults = {
+			prompt_prefix = "🔭 ",
+			selection_caret = " ",
+			sorting_strategy = "ascending",
+			layout_strategy = "horizontal",
+			-- winblend = 30,
+			layout_config = {
+				prompt_position = "top",
+				height = 0.8,
+				width = 0.8,
+				scroll_speed = 6,
+			},
+		},
+		extensions = {
+			fzy_native = {
+				override_generic_sorter = false,
+				override_file_sorter = true,
+			},
+			live_grep_args = {
+				auto_quoting = true, -- enable/disable auto-quoting
+			}
+		}
+	})
+
+	require("telescope").load_extension("fzy_native")
+	require("telescope").load_extension("gosource")
+	require("telescope").load_extension("dotfiles")
+	require("telescope").load_extension("vimspector")
+	require("telescope").load_extension("live_grep_args")
+
+	vim.api.nvim_set_keymap("n", "<leader>fb", ":Telescope buffers<cr>", {})
+	vim.api.nvim_set_keymap("n", "<leader>fh", ":Telescope oldfiles<cr>", {})
+	vim.api.nvim_set_keymap("n", "<leader>ff", ":Telescope find_files<cr>", {})
+	vim.api.nvim_set_keymap("n", "<leader>fw", ":Telescope live_grep<cr>", {})
+	vim.api.nvim_set_keymap("n", "<leader>rg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<cr>",
+		{})
+	vim.api.nvim_set_keymap("n", "<leader>fd", ":Telescope dotfiles<cr>", {})
+	vim.api.nvim_set_keymap("n", "<leader>fs", ":Telescope gosource<cr>", {})
+	vim.api.nvim_set_keymap("n", "<leader>dt", ":Telescope vimspector<cr>", {})
+end
+
+function config.dressing()
+	require("dressing").setup({
+		input = {
+			-- Set to false to disable the vim.ui.input implementation
+			enabled = true,
+			-- https://github.com/stevearc/dressing.nvim/issues/29#issuecomment-1076985525
+			get_config = function()
+				if vim.api.nvim_buf_get_option(0, "filetype") == "NvimTree" then
+					return { enabled = false }
+				end
+			end,
+		},
+		select = {
+			enabled = true,
+			get_config = function(opts)
+				if opts.kind == "codeaction" then
+					return {
+						backend = "telescope",
+						telescope = require("telescope.themes").get_cursor({}),
+					}
+				end
+			end
+		}
+	})
+end
+
 function config.dashboard()
 	vim.cmd [[ hi DashboardHeader guifg=yellow ]]
 	vim.cmd [[ hi DashboardFooter guifg=gray ]]
@@ -335,6 +405,7 @@ function config.nvim_notify()
 
 	---@diagnostic disable-next-line: duplicate-set-field
 	function _G.save_file_with_notify()
+		---@diagnostic disable-next-line: param-type-mismatch
 		local ok, msg = pcall(vim.cmd, "silent write!")
 		if ok then
 			vim.notify("Saved " .. vim.fn.expand "%:t", nil, {
@@ -342,6 +413,7 @@ function config.nvim_notify()
 				timeout = 1000
 			})
 		else
+			---@diagnostic disable-next-line: param-type-mismatch
 			vim.notify(msg, "error", {
 				title = "Error",
 				timeout = 1000
