@@ -38,7 +38,6 @@ for type, icon in pairs(signs) do
 	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
--- https://github.com/neovim/nvim-lspconfig#keybindings-and-completion
 -- https://github.com/nvim-lua/completion-nvim/issues/337#issuecomment-765563829
 local enhance_attach = function(client, bufnr)
 	-- client.server_capabilities.semanticTokensProvider = nil
@@ -76,6 +75,7 @@ local enhance_attach = function(client, bufnr)
 			hi LspReferenceRead guibg=#ff8600 guifg=black gui=NONE
 			hi LspReferenceText guibg=#ff8600 guifg=black gui=NONE
 			hi LspReferenceWrite guibg=#ff8600 guifg=black gui=NONE
+			hi NormalFloat guibg=#3e3e3e
 			augroup lsp_document_highlight
 			autocmd! * <buffer>
 			autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
@@ -125,7 +125,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		vim.keymap.set("n", "<leader>bl", ":Telescope lsp_document_symbols<CR>", opts)
 	end,
 })
-
 
 -- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#custom-configuration
 lspconfig.gopls.setup {

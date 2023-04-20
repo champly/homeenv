@@ -62,7 +62,8 @@ package({
 
 -- package({"nvim-lualine/lualine.nvim"})
 package({
-	"feline-nvim/feline.nvim",
+	-- "feline-nvim/feline.nvim",
+	"freddiehaddad/feline.nvim",
 	event = "BufReadPre",
 	dependencies = "nvim-tree/nvim-web-devicons",
 	enabled = vim.g.completion_with_lsp,
@@ -119,19 +120,6 @@ package({
 package({
 	"rcarriga/nvim-notify",
 	config = conf.nvim_notify,
-})
-
--- search and replace
-package({
-	"windwp/nvim-spectre",
-	keys = {
-		"<leader>S",
-	},
-	dependencies = {
-		"nvim-lua/plenary.nvim",
-		"nvim-tree/nvim-web-devicons",
-	},
-	config = conf.nvim_spectre
 })
 
 -- parentheses improved

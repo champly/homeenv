@@ -76,13 +76,6 @@ package({
 	config = conf.symbols_outline,
 })
 
--- package({
---     "folke/trouble.nvim",
---     event = "BufRead",
---     enabled = vim.g.completion_with_lsp,
---     config = conf.trouble,
---     dependencies = "nvim-tree/nvim-web-devicons",
--- })
 -- tpope plug
 package({
 	"tpope/vim-eunuch",
@@ -143,6 +136,19 @@ package({
 	"glepnir/dbsession.nvim",
 	cmd = { "SessionSave", "SessionLoad" },
 	config = conf.dbsession
+})
+
+-- search and replace
+package({
+	"windwp/nvim-spectre",
+	keys = {
+		"<leader>S",
+	},
+	dependencies = {
+		"nvim-lua/plenary.nvim",
+		"nvim-tree/nvim-web-devicons",
+	},
+	config = conf.nvim_spectre
 })
 
 -- package({

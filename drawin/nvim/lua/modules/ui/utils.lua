@@ -96,6 +96,7 @@ function M.u(code)
 	return table.concat(t)
 end
 
+---@diagnostic disable-next-line: duplicate-set-field
 function _G.dump(...)
 	local args = { ... }
 	if #args == 1 then
@@ -117,6 +118,7 @@ function M.load(path)
 		elseif mod.setup ~= nil then
 			loadfunc = mod.setup
 		end
+		---@diagnostic disable-next-line: redefined-local
 		local ok, err = pcall(loadfunc)
 		if not ok then
 			printf("Error loading module `%s`", path)

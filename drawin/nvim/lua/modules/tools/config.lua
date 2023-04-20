@@ -244,6 +244,12 @@ function config.dbsession()
 	})
 end
 
+function config.nvim_spectre()
+	-- vim.api.nvim_set_keymap("n", "<leader>S", "<cmd>lua require('spectre').open()<CR>", { noremap = true, silent = true })
+	vim.api.nvim_set_keymap("n", "<leader>S", "<cmd>lua require('spectre').open_visual({select_word=true})<CR>",
+		{ noremap = true, silent = true })
+end
+
 function config.neoformat()
 	-- Enable alignment
 	vim.g.neoformat_basic_format_align = 1
