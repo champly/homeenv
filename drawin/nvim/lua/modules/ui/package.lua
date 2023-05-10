@@ -35,7 +35,7 @@ package({
 -- This plugin provides a start screen
 -- package({"mhinz/vim-startify"})
 package({
-	"glepnir/dashboard-nvim",
+	"nvimdev/dashboard-nvim",
 	event = "VimEnter",
 	dependencies = "nvim-tree/nvim-web-devicons",
 	config = conf.dashboard,
@@ -70,7 +70,7 @@ package({
 	config = conf.feline_nvim,
 })
 -- package({
---     "glepnir/whiskyline.nvim",
+--     "nvimdev/whiskyline.nvim",
 --     dependencies = { "nvim-tree/nvim-web-devicons" },
 --     enabled = vim.g.completion_with_lsp,
 --     config = conf.whiskyline,
@@ -78,7 +78,7 @@ package({
 
 -- package({"windwp/windline.nvim"})
 package({
-	"glepnir/galaxyline.nvim",
+	"nvimdev/galaxyline.nvim",
 	branch = "main",
 	enabled = not vim.g.completion_with_lsp,
 	config = conf.galaxyline,

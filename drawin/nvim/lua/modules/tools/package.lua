@@ -133,7 +133,7 @@ package({
 })
 
 package({
-	"glepnir/dbsession.nvim",
+	"nvimdev/dbsession.nvim",
 	cmd = { "SessionSave", "SessionLoad" },
 	config = conf.dbsession
 })

@@ -52,7 +52,7 @@ package({
 })
 
 package({
-	"glepnir/lspsaga.nvim",
+	"nvimdev/lspsaga.nvim",
 	event = "BufRead",
 	dependencies = {
 		{ "nvim-tree/nvim-web-devicons" },

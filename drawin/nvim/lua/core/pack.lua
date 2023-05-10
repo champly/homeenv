@@ -41,7 +41,7 @@ function pack:boot_strap()
 	self:load_modules_packages()
 
 	require("lazy").setup(self.repos, {
-		lockfile = vim.fn.stdpath("config") .. "/lazy-lock.json"
+		lockfile = vim.fn.stdpath("config") .. "/lazy-lock.json",
 	})
 end
 
