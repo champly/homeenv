@@ -64,7 +64,7 @@ table.insert(components.active[1], {
 		return lsp.diagnostics_exist(lsp_severity.HINT)
 	end,
 	hl = { fg = config.colors.grey_fg2 },
-	icon = "  ",
+	icon = "  ",
 })
 
 table.insert(components.active[1], {
@@ -73,7 +73,7 @@ table.insert(components.active[1], {
 		return lsp.diagnostics_exist(lsp_severity.INFO)
 	end,
 	hl = { fg = config.colors.green },
-	icon = "  ",
+	icon = "  ",
 })
 
 table.insert(components.active[1], {
