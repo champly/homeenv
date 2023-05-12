@@ -61,7 +61,7 @@ pip3 install pynvim
 # tmux
 brew install tmux
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-pip3 install powerline-status
+# pip3 install powerline-status
 pip3 install psutil
 
 # nerd fonts

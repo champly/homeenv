@@ -109,7 +109,7 @@ function config.lspsaga_nvim()
 	-- It also supports open/vsplit/etc operations, do refer to "definition_action_keys"
 	-- It also supports tagstack
 	-- Use <C-t> to jump back
-	-- vim.keymap.set("n", "gd", "<cmd>Lspsaga peek_definition<CR>")
+	vim.keymap.set("n", "gp", "<cmd>Lspsaga peek_definition<CR>")
 
 	-- Go to definition
 	vim.keymap.set("n", "<C-]>", "<cmd>Lspsaga goto_definition<CR>")
@@ -119,36 +119,36 @@ function config.lspsaga_nvim()
 	-- It also supports open/vsplit/etc operations, do refer to "definition_action_keys"
 	-- It also supports tagstack
 	-- Use <C-t> to jump back
-	-- vim.keymap.set("n", "gt", "<cmd>Lspsaga peek_type_definition<CR>")
+	vim.keymap.set("n", "gt", "<cmd>Lspsaga peek_type_definition<CR>")
 
-	-- -- Go to type definition
-	-- vim.keymap.set("n", "gt", "<cmd>Lspsaga goto_type_definition<CR>")
+	-- Go to type definition
+	vim.keymap.set("n", "gt", "<cmd>Lspsaga goto_type_definition<CR>")
 
 
-	-- -- Show line diagnostics
-	-- -- You can pass argument ++unfocus to
-	-- -- unfocus the show_line_diagnostics floating window
-	-- vim.keymap.set("n", "<leader>sl", "<cmd>Lspsaga show_line_diagnostics<CR>")
+	-- Show line diagnostics
+	-- You can pass argument ++unfocus to
+	-- unfocus the show_line_diagnostics floating window
+	vim.keymap.set("n", "<leader>sl", "<cmd>Lspsaga show_line_diagnostics<CR>")
 
-	-- -- Show cursor diagnostics
-	-- -- Like show_line_diagnostics, it supports passing the ++unfocus argument
-	-- vim.keymap.set("n", "<leader>sc", "<cmd>Lspsaga show_cursor_diagnostics<CR>")
+	-- Show cursor diagnostics
+	-- Like show_line_diagnostics, it supports passing the ++unfocus argument
+	vim.keymap.set("n", "<leader>sc", "<cmd>Lspsaga show_cursor_diagnostics<CR>")
 
 	-- Show buffer diagnostics
 	vim.keymap.set("n", "<leader>ds", "<cmd>Lspsaga show_buf_diagnostics<CR>")
 
-	-- -- Diagnostic jump
-	-- -- You can use <C-o> to jump back to your previous location
-	-- vim.keymap.set("n", "[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
-	-- vim.keymap.set("n", "]e", "<cmd>Lspsaga diagnostic_jump_next<CR>")
+	-- Diagnostic jump
+	-- You can use <C-o> to jump back to your previous location
+	vim.keymap.set("n", "[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
+	vim.keymap.set("n", "]e", "<cmd>Lspsaga diagnostic_jump_next<CR>")
 
-	-- -- Diagnostic jump with filters such as only jumping to an error
-	-- vim.keymap.set("n", "[E", function()
-	--     require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
-	-- end)
-	-- vim.keymap.set("n", "]E", function()
-	--     require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
-	-- end)
+	-- Diagnostic jump with filters such as only jumping to an error
+	vim.keymap.set("n", "[E", function()
+		require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
+	end)
+	vim.keymap.set("n", "]E", function()
+		require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
+	end)
 
 	-- Toggle outline
 	vim.keymap.set("n", "<space>o", "<cmd>Lspsaga outline<CR>")
@@ -166,16 +166,14 @@ function config.lspsaga_nvim()
 	-- Note that if you use hover with ++keep, pressing this key again will
 	-- close the hover window. If you want to jump to the hover window
 	-- you should use the wincmd command "<C-w>w"
-	vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc ++keep<CR>")
+	-- vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc ++keep<CR>")
 
 	-- -- Call hierarchy
-	-- vim.keymap.set("n", "<Leader>ci", "<cmd>Lspsaga incoming_calls<CR>")
-	-- vim.keymap.set("n", "<Leader>co", "<cmd>Lspsaga outgoing_calls<CR>")
+	vim.keymap.set("n", "<Leader>ci", "<cmd>Lspsaga incoming_calls<CR>")
+	vim.keymap.set("n", "<Leader>co", "<cmd>Lspsaga outgoing_calls<CR>")
 
 	-- Floating terminal
-	-- vim.keymap.set({ "n", "t" }, "<A-d>", "<cmd>Lspsaga term_toggle<CR>")
-
-	-- vim.cmd [[ highlight link LspSagaFinderSelection guifg='#ff0000' guibg='#00ff00' gui='bold' ]]
+	vim.keymap.set({ "n", "t" }, "<F4>", "<cmd>Lspsaga term_toggle<CR>")
 end
 
 return config

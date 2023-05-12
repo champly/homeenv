@@ -16,6 +16,12 @@ function config.gruvbox()
 	vim.cmd([[ colorscheme gruvbox ]])
 end
 
+function config.github()
+	require('github-theme').setup({
+	})
+	vim.cmd [[ colorscheme github_light ]]
+end
+
 function config.telescope()
 	-- https://github.com/nvim-telescope/telescope.nvim/blob/master/lua/telescope/config.lua
 	require("telescope").setup({
@@ -86,13 +92,17 @@ function config.dressing()
 end
 
 function config.dashboard()
-	vim.cmd [[ hi DashboardHeader guifg=yellow ]]
-	vim.cmd [[ hi DashboardFooter guifg=gray ]]
+	if vim.g.color_theme == vim.g.color_theme_dark then
+		vim.cmd [[ hi DashboardHeader guifg=yellow ]]
+		vim.cmd [[ hi DashboardFooter guifg=gray ]]
 
-	vim.cmd [[ hi DashboardIcon guifg=yellow ]]
-	vim.cmd [[ hi DashboardDesc guifg=yellow ]]
-	vim.cmd [[ hi DashboardShotCut guifg=#1E90FF ]]
-	vim.cmd [[ hi DashboardKey guifg=#1E90FF ]]
+		vim.cmd [[ hi DashboardIcon guifg=yellow ]]
+		vim.cmd [[ hi DashboardDesc guifg=yellow ]]
+		vim.cmd [[ hi DashboardShotCut guifg=#1E90FF ]]
+		vim.cmd [[ hi DashboardKey guifg=#1E90FF ]]
+	else
+
+	end
 
 	require("dashboard").setup({
 		theme = "doom",
@@ -335,9 +345,12 @@ function config.galaxyline()
 end
 
 function config.feline_nvim()
-	vim.cmd [[ hi StatusLineNC guibg=#696157 gui=none ]]
+	if vim.g.color_theme == vim.g.color_theme_dark then
+		vim.cmd [[ hi StatusLineNC guibg=#696157 gui=none ]]
+	else
+		vim.cmd [[ hi StatusLineNC guibg=#fce5cd gui=none ]]
+	end
 	require("modules.ui.statusline.layout")
-	-- require("modules.ui.statusline.nvchad")
 
 	-- FIXME: hack code
 	vim.cmd [[

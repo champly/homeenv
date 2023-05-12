@@ -11,17 +11,6 @@ function config.nvim_treesitter()
 		highlight = {
 			enable = true, -- false will disable the whole extension
 		},
-		-- textobjects = {
-		--     select = {
-		--         enable = true,
-		--         keymaps = {
-		--             ["<leader>af"] = "@function.outer",
-		--             ["<leader>if"] = "@function.inner",
-		--             ["<leader>ac"] = "@class.outer",
-		--             ["<leader>ic"] = "@class.inner",
-		--         },
-		--     },
-		-- },
 	}
 end
 
@@ -153,8 +142,7 @@ end
 function config.vimspector()
 	vim.g.vimspector_enable_mappings = "VISUAL_STUDIO"
 
-	-- -- https://github.com/zunpeng/neovim/blob/master/cfgs/plug-cfg/vimspector-cfg.vim
-	-- vim.api.nvim_set_keymap("n", "<leader>dt", "<CR>:lua show_vimspector_list()<CR>", { noremap = true, silent = true })
+	-- https://github.com/zunpeng/neovim/blob/master/cfgs/plug-cfg/vimspector-cfg.vim
 	vim.api.nvim_set_keymap("n", "<S-s>", ":VimspectorReset<CR>", { noremap = true })
 
 	vim.cmd [[ sign define vimspectorBP text=🛑 texthl=Normal ]]

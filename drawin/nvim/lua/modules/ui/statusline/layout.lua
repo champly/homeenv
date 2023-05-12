@@ -4,6 +4,7 @@ local lsp_severity = vim.diagnostic.severity
 local navic = require("nvim-navic")
 
 local statusline_style = config.icon_styles["round"]
+local color = config.theme_color[vim.g.color_theme]
 -- show short statusline on small screens
 local shortline = false
 
@@ -17,28 +18,11 @@ table.insert(components.active, {})
 table.insert(components.active, {})
 table.insert(components.active, {})
 
--- table.insert(components.active[1], {
---     provider = statusline_style.main_icon,
-
---     -- hl = {
---     --     fg = config.colors.statusline_bg,
---     --     bg = config.colors.nord_blue,
---     -- },
---     hl = function()
---         return {
---             fg = config.colors.statusline_bg,
---             bg = config.mode_colors[vim.fn.mode()][2],
---             style = "bold",
---         }
---     end,
--- })
-
 table.insert(components.active[1], {
-	-- provider = statusline_style.vi_mode_icon,
 	provider = "",
 	hl = function()
 		return {
-			fg = config.colors.statusline_bg,
+			fg = color.statusline_bg,
 			bg = config.mode_colors[vim.fn.mode()][2],
 			style = "bold",
 		}
@@ -98,40 +82,18 @@ table.insert(components.active[1], {
 		return vim.api.nvim_win_get_width(tonumber(winid) or 0) > 70
 	end,
 	hl = {
-		fg = config.colors.violet,
-		bg = config.colors.lightbg,
+		fg = config.colors.grey_fg2,
+		bg = color.lightbg,
 	},
 	icon = "  ",
 	right_sep = {
 		str = statusline_style.right,
 		hl = {
-			fg = config.colors.lightbg,
-			bg = config.colors.statusline_bg,
+			fg = color.lightbg,
+			bg = color.statusline_bg,
 		}
 	},
 })
-
--- table.insert(components.active[1], {
---     provider = function()
---         local dir_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
---         return "  " .. dir_name .. " "
---     end,
---     enabled = shortline or function(winid)
---         return vim.api.nvim_win_get_width(tonumber(winid) or 0) > 80
---     end,
---     hl = {
---         fg = config.colors.orange,
---         bg = config.colors.lightbg2,
---         style = "bold",
---     },
---     right_sep = {
---         str = statusline_style.right,
---         hl = {
---             fg = config.colors.lightbg2,
---             bg = config.colors.statusline_bg,
---         },
---     },
--- })
 
 table.insert(components.active[1], {
 	provider = function()
@@ -148,8 +110,8 @@ table.insert(components.active[1], {
 		return vim.api.nvim_win_get_width(tonumber(winid) or 0) > 50 and #vim.fn.expand("%:t") > 0
 	end,
 	hl = {
-		fg = config.colors.white,
-		bg = config.colors.lightbg2,
+		fg = config.colors.grey_fg2,
+		bg = color.lightbg2,
 	},
 })
 
@@ -170,20 +132,20 @@ table.insert(components.active[1], {
 		local filename = vim.fn.expand "%:t"
 		local extension = vim.fn.expand "%:e"
 		local fg = config.colors.white
-		local _, color = require("nvim-web-devicons").get_icon_color(filename, extension)
-		if color ~= nil then
-			fg = color
+		local _, col = require("nvim-web-devicons").get_icon_color(filename, extension)
+		if col ~= nil then
+			fg = col
 		end
 		return {
 			fg = fg,
-			bg = config.colors.lightbg2,
+			bg = color.lightbg2,
 		}
 	end,
 	right_sep = {
 		str = statusline_style.right,
 		hl = {
-			fg = config.colors.lightbg2,
-			bg = config.colors.statusline_bg
+			fg = color.lightbg2,
+			bg = color.statusline_bg
 		}
 	},
 })
@@ -197,13 +159,13 @@ table.insert(components.active[1], {
 	end,
 	hl = {
 		fg = config.colors.white,
-		bg = config.colors.lightbg2,
+		bg = color.lightbg2,
 	},
 	right_sep = {
 		str = statusline_style.right,
 		hl = {
-			fg = config.colors.lightbg2,
-			bg = config.colors.statusline_bg
+			fg = color.lightbg2,
+			bg = color.statusline_bg
 		}
 	},
 })
@@ -212,7 +174,7 @@ table.insert(components.active[2], {
 	provider = config.get_diagnostic_info,
 	hl = {
 		fg = config.colors.orange,
-		bg = config.colors.statusline_bg,
+		bg = color.statusline_bg,
 	}
 })
 
@@ -254,14 +216,14 @@ table.insert(components.active[3], {
 	enabled = shortline or function(winid)
 		return vim.api.nvim_win_get_width(tonumber(winid) or 0) > 70
 	end,
-	hl = { fg = config.colors.grey_fg2, bg = config.colors.statusline_bg },
+	hl = { fg = config.colors.grey_fg2, bg = color.statusline_bg },
 })
 
 table.insert(components.active[3], {
 	provider = "git_diff_added",
 	hl = {
 		fg = config.colors.grey_fg2,
-		bg = config.colors.statusline_bg,
+		bg = color.statusline_bg,
 	},
 	icon = " ",
 })
@@ -271,7 +233,7 @@ table.insert(components.active[3], {
 	provider = "git_diff_changed",
 	hl = {
 		fg = config.colors.grey_fg2,
-		bg = config.colors.statusline_bg,
+		bg = color.statusline_bg,
 	},
 	icon = "  ",
 })
@@ -280,7 +242,7 @@ table.insert(components.active[3], {
 	provider = "git_diff_removed",
 	hl = {
 		fg = config.colors.grey_fg2,
-		bg = config.colors.statusline_bg,
+		bg = color.statusline_bg,
 	},
 	icon = "  ",
 })
@@ -291,8 +253,8 @@ table.insert(components.active[3], {
 		return vim.api.nvim_win_get_width(tonumber(winid) or 0) > 90
 	end,
 	hl = {
-		fg = config.colors.grey,
-		bg = config.colors.one_bg,
+		fg = color.lightbg,
+		bg = color.statusline_bg,
 	},
 })
 
@@ -303,7 +265,7 @@ table.insert(components.active[3], {
 	end,
 	hl = {
 		fg = config.colors.green,
-		bg = config.colors.grey,
+		bg = color.statusline_bg,
 	},
 })
 
@@ -336,7 +298,7 @@ table.insert(components.active[3], {
 	end,
 	hl = {
 		fg = config.colors.green,
-		bg = config.colors.one_bg,
+		bg = color.statusline_bg,
 	},
 })
 
@@ -346,8 +308,8 @@ table.insert(components.active[3], {
 		return vim.api.nvim_win_get_width(tonumber(winid) or 0) > 90
 	end,
 	hl = {
-		fg = config.colors.grey,
-		bg = config.colors.one_bg,
+		fg = color.lightbg,
+		bg = color.statusline_bg,
 	},
 })
 
@@ -357,13 +319,13 @@ table.insert(components.active[3], {
 		return vim.api.nvim_win_get_width(tonumber(winid) or 0) > 90
 	end,
 	hl = {
-		bg = config.colors.one_bg,
+		bg = color.statusline_bg,
 	}
 })
 
 require("feline").setup({
 	theme = {
-		bg = config.colors.statusline_bg,
+		bg = color.statusline_bg,
 		fg = config.colors.fg,
 	},
 	components = components,

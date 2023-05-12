@@ -104,7 +104,7 @@ package({
 package({
 	"puremourning/vimspector",
 	event = "BufReadPre",
-	build = "./install_gadget.py --enable-go --enable-rust --no-check-certificate",
+	build = "./install_gadget.py --enable-go --enable-rust",
 	init = conf.vimspector
 })
 

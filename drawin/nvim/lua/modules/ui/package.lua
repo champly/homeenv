@@ -11,7 +11,13 @@ local conf = require("modules.ui.config")
 -- }
 package({
 	"ellisonleao/gruvbox.nvim",
+	enabled = vim.g.color_theme == vim.g.color_theme_dark,
 	config = conf.gruvbox
+})
+package({
+	"projekt0n/github-nvim-theme",
+	enabled = vim.g.color_theme == vim.g.color_theme_light,
+	config = conf.github
 })
 
 package({

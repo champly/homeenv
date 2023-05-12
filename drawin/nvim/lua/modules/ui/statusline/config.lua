@@ -44,6 +44,19 @@ M.system_icons = {
 	Windows = ' ',
 }
 
+M.theme_color = {
+	dark = {
+		statusline_bg = "#2c2c2c",
+		lightbg = "#353535",
+		lightbg2 = "#303030",
+	},
+	light = {
+		statusline_bg = "#c7c7c7",
+		lightbg = "#c7c7c7",
+		lightbg2 = "#c7c7c7",
+	}
+}
+
 M.colors = {
 	white = "#ebdbb2",
 	darker_black = "#232323",
@@ -71,11 +84,6 @@ M.colors = {
 	teal = "#749689",
 	orange = "#ff8800",
 	cyan = "#82b3a8",
-	statusline_bg = "#2c2c2c",
-	lightbg = "#353535",
-	lightbg2 = "#303030",
-	pmenu_bg = "#83a598",
-	folder_bg = "#83a598",
 }
 
 M.mode_colors = {
@@ -103,7 +111,7 @@ M.mode_colors = {
 
 M.chad_mode_hl = function()
 	return {
-		fg = M.colors.statusline_bg,
+		fg = M.theme_color[vim.g.color_theme].statusline_bg,
 		bg = M.mode_colors[vim.fn.mode()][2],
 		style = "bold",
 	}
@@ -112,7 +120,7 @@ end
 M.chad_mode_hl_sep = function()
 	return {
 		fg = M.mode_colors[vim.fn.mode()][2],
-		bg = M.colors.statusline_bg,
+		bg = M.theme_color[vim.g.color_theme].statusline_bg,
 	}
 end
 
@@ -131,7 +139,6 @@ M.lsp_status = function(status)
 	end
 	return shorter_stat
 end
-
 
 M.get_coc_lsp = function()
 	local status = vim.fn['coc#status']()
