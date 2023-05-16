@@ -297,7 +297,7 @@ table.insert(components.active[3], {
 		return vim.api.nvim_win_get_width(tonumber(winid) or 0) > 90
 	end,
 	hl = {
-		fg = config.colors.green,
+		fg = color.normal_fg,
 		bg = color.statusline_bg,
 	},
 })
@@ -319,6 +319,7 @@ table.insert(components.active[3], {
 		return vim.api.nvim_win_get_width(tonumber(winid) or 0) > 90
 	end,
 	hl = {
+		fg = color.icon_fg,
 		bg = color.statusline_bg,
 	}
 })

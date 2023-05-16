@@ -49,11 +49,17 @@ M.theme_color = {
 		statusline_bg = "#2c2c2c",
 		lightbg = "#353535",
 		lightbg2 = "#303030",
+		mode_fg = "#2c2c2c",
+		normal_fg = "#b8bb26",
+		icon_fg = "",
 	},
 	light = {
 		statusline_bg = "#c7c7c7",
 		lightbg = "#c7c7c7",
 		lightbg2 = "#c7c7c7",
+		mode_fg = "#ffffff",
+		normal_fg = "#669900",
+		icon_fg = "#000000",
 	}
 }
 
@@ -111,7 +117,7 @@ M.mode_colors = {
 
 M.chad_mode_hl = function()
 	return {
-		fg = M.theme_color[vim.g.color_theme].statusline_bg,
+		fg = M.theme_color[vim.g.color_theme].mode_fg,
 		bg = M.mode_colors[vim.fn.mode()][2],
 		style = "bold",
 	}
@@ -134,7 +140,7 @@ M.lsp_status = function(status)
 	for match in string.gmatch(status, "[^%s]+") do
 		local err_warn = string.find(match, "^[WE]%d+", 0)
 		if not err_warn then
-			shorter_stat = shorter_stat .. ' ' .. match
+			shorter_stat = shorter_stat .. " " .. match
 		end
 	end
 	return shorter_stat

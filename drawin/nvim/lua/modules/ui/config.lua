@@ -101,7 +101,13 @@ function config.dashboard()
 		vim.cmd [[ hi DashboardShotCut guifg=#1E90FF ]]
 		vim.cmd [[ hi DashboardKey guifg=#1E90FF ]]
 	else
+		vim.cmd [[ hi DashboardHeader guifg=orange ]]
+		vim.cmd [[ hi DashboardFooter guifg=gray ]]
 
+		vim.cmd [[ hi DashboardIcon guifg=orange ]]
+		vim.cmd [[ hi DashboardDesc guifg=orange ]]
+		vim.cmd [[ hi DashboardShotCut guifg=#1E90FF ]]
+		vim.cmd [[ hi DashboardKey guifg=#1E90FF ]]
 	end
 
 	require("dashboard").setup({
