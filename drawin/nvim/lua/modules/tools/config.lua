@@ -161,6 +161,8 @@ function config.nvim_dap()
 	vim.keymap.set("n", "<F11>", function() require("dap").step_into() end)
 	vim.keymap.set("n", "<F12>", function() require("dap").step_out() end)
 	vim.keymap.set("n", "<S-s>", function() require("dap").terminate() end)
+	-- vim.keymap.set("n", "<leader>ll",
+	--     function() require("dap.ext.vscode").load_launchjs(nil, { codelldb = { "rust", dlv = { "go" } } }) end)
 
 	local dap = require("dap")
 
@@ -220,9 +222,33 @@ function config.nvim_dap()
 			stopOnEntry = false,
 		},
 	}
-	-- dap.configurations.c = dap.configurations.cpp
+	dap.configurations.cpp = {
+		{
+			name = "Launch file",
+			type = "codelldb",
+			request = "launch",
+			program = function()
+				return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+			end,
+			cwd = "${workspaceFolder}",
+			stopOnEntry = false,
+		},
+	}
+	dap.configurations.c = dap.configurations.cpp
 	-- dap.configurations.rust = dap.configurations.cpp
 	-- require("dap.ext.vscode").load_launchjs(nil, { codelldb = { "rust" } })
+	-- dap.type_to_filetypes = { codelldb = { "rust", dlv = { "go" } } }
+
+	local type_to_filetypes = { codelldb = { "rust" }, delve = { "go" } }
+	require("dap.ext.vscode").load_launchjs(nil, type_to_filetypes)
+
+	local pattern = "*/.vscode/launch.json"
+	vim.api.nvim_create_autocmd("BufWritePost", {
+		pattern = pattern,
+		callback = function(args)
+			require("dap.ext.vscode").load_launchjs(args.file, type_to_filetypes)
+		end
+	})
 end
 
 function config.nvim_dap_ui()
