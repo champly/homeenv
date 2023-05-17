@@ -150,6 +150,95 @@ function config.vimspector()
 	vim.cmd [[ sign define vimspectorPC text=👉 texthl=SpellBad ]]
 end
 
+function config.nvim_dap()
+	vim.fn.sign_define("DapBreakpoint", { text = "🛑", texthl = "Normal", linehl = "", numhl = "" })
+	vim.fn.sign_define("DapBreakpointRejected", { text = "🚫", texthl = "Normal", linehl = "", numhl = "" })
+	vim.fn.sign_define("DapStopped", { text = "👉", texthl = "Normal", linehl = "", numhl = "" })
+
+	vim.keymap.set("n", "<F5>", function() require("dap").continue() end)
+	vim.keymap.set("n", "<F9>", function() require("dap").toggle_breakpoint() end)
+	vim.keymap.set("n", "<F10>", function() require("dap").step_over() end)
+	vim.keymap.set("n", "<F11>", function() require("dap").step_into() end)
+	vim.keymap.set("n", "<F12>", function() require("dap").step_out() end)
+	vim.keymap.set("n", "<S-s>", function() require("dap").terminate() end)
+
+	local dap = require("dap")
+
+	dap.adapters.delve = {
+		type = "server",
+		port = "${port}",
+		executable = {
+			command = "dlv",
+			args = { "dap", "-l", "127.0.0.1:${port}" },
+		}
+	}
+	dap.adapters.codelldb = {
+		type = "server",
+		port = "${port}",
+		executable = {
+			-- CHANGE THIS to your path!
+			command = os.getenv("HOME") .. "/.vscode/extensions/vadimcn.vscode-lldb-1.9.1/adapter/codelldb",
+			args = { "--port", "${port}" },
+		}
+	}
+
+	-- https://github.com/go-delve/delve/blob/master/Documentation/usage/dlv_dap.md
+	dap.configurations.go = {
+		{
+			type = "delve",
+			name = "Debug",
+			request = "launch",
+			program = "${file}"
+		},
+		{
+			type = "delve",
+			name = "Debug test", -- configuration for debugging test files
+			request = "launch",
+			mode = "test",
+			program = "${file}"
+		},
+		-- works with go.mod packages and sub packages
+		{
+			type = "delve",
+			name = "Debug test (go.mod)",
+			request = "launch",
+			mode = "test",
+			program = "./${relativeFileDirname}"
+		}
+	}
+
+	dap.configurations.rust = {
+		{
+			name = "Launch file",
+			type = "codelldb",
+			request = "launch",
+			-- program = function()
+			--     return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+			-- end,
+			program = "${workspaceFolder}/target/debug/${workspaceFolderBasename}",
+			cwd = "${workspaceFolder}",
+			stopOnEntry = false,
+		},
+	}
+	-- dap.configurations.c = dap.configurations.cpp
+	-- dap.configurations.rust = dap.configurations.cpp
+	-- require("dap.ext.vscode").load_launchjs(nil, { codelldb = { "rust" } })
+end
+
+function config.nvim_dap_ui()
+	require("dapui").setup()
+	local dap, dapui = require("dap"), require("dapui")
+	dap.listeners.after.event_initialized["dapui_config"] = function()
+		dapui.open()
+	end
+	dap.listeners.before.event_terminated["dapui_config"] = function()
+		dapui.close()
+	end
+	dap.listeners.before.event_exited["dapui_config"] = function()
+		dapui.close()
+	end
+end
+
 function config.autopairs()
 	local present1, autopairs = pcall(require, "nvim-autopairs")
 	local present2, cmp_autopairs = pcall(require, "nvim-autopairs.completion.cmp")

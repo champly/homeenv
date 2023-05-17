@@ -99,13 +99,28 @@ package({
 	event = "BufReadPre",
 })
 
--- Debugger
--- https://github.com/puremourning/vimspector#supported-languages
+-- -- Debugger
+-- -- https://github.com/puremourning/vimspector#supported-languages
+-- package({
+--     "puremourning/vimspector",
+--     event = "BufReadPre",
+--     build = "./install_gadget.py --enable-go --enable-rust",
+--     init = conf.vimspector
+-- })
+
 package({
-	"puremourning/vimspector",
+	"mfussenegger/nvim-dap",
 	event = "BufReadPre",
-	build = "./install_gadget.py --enable-go --enable-rust",
-	init = conf.vimspector
+	config = conf.nvim_dap,
+})
+
+package({
+	"rcarriga/nvim-dap-ui",
+	event = "BufReadPre",
+	dependencies = {
+		"mfussenegger/nvim-dap",
+	},
+	config = conf.nvim_dap_ui,
 })
 
 -- Insert or delete brackets, parens, quotes in pair
