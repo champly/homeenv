@@ -5,7 +5,8 @@
 			"name": "Launch Workspace",
 			"type": "delve",
 			"request": "launch",
-			"program": "${workspaceFolder}"
+			"program": "${workspaceFolder}",
+			"args": []
 		}
 	]
 }

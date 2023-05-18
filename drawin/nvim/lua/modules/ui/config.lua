@@ -51,7 +51,6 @@ function config.telescope()
 	require("telescope").load_extension("fzy_native")
 	require("telescope").load_extension("gosource")
 	require("telescope").load_extension("dotfiles")
-	-- require("telescope").load_extension("vimspector")
 	require("telescope").load_extension("nvimdap")
 	require("telescope").load_extension("live_grep_args")
 
@@ -63,7 +62,6 @@ function config.telescope()
 		{})
 	vim.api.nvim_set_keymap("n", "<leader>fd", ":Telescope dotfiles<cr>", {})
 	vim.api.nvim_set_keymap("n", "<leader>fs", ":Telescope gosource<cr>", {})
-	-- vim.api.nvim_set_keymap("n", "<leader>dt", ":Telescope vimspector<cr>", {})
 	vim.api.nvim_set_keymap("n", "<leader>dt", ":Telescope nvimdap<cr>", {})
 end
 
@@ -139,44 +137,44 @@ function config.dashboard()
 			},
 			center = {
 				{
-					icon = "  ",
+					icon = "  ",
 					desc = "Recently laset session                  ",
 					key = "<leader>sl",
 					-- keymap = "<leader>sl",
 					action = "SessionLoad"
 				},
 				{
-					icon = "  ",
+					icon = "  ",
 					desc = "Recently opened files                   ",
 					key = "<leader>fh",
 					action = "Telescope oldfiles"
 				},
 				{
-					icon = "  ",
+					icon = "  ",
 					desc = "Find  File                              ",
 					key = "<leader>ff",
 					action = "Telescope find_files"
 				},
 				{
-					icon = "  ",
+					icon = "  ",
 					desc = "Find  word                              ",
 					key = "<leader>fw",
 					action = "Telescope live_grep"
 				},
 				{
-					icon = "  ",
+					icon = "  ",
 					desc = "Create new buffer                       ",
 					key = "<leader> n",
 					action = "enew"
 				},
 				{
-					icon = "  ",
+					icon = "  ",
 					desc = "Open Personal dotfiles                  ",
 					key = "<leader>fd",
 					action = "Telescope dotfiles"
 				},
 				{
-					icon = "  ",
+					icon = "  ",
 					desc = "Find Go Source Code                     ",
 					key = "<leader>fs",
 					action = "Telescope gosource"

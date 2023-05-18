@@ -99,15 +99,7 @@ package({
 	event = "BufReadPre",
 })
 
--- -- Debugger
--- -- https://github.com/puremourning/vimspector#supported-languages
--- package({
---     "puremourning/vimspector",
---     event = "BufReadPre",
---     build = "./install_gadget.py --enable-go --enable-rust",
---     init = conf.vimspector
--- })
-
+-- Debugger
 package({
 	"mfussenegger/nvim-dap",
 	event = "BufReadPre",

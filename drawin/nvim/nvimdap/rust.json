@@ -8,7 +8,8 @@
 			"name": "Launch",
 			"type": "codelldb",
 			"request": "launch",
-			"program": "${workspaceFolder}/target/debug/${workspaceFolderBasename}"
+			"program": "${workspaceFolder}/target/debug/${workspaceFolderBasename}",
+			"args": []
 		}
 	]
 }
