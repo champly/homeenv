@@ -7,7 +7,6 @@ package({
 	enabled = vim.g.completion_with_lsp,
 	dependencies = {
 		"telescope.nvim",
-		"MunifTanjim/nui.nvim"
 	},
 	ft = { "go", "lua", "rust", "c", "cpp", "markdown" },
 	config = conf.nvim_lsp,
