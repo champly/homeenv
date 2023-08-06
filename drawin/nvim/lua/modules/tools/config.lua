@@ -86,7 +86,7 @@ end
 function config.symbols_outline()
 	require("symbols-outline").setup({
 		highlight_hovered_item = true,
-		auto_close = false,
+		auto_close = true,
 		auto_preview = false,
 		relative_width = true,
 		show_symbol_details = true,

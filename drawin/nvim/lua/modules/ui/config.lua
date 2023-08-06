@@ -196,6 +196,7 @@ function config.dashboard()
 	vim.api.nvim_set_keymap("n", "<leader>fw", ":Telescope live_grep<cr>", {})
 	vim.api.nvim_set_keymap("n", "<leader>fd", ":Telescope dotfiles<cr>", {})
 	vim.api.nvim_set_keymap("n", "<leader>fs", ":Telescope gosource<cr>", {})
+	vim.api.nvim_set_keymap("n", "<leader>lm", ":Telescope marks<cr>", {})
 end
 
 function config.nvim_tree()
@@ -357,14 +358,6 @@ function config.feline_nvim()
 		vim.cmd [[ hi StatusLineNC guibg=#fce5cd gui=none ]]
 	end
 	require("modules.ui.statusline.layout")
-
-	-- FIXME: hack code
-	vim.cmd [[
-		func Redraw(timer)
-			redrawstatus
-		endfunc
-		call timer_start(200, "Redraw", {"repeat": 100})
-	]]
 end
 
 function config.whiskyline()

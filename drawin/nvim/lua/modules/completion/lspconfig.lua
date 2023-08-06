@@ -1,6 +1,6 @@
 local lspconfig = require("lspconfig")
 local util = require("lspconfig.util")
-local format = require("modules.completion.format")
+local common = require("modules.completion.common")
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
@@ -43,7 +43,7 @@ local enhance_attach = function(client, bufnr)
 	-- client.server_capabilities.semanticTokensProvider = nil
 
 	if client.server_capabilities.documentHighlightProvider then
-		format.lsp_before_save()
+		common.lsp_before_save()
 		-- local ext = vim.fn.expand("%:e")
 		-- vim.api.nvim_create_autocmd("BufWritePre", {
 		--     pattern = "*." .. ext,
@@ -63,6 +63,14 @@ local enhance_attach = function(client, bufnr)
 		--     })
 		-- end
 	end
+
+	-- !import: must invoke first when lsp is not load
+	common.redraw_statusline(20)
+	vim.api.nvim_create_autocmd("DiagnosticChanged", {
+		callback = function()
+			common.redraw_statusline(1)
+		end,
+	})
 
 	-- winbar use LSP to show your current code context.
 	if client.server_capabilities.documentSymbolProvider then
@@ -131,6 +139,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
 		-- https://github.com/nvim-telescope/telescope.nvim#neovim-lsp-pickers
 		vim.keymap.set("n", "<c-]>", ":Telescope lsp_definitions theme=get_cursor<CR>", opts)
+		vim.keymap.set("n", "<leader>td", ":Telescope lsp_type_definitions<CR>", opts)
 		vim.keymap.set("n", "<leader>im", ":Telescope lsp_implementations theme=ivy<CR>", opts)
 		vim.keymap.set("n", "<leader>rf", ":Telescope lsp_references theme=ivy<CR>", opts)
 		vim.keymap.set("n", "<leader>ds", ":Telescope diagnostics theme=ivy<CR>", opts)
