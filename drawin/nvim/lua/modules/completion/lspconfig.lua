@@ -165,7 +165,9 @@ lspconfig.gopls.setup {
 			analyses = {
 				fieldalignment = true
 			},
+			-- ["local"] = "github.com/champly",
 			allowModfileModifications = true,
+			allowImplicitNetworkAccess = true,
 			-- https://github.com/golang/tools/blob/master/gopls/doc/inlayHints.md
 			hints = {
 				assignVariableTypes = true,

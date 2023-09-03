@@ -102,6 +102,35 @@ function config.symbols_outline()
 			rename_symbol = "r",
 			code_actions = "a",
 		},
+		-- remove it until this pr merged: https://github.com/simrat39/symbols-outline.nvim/pull/225
+		symbols = {
+			File = { icon = "󰈔", hl = "@text.uri" },
+			Module = { icon = "󰆧", hl = "@namespace" },
+			Namespace = { icon = "󰅪", hl = "@namespace" },
+			Package = { icon = "󰏗", hl = "@namespace" },
+			Class = { icon = "𝓒", hl = "@type" },
+			Method = { icon = "ƒ", hl = "@method" },
+			Property = { icon = "", hl = "@method" },
+			Field = { icon = "󰆨", hl = "@field" },
+			Constructor = { icon = "", hl = "@constructor" },
+			Enum = { icon = "ℰ", hl = "@type" },
+			Interface = { icon = "󰜰", hl = "@type" },
+			Function = { icon = "", hl = "@function" },
+			Variable = { icon = "", hl = "@constant" },
+			Constant = { icon = "", hl = "@constant" },
+			String = { icon = "𝓐", hl = "@string" },
+			Number = { icon = "#", hl = "@number" },
+			Boolean = { icon = "⊨", hl = "@boolean" },
+			Array = { icon = "󰅪", hl = "@constant" },
+			Object = { icon = "⦿", hl = "@type" },
+			Key = { icon = "🔐", hl = "@type" },
+			Null = { icon = "NULL", hl = "@type" },
+			Event = { icon = "🗲", hl = "@type" },
+			Operator = { icon = "+", hl = "@operator" },
+			TypeParameter = { icon = "𝙏", hl = "@parameter" },
+			Component = { icon = "󰅴", hl = "@function" },
+			Fragment = { icon = "󰅴", hl = "@constant" },
+		},
 	})
 	vim.api.nvim_set_keymap("n", "<Space>o", ":SymbolsOutline<CR>", { noremap = true, silent = true })
 	vim.cmd [[ hi FocusedSymbol gui=bold guifg=#C678DD ]]
@@ -293,13 +322,6 @@ function config.matchparen()
 		on_startup = true,     -- Should it be enabled by default
 		hl_group = "MatchParen", -- highlight group for matched characters
 		augroup_name = "matchparen", -- almost no reason to touch this unless there is already augroup with such name
-	})
-end
-
-function config.dbsession()
-	require("dbsession").setup({
-		dir = "~/Dropbox/config/session",
-		auto_save_on_exit = true,
 	})
 end
 

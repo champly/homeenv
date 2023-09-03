@@ -140,9 +140,13 @@ package({
 })
 
 package({
-	"nvimdev/dbsession.nvim",
-	cmd = { "SessionSave", "SessionLoad" },
-	config = conf.dbsession
+	"folke/persistence.nvim",
+	event = "BufReadPre",
+	opts = {
+		dir = vim.fn.expand(vim.fn.stdpath("state") .. "/sessions/"),
+		options = { "buffers", "curdir", "tabpages", "winsize" },
+		pre_save = nil,
+	}
 })
 
 -- search and replace
