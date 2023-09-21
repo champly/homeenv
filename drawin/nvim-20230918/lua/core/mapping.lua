@@ -6,7 +6,7 @@ vim.api.nvim_set_keymap("n", "<leader>bd", ":bd!<CR>", { noremap = true })
 -- -- https://www.reddit.com/r/neovim/comments/ro6oye/open_link_from_neovim/
 vim.api.nvim_set_keymap("n", "gx", ":silent execute '!open ' . shellescape(expand('<cfile>'), 1)<CR>", { noremap = true })
 
--- Session
+-- session
 vim.api.nvim_set_keymap("n", "<leader>ql", [[<cmd>lua require("persistence").load()<cr>]], {})
 
 -- loop set mouse mode

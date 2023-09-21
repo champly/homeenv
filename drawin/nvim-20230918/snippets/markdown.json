@@ -1,0 +1,120 @@
+{
+	"new line": {
+		"prefix": "nl",
+		"body": [
+			"---",
+			"",
+			"${1:Content}"
+		],
+		"description": "Dividing line"
+	},
+	"font bold": {
+		"prefix": "fb",
+		"body": ["**${1:Content}** ${2:Next}"],
+		"description": "Font Bold"
+	},
+	"font italic": {
+		"prefix": "fi",
+		"body": ["*${1:Content}* ${2:Next}"],
+		"description": "Font Italic"
+	},
+	"font strikethrough": {
+		"prefix": "fd",
+		"body": ["**${1:Content}** ${2:Next}"],
+		"description": "Font StrikeThrough"
+	},
+	"font code": {
+		"prefix": "fc",
+		"body": ["`${1:Content}` ${2:Next}"],
+		"description": "Font Code"
+	},
+	"code block": {
+		"prefix": "cb",
+		"body": [
+			"",
+			"``` ${1:Content}",
+			"${2:Next}",
+			"```",
+			"",
+			"${3:Other}"
+		],
+		"description": "Code Block"
+	},
+	"selection box": {
+		"prefix": "sb",
+		"body": ["- [ ] ${1:Content}"],
+		"description": "Selection Box"
+	},
+	"link pic": {
+		"prefix": "lp",
+		"body": ["![${1:Content}](${1:Content}) ${2:Next}"],
+		"description": "Link Pic"
+	},
+	"link key": {
+		"prefix": "lk",
+		"body": ["[${1:Content}](${1:Content}) ${2:Next}"],
+		"description": "Link Key"
+	},
+	"toggle content": {
+		"prefix": "tc",
+		"body": [
+			"<details>",
+			"<summary>${1:Title}</summary>",
+			"${2:Content}",
+			"</details>"
+		],
+		"description": "Fold Content"
+	},
+	"h1 title": {
+		"prefix": "h1",
+		"body": [
+			"# ${1:Title}",
+			"",
+			"---",
+			"",
+			"[TOC]",
+			"",
+			"${2:Next}"
+		]
+	},
+	"h2 title": {
+		"prefix": "h2",
+		"body": [
+			"## ${1:Title}",
+			"",
+			"${2:Next}"
+		]
+	},
+	"h3 title": {
+		"prefix": "h3",
+		"body": [
+			"### ${1:Title}",
+			"",
+			"${2:Next}"
+		]
+	},
+	"h4 title": {
+		"prefix": "h4",
+		"body": [
+			"#### ${1:Title}",
+			"",
+			"${2:Next}"
+		]
+	},
+	"h5 title": {
+		"prefix": "h5",
+		"body": [
+			"##### ${1:Title}",
+			"",
+			"${2:Next}"
+		]
+	},
+	"h6 title": {
+		"prefix": "h6",
+		"body": [
+			"###### ${1:Title}",
+			"",
+			"${2:Next}"
+		]
+	}
+}

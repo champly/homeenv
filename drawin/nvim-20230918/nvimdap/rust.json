@@ -1,0 +1,15 @@
+// 1. Compile our Rust project with cargo build, cargo run, cargo test, so that we can produce a binary.
+// 2. Create a .vscode/launch.json file at the root of your Cargo directory. Replace ${workspaceRootFolderName}
+// 3. Attach codelldb and your Rust application binary to nvim-dap in the .vscode/launch.json file.
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Launch",
+			"type": "codelldb",
+			"request": "launch",
+			"program": "${workspaceFolder}/target/debug/${workspaceFolderBasename}",
+			"args": []
+		}
+	]
+}

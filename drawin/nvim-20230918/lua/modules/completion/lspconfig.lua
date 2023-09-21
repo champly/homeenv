@@ -43,30 +43,25 @@ local enhance_attach = function(client, bufnr)
 	-- client.server_capabilities.semanticTokensProvider = nil
 
 	if client.server_capabilities.documentHighlightProvider then
-		local ext = vim.fn.expand("%:e")
-		vim.api.nvim_create_autocmd("BufWritePre", {
-			pattern = "*." .. ext,
-			callback = function()
-				vim.lsp.buf.format(nil, 1000)
-			end
-		})
+		common.lsp_before_save()
+		-- local ext = vim.fn.expand("%:e")
+		-- vim.api.nvim_create_autocmd("BufWritePre", {
+		--     pattern = "*." .. ext,
+		--     callback = function()
+		--         vim.lsp.buf.format(nil, 1000)
+		--     end
+		-- })
 
-		-- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#imports
-		if ext == "go" then
-			vim.api.nvim_create_autocmd("BufWritePre", {
-				pattern = "*.go",
-				callback = function()
-					local orignal = vim.notify
-					vim.notify = function(msg, level, opts)
-						if msg == "No code actions available" then
-							return
-						end
-						orignal(msg, level, opts)
-					end
-					vim.lsp.buf.code_action({ context = { only = { "source.organizeImports" } }, apply = true })
-				end
-			})
-		end
+		-- -- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#imports
+		-- if ext == "go" then
+		--     vim.api.nvim_create_autocmd("BufWritePre", {
+		--         pattern = "*.go",
+		--         callback = function()
+		--             -- vim.cmd [[ lua vim.lsp.buf.code_action({ context = { only = { "source.organizeImports" } }, apply = true }) ]]
+		--             vim.lsp.buf.code_action({ context = { only = { "source.organizeImports" } }, apply = true })
+		--         end
+		--     })
+		-- end
 	end
 
 	-- !import: must invoke first when lsp is not load
@@ -97,7 +92,6 @@ local enhance_attach = function(client, bufnr)
 				hi LspReferenceText guibg=#ffcc33 guifg=black gui=NONE
 				hi LspReferenceWrite guibg=#ffcc33 guifg=black gui=NONE
 				hi NormalFloat guibg=#d9d9d9
-				hi DiagnosticFloatingHint guifg=gray
 			]], false)
 		end
 

@@ -2,10 +2,6 @@
 	"contributes":{
 		"snippets":[
 			{
-				"language": "all",
-				"path": "./license.json"
-			},
-			{
 				"language":"markdown",
 				"path":"./markdown.json"
 			},

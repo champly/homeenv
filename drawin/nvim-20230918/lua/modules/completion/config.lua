@@ -176,10 +176,4 @@ function config.lspsaga_nvim()
 	vim.keymap.set({ "n", "t" }, "<F4>", "<cmd>Lspsaga term_toggle<CR>")
 end
 
-function config.lsp_signature()
-	if vim.g.color_theme == vim.g.color_theme_light then
-		vim.api.nvim_exec([[ hi LspSignatureActiveParameter guibg=grey ]], false)
-	end
-end
-
 return config

@@ -36,7 +36,6 @@ function config.telescope()
 				width = 0.8,
 				scroll_speed = 6,
 			},
-			dynamic_preview_title = true,
 		},
 		extensions = {
 			fzy_native = {
@@ -327,7 +326,6 @@ function config.nvim_tree()
 			}
 		},
 		filters = {
-			git_ignored = false,
 			dotfiles = true
 		},
 		actions = {
@@ -511,12 +509,6 @@ function config.nvim_notify()
 
 	vim.api.nvim_set_keymap("n", "<leader>s", "<cmd>lua save_file_with_notify()<cr>", { noremap = true, silent = true })
 end
-
--- function config.indentmini()
---     require("indentmini").setup({
---         char = "|",
---     })
--- end
 
 function config.rainbow()
 	vim.g.rainbow_active = 1 -- set to 0 if you want to enable it later via :RainbowToggle

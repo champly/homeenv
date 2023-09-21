@@ -34,9 +34,7 @@ package({
 	-- version = "<CurrentMajor>.*",
 	build = "make install_jsregexp",
 	enabled = vim.g.completion_with_lsp,
-	dependencies = {
-		"saadparwaiz1/cmp_luasnip",
-	},
+	dependencies = "saadparwaiz1/cmp_luasnip",
 	config = conf.lua_snip
 })
 
@@ -69,7 +67,6 @@ package({
 	event = "InsertCharPre",
 	dependencies = "nvim-lspconfig",
 	enabled = vim.g.completion_with_lsp,
-	config = conf.lsp_signature,
 })
 
 -- go language support

@@ -128,13 +128,6 @@ package({
 	config = conf.nvim_notify,
 })
 
--- -- indentiline
--- package({
---     "nvimdev/indentmini.nvim",
---     event = "BufEnter",
---     config = conf.indentmini,
--- })
-
 -- parentheses improved
 -- package({
 --     "luochen1990/rainbow",
