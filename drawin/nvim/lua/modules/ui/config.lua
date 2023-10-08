@@ -141,8 +141,7 @@ function config.dashboard()
 					icon = "  ",
 					desc = "Recently laset session                  ",
 					key = "<leader>sl",
-					-- keymap = "<leader>sl",
-					action = "SessionLoad"
+					action = [[ lua require("persistence").load() ]]
 				},
 				{
 					icon = "  ",
@@ -265,7 +264,6 @@ function config.nvim_tree()
 		vim.keymap.set("n", "<2-LeftMouse>", api.node.open.edit, opts("Open"))
 		vim.keymap.set("n", "<2-RightMouse>", api.tree.change_root_to_node, opts("CD"))
 		-- END_DEFAULT_ON_ATTACH
-
 
 		-- Mappings migrated from view.mappings.list
 		--
