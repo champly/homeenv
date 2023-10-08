@@ -44,7 +44,8 @@ vim.opt.cmdheight             = 0
 -- 区分空格和缩进
 vim.opt.list                  = true
 vim.opt.showbreak             = "↪ "
-vim.opt.listchars             = "tab:▸ ,space:⋅,trail:·,precedes:←,extends:→"
+-- vim.opt.listchars             = "tab:▸ ,space:⋅,trail:·,precedes:←,extends:→" -- 复制的时候会空格会一起复制出去
+vim.opt.listchars             = "tab:▸ ,trail:·,precedes:←,extends:→"
 -- Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 -- delays and poor user experience.
 vim.opt.updatetime            = 300
