@@ -68,6 +68,16 @@ function config.telescope()
 	vim.api.nvim_set_keymap("n", "<leader>dt", ":Telescope nvimdap<cr>", {})
 end
 
+function config.nvim_bqf()
+	require("bqf").setup {
+		preview = {
+			winblend = 0,
+		}
+	}
+	-- https://github.com/kevinhwang91/nvim-bqf/issues/35#issuecomment-1107697457
+	-- vim.api.nvim_feedkeys([['"]], "im", false)
+end
+
 function config.dressing()
 	require("dressing").setup({
 		input = {

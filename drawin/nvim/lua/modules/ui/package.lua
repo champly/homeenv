@@ -36,6 +36,7 @@ package({
 package({
 	"kevinhwang91/nvim-bqf",
 	ft = "qf",
+	config = conf.nvim_bqf,
 })
 
 package({
