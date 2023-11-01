@@ -49,6 +49,8 @@ function config.telescope()
 		}
 	})
 
+	-- default mapping: https://github.com/nvim-telescope/telescope.nvim/blob/master/lua/telescope/mappings.lua#L133
+
 	require("telescope").load_extension("fzy_native")
 	require("telescope").load_extension("gosource")
 	require("telescope").load_extension("dotfiles")

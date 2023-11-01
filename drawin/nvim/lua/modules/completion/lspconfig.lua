@@ -126,6 +126,13 @@ local enhance_attach = function(client, bufnr)
 			border = "rounded"
 		}
 	}, bufnr)
+
+	-- inlay hints neovim >= 0.10
+	if vim.lsp.buf.inlay_hint then
+		if client.server_capabilities.inlayHintProvider then
+			vim.lsp.buf.inlay_hint(bufnr, true)
+		end
+	end
 end
 
 -- vim.lsp.set_log_level("debug")
@@ -150,6 +157,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		-- See `:help vim.lsp.*` for documentation on any of the below functions
 		local opts = { buffer = ev.buf, silent = true, noremap = true }
 
+		-- TODO: https://github.com/nvim-telescope/telescope.nvim/issues/1265
 		vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 		vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
 		vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)

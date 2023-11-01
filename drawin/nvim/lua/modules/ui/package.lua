@@ -34,6 +34,11 @@ package({
 })
 
 package({
+	"kevinhwang91/nvim-bqf",
+	ft = "qf",
+})
+
+package({
 	"stevearc/dressing.nvim",
 	config = conf.dressing,
 })

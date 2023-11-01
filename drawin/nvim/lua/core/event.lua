@@ -21,7 +21,6 @@ function autocmd.load_autocmds()
 			-- 目前的问题是 偶尔需要手动执行 MiniBufExplorer
 			{ "FileType", "qf", "wincmd J" },
 		},
-		-- yank = {},
 	}
 
 	autocmd.nvim_create_augroups(definitions)
