@@ -17,26 +17,6 @@ vim.api.nvim_set_keymap("n", "<leader>sm", ":lua vim.opt.mouse = vim.opt.mouse._
 -- brew install figlet
 vim.api.nvim_set_keymap("n", "fl", ":r !figlet ", { noremap = true })
 
--- toggle quickfix
-function toggle_qf()
-	local qf_open = false
-	for _, win in pairs(vim.fn.getwininfo()) do
-		if win["quickfix"] == 1 then
-			qf_open = true
-		end
-	end
-	if qf_open == true then
-		vim.cmd("cclose")
-		return
-	end
-	if not vim.tbl_isempty(vim.fn.getqflist()) then
-		vim.cmd("copen")
-	end
-end
-
--- toggle quickfix mapping
-vim.api.nvim_set_keymap("n", "<leader>q", ":lua toggle_qf()<CR>", { noremap = true })
-
 -- Finial
 -- command line mode
 vim.api.nvim_set_keymap("c", "<C-a>", "<Home>", { noremap = true })
