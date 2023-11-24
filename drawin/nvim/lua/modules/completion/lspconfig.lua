@@ -188,6 +188,7 @@ lspconfig.gopls.setup {
 			staticcheck = true,
 			gofumpt = true,
 			analyses = {
+				unusedparams = true,
 				fieldalignment = true
 			},
 			-- ["local"] = "github.com/champly",

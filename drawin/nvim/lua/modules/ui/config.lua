@@ -540,15 +540,6 @@ function config.rainbow()
 	}
 end
 
-function config.nvim_ts_rainbow()
-	-- https://github.com/p00f/nvim-ts-rainbow#installation-and-setup
-	require("nvim-treesitter.configs").setup({
-		rainbow = {
-			enable = true
-		}
-	})
-end
-
 function config.beacon()
 	vim.cmd [[ highlight Beacon guibg=blue ctermbg=15 ]]
 end

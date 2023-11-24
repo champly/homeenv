@@ -149,12 +149,6 @@ package({
 -- })
 
 -- package({
---     "p00f/nvim-ts-rainbow",
---     dependencies = "nvim-treesitter",
---     config = conf.nvim_ts_rainbow
--- })
-
--- package({
 --     "danilamihailov/beacon.nvim",
 --     config = conf.beacon,
 -- })
