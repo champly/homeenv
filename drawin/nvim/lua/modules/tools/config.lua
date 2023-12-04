@@ -30,7 +30,7 @@ function config.nvim_treesitter()
 		highlight = {
 			enable = true, -- false will disable the whole extension
 			disable = function(_, buf)
-				return vim.api.nvim_buf_line_count(buf) > 3000
+				return vim.api.nvim_buf_line_count(buf) > 6000
 			end,
 		},
 	})
