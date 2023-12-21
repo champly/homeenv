@@ -70,10 +70,11 @@ package({
 
 -- symbols outline
 package({
-	"simrat39/symbols-outline.nvim",
+	-- "simrat39/symbols-outline.nvim",
+	"hedyhli/outline.nvim",
 	event = "BufRead",
 	enabled = vim.g.completion_with_lsp,
-	config = conf.symbols_outline,
+	config = conf.outline_nvim,
 })
 
 -- tpope plug

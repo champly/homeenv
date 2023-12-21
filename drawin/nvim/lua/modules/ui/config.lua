@@ -378,7 +378,6 @@ end
 
 function config.bufferline()
 	-- https://github.com/akinsho/bufferline.nvim#configuration
-	vim.opt.termguicolors = true
 	require("bufferline").setup {
 		options = {
 			numbers = function(opts)
@@ -486,6 +485,8 @@ function config.toggleterm()
 		-- 'vertical' | 'horizontal' | 'tab' | 'float'
 		direction = "float"
 	})
+
+	-- 在终端中，你可以按下<C-\><C-n>（也就是按下Ctrl+\然后按下Ctrl+n）来进入正常模式
 end
 
 function config.vim_floaterm()
