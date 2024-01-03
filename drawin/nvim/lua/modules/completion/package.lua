@@ -72,8 +72,14 @@ package({
 	config = conf.lsp_signature,
 })
 
--- go language support
--- use 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+-- package({
+--     "folke/neodev.nvim",
+--     event = "InsertCharPre",
+--     dependencies = "nvim-lspconfig",
+--     config = function()
+--         require("neodev").setup({})
+--     end
+-- })
 
 -- code-completion engine
 package({

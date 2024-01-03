@@ -2,17 +2,13 @@ local lspconfig = require("lspconfig")
 local util = require("lspconfig.util")
 local common = require("modules.completion.common")
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
--- capabilities.textDocument.completion.completionItem.snippetSupport = true
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 -- https://neovim.io/doc/user/lsp.html
 -- https://neovim.io/doc/user/diagnostic.html#vim.diagnostic.config()
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 	vim.lsp.diagnostic.on_publish_diagnostics,
 	{
-		-- Enable underline, use default values
-		underline = true,
 		-- Enable virtual text, override spacing to 4
 		virtual_text = {
 			severity = vim.diagnostic.severity.ERROR,
@@ -21,14 +17,10 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 			-- },
 			spacing = 4,
 			prefix = "",
-			-- prefix = " ✗ ",
 		},
 		signs = {
-			enable = true,
 			priority = 20,
 		},
-		-- Disable a feature
-		update_in_insert = false,
 	}
 )
 
@@ -39,9 +31,8 @@ for type, icon in pairs(signs) do
 end
 
 -- https://github.com/nvim-lua/completion-nvim/issues/337#issuecomment-765563829
+-- TODO: use https://github.com/NvChad/NvChad/blob/v2.0/lua/plugins/configs/lspconfig.lua rewrite
 local enhance_attach = function(client, bufnr)
-	-- client.server_capabilities.semanticTokensProvider = nil
-
 	if client.server_capabilities.documentHighlightProvider then
 		local ext = vim.fn.expand("%:e")
 		vim.api.nvim_create_autocmd("BufWritePre", {
