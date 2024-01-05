@@ -359,6 +359,9 @@ function config.nvim_tree()
 	}
 end
 
+function config.neo_tree()
+end
+
 function config.galaxyline()
 	require("modules.ui.eviline")
 end

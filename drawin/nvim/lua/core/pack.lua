@@ -41,7 +41,11 @@ function pack:boot_strap()
 	self:load_modules_packages()
 
 	require("lazy").setup(self.repos, {
-		lockfile = vim.fn.stdpath("config") .. "/lazy-lock.json",
+		checker = {
+			enable = true,
+			notify = true, -- get a notification when new updates are found
+			frequency = 3600, -- check for updates every hour
+		},
 	})
 end
 

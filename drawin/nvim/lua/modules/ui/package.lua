@@ -61,6 +61,17 @@ package({
 	},
 	config = conf.nvim_tree,
 })
+-- TODO: replace nvim-tree with neo-tree
+-- package({
+--     "nvim-neo-tree/neo-tree.nvim",
+--     branch = "v3.x",
+--     cmd = "Neotree",
+--     dependencies = {
+--         "nvim-lua/plenary.nvim",
+--         "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+--     },
+--     config = conf.neo_tree,
+-- })
 
 -- Lean & mean status/tabline for vim that's light as air.
 -- package({"vim-airline/vim-airline"})
