@@ -33,6 +33,6 @@ RUN chmod 755 ./nvim.appimage
 RUN ./nvim.appimage --appimage-extract
 RUN mv squashfs-root /usr/local/nvim
 
-ENV PATH="/usr/local/nvim/usr/bin"
+ENV PATH="/usr/local/nvim/usr/bin:${PATH}"
 
 ENTRYPOINT ["nvim"]
