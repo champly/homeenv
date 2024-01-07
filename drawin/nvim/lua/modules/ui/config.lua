@@ -360,6 +360,15 @@ function config.nvim_tree()
 end
 
 function config.neo_tree()
+	require("neo-tree").setup({
+		filesystem = {
+			follow_current_file = {
+				enabled = true,
+			},
+		},
+	})
+
+	vim.cmd([[nnoremap ff :Neotree reveal<cr>]])
 end
 
 function config.galaxyline()
