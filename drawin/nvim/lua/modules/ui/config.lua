@@ -66,6 +66,7 @@ function config.telescope()
 	vim.api.nvim_set_keymap("n", "<leader>fd", ":Telescope dotfiles<cr>", {})
 	vim.api.nvim_set_keymap("n", "<leader>fs", ":Telescope gosource<cr>", {})
 	vim.api.nvim_set_keymap("n", "<leader>dt", ":Telescope nvimdap<cr>", {})
+	vim.api.nvim_set_keymap("n", "<leader>gl", ":Telescope git_bcommits<cr>", {})
 end
 
 function config.nvim_bqf()
