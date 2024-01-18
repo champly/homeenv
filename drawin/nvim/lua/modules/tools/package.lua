@@ -163,9 +163,15 @@ package({
 	config = conf.nvim_spectre
 })
 
--- TODO: use williamboman/mason.nvim install prettier
+package({
+	"williamboman/mason.nvim",
+	opts = function(_, opts)
+		opts.ensure_installed = opts.ensure_installed or {}
+		table.insert(opts.ensure_installed, "prettier")
+	end,
+})
+
 -- format
--- npm install --save-dev --save-exact prettier
 package({
 	"nvimtools/none-ls.nvim",
 	opts = function(_, opts)
@@ -173,6 +179,23 @@ package({
 		opts.sources = opts.sources or {}
 		table.insert(opts.sources, nls.builtins.formatting.prettier)
 	end,
+})
+
+package({
+	"stevearc/conform.nvim",
+	opts = {
+		formatters_by_ft = {
+			["json"] = { "prettier" },
+			["jsonc"] = { "prettier" },
+			["yaml"] = { "prettier" },
+			["markdown"] = { "prettier" },
+			["markdown.mdx"] = { "prettier" },
+		},
+		format_on_save = {
+			timeout_ms = 500,
+			lsp_fallback = true,
+		}
+	},
 })
 
 -- package({
