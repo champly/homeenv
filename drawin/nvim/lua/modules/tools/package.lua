@@ -163,6 +163,18 @@ package({
 	config = conf.nvim_spectre
 })
 
+-- TODO: use williamboman/mason.nvim install prettier
+-- format
+-- npm install --save-dev --save-exact prettier
+package({
+	"nvimtools/none-ls.nvim",
+	opts = function(_, opts)
+		local nls = require("null-ls")
+		opts.sources = opts.sources or {}
+		table.insert(opts.sources, nls.builtins.formatting.prettier)
+	end,
+})
+
 -- package({
 --     "sbdchd/neoformat",
 --     event = "BufReadPre",
