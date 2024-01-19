@@ -176,8 +176,7 @@ function config.nvim_dap()
 		type = "server",
 		port = "${port}",
 		executable = {
-			-- FIXME: CHANGE THIS to your path!
-			command = os.getenv("HOME") .. "/.vscode/extensions/vadimcn.vscode-lldb-1.9.1/adapter/codelldb",
+			command = "codelldb",
 			args = { "--port", "${port}" },
 		}
 	}
