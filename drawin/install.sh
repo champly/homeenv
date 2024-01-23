@@ -119,6 +119,9 @@ rustup component add rls rust-analysis rust-src
 # https://rust-lang.github.io/rustup/concepts/components.html
 rustup toolchain install nightly --component rust-analyzer
 
+# install rz sz
+brew install lrzsz
+
 # graph easy
 # https://juejin.cn/post/6844903510987767815
 brew install graphviz
