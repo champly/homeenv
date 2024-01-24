@@ -60,12 +60,31 @@ package({
 	config = conf.vim_visual_multi_setup,
 })
 
--- Jump to any location specified by two characters.
+-- -- Jump to any location specified by two characters.
+-- package({
+--     "phaazon/hop.nvim",
+--     event = "BufReadPre",
+--     config = conf.hop_nvim,
+--     init = conf.hop_nvim_setup,
+-- })
 package({
-	"phaazon/hop.nvim",
-	event = "BufReadPre",
-	config = conf.hop_nvim,
-	init = conf.hop_nvim_setup,
+	"folke/flash.nvim",
+	event = "VeryLazy",
+	opts = {
+		modes = {
+			char = {
+				jump_labels = true
+			}
+		},
+	},
+	-- stylua: ignore
+	keys = {
+		{ "s",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
+		{ "S",     mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
+		{ "r",     mode = "o",               function() require("flash").remote() end,            desc = "Remote Flash" },
+		{ "R",     mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+		{ "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
+	},
 })
 
 -- symbols outline
@@ -173,29 +192,15 @@ package({
 	},
 	config = function(_, opts)
 		require("mason").setup(opts)
-		local mr = require("mason-registry")
-		mr:on("package:install:success", function()
-			vim.defer_fn(function()
-				-- trigger FileType event to possibly load this newly installed LSP server
-				require("lazy.core.handler.event").trigger({
-					event = "FileType",
-					buf = vim.api.nvim_get_current_buf(),
-				})
-			end, 100)
-		end)
-		local function ensure_installed()
-			for _, tool in ipairs(opts.ensure_installed) do
-				local p = mr.get_package(tool)
-				if not p:is_installed() then
-					p:install()
+		local registry = require "mason-registry"
+		registry.refresh(function()
+			for _, pkg_name in ipairs(opts.ensure_installed) do
+				local pkg = registry.get_package(pkg_name)
+				if not pkg:is_installed() then
+					pkg:install()
 				end
 			end
-		end
-		if mr.refresh then
-			mr.refresh(ensure_installed)
-		else
-			ensure_installed()
-		end
+		end)
 	end,
 })
 
@@ -227,14 +232,7 @@ package({
 })
 
 -- package({
---     "sbdchd/neoformat",
---     event = "BufReadPre",
---     config = conf.neoformat,
+--     "folke/todo-comments.nvim",
+--     dependencies = { "nvim-lua/plenary.nvim" },
+--     opts = {}
 -- })
-
--- zbirenbaum/copilot.lua
--- zbirenbaum/copilot-cmp
--- package({
---    "github/copilot.vim",
---     cmd = "Copilot",
--- }
