@@ -33,7 +33,6 @@ function config.telescope()
 			layout_config = {
 				prompt_position = "top",
 				height = 0.8,
-				width = 0.8,
 				scroll_speed = 6,
 			},
 			dynamic_preview_title = true,
