@@ -188,9 +188,13 @@ package({
 		ensure_installed = {
 			"codelldb",
 			"prettier",
+			-- TODO: if this issues is fixed https://github.com/biomejs/biome/issues/1662
+			-- replace prettier with biome
+			-- "biome",
 		},
 	},
 	config = function(_, opts)
+		-- https://github.com/williamboman/mason.nvim/issues/1309#issuecomment-1555018732
 		require("mason").setup(opts)
 		local registry = require "mason-registry"
 		registry.refresh(function()
@@ -211,6 +215,7 @@ package({
 		local nls = require("null-ls")
 		opts.sources = opts.sources or {}
 		table.insert(opts.sources, nls.builtins.formatting.prettier)
+		-- table.insert(opts.sources, nls.builtins.formatting.biome)
 	end,
 })
 
@@ -223,6 +228,11 @@ package({
 			["yaml"] = { "prettier" },
 			["markdown"] = { "prettier" },
 			["markdown.mdx"] = { "prettier" },
+			-- ["json"] = { "biome" },
+			-- ["jsonc"] = { "biome" },
+			-- ["yaml"] = { "biome" },
+			-- ["markdown"] = { "biome" },
+			-- ["markdown.mdx"] = { "biome" },
 		},
 		format_on_save = {
 			timeout_ms = 500,
