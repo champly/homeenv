@@ -41,7 +41,7 @@ function pack:boot_strap()
 	self:load_modules_packages()
 
 	require("lazy").setup(self.repos, {
-		concurrency = 10,
+		-- concurrency = 10,
 		checker = {
 			enable = true,
 			notify = true, -- get a notification when new updates are found
