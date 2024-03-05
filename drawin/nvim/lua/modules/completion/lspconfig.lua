@@ -179,7 +179,7 @@ lspconfig.gopls.setup {
 			staticcheck = true,
 			gofumpt = true,
 			analyses = {
-				unusedparams = true,
+				-- https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md
 				fieldalignment = true
 			},
 			-- ["local"] = "github.com/champly",

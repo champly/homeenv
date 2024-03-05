@@ -9,11 +9,6 @@ package({
 	config = conf.nvim_treesitter,
 })
 
--- package({
---     "nvim-treesitter/nvim-treesitter-textobjects",
---     dependencies = "nvim-treesitter"
--- })
-
 package({
 	"iamcco/markdown-preview.nvim",
 	build = "cd app && yarn install",
@@ -225,7 +220,7 @@ package({
 		formatters_by_ft = {
 			["json"] = { "prettier" },
 			["jsonc"] = { "prettier" },
-			["yaml"] = { "prettier" },
+			-- ["yaml"] = { "prettier" },
 			["markdown"] = { "prettier" },
 			["markdown.mdx"] = { "prettier" },
 			-- ["json"] = { "biome" },
@@ -240,6 +235,15 @@ package({
 		}
 	},
 })
+
+-- -- TODO: config this plugin with keymaps
+-- package({
+--     "sindrets/diffview.nvim",
+--     cmd = {
+--         "DiffviewOpen",
+--         "DiffviewFileHistory",
+--     },
+-- })
 
 -- package({
 --     "folke/todo-comments.nvim",
