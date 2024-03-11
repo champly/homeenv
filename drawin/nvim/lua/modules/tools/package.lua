@@ -182,10 +182,7 @@ package({
 	opts = {
 		ensure_installed = {
 			"codelldb",
-			"prettier",
-			-- TODO: if this issues is fixed https://github.com/biomejs/biome/issues/1662
-			-- replace prettier with biome
-			-- "biome",
+			"biome",
 		},
 	},
 	config = function(_, opts)
@@ -209,8 +206,7 @@ package({
 	opts = function(_, opts)
 		local nls = require("null-ls")
 		opts.sources = opts.sources or {}
-		table.insert(opts.sources, nls.builtins.formatting.prettier)
-		-- table.insert(opts.sources, nls.builtins.formatting.biome)
+		table.insert(opts.sources, nls.builtins.formatting.biome)
 	end,
 })
 
@@ -218,16 +214,11 @@ package({
 	"stevearc/conform.nvim",
 	opts = {
 		formatters_by_ft = {
-			["json"] = { "prettier" },
-			["jsonc"] = { "prettier" },
-			-- ["yaml"] = { "prettier" },
-			["markdown"] = { "prettier" },
-			["markdown.mdx"] = { "prettier" },
-			-- ["json"] = { "biome" },
-			-- ["jsonc"] = { "biome" },
-			-- ["yaml"] = { "biome" },
-			-- ["markdown"] = { "biome" },
-			-- ["markdown.mdx"] = { "biome" },
+			["json"] = { "biome" },
+			["jsonc"] = { "biome" },
+			["yaml"] = { "biome" },
+			["markdown"] = { "biome" },
+			["markdown.mdx"] = { "biome" },
 		},
 		format_on_save = {
 			timeout_ms = 500,
