@@ -183,6 +183,7 @@ package({
 		ensure_installed = {
 			"codelldb",
 			"biome",
+			"prettier"
 		},
 	},
 	config = function(_, opts)
@@ -200,31 +201,63 @@ package({
 	end,
 })
 
--- format
-package({
-	"nvimtools/none-ls.nvim",
-	opts = function(_, opts)
-		local nls = require("null-ls")
-		opts.sources = opts.sources or {}
-		table.insert(opts.sources, nls.builtins.formatting.biome)
-	end,
-})
+-- -- format
+-- package({
+--     "nvimtools/none-ls.nvim",
+--     opts = function(_, opts)
+--         local nls = require("null-ls")
+--         opts.sources = opts.sources or {}
+--         table.insert(
+--             opts.sources,
+--             nls.builtins.formatting.biome.with({
+--                 extra_args = {
+--                     "--config-path",
+--                     vim.fn.stdpath("config") .. "/external/format",
+--                 }
+--             })
+--         )
+--     end,
+-- })
 
 package({
 	"stevearc/conform.nvim",
-	opts = {
-		formatters_by_ft = {
-			["json"] = { "biome" },
-			["jsonc"] = { "biome" },
-			["yaml"] = { "biome" },
-			["markdown"] = { "biome" },
-			["markdown.mdx"] = { "biome" },
-		},
-		format_on_save = {
-			timeout_ms = 500,
-			lsp_fallback = true,
+	config = function()
+		local opts = {
+			formatters = {
+				biome = {
+					args = {
+						"format",
+						"--stdin-file-path",
+						"$FILENAME",
+						"--config-path",
+						vim.fn.stdpath("config") .. "/external/format",
+					},
+				}
+			},
+			formatters_by_ft = {
+				["json"] = { "biome" },
+				["jsonc"] = { "biome" },
+				["yaml"] = { "biome" },
+				["markdown"] = { "biome" },
+				["markdown.mdx"] = { "biome" },
+			},
+			format_on_save = {
+				timeout_ms = 500,
+				lsp_fallback = true,
+			}
 		}
-	},
+
+		if vim.loop.os_uname().sysname ~= "Darwin" then
+			opts.formatters_by_ft = {
+				["json"] = { "prettier" },
+				["jsonc"] = { "prettier" },
+				["yaml"] = { "prettier" },
+				["markdown"] = { "prettier" },
+				["markdown.mdx"] = { "prettier" },
+			}
+		end
+		require("conform").setup(opts)
+	end
 })
 
 -- -- TODO: config this plugin with keymaps
