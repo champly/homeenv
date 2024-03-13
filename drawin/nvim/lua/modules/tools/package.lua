@@ -223,7 +223,21 @@ package({
 	"stevearc/conform.nvim",
 	config = function()
 		local opts = {
-			formatters = {
+			formatters_by_ft = {
+				["json"] = { "prettier" },
+				["jsonc"] = { "prettier" },
+				["markdown"] = { "prettier" },
+				["markdown.mdx"] = { "prettier" },
+				["yaml"] = { "prettier" },
+			},
+			format_on_save = {
+				timeout_ms = 500,
+				lsp_fallback = true,
+			}
+		}
+
+		if vim.loop.os_uname().sysname == "Darwin" then
+			opts.formatters = {
 				biome = {
 					args = {
 						"format",
@@ -233,27 +247,10 @@ package({
 						vim.fn.stdpath("config") .. "/external/format",
 					},
 				}
-			},
-			formatters_by_ft = {
+			}
+			opts.formatters_by_ft = {
 				["json"] = { "biome" },
 				["jsonc"] = { "biome" },
-				["yaml"] = { "biome" },
-				["markdown"] = { "biome" },
-				["markdown.mdx"] = { "biome" },
-			},
-			format_on_save = {
-				timeout_ms = 500,
-				lsp_fallback = true,
-			}
-		}
-
-		if vim.loop.os_uname().sysname ~= "Darwin" then
-			opts.formatters_by_ft = {
-				["json"] = { "prettier" },
-				["jsonc"] = { "prettier" },
-				["yaml"] = { "prettier" },
-				["markdown"] = { "prettier" },
-				["markdown.mdx"] = { "prettier" },
 			}
 		end
 		require("conform").setup(opts)
