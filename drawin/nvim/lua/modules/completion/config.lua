@@ -13,6 +13,8 @@ function config.nvim_cmp()
 	vim.opt.completeopt = "menuone,noselect"
 
 	local cmp = require("cmp")
+	local lspkind = require("lspkind")
+
 	cmp.setup({
 		preselect = cmp.PreselectMode.None,
 		snippet = {
@@ -21,18 +23,17 @@ function config.nvim_cmp()
 			end,
 		},
 		formatting = {
-			format = function(entry, vim_item)
-				local icons = require "modules.completion.lspconfig_icon"
-				vim_item.kind = string.format("%s %s", icons[vim_item.kind], vim_item.kind)
-
-				vim_item.menu = ({
-					nvim_lsp = "[LSP]",
-					nvim_lua = "[Lua]",
-					buffer = "[BUF]",
-				})[entry.source.name]
-
-				return vim_item
-			end,
+			format = lspkind.cmp_format({
+				mode = "symbol_text",
+				-- before = function(entry, vim_item)
+				--     vim_item.menu = ({
+				--         nvim_lsp = "[LSP]",
+				--         nvim_lua = "[Lua]",
+				--         buffer = "[BUF]",
+				--     })[entry.source.name]
+				--     return vim_item
+				-- end
+			})
 		},
 		mapping = {
 			["<C-p>"] = cmp.mapping.select_prev_item(),
