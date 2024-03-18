@@ -248,10 +248,8 @@ package({
 					},
 				}
 			}
-			opts.formatters_by_ft = {
-				["json"] = { "biome" },
-				["jsonc"] = { "biome" },
-			}
+			opts.formatters_by_ft["json"] = { "biome" }
+			opts.formatters_by_ft["jsonc"] = { "biome" }
 		end
 		require("conform").setup(opts)
 	end
