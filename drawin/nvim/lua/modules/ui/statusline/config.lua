@@ -132,11 +132,11 @@ end
 
 M.get_system_info = function()
 	-- Darwin/Linux/Windows
-	return M.system_icons[vim.loop.os_uname().sysname]
+	return M.system_icons[vim.uv.os_uname().sysname]
 end
 
 M.lsp_status = function(status)
-	local shorter_stat = ''
+	local shorter_stat = ""
 	for match in string.gmatch(status, "[^%s]+") do
 		local err_warn = string.find(match, "^[WE]%d+", 0)
 		if not err_warn then

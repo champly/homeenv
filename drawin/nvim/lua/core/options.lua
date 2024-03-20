@@ -62,7 +62,7 @@ vim.opt.expandtab             = false -- 选项把插入的 tab 字符替换成�
 vim.o.timeoutlen              = 300   --毫秒计的等待映射的键序列完成的时间
 vim.o.maxmempattern           = 5000  -- maxmempattern规定了vim做字符串匹配时使用的最大内存，不是由每行字符数决定的。
 
-if vim.loop.os_uname().sysname == "Darwin" then
+if vim.uv.os_uname().sysname == "Darwin" then
 	vim.g.clipboard = {
 		name = "macOS-clipboard",
 		copy = {
@@ -78,7 +78,7 @@ if vim.loop.os_uname().sysname == "Darwin" then
 
 	-- https://zhuanlan.zhihu.com/p/24484514
 	vim.g.python3_host_skip_check = 1
-	if not vim.loop.fs_stat("/usr/local/bin/python3") then
+	if not vim.uv.fs_stat("/usr/local/bin/python3") then
 		vim.g.python3_host_prog = "/usr/bin/python3"
 	else
 		vim.g.python3_host_prog = "/usr/local/bin/python3"

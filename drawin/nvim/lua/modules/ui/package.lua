@@ -149,6 +149,24 @@ package({
 	config = conf.nvim_notify,
 })
 
+package({
+	"j-hui/fidget.nvim",
+	opts = {
+		progress = {
+			display = {
+				-- How long a message should persist after completion
+				done_ttl = 1,
+			}
+		},
+		notification = {
+			window = {
+				-- Background color opacity in the notification window
+				winblend = 20,
+			}
+		}
+	},
+})
+
 -- Active indent guide and indent text objects. When you're browsing
 -- code, this highlights the current level of indentation, and animates
 -- the highlighting.
@@ -181,6 +199,7 @@ package({
 				"outline",
 			},
 			callback = function()
+				---@diagnostic disable-next-line: inject-field
 				vim.b.miniindentscope_disable = true
 			end,
 		})

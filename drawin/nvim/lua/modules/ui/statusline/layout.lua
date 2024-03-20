@@ -170,42 +170,44 @@ table.insert(components.active[1], {
 	},
 })
 
-table.insert(components.active[2], {
-	provider = config.get_diagnostic_info,
-	hl = {
-		fg = config.colors.orange,
-		bg = color.statusline_bg,
-	}
-})
+-- table.insert(components.active[2], {
+--     provider = config.get_diagnostic_info,
+--     hl = {
+--         fg = config.colors.orange,
+--         bg = color.statusline_bg,
+--     }
+-- })
 
-table.insert(components.active[2], {
-	provider = function()
-		local Lsp = vim.lsp.util.get_progress_messages()[1]
+-- table.insert(components.active[2], {
+--     provider = function()
+--         local Lsp = vim.lsp.status()[1]
 
-		if vim.o.columns < 120 or not Lsp then
-			return ""
-		end
+--         if vim.o.columns < 120 or not Lsp then
+--             return ""
+--         end
 
-		local msg = Lsp.message or ""
-		local percentage = Lsp.percentage or 0
-		local title = Lsp.title or ""
-		local spinners = { "🌖", "🌗", "🌘", "🌑", "🌒", "🌓", "🌔" }
-		-- local spinners = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
-		local ms = vim.loop.hrtime() / 1000000
-		local frame = math.floor(ms / 120) % #spinners
-		return string.format(" %%<%s %s %s (%s%%%%) ", spinners[frame + 1], title, msg, percentage)
-	end,
-	enabled = shortline or function(winid)
-		return vim.api.nvim_win_get_width(tonumber(winid) or 0) > 80
-	end,
-	hl = { fg = config.colors.orange },
-})
+--         local msg = Lsp.message or ""
+--         local percentage = Lsp.percentage or 0
+--         local title = Lsp.title or ""
+--         local spinners = { "🌖", "🌗", "🌘", "🌑", "🌒", "🌓", "🌔" }
+--         -- local spinners = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
+--         ---@diagnostic disable-next-line: undefined-field
+--         local ms = vim.uv.hrtime() / 1000000
+--         local frame = math.floor(ms / 120) % #spinners
+--         return string.format(" %%<%s %s %s (%s%%%%) ", spinners[frame + 1], title, msg, percentage)
+--     end,
+--     enabled = shortline or function(winid)
+--         return vim.api.nvim_win_get_width(tonumber(winid) or 0) > 80
+--     end,
+--     hl = { fg = config.colors.orange },
+-- })
 
 table.insert(components.active[3], {
 	provider = function()
-		if next(vim.lsp.buf_get_clients()) ~= nil then
+		if next(vim.lsp.get_clients()) ~= nil then
 			local clients = {}
-			for _, client in pairs(vim.lsp.buf_get_clients(0)) do
+			for _, client in pairs(vim.lsp.get_clients()) do
+				---@diagnostic disable-next-line: undefined-field
 				clients[#clients + 1] = client.name
 			end
 			return "  " .. table.concat(clients, " ") .. " "

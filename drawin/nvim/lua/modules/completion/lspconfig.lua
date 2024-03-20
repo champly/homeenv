@@ -1,14 +1,12 @@
 local lspconfig = require("lspconfig")
 local util = require("lspconfig.util")
-local common = require("modules.completion.common")
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 -- https://neovim.io/doc/user/lsp.html
 -- https://neovim.io/doc/user/diagnostic.html#vim.diagnostic.config()
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-	vim.lsp.diagnostic.on_publish_diagnostics,
-	{
+	vim.lsp.diagnostic.on_publish_diagnostics, {
 		-- Enable virtual text, override spacing to 4
 		virtual_text = {
 			severity = vim.diagnostic.severity.ERROR,
@@ -24,6 +22,26 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 	}
 )
 
+-- https://neovim.io/doc/user/lsp.html#lsp-handler
+-- vim.lsp.handlers["textDocument/hover"] = function(err, result, ctx, config)
+--     config = config or { border = "rounded", focusable = true }
+--     config.focus_id = ctx.method
+--     if not (result and result.contents) then
+--         return
+--     end
+
+--     local markdown_lines = vim.lsp.util.convert_input_to_markdown_lines(result.contents.value)
+--     markdown_lines = vim.tbl_filter(function(line)
+--         return line ~= ""
+--     end, markdown_lines)
+
+--     if vim.tbl_isempty(markdown_lines) then
+--         return
+--     end
+
+--     return vim.lsp.util.open_floating_preview(markdown_lines, "markdown", config)
+-- end
+
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 for type, icon in pairs(signs) do
 	local hl = "DiagnosticSign" .. type
@@ -38,7 +56,7 @@ local enhance_attach = function(client, bufnr)
 		vim.api.nvim_create_autocmd("BufWritePre", {
 			pattern = "*." .. ext,
 			callback = function()
-				vim.lsp.buf.format(nil, 1000)
+				vim.lsp.buf.format()
 			end
 		})
 
@@ -59,6 +77,7 @@ local enhance_attach = function(client, bufnr)
 					for cid, res in pairs(result or {}) do
 						for _, r in pairs(res.result or {}) do
 							if r.edit then
+								---@diagnostic disable-next-line: undefined-field
 								local enc = (vim.lsp.get_client_by_id(cid) or {}).offset_encoding or "utf-16"
 								vim.lsp.util.apply_workspace_edit(r.edit, enc)
 							end
@@ -69,14 +88,6 @@ local enhance_attach = function(client, bufnr)
 			})
 		end
 	end
-
-	-- !import: must invoke first when lsp is not load
-	common.redraw_statusline(20)
-	vim.api.nvim_create_autocmd("DiagnosticChanged", {
-		callback = function()
-			common.redraw_statusline(1)
-		end,
-	})
 
 	-- winbar use LSP to show your current code context.
 	if client.server_capabilities.documentSymbolProvider then
@@ -125,8 +136,6 @@ local enhance_attach = function(client, bufnr)
 		end
 	end
 end
-
--- vim.lsp.set_log_level("debug")
 
 -- -- Global mappings.
 -- -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -183,7 +192,6 @@ lspconfig.gopls.setup {
 				fieldalignment = true
 			},
 			-- ["local"] = "github.com/champly",
-			allowModfileModifications = true,
 			allowImplicitNetworkAccess = true,
 			-- https://github.com/golang/tools/blob/master/gopls/doc/inlayHints.md
 			hints = {

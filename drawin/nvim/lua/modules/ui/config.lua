@@ -17,9 +17,11 @@ function config.gruvbox()
 end
 
 function config.github()
-	require('github-theme').setup({
-	})
-	vim.cmd [[ colorscheme github_light ]]
+	require("github-theme").setup()
+	vim.cmd([[ colorscheme github_light ]])
+
+	-- TODO: remove this config
+	vim.cmd([[ hi Delimiter guifg=black gui=none ]])
 end
 
 function config.telescope()
@@ -512,7 +514,7 @@ function config.vim_floaterm()
 end
 
 function config.nvim_notify()
-	vim.notify = require("notify")
+	vim.notify = vim.schedule_wrap(require("notify"))
 
 	---@diagnostic disable-next-line: duplicate-set-field
 	function _G.save_file_with_notify()

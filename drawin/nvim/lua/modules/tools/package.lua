@@ -126,6 +126,7 @@ package({
 	event = "BufReadPre",
 	dependencies = {
 		"mfussenegger/nvim-dap",
+		"nvim-neotest/nvim-nio"
 	},
 	config = conf.nvim_dap_ui,
 })
@@ -236,7 +237,7 @@ package({
 			}
 		}
 
-		if vim.loop.os_uname().sysname == "Darwin" then
+		if vim.uv.os_uname().sysname == "Darwin" then
 			opts.formatters = {
 				biome = {
 					args = {
