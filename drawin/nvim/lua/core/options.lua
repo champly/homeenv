@@ -1,6 +1,5 @@
 local cache_dir               = os.getenv("HOME") .. "/.cache/nvim/"
 
-vim.g.completion_with_lsp     = true
 vim.g.color_theme_dark        = "dark"
 vim.g.color_theme_light       = "light"
 vim.g.color_theme             = vim.g.color_theme_light -- dark or light if you want light mode

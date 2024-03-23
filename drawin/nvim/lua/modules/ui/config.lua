@@ -70,16 +70,6 @@ function config.telescope()
 	vim.api.nvim_set_keymap("n", "<leader>gl", ":Telescope git_bcommits<cr>", {})
 end
 
-function config.nvim_bqf()
-	require("bqf").setup {
-		preview = {
-			winblend = 0,
-		}
-	}
-	-- https://github.com/kevinhwang91/nvim-bqf/issues/35#issuecomment-1107697457
-	-- vim.api.nvim_feedkeys([['"]], "im", false)
-end
-
 function config.dressing()
 	require("dressing").setup({
 		input = {
@@ -145,7 +135,7 @@ function config.dashboard()
 					vim.version().major,
 					vim.version().minor,
 					vim.version().patch,
-					vim.version().prerelease == true and "-dev" or ""
+					vim.version().prerelease == "dev" and "-dev" or ""
 				),
 				"",
 				"",
@@ -291,65 +281,32 @@ function config.nvim_tree()
 	-- https://github.com/nvim-tree/nvim-tree.lua/pull/603
 	-- https://github.com/nvim-tree/nvim-tree.lua/issues/674
 	require("nvim-tree").setup {
-		update_cwd = true,
-		update_focused_file = {
-			enable = true,
-			update_cwd = false
-		},
 		renderer = {
 			indent_markers = {
 				enable = true,
-				icons = {
-					corner = "└",
-					edge = "│",
-					item = "│",
-					none = " ",
-				},
 			},
 			icons = {
 				show = {
-					file = true,
-					folder = true,
 					folder_arrow = false,
-					git = true,
 				},
 				glyphs = {
 					git = {
-						unstaged = "✗",
-						staged = "✓",
-						unmerged = "",
 						-- renamed = "➜",
+						-- deleted = "",
 						renamed = "≫",
-						untracked = "★",
 						deleted = "≠",
-						ignored = "◌"
 					},
 				}
 			},
 			special_files = {}
-		},
-		diagnostics = {
-			enable = false,
-			show_on_dirs = false,
-			icons = {
-				hint = "",
-				info = "",
-				warning = "",
-				error = ""
-			}
 		},
 		filters = {
 			git_ignored = false,
 			dotfiles = true
 		},
 		actions = {
-			change_dir = {
-				enable = true,
-				global = false
-			},
 			open_file = {
 				quit_on_open = true,
-				resize_window = true,
 			},
 		},
 		view = {
@@ -373,23 +330,6 @@ function config.neo_tree()
 	vim.cmd([[nnoremap ff :Neotree reveal<cr>]])
 end
 
-function config.galaxyline()
-	require("modules.ui.eviline")
-end
-
-function config.feline_nvim()
-	if vim.g.color_theme == vim.g.color_theme_dark then
-		vim.cmd [[ hi StatusLineNC guibg=#696157 gui=none ]]
-	else
-		vim.cmd [[ hi StatusLineNC guibg=#fce5cd gui=none ]]
-	end
-	require("modules.ui.statusline.layout")
-end
-
-function config.whiskyline()
-	require("whiskyline").setup()
-end
-
 function config.bufferline()
 	-- https://github.com/akinsho/bufferline.nvim#configuration
 	require("bufferline").setup {
@@ -409,67 +349,27 @@ function config.bufferline()
 	end
 end
 
-function config.vim_gitgutter()
-	vim.g.gitgutter_diff_args = '-w'
-
-	vim.g.gitgutter_sign_allow_clobber = 0
-	vim.g.gitgutter_map_keys = 0
-	vim.g.gitgutter_override_sign_column_highlight = 0
-	vim.g.gitgutter_preview_win_floating = 1
-	vim.g.gitgutter_sign_added = '▎'
-	vim.g.gitgutter_sign_modified = '░'
-	vim.g.gitgutter_sign_removed = '▏'
-	vim.g.gitgutter_sign_removed_first_line = '▔'
-	vim.g.gitgutter_sign_modified_removed = '▒'
-
-	-- -- 有时会出现git左侧状态栏不准确的问题 使用该命令可以强制刷新
-	-- nmap <silent> <leader>ll :GitGutterAll<CR>
-	-- nnoremap <leader>gf :GitGutterFold<CR>
-	-- -- nnoremap H :GitGutterPreviewHunk<CR>
-	-- -- nnoremap <leader>g- :GitGutterPrevHunk<CR>
-	-- -- nnoremap <leader>g= :GitGutterNextHunk<CR>
-
-	-- 有时会出现git左侧状态栏不准确的问题 使用该命令可以强制刷新
-	vim.api.nvim_set_keymap("n", "<leader>ll", ":GitGutterAll<CR>", { silent = true })
-	vim.api.nvim_set_keymap("n", "<leader>gf", ":GitGutterFold<CR>", { noremap = true })
+function config.feline_nvim()
+	if vim.g.color_theme == vim.g.color_theme_dark then
+		vim.cmd [[ hi StatusLineNC guibg=#696157 gui=none ]]
+	else
+		vim.cmd [[ hi StatusLineNC guibg=#fce5cd gui=none ]]
+	end
+	require("modules.ui.statusline.layout")
 end
 
 function config.gitsigns_nvim()
 	-- https://github.com/lewis6991/gitsigns.nvim/issues/430
 	vim.cmd [[ highlight gitsignscurrentlineblame guibg=None guifg=#756969]]
 
-	require('gitsigns').setup({
+	require("gitsigns").setup({
 		signs = {
-			add = {
-				hl = 'GitSignsAdd',
-				text = '│',
-				numhl = 'GitSignsAddNr',
-				linehl = 'GitSignsAddLn'
-			},
-			change = {
-				hl = 'GitSignsChange',
-				text = '▒',
-				numhl = 'GitSignsChangeNr',
-				linehl = 'GitSignsChangeLn'
-			},
-			delete = {
-				hl = 'GitSignsDelete',
-				text = '_',
-				numhl = 'GitSignsDeleteNr',
-				linehl = 'GitSignsDeleteLn'
-			},
-			topdelete = {
-				hl = 'GitSignsDelete',
-				text = '‾',
-				numhl = 'GitSignsDeleteNr',
-				linehl = 'GitSignsDeleteLn'
-			},
-			changedelete = {
-				hl = 'GitSignsChange',
-				text = '░',
-				numhl = 'GitSignsChangeNr',
-				linehl = 'GitSignsChangeLn'
-			}
+			-- add          = { text = '│' },
+			change       = { text = '▒' },
+			-- delete       = { text = '_' },
+			-- topdelete    = { text = '‾' },
+			changedelete = { text = '░' },
+			-- untracked    = { text = '┆' },
 		},
 		current_line_blame = true,
 		current_line_blame_opts = {
@@ -478,9 +378,6 @@ function config.gitsigns_nvim()
 			delay = 0,
 			ignore_whitespace = true
 		},
-		current_line_blame_formatter_opts = {
-			relative_time = true
-		}
 	})
 end
 
@@ -501,16 +398,6 @@ function config.toggleterm()
 	})
 
 	-- 在终端中，你可以按下<C-\><C-n>（也就是按下Ctrl+\然后按下Ctrl+n）来进入正常模式
-end
-
-function config.vim_floaterm()
-	vim.g.floaterm_title = "zsh $1/$2"
-	vim.g.floaterm_autoclose = 1
-	vim.g.floaterm_width = 0.8
-	vim.g.floaterm_height = 0.8
-
-	vim.api.nvim_set_keymap("n", "<F3>", ":FloatermToggle<CR>", { noremap = true })
-	vim.api.nvim_set_keymap("t", "<F3>", "<C-\\><C-n>:FloatermToggle<CR>", { noremap = true })
 end
 
 function config.nvim_notify()
@@ -535,28 +422,6 @@ function config.nvim_notify()
 	end
 
 	vim.api.nvim_set_keymap("n", "<leader>s", "<cmd>lua save_file_with_notify()<cr>", { noremap = true, silent = true })
-end
-
--- function config.indentmini()
---     require("indentmini").setup({
---         char = "|",
---     })
--- end
-
-function config.rainbow()
-	vim.g.rainbow_active = 1 -- set to 0 if you want to enable it later via :RainbowToggle
-
-	-- 使用 vim-devicons 之后文件见有中括号
-	-- https://github.com/ryanoasis/vim-devicons/issues/274#issuecomment-513560707
-	vim.g.rainbow_conf = {
-		separately = {
-			nerdtree = 0
-		}
-	}
-end
-
-function config.beacon()
-	vim.cmd [[ highlight Beacon guibg=blue ctermbg=15 ]]
 end
 
 function config.which_key()

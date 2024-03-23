@@ -36,7 +36,11 @@ package({
 package({
 	"kevinhwang91/nvim-bqf",
 	ft = "qf",
-	config = conf.nvim_bqf,
+	opts = {
+		preview = {
+			winblend = 0,
+		}
+	},
 })
 
 package({
@@ -89,40 +93,17 @@ package({
 
 -- package({"nvim-lualine/lualine.nvim"})
 package({
-	-- "feline-nvim/feline.nvim",
 	"freddiehaddad/feline.nvim",
 	event = "BufReadPre",
 	dependencies = "nvim-tree/nvim-web-devicons",
-	enabled = vim.g.completion_with_lsp,
 	config = conf.feline_nvim,
-})
--- package({
---     "nvimdev/whiskyline.nvim",
---     dependencies = { "nvim-tree/nvim-web-devicons" },
---     enabled = vim.g.completion_with_lsp,
---     config = conf.whiskyline,
--- })
-
--- package({"windwp/windline.nvim"})
-package({
-	"nvimdev/galaxyline.nvim",
-	branch = "main",
-	enabled = not vim.g.completion_with_lsp,
-	config = conf.galaxyline,
 })
 
 -- Git
 -- package({"tpope/vim-fugitive"})
 package({
-	"airblade/vim-gitgutter",
-	config = conf.vim_gitgutter,
-	enabled = not vim.g.completion_with_lsp,
-})
-
-package({
 	"lewis6991/gitsigns.nvim",
 	event = "BufReadPre",
-	enabled = vim.g.completion_with_lsp,
 	config = conf.gitsigns_nvim,
 })
 
@@ -136,12 +117,6 @@ package({
 	end,
 	config = conf.toggleterm
 })
--- package({
---     "voldikss/vim-floaterm",
---     event = "BufRead",
---     cmd = { "FloatermToggle" },
---     config = conf.vim_floaterm,
--- })
 
 -- notify
 package({
@@ -205,18 +180,6 @@ package({
 		})
 	end,
 })
-
--- parentheses improved
--- package({
---     "luochen1990/rainbow",
---     event = "BufRead",
---     config = conf.rainbow,
--- })
-
--- package({
---     "danilamihailov/beacon.nvim",
---     config = conf.beacon,
--- })
 
 -- package({
 --     "folke/which-key.nvim",

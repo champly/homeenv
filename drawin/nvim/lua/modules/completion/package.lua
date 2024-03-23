@@ -4,7 +4,6 @@ local conf = require("modules.completion.config")
 package({
 	"neovim/nvim-lspconfig",
 	-- event = "BufRead",
-	enabled = vim.g.completion_with_lsp,
 	dependencies = {
 		"telescope.nvim",
 	},
@@ -16,7 +15,6 @@ package({
 package({
 	"hrsh7th/nvim-cmp",
 	event = "InsertEnter",
-	enabled = vim.g.completion_with_lsp,
 	config = conf.nvim_cmp,
 	dependencies = {
 		"onsails/lspkind.nvim",
@@ -34,7 +32,6 @@ package({
 	event = "InsertCharPre",
 	-- version = "<CurrentMajor>.*",
 	build = "make install_jsregexp",
-	enabled = vim.g.completion_with_lsp,
 	dependencies = {
 		"saadparwaiz1/cmp_luasnip",
 	},
@@ -53,23 +50,21 @@ package({
 	end
 })
 
-package({
-	"nvimdev/lspsaga.nvim",
-	event = "LspAttach",
-	dependencies = {
-		{ "nvim-tree/nvim-web-devicons" },
-		-- Please make sure you install markdown and markdown_inline parser
-		{ "nvim-treesitter/nvim-treesitter" }
-	},
-	enabled = vim.g.completion_with_lsp and false,
-	config = conf.lspsaga_nvim
-})
+-- package({
+--     "nvimdev/lspsaga.nvim",
+--     event = "LspAttach",
+--     dependencies = {
+--         { "nvim-tree/nvim-web-devicons" },
+--         -- Please make sure you install markdown and markdown_inline parser
+--         { "nvim-treesitter/nvim-treesitter" }
+--     },
+--     config = conf.lspsaga_nvim
+-- })
 
 package({
 	"ray-x/lsp_signature.nvim",
 	event = "InsertCharPre",
 	dependencies = "nvim-lspconfig",
-	enabled = vim.g.completion_with_lsp,
 	config = conf.lsp_signature,
 })
 
@@ -81,12 +76,3 @@ package({
 --         require("neodev").setup({})
 --     end
 -- })
-
--- code-completion engine
-package({
-	"neoclide/coc.nvim",
-	event = "BufRead",
-	branch = "release",
-	enabled = not vim.g.completion_with_lsp,
-	config = conf.nvim_coc,
-})

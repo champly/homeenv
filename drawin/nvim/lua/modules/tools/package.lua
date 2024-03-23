@@ -84,10 +84,8 @@ package({
 
 -- symbols outline
 package({
-	-- "simrat39/symbols-outline.nvim",
 	"hedyhli/outline.nvim",
 	event = "BufRead",
-	enabled = vim.g.completion_with_lsp,
 	config = conf.outline_nvim,
 })
 
@@ -201,24 +199,6 @@ package({
 		end)
 	end,
 })
-
--- -- format
--- package({
---     "nvimtools/none-ls.nvim",
---     opts = function(_, opts)
---         local nls = require("null-ls")
---         opts.sources = opts.sources or {}
---         table.insert(
---             opts.sources,
---             nls.builtins.formatting.biome.with({
---                 extra_args = {
---                     "--config-path",
---                     vim.fn.stdpath("config") .. "/external/format",
---                 }
---             })
---         )
---     end,
--- })
 
 package({
 	"stevearc/conform.nvim",

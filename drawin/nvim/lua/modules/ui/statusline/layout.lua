@@ -16,7 +16,6 @@ local components = {
 
 table.insert(components.active, {})
 table.insert(components.active, {})
-table.insert(components.active, {})
 
 table.insert(components.active[1], {
 	provider = "",
@@ -170,39 +169,7 @@ table.insert(components.active[1], {
 	},
 })
 
--- table.insert(components.active[2], {
---     provider = config.get_diagnostic_info,
---     hl = {
---         fg = config.colors.orange,
---         bg = color.statusline_bg,
---     }
--- })
-
--- table.insert(components.active[2], {
---     provider = function()
---         local Lsp = vim.lsp.status()[1]
-
---         if vim.o.columns < 120 or not Lsp then
---             return ""
---         end
-
---         local msg = Lsp.message or ""
---         local percentage = Lsp.percentage or 0
---         local title = Lsp.title or ""
---         local spinners = { "🌖", "🌗", "🌘", "🌑", "🌒", "🌓", "🌔" }
---         -- local spinners = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
---         ---@diagnostic disable-next-line: undefined-field
---         local ms = vim.uv.hrtime() / 1000000
---         local frame = math.floor(ms / 120) % #spinners
---         return string.format(" %%<%s %s %s (%s%%%%) ", spinners[frame + 1], title, msg, percentage)
---     end,
---     enabled = shortline or function(winid)
---         return vim.api.nvim_win_get_width(tonumber(winid) or 0) > 80
---     end,
---     hl = { fg = config.colors.orange },
--- })
-
-table.insert(components.active[3], {
+table.insert(components.active[2], {
 	provider = function()
 		if next(vim.lsp.get_clients()) ~= nil then
 			local clients = {}
@@ -221,7 +188,7 @@ table.insert(components.active[3], {
 	hl = { fg = config.colors.grey_fg2, bg = color.statusline_bg },
 })
 
-table.insert(components.active[3], {
+table.insert(components.active[2], {
 	provider = "git_diff_added",
 	hl = {
 		fg = config.colors.grey_fg2,
@@ -231,7 +198,7 @@ table.insert(components.active[3], {
 })
 
 -- diffModfified
-table.insert(components.active[3], {
+table.insert(components.active[2], {
 	provider = "git_diff_changed",
 	hl = {
 		fg = config.colors.grey_fg2,
@@ -240,7 +207,7 @@ table.insert(components.active[3], {
 	icon = "  ",
 })
 -- diffRemove
-table.insert(components.active[3], {
+table.insert(components.active[2], {
 	provider = "git_diff_removed",
 	hl = {
 		fg = config.colors.grey_fg2,
@@ -249,7 +216,7 @@ table.insert(components.active[3], {
 	icon = "  ",
 })
 
-table.insert(components.active[3], {
+table.insert(components.active[2], {
 	provider = statusline_style.left,
 	enabled = shortline or function(winid)
 		return vim.api.nvim_win_get_width(tonumber(winid) or 0) > 90
@@ -260,7 +227,7 @@ table.insert(components.active[3], {
 	},
 })
 
-table.insert(components.active[3], {
+table.insert(components.active[2], {
 	provider = statusline_style.left,
 	enabled = shortline or function(winid)
 		return vim.api.nvim_win_get_width(tonumber(winid) or 0) > 90
@@ -271,7 +238,7 @@ table.insert(components.active[3], {
 	},
 })
 
-table.insert(components.active[3], {
+table.insert(components.active[2], {
 	provider = statusline_style.position_icon,
 	enabled = shortline or function(winid)
 		return vim.api.nvim_win_get_width(tonumber(winid) or 0) > 90
@@ -282,7 +249,7 @@ table.insert(components.active[3], {
 	},
 })
 
-table.insert(components.active[3], {
+table.insert(components.active[2], {
 	provider = function()
 		local current_line = vim.fn.line "."
 		local total_line = vim.fn.line "$"
@@ -304,7 +271,7 @@ table.insert(components.active[3], {
 	},
 })
 
-table.insert(components.active[3], {
+table.insert(components.active[2], {
 	provider = statusline_style.left,
 	enabled = shortline or function(winid)
 		return vim.api.nvim_win_get_width(tonumber(winid) or 0) > 90
@@ -315,7 +282,7 @@ table.insert(components.active[3], {
 	},
 })
 
-table.insert(components.active[3], {
+table.insert(components.active[2], {
 	provider = config.get_system_info(),
 	enabled = shortline or function(winid)
 		return vim.api.nvim_win_get_width(tonumber(winid) or 0) > 90
