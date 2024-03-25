@@ -300,6 +300,9 @@ function config.nvim_tree()
 			},
 			special_files = {}
 		},
+		update_focused_file = {
+			enable = true
+		},
 		filters = {
 			git_ignored = false,
 			dotfiles = true
@@ -363,7 +366,7 @@ function config.gitsigns_nvim()
 	vim.cmd [[ highlight gitsignscurrentlineblame guibg=None guifg=#756969]]
 
 	require("gitsigns").setup({
-		signs = {
+		signs                   = {
 			-- add          = { text = '│' },
 			change       = { text = '▒' },
 			-- delete       = { text = '_' },
@@ -371,7 +374,7 @@ function config.gitsigns_nvim()
 			changedelete = { text = '░' },
 			-- untracked    = { text = '┆' },
 		},
-		current_line_blame = true,
+		current_line_blame      = true,
 		current_line_blame_opts = {
 			virt_text = true,
 			virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
