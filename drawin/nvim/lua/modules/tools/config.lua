@@ -112,8 +112,8 @@ function config.outline_nvim()
 			wrap = true,
 		},
 	})
-	vim.api.nvim_set_keymap("n", "<space>o", ":Outline<CR>", { noremap = true, silent = true })
-	vim.cmd [[ hi FocusedSymbol gui=bold guifg=#C678DD ]]
+	vim.api.nvim_set_keymap("n", "<space>o", ":Outline<cr>", { noremap = true, silent = true })
+	vim.cmd [[ hi OutlineCurrent gui=bold guifg=blue ]]
 end
 
 function config.nvim_dap()
