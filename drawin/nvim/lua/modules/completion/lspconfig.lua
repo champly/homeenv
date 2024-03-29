@@ -129,10 +129,9 @@ local enhance_attach = function(client, bufnr)
 		}
 	}, bufnr)
 
-	-- inlay hints neovim >= 0.10
-	if vim.lsp.buf.inlay_hint then
+	if vim.lsp.inlay_hint then
 		if client.server_capabilities.inlayHintProvider then
-			vim.lsp.buf.inlay_hint(bufnr, true)
+			vim.lsp.inlay_hint.enable(bufnr, true)
 		end
 	end
 end
@@ -194,15 +193,15 @@ lspconfig.gopls.setup {
 			-- ["local"] = "github.com/champly",
 			allowImplicitNetworkAccess = true,
 			-- https://github.com/golang/tools/blob/master/gopls/doc/inlayHints.md
-			hints = {
-				assignVariableTypes = true,
-				compositeLiteralFields = true,
-				compositeLiteralTypes = true,
-				constantValues = true,
-				functionTypeParameters = true,
-				parameterNames = true,
-				rangeVariableTypes = true,
-			},
+			-- hints = {
+			--     assignVariableTypes = true,
+			--     compositeLiteralFields = true,
+			--     compositeLiteralTypes = true,
+			--     constantValues = true,
+			--     functionTypeParameters = true,
+			--     parameterNames = true,
+			--     rangeVariableTypes = true,
+			-- },
 		}
 	},
 	on_attach = enhance_attach,
