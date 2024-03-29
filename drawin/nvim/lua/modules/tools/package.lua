@@ -182,7 +182,9 @@ package({
 		ensure_installed = {
 			"codelldb",
 			"biome",
-			"prettier"
+			"prettier",
+			"lua-language-server",
+			"clangd",
 		},
 	},
 	config = function(_, opts)
