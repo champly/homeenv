@@ -131,7 +131,7 @@ local enhance_attach = function(client, bufnr)
 
 	if vim.lsp.inlay_hint then
 		if client.server_capabilities.inlayHintProvider then
-			vim.lsp.inlay_hint.enable(bufnr, true)
+			vim.lsp.inlay_hint.enable(true)
 		end
 	end
 end

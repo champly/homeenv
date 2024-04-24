@@ -67,6 +67,9 @@ package({
 	event = "VeryLazy",
 	opts = {
 		modes = {
+			search = {
+				enable = false,
+			},
 			char = {
 				jump_labels = true
 			}
@@ -236,6 +239,27 @@ package({
 		end
 		require("conform").setup(opts)
 	end
+})
+
+package({
+	"epwalsh/obsidian.nvim",
+	version = "*",
+	lazy = true,
+	ft = "markdown",
+	dependencies = {
+		"nvim-lua/plenary.nvim",
+	},
+	opts = {
+		workspaces = {
+			{
+				name = "icloud",
+				path = "~/Library/Mobile Documents/com~apple~CloudDocs/notebook",
+			},
+		},
+		daily_notes = {
+			folder = "Daily/tx"
+		}
+	},
 })
 
 -- -- TODO: config this plugin with keymaps

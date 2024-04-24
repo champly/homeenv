@@ -338,7 +338,7 @@ function config.bufferline()
 	require("bufferline").setup {
 		options = {
 			numbers = function(opts)
-				return string.format('%s.', opts.ordinal)
+				return string.format("%s.", opts.ordinal)
 			end,
 			modified_icon = "✥",
 			buffer_close_icon = "",
@@ -346,7 +346,7 @@ function config.bufferline()
 		}
 	}
 
-	local cmd = "nnoremap <silent><leader>%d <Cmd>BufferLineGoToBuffer %d<CR>"
+	local cmd = "nnoremap <silent><leader>%d <cmd>lua require('bufferline').go_to(%d, true)<cr>"
 	for i = 1, 9, 1 do
 		vim.cmd(string.format(cmd, i, i))
 	end
