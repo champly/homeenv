@@ -38,17 +38,18 @@ package({
 	config = conf.lua_snip
 })
 
--- winbar use LSP to show your current code context.
-package({
-	"SmiteshP/nvim-navic",
-	event = "BufRead",
-	dependencies = "neovim/nvim-lspconfig",
-	config = function()
-		require("nvim-navic").setup {
-			highlight = true,
-		}
-	end
-})
+-- -- winbar use LSP to show your current code context.
+-- package({
+--     "SmiteshP/nvim-navic",
+--     event = "BufRead",
+--     dependencies = "neovim/nvim-lspconfig",
+--     config = function()
+--         require("nvim-navic").setup {
+--             highlight = true,
+--         }
+--         vim.o.winbar = "%{%v:lua.require('nvim-navic').get_location()%}"
+--     end
+-- })
 
 -- package({
 --     "nvimdev/lspsaga.nvim",

@@ -89,10 +89,10 @@ local enhance_attach = function(client, bufnr)
 		end
 	end
 
-	-- winbar use LSP to show your current code context.
-	if client.server_capabilities.documentSymbolProvider then
-		require("nvim-navic").attach(client, bufnr)
-	end
+	-- -- winbar use LSP to show your current code context.
+	-- if client.server_capabilities.documentSymbolProvider then
+	--     require("nvim-navic").attach(client, bufnr)
+	-- end
 
 	-- Set autocommands conditional on server_capabilities
 	if client.server_capabilities.documentHighlightProvider then

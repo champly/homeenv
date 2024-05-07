@@ -1,7 +1,6 @@
 local config = require("modules.ui.statusline.config")
 local lsp = require "feline.providers.lsp"
 local lsp_severity = vim.diagnostic.severity
-local navic = require("nvim-navic")
 
 local statusline_style = config.icon_styles["round"]
 local color = config.theme_color[vim.g.color_theme]
@@ -140,26 +139,6 @@ table.insert(components.active[1], {
 			bg = color.lightbg2,
 		}
 	end,
-	right_sep = {
-		str = statusline_style.right,
-		hl = {
-			fg = color.lightbg2,
-			bg = color.statusline_bg
-		}
-	},
-})
-
-table.insert(components.active[1], {
-	provider = function()
-		return navic.get_location()
-	end,
-	enabled = function()
-		return navic.is_available()
-	end,
-	hl = {
-		fg = config.colors.white,
-		bg = color.lightbg2,
-	},
 	right_sep = {
 		str = statusline_style.right,
 		hl = {
