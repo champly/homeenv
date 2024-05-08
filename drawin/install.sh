@@ -73,7 +73,8 @@ brew install binutils
 
 # ranger
 # pip3 install ranger-fm
-brew install ranger
+# brew install ranger
+brew install yazi
 brew install atool
 brew install highlight
 brew install jq
