@@ -249,6 +249,7 @@ package({
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 	},
+	enabled = vim.uv.os_uname().sysname == "Darwin",
 	opts = {
 		workspaces = {
 			{
