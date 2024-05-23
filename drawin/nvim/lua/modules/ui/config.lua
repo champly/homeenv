@@ -38,6 +38,13 @@ function config.telescope()
 				scroll_speed = 6,
 			},
 			dynamic_preview_title = true,
+			-- default mapping: https://github.com/nvim-telescope/telescope.nvim/blob/master/lua/telescope/mappings.lua#L133
+			mappings = {
+				i = {
+					["<C-j>"] = "preview_scrolling_left",
+					["<C-f>"] = { "<Right>", type = "command" },
+				},
+			},
 		},
 		extensions = {
 			fzy_native = {
@@ -49,8 +56,6 @@ function config.telescope()
 			}
 		}
 	})
-
-	-- default mapping: https://github.com/nvim-telescope/telescope.nvim/blob/master/lua/telescope/mappings.lua#L133
 
 	require("telescope").load_extension("fzy_native")
 	require("telescope").load_extension("gosource")

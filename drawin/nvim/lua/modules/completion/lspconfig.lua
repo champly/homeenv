@@ -22,26 +22,6 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 	}
 )
 
--- https://neovim.io/doc/user/lsp.html#lsp-handler
--- vim.lsp.handlers["textDocument/hover"] = function(err, result, ctx, config)
---     config = config or { border = "rounded", focusable = true }
---     config.focus_id = ctx.method
---     if not (result and result.contents) then
---         return
---     end
-
---     local markdown_lines = vim.lsp.util.convert_input_to_markdown_lines(result.contents.value)
---     markdown_lines = vim.tbl_filter(function(line)
---         return line ~= ""
---     end, markdown_lines)
-
---     if vim.tbl_isempty(markdown_lines) then
---         return
---     end
-
---     return vim.lsp.util.open_floating_preview(markdown_lines, "markdown", config)
--- end
-
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 for type, icon in pairs(signs) do
 	local hl = "DiagnosticSign" .. type
@@ -88,11 +68,6 @@ local enhance_attach = function(client, bufnr)
 			})
 		end
 	end
-
-	-- -- winbar use LSP to show your current code context.
-	-- if client.server_capabilities.documentSymbolProvider then
-	--     require("nvim-navic").attach(client, bufnr)
-	-- end
 
 	-- Set autocommands conditional on server_capabilities
 	if client.server_capabilities.documentHighlightProvider then
