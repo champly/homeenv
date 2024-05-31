@@ -263,15 +263,22 @@ package({
 	},
 })
 
--- -- TODO: config this plugin with keymaps
--- package({
---     "sindrets/diffview.nvim",
---     cmd = {
---         "DiffviewOpen",
---         "DiffviewFileHistory",
---     },
--- })
+package({
+	"sindrets/diffview.nvim",
+	cmd = {
+		"DiffviewOpen",
+		"DiffviewFileHistory",
+	},
+	opts = {
+		view = {
+			merge_tool = {
+				layout = "diff3_mixed",
+			}
+		}
+	}
+})
 
+-- -- -- TODO: config this plugin with keymaps
 -- package({
 --     "folke/todo-comments.nvim",
 --     dependencies = { "nvim-lua/plenary.nvim" },

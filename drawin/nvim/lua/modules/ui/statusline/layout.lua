@@ -83,7 +83,7 @@ table.insert(components.active[1], {
 		fg = config.colors.grey_fg2,
 		bg = color.lightbg,
 	},
-	icon = "  ",
+	icon = " 󰘬 ",
 	right_sep = {
 		str = statusline_style.right,
 		hl = {
