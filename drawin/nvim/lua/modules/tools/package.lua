@@ -210,8 +210,8 @@ package({
 	config = function()
 		local opts = {
 			formatters_by_ft = {
-				["json"] = { "prettier" },
-				["jsonc"] = { "prettier" },
+				["json"] = { "biome" },
+				["jsonc"] = { "biome" },
 				["markdown"] = { "prettier" },
 				["markdown.mdx"] = { "prettier" },
 				["yaml"] = { "prettier" },
@@ -222,21 +222,17 @@ package({
 			}
 		}
 
-		if vim.uv.os_uname().sysname == "Darwin" then
-			opts.formatters = {
-				biome = {
-					args = {
-						"format",
-						"--stdin-file-path",
-						"$FILENAME",
-						"--config-path",
-						vim.fn.stdpath("config") .. "/external/format",
-					},
-				}
+		opts.formatters = {
+			biome = {
+				args = {
+					"format",
+					"--stdin-file-path",
+					"$FILENAME",
+					"--config-path",
+					vim.fn.stdpath("config") .. "/external/format",
+				},
 			}
-			opts.formatters_by_ft["json"] = { "biome" }
-			opts.formatters_by_ft["jsonc"] = { "biome" }
-		end
+		}
 		require("conform").setup(opts)
 	end
 })
