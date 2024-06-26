@@ -44,6 +44,20 @@ function config.markdown_preview_nvim_setup()
 	vim.g.table_mode_cell_text_object_i_map = "k<Bar>"
 end
 
+function config.headlines_nvim()
+	-- vim.cmd [[highlight Headline1 guibg=#1e2718]]
+	-- vim.cmd [[highlight Headline2 guibg=#21262d]]
+	-- vim.cmd [[highlight CodeBlock guibg=#1c1c1c]]
+	-- vim.cmd [[highlight Dash guibg=#D19A66 gui=bold]]
+
+	require("headlines").setup({
+		markdown = {
+			fat_headline_lower_string = "▀",
+			-- headline_highlights = { "Headline1", "Headline2" },
+		},
+	})
+end
+
 function config.undotree()
 	-- nnoremap <Leader>u :UndotreeToggle<CR>
 	vim.api.nvim_set_keymap("n", "<leader>u", ":UndotreeToggle<cr>", { noremap = true })

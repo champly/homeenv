@@ -60,6 +60,7 @@ vim.opt.expandtab             = false -- 选项把插入的 tab 字符替换成�
 
 vim.o.timeoutlen              = 300   --毫秒计的等待映射的键序列完成的时间
 vim.o.maxmempattern           = 5000  -- maxmempattern规定了vim做字符串匹配时使用的最大内存，不是由每行字符数决定的。
+vim.o.conceallevel            = 2
 
 if vim.uv.os_uname().sysname == "Darwin" then
 	vim.g.clipboard = {

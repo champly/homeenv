@@ -20,6 +20,13 @@ package({
 	}
 })
 
+package({
+	"lukas-reineke/headlines.nvim",
+	dependencies = "nvim-treesitter/nvim-treesitter",
+	ft = { "markdown" },
+	config = conf.headlines_nvim,
+})
+
 -- annotate plugin: https://github.com/preservim/nerdcommenter#settings
 package({
 	"preservim/nerdcommenter",
