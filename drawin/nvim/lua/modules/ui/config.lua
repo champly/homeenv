@@ -324,6 +324,8 @@ function config.nvim_tree()
 		},
 		on_attach = on_attach,
 	}
+
+	vim.cmd [[ hi NvimTreeFolderIcon guifg=#DAA520 ]]
 end
 
 function config.neo_tree()
