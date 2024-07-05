@@ -195,6 +195,7 @@ package({
 			"prettier",
 			"lua-language-server",
 			"clangd",
+			"yamlfmt",
 		},
 	},
 	config = function(_, opts)
