@@ -221,7 +221,7 @@ package({
 				["jsonc"] = { "biome" },
 				["markdown"] = { "prettier" },
 				["markdown.mdx"] = { "prettier" },
-				["yaml"] = { "prettier" },
+				["yaml"] = { "yamlfmt" },
 			},
 			format_on_save = {
 				timeout_ms = 2000,
