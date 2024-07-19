@@ -232,9 +232,9 @@ package({
 				timeout_ms = 2000,
 				lsp_fallback = true,
 			},
-			format_after_save = {
-				lsp_format = "never",
-			}
+			-- format_after_save = {
+			--     lsp_format = "never",
+			-- }
 		}
 
 		opts.formatters = {
