@@ -220,6 +220,13 @@ package({
 	"stevearc/conform.nvim",
 	config = function()
 		local opts = {
+			format_on_save = {
+				timeout_ms = 2000,
+				lsp_fallback = true,
+			},
+			format_after_save = {
+				lsp_format = "never",
+			},
 			formatters_by_ft = {
 				["go"] = { "goimports", "gofmt" },
 				["json"] = { "biome" },
@@ -228,24 +235,16 @@ package({
 				["markdown.mdx"] = { "prettier" },
 				["yaml"] = { "yamlfmt" },
 			},
-			format_on_save = {
-				timeout_ms = 2000,
-				lsp_fallback = true,
-			},
-			-- format_after_save = {
-			--     lsp_format = "never",
-			-- }
-		}
-
-		opts.formatters = {
-			biome = {
-				args = {
-					"format",
-					"--stdin-file-path",
-					"$FILENAME",
-					"--config-path",
-					vim.fn.stdpath("config") .. "/external/format",
-				},
+			formatters = {
+				biome = {
+					args = {
+						"format",
+						"--stdin-file-path",
+						"$FILENAME",
+						"--config-path",
+						vim.fn.stdpath("config") .. "/external/format",
+					},
+				}
 			}
 		}
 		require("conform").setup(opts)
