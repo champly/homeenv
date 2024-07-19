@@ -21,10 +21,12 @@ package({
 })
 
 package({
-	"lukas-reineke/headlines.nvim",
-	dependencies = "nvim-treesitter/nvim-treesitter",
+	"OXY2DEV/markview.nvim",
+	dependencies = {
+		"nvim-treesitter/nvim-treesitter",
+		"nvim-tree/nvim-web-devicons"
+	},
 	ft = { "markdown" },
-	config = conf.headlines_nvim,
 })
 
 -- annotate plugin: https://github.com/preservim/nerdcommenter#settings
@@ -218,6 +220,7 @@ package({
 	config = function()
 		local opts = {
 			formatters_by_ft = {
+				["go"] = { "goimports", "gofmt" },
 				["json"] = { "biome" },
 				["jsonc"] = { "biome" },
 				["markdown"] = { "prettier" },
@@ -227,6 +230,9 @@ package({
 			format_on_save = {
 				timeout_ms = 2000,
 				lsp_fallback = true,
+			},
+			format_after_save = {
+				lsp_format = "never",
 			}
 		}
 
