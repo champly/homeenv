@@ -198,6 +198,7 @@ package({
 			"lua-language-server",
 			"clangd",
 			"yamlfmt",
+			"goimports",
 		},
 	},
 	config = function(_, opts)
