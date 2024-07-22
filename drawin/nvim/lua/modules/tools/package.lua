@@ -199,6 +199,7 @@ package({
 			"clangd",
 			"yamlfmt",
 			"goimports",
+			"gofumpt",
 		},
 	},
 	config = function(_, opts)
@@ -228,7 +229,7 @@ package({
 				lsp_format = "never",
 			},
 			formatters_by_ft = {
-				["go"] = { "goimports", "gofmt" },
+				["go"] = { "goimports", "gofumpt" },
 				["json"] = { "biome" },
 				["jsonc"] = { "biome" },
 				["markdown"] = { "prettier" },
