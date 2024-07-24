@@ -140,7 +140,7 @@ function config.dashboard()
 					vim.version().major,
 					vim.version().minor,
 					vim.version().patch,
-					vim.version().prerelease == "dev" and "-dev" or ""
+					vim.version().api_prerelease and "-dev" or ""
 				),
 				"",
 				"",
