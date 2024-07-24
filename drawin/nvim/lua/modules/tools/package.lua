@@ -200,6 +200,7 @@ package({
 			"yamlfmt",
 			"goimports",
 			"gofumpt",
+			"taplo",
 		},
 	},
 	config = function(_, opts)
@@ -235,6 +236,7 @@ package({
 				["markdown"] = { "prettier" },
 				["markdown.mdx"] = { "prettier" },
 				["yaml"] = { "yamlfmt" },
+				["toml"] = { "taplo" },
 			},
 			formatters = {
 				biome = {
