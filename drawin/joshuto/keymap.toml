@@ -140,6 +140,7 @@ keymap = [
   # custom command
   { keys = ["o", "z"], commands = ["shell zsh"] },
   { keys = ["o", "n"], commands = ["shell nvim"] },
+  { keys = ["o", "g"], commands = ["shell gitui"] },
 ]
 
 [task_view]
