@@ -8,10 +8,7 @@ xdg_open = false
 xdg_open_fork = false
 case_insensitive_ext = false
 
-custom_commands = [
-  { name = "cd1", command = "echo '%text'" },
-  { name = "cd2", command = "echo %s" },
-]
+custom_commands = []
 
 [display]
 # default, hsplit
@@ -26,7 +23,7 @@ show_borders = true
 show_hidden = false
 show_icons = true
 # none, absolute, relative
-line_number_style = "relative"
+line_number_style = "none"
 
 # size, mtime, user, gourp, perm. can be combined with |.
 # `none` to disable, `all` to enable all
@@ -41,7 +38,7 @@ directories_first = true
 reverse = false
 
 [preview]
-max_preview_size = 10485760                          # 2MB
+max_preview_size = 10485760                          # 10MB
 preview_script = "~/.config/joshuto/preview_file.sh" # make sure it's marked as executable
 xdg_thumb_size = "xlarge"
 

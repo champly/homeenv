@@ -138,8 +138,8 @@ keymap = [
   { keys = ["g", "s", "K"], commands = ["cd ~/go/src/k8s.io"] },
 
   # custom command
-  { keys = ["P"], commands = ["terminal"] },
-  { keys = ["O"], commands = ["shell echo %s"] },
+  { keys = ["o", "z"], commands = ["shell zsh"] },
+  { keys = ["o", "n"], commands = ["shell nvim"] },
 ]
 
 [task_view]
