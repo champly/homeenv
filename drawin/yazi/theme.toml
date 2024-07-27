@@ -55,10 +55,10 @@ syntect_theme = ""
 [status]
 separator_open = ""
 separator_close = ""
-separator_style = { fg = "gray", bg = "gray" }
+separator_style = { fg = "darkgray", bg = "darkgray" }
 
 # Mode
-mode_normal = { bg = "blue", bold = true }
+mode_normal = { bg = "lightblue", bold = true }
 mode_select = { bg = "red", bold = true }
 mode_unset = { bg = "red", bold = true }
 
@@ -195,7 +195,7 @@ rules = [
 
   # Fallback
   # { name = "*", fg = "white" },
-  { name = "*/", fg = "lightblue" },
+  { name = "*/", bold = true, fg = "lightblue" },
 ]
 
 [icon]
