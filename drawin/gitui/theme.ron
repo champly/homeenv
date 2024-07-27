@@ -1,0 +1,4 @@
+(
+    selection_bg: Some("LightBlue"),
+    selection_fg: Some("#ffffff"),
+)
