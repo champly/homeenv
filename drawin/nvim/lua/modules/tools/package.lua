@@ -264,9 +264,9 @@ package({
 	},
 	enabled = vim.uv.os_uname().sysname == "Darwin",
 	opts = function()
-		local path = "~/Library/Mobile Documents/com~apple~CloudDocs/notebook"
+		local path = os.getenv("HOME") .. "/Library/Mobile Documents/com~apple~CloudDocs/notebook"
 		if not vim.uv.fs_stat(path) then
-			path = "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/notebook"
+			path = os.getenv("HOME") .. "/Library/Mobile Documents/iCloud~md~obsidian/Documents/notebook"
 		end
 		return {
 			workspaces = {
