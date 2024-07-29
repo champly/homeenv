@@ -17,8 +17,8 @@ mouse_events = ["click", "scroll"]
 
 [preview]
 tab_size = 2
-max_width = 600
-max_height = 900
+max_width = 6000
+max_height = 9000
 cache_dir = ""
 image_filter = "triangle"
 image_quality = 75
