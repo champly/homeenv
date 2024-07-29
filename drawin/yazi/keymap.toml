@@ -163,6 +163,7 @@ keymap = [
   { on = ["o", "z"], run = "shell '$SHELL' --confirm --block", desc = "Open shell here" },
   { on = ["o", "n"], run = "shell nvim --confirm --block", desc = "Open nvim here" },
   { on = ["o", "g"], run = "shell gitui --confirm --block", desc = "Open gitui here" },
+  { on = ["o", "v"], run = "shell 'code .' --confirm --block", desc = "Open VSCode here" },
   { on = ["o", "f"], run = "shell 'open .' --confirm --block", desc = "Open finder here" },
 
   # plugin
