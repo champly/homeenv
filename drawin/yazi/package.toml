@@ -1,5 +1,9 @@
 [plugin]
-deps = [{ use = "yazi-rs/plugins#full-border", commit = "06e5fe1" }, { use = "yazi-rs/plugins#max-preview", commit = "06e5fe1" }]
+deps = [
+  { use = "yazi-rs/plugins#full-border", commit = "39f2753" },
+  { use = "yazi-rs/plugins#max-preview", commit = "39f2753" },
+  { use = "Reledia/glow", commit = "536185a" },
+]
 
 [flavor]
 deps = []
