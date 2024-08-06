@@ -26,6 +26,7 @@ function config.nvim_treesitter()
 			"jsonc",
 			"yaml",
 			"bash",
+			"html",
 		},
 		highlight = {
 			enable = true, -- false will disable the whole extension
