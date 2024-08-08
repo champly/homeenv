@@ -1,0 +1,11 @@
+[custom.current_process]
+# command = "ps -o comm= -p $PPID"
+# command = "ps -o ppid= -p $PPID | xargs -I{} ps -o comm= -p {}"
+command = "ps -o ppid= -p $PPID | xargs -I{} ps -o ppid= -p {} | xargs -I{} ps -o comm= -p {}"
+when = true
+format = "󰙅 [$output]($style)"
+
+[custom.parent_process]
+command = "ps -o comm= -p $$"
+when = true
+format = "▸[$output]($style)"
