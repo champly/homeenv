@@ -27,6 +27,7 @@ function config.nvim_treesitter()
 			"yaml",
 			"bash",
 			"html",
+			"nickel"
 		},
 		highlight = {
 			enable = true, -- false will disable the whole extension
