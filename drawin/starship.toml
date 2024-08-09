@@ -8,4 +8,4 @@ format = "󰙅 [$output]($style)"
 [custom.parent_process]
 command = "ps -o comm= -p $$"
 when = true
-format = "▸[$output]($style)"
+format = "▸[$output]($style) "
