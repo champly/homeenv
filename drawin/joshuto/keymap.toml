@@ -136,6 +136,7 @@ keymap = [
   { keys = ["g", "s", "c"], commands = ["cd ~/go/src/github.com/champly"] },
   { keys = ["g", "s", "k"], commands = ["cd ~/go/src/git.woa.com/khaos"] },
   { keys = ["g", "s", "K"], commands = ["cd ~/go/src/k8s.io"] },
+  { keys = ["g", "t"], commands = ["cd /tmp"] },
 
   # custom command
   { keys = ["o", "z"], commands = ["shell zsh"] },
