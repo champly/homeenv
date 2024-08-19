@@ -46,7 +46,17 @@ config.keys = {
 		key = "d",
 		mods = "SUPER|SHIFT",
 		action = wezterm.action.SplitVertical { domain = "CurrentPaneDomain" },
-	}
+	},
+	{
+		key = "[",
+		mods = "SUPER",
+		action = wezterm.action.ActivatePaneDirection("Prev")
+	},
+	{
+		key = "]",
+		mods = "SUPER",
+		action = wezterm.action.ActivatePaneDirection("Next")
+	},
 }
 
 -- and finally, return the configuration to wezterm
