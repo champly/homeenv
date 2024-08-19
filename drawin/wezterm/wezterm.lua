@@ -57,6 +57,11 @@ config.keys = {
 		mods = "SUPER",
 		action = wezterm.action.ActivatePaneDirection("Next")
 	},
+	{
+		key = "p",
+		mods = "SUPER|SHIFT",
+		action = wezterm.action.TogglePaneZoomState
+	}
 }
 
 -- and finally, return the configuration to wezterm
