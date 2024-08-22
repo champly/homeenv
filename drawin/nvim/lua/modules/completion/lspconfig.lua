@@ -5,22 +5,20 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 -- https://neovim.io/doc/user/lsp.html
 -- https://neovim.io/doc/user/diagnostic.html#vim.diagnostic.config()
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-	vim.lsp.diagnostic.on_publish_diagnostics, {
-		-- Enable virtual text, override spacing to 4
-		virtual_text = {
-			severity = vim.diagnostic.severity.ERROR,
-			-- severity = {
-			--     min = vim.diagnostic.severity.WARN
-			-- },
-			spacing = 4,
-			prefix = "",
-		},
-		signs = {
-			priority = 20,
-		},
-	}
-)
+vim.diagnostic.config({
+	-- Enable virtual text, override spacing to 4
+	virtual_text = {
+		severity = vim.diagnostic.severity.ERROR,
+		-- severity = {
+		--     min = vim.diagnostic.severity.WARN
+		-- },
+		spacing = 4,
+		prefix = "",
+	},
+	signs = {
+		priority = 20,
+	},
+})
 
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 for type, icon in pairs(signs) do
