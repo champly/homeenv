@@ -1,8 +1,8 @@
 [plugin]
 deps = [
-  { use = "yazi-rs/plugins#full-border", commit = "07b36c3" },
-  { use = "yazi-rs/plugins#max-preview", commit = "07b36c3" },
-  { use = "Reledia/glow", commit = "536185a" },
+  { use = "yazi-rs/plugins:full-border", rev = "b659791" },
+  { use = "yazi-rs/plugins:max-preview", rev = "b659791" },
+  { use = "Reledia/glow", rev = "536185a" },
 ]
 
 [flavor]
