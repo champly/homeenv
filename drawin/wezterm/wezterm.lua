@@ -61,6 +61,14 @@ config.keys = {
 		key = "p",
 		mods = "SUPER|SHIFT",
 		action = wezterm.action.TogglePaneZoomState
+	},
+	{
+		key = "Enter",
+		mods = "SUPER",
+		---@diagnostic disable-next-line: unused-local
+		action = wezterm.action_callback(function(window, pane)
+			window:maximize()
+		end)
 	}
 }
 
