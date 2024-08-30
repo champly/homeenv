@@ -314,7 +314,8 @@ function config.nvim_tree()
 		},
 		actions = {
 			open_file = {
-				quit_on_open = true,
+				-- Closes the explorer when opening a file.
+				quit_on_open = false,
 			},
 		},
 		view = {
