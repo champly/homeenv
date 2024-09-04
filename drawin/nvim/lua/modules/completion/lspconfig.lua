@@ -1,7 +1,28 @@
 local lspconfig = require("lspconfig")
 local util = require("lspconfig.util")
 
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
+-- local capabilities = require("cmp_nvim_lsp").default_capabilities()
+local capabilities = vim.tbl_deep_extend(
+	"force",
+	{},
+	vim.lsp.protocol.make_client_capabilities(),
+	require("cmp_nvim_lsp").default_capabilities(),
+	{
+		textDocument = {
+			foldRange = {
+				dynamicRegistration = false,
+				lineFoldingOnly = true,
+			},
+		},
+		-- FIXME: workaround for https://github.com/neovim/neovim/issues/28058
+		workspace = {
+			didChangeWatchedFiles = {
+				dynamicRegistration = false,
+				relativePatternSupport = false,
+			},
+		},
+	}
+)
 
 -- https://neovim.io/doc/user/lsp.html
 -- https://neovim.io/doc/user/diagnostic.html#vim.diagnostic.config()

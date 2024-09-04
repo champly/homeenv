@@ -1,9 +1,5 @@
 local config = {}
 
-function config.nvim_coc()
-	require("modules.completion.coc")
-end
-
 function config.nvim_lsp()
 	require("modules.completion.lspconfig")
 end
