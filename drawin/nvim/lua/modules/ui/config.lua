@@ -301,7 +301,7 @@ function config.bufferline()
 			end,
 			modified_icon = "✥",
 			buffer_close_icon = "",
-			always_show_bufferline = false
+			always_show_bufferline = false,
 		}
 	}
 
@@ -363,6 +363,7 @@ function config.toggleterm()
 end
 
 function config.nvim_notify()
+	---@diagnostic disable-next-line: param-type-mismatch
 	vim.notify = vim.schedule_wrap(require("notify"))
 
 	---@diagnostic disable-next-line: duplicate-set-field

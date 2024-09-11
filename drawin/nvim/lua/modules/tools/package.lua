@@ -41,9 +41,15 @@ package({
 
 -- The plug-in visualizes undo history and makes it easier to browse and switch between different undo branches
 package({
-	"mbbill/undotree",
+	"debugloop/telescope-undo.nvim",
+	dependencies = {
+		"nvim-telescope/telescope.nvim",
+		"nvim-lua/plenary.nvim",
+	},
 	event = "BufRead",
-	config = conf.undotree,
+	keys = {
+		{ "<leader>u", "<cmd>Telescope undo<cr>", desc = "undo history" },
+	},
 })
 
 -- VimWiki is a personal wiki for Vim
@@ -65,12 +71,6 @@ package({
 })
 
 -- -- Jump to any location specified by two characters.
--- package({
---     "phaazon/hop.nvim",
---     event = "BufReadPre",
---     config = conf.hop_nvim,
---     init = conf.hop_nvim_setup,
--- })
 package({
 	"folke/flash.nvim",
 	event = "VeryLazy",
@@ -94,6 +94,7 @@ package({
 	},
 })
 
+-- class outline viewer
 -- symbols outline
 package({
 	"hedyhli/outline.nvim",
@@ -147,10 +148,6 @@ package({
 	event = "BufReadPre",
 	config = conf.autopairs,
 })
-
--- class outline viewer
--- use 'majutsushi/tagbar'
--- use 'liuchengxu/vista.vim'
 
 -- Smooth scrolling for Vim done right
 package({
