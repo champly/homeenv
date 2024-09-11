@@ -17,7 +17,13 @@ function config.gruvbox()
 end
 
 function config.github()
-	require("github-theme").setup()
+	require("github-theme").setup({
+		options = {
+			styles = {
+				comments = "italic",
+			}
+		}
+	})
 	vim.cmd([[ colorscheme github_light ]])
 
 	-- TODO: remove this config
@@ -183,7 +189,7 @@ function config.dashboard()
 					action = "Telescope dotfiles"
 				},
 				{
-					icon = "  ",
+					icon = "  ",
 					desc = "Find Go Source Code                     ",
 					key = "<leader>fs",
 					action = "Telescope gosource"

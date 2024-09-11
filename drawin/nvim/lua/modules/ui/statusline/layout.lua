@@ -185,6 +185,7 @@ table.insert(components.active[2], {
 	},
 	icon = "  ",
 })
+
 -- diffRemove
 table.insert(components.active[2], {
 	provider = "git_diff_removed",
