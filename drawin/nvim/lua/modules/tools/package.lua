@@ -192,14 +192,23 @@ package({
 	"williamboman/mason.nvim",
 	opts = {
 		ensure_installed = {
+			-- debug: rust/cpp
 			"codelldb",
+			-- json
 			"biome",
 			"prettier",
+			-- lua
 			"lua-language-server",
+			-- c/c++
 			"clangd",
+			-- yaml
 			"yamlfmt",
+			-- go
 			"goimports",
 			"gofumpt",
+			"gomodifytags",
+			"delve",
+			-- toml
 			"taplo",
 		},
 	},
