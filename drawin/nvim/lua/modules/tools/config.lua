@@ -43,17 +43,12 @@ function config.markdown_preview_nvim_setup()
 	vim.api.nvim_set_keymap("n", "<leader>kv", ":MarkdownPrevie<CR>", { noremap = true })
 
 	vim.api.nvim_set_keymap("n", "<leader>tm", ":TableModeToggle<cr>", {})
+	---@diagnostic disable-next-line: inject-field
 	vim.g.table_mode_cell_text_object_i_map = "k<Bar>"
 end
 
-function config.undotree()
-	-- nnoremap <Leader>u :UndotreeToggle<CR>
-	vim.api.nvim_set_keymap("n", "<leader>u", ":UndotreeToggle<cr>", { noremap = true })
-	-- If set to 1, the undotree window will get focus after being opened, otherwise focus will stay in current window.
-	vim.g.undotree_SetFocusWhenToggle = 1
-end
-
 function config.vimwiki_setup()
+	---@diagnostic disable-next-line: inject-field
 	vim.g.vimwiki_list = {
 		{
 			path = "~/Dropbox/notebook/vimwiki/",
@@ -67,8 +62,11 @@ function config.vimwiki_setup()
 end
 
 function config.vim_visual_multi_setup()
+	---@diagnostic disable-next-line: inject-field
 	vim.g.VM_show_warnings = 0
+	---@diagnostic disable-next-line: inject-field
 	vim.g.VM_leader = "\\"
+	---@diagnostic disable-next-line: inject-field
 	vim.g.VM_maps = {
 		Undo = "u",
 		Redo = "<C-r>",
@@ -76,6 +74,7 @@ function config.vim_visual_multi_setup()
 		["Add Cursor Up"] = "<M-k>", -- 往上增加光标 Opt+k
 		-- ["Select All"] = '\\A',
 	}
+	---@diagnostic disable-next-line: inject-field
 	vim.g.VM_no_meta_mappings = {
 	}
 
@@ -246,6 +245,7 @@ function config.autopairs()
 end
 
 function config.smoothie_setup()
+	---@diagnostic disable-next-line: inject-field
 	vim.g.smoothie_remapped_commands = {
 		"<C-D>",
 		"<C-U>",
@@ -275,17 +275,38 @@ function config.matchparen()
 end
 
 function config.nvim_spectre()
-	-- vim.api.nvim_set_keymap("n", "<leader>S", "<cmd>lua require('spectre').open()<CR>", { noremap = true, silent = true })
-	vim.api.nvim_set_keymap("n", "<leader>S", "<cmd>lua require('spectre').open_visual({select_word=true})<CR>",
-		{ noremap = true, silent = true })
+	require("spectre").setup({
+		replace_engine = {
+			["sed"] = {
+				cmd = "sed",
+				args = {
+					"-i",
+					"",
+					"-E",
+				},
+			},
+		},
+	})
+
+	vim.keymap.set("n", "<leader>S", "<cmd>lua require('spectre').toggle()<CR>", { desc = "Toggle Spectre" })
+	vim.keymap.set("n", "<leader>sw", "<cmd>lua require('spectre').open_visual({select_word=true})<CR>", {
+		desc = "Search current word"
+	})
+	vim.keymap.set("v", "<leader>sw", "<esc><cmd>lua require('spectre').open_visual()<CR>",
+		{ desc = "Search current word" })
+	vim.keymap.set("n", "<leader>sp", "<cmd>lua require('spectre').open_file_search({select_word=true})<CR>",
+		{ desc = "Search on current file" })
 end
 
 function config.neoformat()
 	-- Enable alignment
+	---@diagnostic disable-next-line: inject-field
 	vim.g.neoformat_basic_format_align = 1
 	-- Enable tab to spaces conversion
+	---@diagnostic disable-next-line: inject-field
 	vim.g.neoformat_basic_format_retab = 1
 	-- Enable trimmming of trailing whitespace
+	---@diagnostic disable-next-line: inject-field
 	vim.g.neoformat_basic_format_trim = 1
 end
 
