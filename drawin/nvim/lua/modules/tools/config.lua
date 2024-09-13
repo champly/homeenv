@@ -275,18 +275,24 @@ function config.matchparen()
 end
 
 function config.nvim_spectre()
-	require("spectre").setup({
-		replace_engine = {
-			["sed"] = {
-				cmd = "sed",
-				args = {
-					"-i",
-					"",
-					"-E",
+	local opt = {}
+	---@diagnostic disable-next-line: undefined-field
+	if vim.uv.os_uname().sysname == "Darwin" then
+		-- https://github.com/nvim-pack/nvim-spectre/issues/118#issuecomment-1531683211
+		opt = {
+			replace_engine = {
+				["sed"] = {
+					cmd = "sed",
+					args = {
+						"-i",
+						"",
+						"-E",
+					},
 				},
 			},
-		},
-	})
+		}
+	end
+	require("spectre").setup(opt)
 
 	vim.keymap.set("n", "<leader>S", "<cmd>lua require('spectre').toggle()<CR>", { desc = "Toggle Spectre" })
 	vim.keymap.set("n", "<leader>sw", "<cmd>lua require('spectre').open_visual({select_word=true})<CR>", {
