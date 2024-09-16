@@ -268,9 +268,11 @@ package({
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 	},
+	---@diagnostic disable-next-line: undefined-field
 	enabled = vim.uv.os_uname().sysname == "Darwin",
 	opts = function()
 		local path = os.getenv("HOME") .. "/Library/Mobile Documents/com~apple~CloudDocs/notebook"
+		---@diagnostic disable-next-line: undefined-field
 		if not vim.uv.fs_stat(path) then
 			path = os.getenv("HOME") .. "/Library/Mobile Documents/iCloud~md~obsidian/Documents/notebook"
 		end
@@ -282,7 +284,7 @@ package({
 				},
 			},
 			daily_notes = {
-				folder = "Daily/tx"
+				folder = "Daily/Tencent"
 			}
 		}
 	end,
