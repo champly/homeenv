@@ -64,6 +64,15 @@ return {
 			end
 		end,
 	},
+	-- {
+	--     "nvim-lualine/lualine.nvim",
+	--     dependencies = { "nvim-tree/nvim-web-devicons" },
+	--     opts = {
+	--         options = {
+	--             theme = "onelight"
+	--         }
+	--     }
+	-- },
 	{
 		"freddiehaddad/feline.nvim",
 		event = "BufReadPre",

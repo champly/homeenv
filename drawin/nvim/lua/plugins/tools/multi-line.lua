@@ -3,7 +3,6 @@ return {
 	{
 		"mg979/vim-visual-multi",
 		event = "BufReadPre",
-		branch = "master",
 		init = function()
 			---@diagnostic disable-next-line: inject-field
 			vim.g.VM_show_warnings = 0
