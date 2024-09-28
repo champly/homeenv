@@ -1,1 +1,1 @@
-lua require("core")
+lua require("config")

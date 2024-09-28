@@ -1,4 +1,4 @@
-local config = require("modules.ui.statusline.config")
+local config = require("plugins.ui.statusline.config")
 local lsp = require "feline.providers.lsp"
 local lsp_severity = vim.diagnostic.severity
 
