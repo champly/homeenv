@@ -62,6 +62,7 @@ vim.o.timeoutlen              = 300   --毫秒计的等待映射的键序列完�
 vim.o.maxmempattern           = 5000  -- maxmempattern规定了vim做字符串匹配时使用的最大内存，不是由每行字符数决定的。
 vim.o.conceallevel            = 2
 
+---@diagnostic disable-next-line: undefined-field
 if vim.uv.os_uname().sysname == "Darwin" then
 	vim.g.clipboard = {
 		name = "macOS-clipboard",
@@ -78,6 +79,7 @@ if vim.uv.os_uname().sysname == "Darwin" then
 
 	-- https://zhuanlan.zhihu.com/p/24484514
 	vim.g.python3_host_skip_check = 1
+	---@diagnostic disable-next-line: undefined-field
 	if not vim.uv.fs_stat("/usr/local/bin/python3") then
 		vim.g.python3_host_prog = "/usr/bin/python3"
 	else

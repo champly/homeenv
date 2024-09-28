@@ -132,6 +132,7 @@ end
 
 M.get_system_info = function()
 	-- Darwin/Linux/Windows
+	---@diagnostic disable-next-line: undefined-field
 	return M.system_icons[vim.uv.os_uname().sysname]
 end
 
