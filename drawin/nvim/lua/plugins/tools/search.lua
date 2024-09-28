@@ -3,13 +3,16 @@ return {
 	{
 		"windwp/nvim-spectre",
 		keys = {
-			"<leader>S",
+			{ "<leader>S",  mode = { "n" }, function() require("spectre").toggle() end,                                 desc = "Toggle Spectre" },
+			{ "<leader>sw", mode = { "n" }, function() require("spectre").open_visual({ select_word = true }) end,      desc = "Search current word" },
+			{ "<leader>sw", mode = { "v" }, function() require("spectre").open_visual() end,                            desc = "Search current word" },
+			{ "<leader>sp", mode = { "n" }, function() require("spectre").open_file_search({ select_word = true }) end, desc = "Search on current file" }
 		},
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-tree/nvim-web-devicons",
 		},
-		config = function()
+		opts = function()
 			local opt = {}
 			---@diagnostic disable-next-line: undefined-field
 			if vim.uv.os_uname().sysname == "Darwin" then
@@ -27,16 +30,7 @@ return {
 					},
 				}
 			end
-			require("spectre").setup(opt)
-
-			vim.keymap.set("n", "<leader>S", "<cmd>lua require('spectre').toggle()<CR>", { desc = "Toggle Spectre" })
-			vim.keymap.set("n", "<leader>sw", "<cmd>lua require('spectre').open_visual({select_word=true})<CR>", {
-				desc = "Search current word"
-			})
-			vim.keymap.set("v", "<leader>sw", "<esc><cmd>lua require('spectre').open_visual()<CR>",
-				{ desc = "Search current word" })
-			vim.keymap.set("n", "<leader>sp", "<cmd>lua require('spectre').open_file_search({select_word=true})<CR>",
-				{ desc = "Search on current file" })
-		end,
+			return opt
+		end
 	}
 }

@@ -6,7 +6,6 @@ return {
 			"nvim-telescope/telescope.nvim",
 			"nvim-lua/plenary.nvim",
 		},
-		event = "BufRead",
 		keys = {
 			{ "<leader>u", "<cmd>Telescope undo<cr>", desc = "undo history" },
 		},

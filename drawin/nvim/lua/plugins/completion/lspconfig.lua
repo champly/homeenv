@@ -4,7 +4,7 @@ local util = require("lspconfig.util")
 return {
 	{
 		"neovim/nvim-lspconfig",
-		-- event = "BufRead",
+		event = "BufRead",
 		dependencies = {
 			"telescope.nvim",
 		},
