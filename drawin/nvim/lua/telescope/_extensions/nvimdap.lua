@@ -9,7 +9,7 @@ local action_state = require "telescope.actions.state"
 local nvim_dap_list = function()
 	local list = {}
 
-	local path = vim.fn.stdpath("config") .. "/nvimdap"
+	local path = vim.fn.stdpath("config") .. "/external/nvimdap"
 	local config_list = io.popen("rg --files " .. path)
 	---@diagnostic disable-next-line: need-check-nil
 	for file in config_list:lines() do
