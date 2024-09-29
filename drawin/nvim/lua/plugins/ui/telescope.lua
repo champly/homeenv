@@ -47,16 +47,16 @@ return {
 		require("telescope").load_extension("nvimdap")
 		require("telescope").load_extension("live_grep_args")
 
-		vim.api.nvim_set_keymap("n", "<leader>fb", ":Telescope buffers<cr>", {})
-		vim.api.nvim_set_keymap("n", "<leader>fh", ":Telescope oldfiles<cr>", {})
-		vim.api.nvim_set_keymap("n", "<leader>ff", ":Telescope find_files<cr>", {})
-		vim.api.nvim_set_keymap("n", "<leader>fw", ":Telescope live_grep<cr>", {})
-		vim.api.nvim_set_keymap("n", "<leader>rg",
-			":lua require('telescope').extensions.live_grep_args.live_grep_args()<cr>",
-			{})
-		vim.api.nvim_set_keymap("n", "<leader>fd", ":Telescope dotfiles<cr>", {})
-		vim.api.nvim_set_keymap("n", "<leader>fs", ":Telescope gosource<cr>", {})
-		vim.api.nvim_set_keymap("n", "<leader>dt", ":Telescope nvimdap<cr>", {})
-		vim.api.nvim_set_keymap("n", "<leader>gl", ":Telescope git_bcommits<cr>", {})
+		local opts = { silent = true }
+		vim.api.nvim_set_keymap("n", "<leader>fb", ":Telescope buffers<cr>", opts)
+		vim.api.nvim_set_keymap("n", "<leader>fh", ":Telescope oldfiles<cr>", opts)
+		vim.api.nvim_set_keymap("n", "<leader>ff", ":Telescope find_files<cr>", opts)
+		vim.api.nvim_set_keymap("n", "<leader>fw", ":Telescope live_grep<cr>", opts)
+		vim.api.nvim_set_keymap("n", "<leader>fc", ":Telescope grep_string<cr>", opts)
+		vim.api.nvim_set_keymap("n", "<leader>rg", ":Telescope live_grep_args<cr>", opts)
+		vim.api.nvim_set_keymap("n", "<leader>fd", ":Telescope dotfiles<cr>", opts)
+		vim.api.nvim_set_keymap("n", "<leader>fs", ":Telescope gosource<cr>", opts)
+		vim.api.nvim_set_keymap("n", "<leader>dt", ":Telescope nvimdap<cr>", opts)
+		vim.api.nvim_set_keymap("n", "<leader>gl", ":Telescope git_bcommits<cr>", opts)
 	end
 }

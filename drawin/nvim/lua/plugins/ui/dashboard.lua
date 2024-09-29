@@ -100,12 +100,5 @@ return {
 				}
 			}
 		})
-
-		vim.api.nvim_set_keymap("n", "<leader>fh", ":Telescope oldfiles<cr>", {})
-		vim.api.nvim_set_keymap("n", "<leader>ff", ":Telescope find_files<cr>", {})
-		vim.api.nvim_set_keymap("n", "<leader>fw", ":Telescope live_grep<cr>", {})
-		vim.api.nvim_set_keymap("n", "<leader>fd", ":Telescope dotfiles<cr>", {})
-		vim.api.nvim_set_keymap("n", "<leader>fs", ":Telescope gosource<cr>", {})
-		vim.api.nvim_set_keymap("n", "<leader>lm", ":Telescope marks<cr>", {})
 	end,
 }
