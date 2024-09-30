@@ -125,7 +125,7 @@ return {
 					-- TODO: https://github.com/nvim-telescope/telescope.nvim/issues/1265
 					vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 					vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-					vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
+					vim.keymap.set({ "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
 					-- https://github.com/nvim-telescope/telescope.nvim#neovim-lsp-pickers
 					vim.keymap.set("n", "<c-]>", ":Telescope lsp_definitions theme=get_cursor<CR>", opts)
 					vim.keymap.set("n", "<leader>td", ":Telescope lsp_type_definitions<CR>", opts)
