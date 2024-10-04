@@ -8,9 +8,6 @@ return {
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-path",
 			"hrsh7th/cmp-buffer",
-			-- "L3MON4D3/LuaSnip",
-			-- "saadparwaiz1/cmp_luasnip",
-			-- "hrsh7th/cmp-nvim-lua",
 		},
 		config = function()
 			-- https://github.com/neovim/nvim-lspconfig/wiki/Autocompletion#nvim-cmp
@@ -29,14 +26,6 @@ return {
 				formatting = {
 					format = lspkind.cmp_format({
 						mode = "symbol_text",
-						-- before = function(entry, vim_item)
-						--     vim_item.menu = ({
-						--         nvim_lsp = "[LSP]",
-						--         nvim_lua = "[Lua]",
-						--         buffer = "[BUF]",
-						--     })[entry.source.name]
-						--     return vim_item
-						-- end
 					})
 				},
 				mapping = {
@@ -76,7 +65,6 @@ return {
 					{ name = "luasnip" },
 					{ name = "path" },
 					{ name = "buffer" },
-					-- { name = "nvim_lua" },
 				},
 				-- https://github.com/hrsh7th/nvim-cmp/issues/381#issuecomment-947895080
 				-- https://github.com/hrsh7th/nvim-cmp/issues/183

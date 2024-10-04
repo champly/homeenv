@@ -110,7 +110,7 @@ return {
 					vim.keymap.set("n", "<leader>td", ":Telescope lsp_type_definitions<CR>", opts)
 					vim.keymap.set("n", "<leader>im", ":Telescope lsp_implementations theme=ivy<CR>", opts)
 					vim.keymap.set("n", "<leader>rf", ":Telescope lsp_references theme=ivy<CR>", opts)
-					vim.keymap.set("n", "<leader>ds", ":Telescope diagnostics theme=ivy<CR>", opts)
+					-- vim.keymap.set("n", "<leader>ds", ":Telescope diagnostics theme=ivy<CR>", opts)
 					vim.keymap.set("n", "<leader>bl", ":Telescope lsp_document_symbols<CR>", opts)
 				end,
 			})
