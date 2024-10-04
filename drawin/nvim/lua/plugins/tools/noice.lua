@@ -3,12 +3,17 @@ return {
 		"folke/noice.nvim",
 		event = "VeryLazy",
 		dependencies = {
-			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
 			"MunifTanjim/nui.nvim",
-			-- OPTIONAL:
-			--   `nvim-notify` is only needed, if you want to use the notification view.
-			--   If not available, we use `mini` as the fallback
 			"rcarriga/nvim-notify",
+			{
+				"smjonas/inc-rename.nvim",
+				config = function()
+					require("inc_rename").setup()
+					vim.keymap.set("n", "<leader>rn", function()
+						return ":IncRename " .. vim.fn.expand("<cword>")
+					end, { expr = true })
+				end,
+			}
 		},
 		opts = {
 			lsp = {
@@ -28,46 +33,24 @@ return {
 				bottom_search = true, -- use a classic bottom cmdline for search
 				command_palette = true, -- position the cmdline and popupmenu together
 				long_message_to_split = true, -- long messages will be sent to a split
-				inc_rename = false, -- enables an input dialog for inc-rename.nvim
+				inc_rename = true, -- enables an input dialog for inc-rename.nvim
 				lsp_doc_border = false, -- add a border to hover docs and signature help
 			},
-			-- -- https://github.com/folke/noice.nvim/issues/779#issuecomment-2081998250
+			-- cmdline center
 			-- views = {
 			--     cmdline_popup = {
 			--         position = {
-			--             row = "40%", -- 40% from top of the screen. This will position it almost at the center.
+			--             row = "30%",
 			--             col = "50%",
-			--         }
+			--         },
 			--     },
-			-- }
+			--     cmdline_popupmenu = {
+			--         position = {
+			--             row = "36%",
+			--             col = "50%",
+			--         },
+			--     },
+			-- },
 		},
 	},
-	-- {
-	--     "rcarriga/nvim-notify",
-	--     config = function()
-	--         ---@diagnostic disable-next-line: param-type-mismatch
-	--         vim.notify = vim.schedule_wrap(require("notify"))
-
-	--         ---@diagnostic disable-next-line: duplicate-set-field
-	--         function _G.save_file_with_notify()
-	--             ---@diagnostic disable-next-line: param-type-mismatch
-	--             local ok, msg = pcall(vim.cmd, "silent write!")
-	--             if ok then
-	--                 vim.notify("Saved " .. vim.fn.expand "%:t", nil, {
-	--                     title = "Success",
-	--                     timeout = 1000
-	--                 })
-	--             else
-	--                 ---@diagnostic disable-next-line: param-type-mismatch
-	--                 vim.notify(msg, "error", {
-	--                     title = "Error",
-	--                     timeout = 1000
-	--                 })
-	--             end
-	--         end
-
-	--         vim.api.nvim_set_keymap("n", "<leader>s", "<cmd>lua save_file_with_notify()<cr>",
-	--             { noremap = true, silent = true })
-	--     end,
-	-- }
 }
