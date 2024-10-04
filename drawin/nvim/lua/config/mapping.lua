@@ -4,7 +4,8 @@ vim.api.nvim_set_keymap("n", "<leader>n", ":enew<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<leader>bd", ":bd!<CR>", { noremap = true })
 
 -- -- https://www.reddit.com/r/neovim/comments/ro6oye/open_link_from_neovim/
-vim.api.nvim_set_keymap("n", "gx", ":silent execute '!open ' . shellescape(expand('<cfile>'), 1)<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "gx", ":silent execute '!open ' . shellescape(expand('<cfile>'), 1)<CR>",
+	{ noremap = true, silent = true })
 
 -- Session
 vim.api.nvim_set_keymap("n", "<leader>sl", [[<cmd>lua require("persistence").load()<cr>]], {})

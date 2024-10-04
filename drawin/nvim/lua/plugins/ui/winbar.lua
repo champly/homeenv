@@ -1,6 +1,7 @@
 return {
 	{
 		"Bekaboo/dropbar.nvim",
+		event = "BufReadPre",
 		dependencies = {
 			"nvim-tree/nvim-web-devicons"
 		},
