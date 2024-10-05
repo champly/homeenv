@@ -13,8 +13,6 @@ return {
 			vim.keymap.set("n", "<F11>", function() require("dap").step_into() end)
 			vim.keymap.set("n", "<F12>", function() require("dap").step_out() end)
 			vim.keymap.set("n", "<S-s>", function() require("dap").terminate() end)
-			-- vim.keymap.set("n", "<leader>ll",
-			--     function() require("dap.ext.vscode").load_launchjs(nil, { codelldb = { "rust", dlv = { "go" } } }) end)
 
 			local dap = require("dap")
 
