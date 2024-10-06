@@ -72,4 +72,4 @@ function ToggleQF()
 end
 
 -- toggle quickfix mapping
-vim.api.nvim_set_keymap("n", "<leader>q", ":lua ToggleQF()<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<leader>q", ":lua ToggleQF()<CR>", { noremap = true, silent = true })
