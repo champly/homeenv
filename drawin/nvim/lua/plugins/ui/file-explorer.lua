@@ -70,7 +70,6 @@ return {
 			vim.cmd [[ hi NvimTreeFolderIcon guifg=#DAA520 ]]
 		end,
 	},
-	-- -- TODO: replace nvim-tree with neo-tree
 	-- {
 	--         "nvim-neo-tree/neo-tree.nvim",
 	--         branch = "v3.x",

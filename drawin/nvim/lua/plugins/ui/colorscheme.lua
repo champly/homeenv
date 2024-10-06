@@ -29,9 +29,7 @@ return {
 					}
 				}
 			})
-			vim.cmd([[ colorscheme github_light ]])
-			-- TODO: remove this config
-			vim.cmd([[ hi Delimiter guifg=black gui=none ]])
+			vim.cmd("colorscheme github_light")
 		end
 	},
 	{
