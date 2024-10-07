@@ -4,6 +4,7 @@ return {
 		version = "*",
 		lazy = true,
 		ft = "markdown",
+		cmd = "ObsidianToday",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 		},
@@ -23,30 +24,11 @@ return {
 					},
 				},
 				daily_notes = {
-					folder = "Daily/Tencent"
+					folder = "Daily/Tencent",
+					date_format = "%Y年%m月%d日"
 				}
 			}
 		end,
 
 	},
-	-- {
-	--     "vimwiki/vimwiki",
-	--     cmd = {
-	--         "VimwikiMakeDiaryNote",
-	--         "VimwikiIndex",
-	--     },
-	--     init = function()
-	--         ---@diagnostic disable-next-line: inject-field
-	--         vim.g.vimwiki_list = {
-	--             {
-	--                 path = "~/Dropbox/notebook/vimwiki/",
-	--                 syntax = "markdown",
-	--                 ext = ".md"
-	--             }
-	--         }
-
-	--         vim.api.nvim_set_keymap("n", "<leader>wd", ":VimwikiMakeDiaryNote<cr>", { silent = true })
-	--         vim.api.nvim_set_keymap("n", "<leader>ww", ":VimwikiIndex<cr>", { silent = true })
-	--     end,
-	-- }
 }
