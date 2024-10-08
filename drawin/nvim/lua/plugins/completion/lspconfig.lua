@@ -1,6 +1,3 @@
-local lspconfig = require("lspconfig")
-local util = require("lspconfig.util")
-
 return {
 	{
 		"neovim/nvim-lspconfig",
@@ -22,7 +19,7 @@ return {
 					--     min = vim.diagnostic.severity.WARN
 					-- },
 					spacing = 4,
-					prefix = "",
+					prefix = " ",
 				},
 				signs = {
 					priority = 20,
@@ -43,28 +40,28 @@ return {
 				if client.server_capabilities.documentHighlightProvider then
 					if vim.g.color_theme == vim.g.color_theme_dark then
 						vim.cmd([[
-				hi LspReferenceRead guibg=#ff8600 guifg=black gui=NONE
-				hi LspReferenceText guibg=#ff8600 guifg=black gui=NONE
-				hi LspReferenceWrite guibg=#ff8600 guifg=black gui=NONE
-				hi NormalFloat guibg=#3e3e3e
-			]])
+							hi LspReferenceRead guibg=#ff8600 guifg=black gui=NONE
+							hi LspReferenceText guibg=#ff8600 guifg=black gui=NONE
+							hi LspReferenceWrite guibg=#ff8600 guifg=black gui=NONE
+							hi NormalFloat guibg=#3e3e3e
+						]])
 					else
 						vim.cmd([[
-				hi LspReferenceRead guibg=#ffcc33 guifg=black gui=NONE
-				hi LspReferenceText guibg=#ffcc33 guifg=black gui=NONE
-				hi LspReferenceWrite guibg=#ffcc33 guifg=black gui=NONE
-				hi NormalFloat guibg=#d9d9d9
-				hi DiagnosticFloatingHint guifg=gray
-			]])
+							hi LspReferenceRead guibg=#ffcc33 guifg=black gui=NONE
+							hi LspReferenceText guibg=#ffcc33 guifg=black gui=NONE
+							hi LspReferenceWrite guibg=#ffcc33 guifg=black gui=NONE
+							hi NormalFloat guibg=#d9d9d9
+							hi DiagnosticFloatingHint guifg=gray
+						]])
 					end
 
 					vim.cmd([[
-			augroup lsp_document_highlight
-			autocmd! * <buffer>
-				autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-				autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-			augroup END
-		]])
+						augroup lsp_document_highlight
+						autocmd! * <buffer>
+							autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+							autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+						augroup END
+					]])
 				end
 
 				require("lsp_signature").on_attach({
@@ -115,14 +112,10 @@ return {
 				end,
 			})
 
+			local lspconfig = require("lspconfig")
+
 			-- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#custom-configuration
-			lspconfig.gopls.setup {
-				cmd = { "gopls", "-mode=stdio" },
-				filetypes = { "go", "gomod", "gotmpl" },
-				root_dir = function(fname)
-					-- https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/gopls.lua
-					return util.root_pattern("go.work")(fname) or util.root_pattern("go.mod", ".git")(fname)
-				end,
+			lspconfig.gopls.setup({
 				settings = {
 					gopls = {
 						usePlaceholders = false,
@@ -150,14 +143,12 @@ return {
 				},
 				on_attach = enhance_attach,
 				capabilities = capabilities,
-			}
+			})
 
 			-- https://rust-analyzer.github.io/manual.html#nvim-lsp
-			lspconfig.rust_analyzer.setup {
+			lspconfig.rust_analyzer.setup({
 				-- rustup toolchain install nightly --component rust-analyzer
-				-- cmd = { "rustup", "run", "stable", "rust-analyzer" },
-				cmd = { "rustup", "run", "nightly", "rust-analyzer" },
-				-- cmd = { "rust-analyzer" },
+				-- cmd = { "rustup", "run", "nightly", "rust-analyzer" },
 				settings = {
 					["rust-analyzer"] = {
 						imports = {
@@ -189,9 +180,9 @@ return {
 				},
 				on_attach = enhance_attach,
 				capabilities = capabilities,
-			}
+			})
 
-			-- lspconfig.yamlls.setup {
+			-- lspconfig.yamlls.setup({
 			--     settings = {
 			--         yaml = {
 			--             schemas = {
@@ -202,13 +193,13 @@ return {
 			--     },
 			--     on_attach = enhance_attach,
 			--     capabilities = capabilities,
-			-- }
+			-- })
 
-			-- lspconfig.jsonls.setup {
+			-- lspconfig.jsonls.setup({
 			--     cmd = { "vscode-json-languageserver",  "--stdio" },
 			--     on_attach = enhance_attach,
 			--     capabilities = capabilities,
-			-- }
+			-- })
 
 			-- https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/clangd.lua
 			lspconfig.clangd.setup({
@@ -227,7 +218,7 @@ return {
 			})
 
 			-- -- https://github.com/MaskRay/ccls/wiki/nvim-lspconfig
-			-- lspconfig.ccls.setup {
+			-- lspconfig.ccls.setup({
 			--     cmd = { "ccls" },
 			--     filetypes = { "c", "cc", "cpp", "c++", "objc", "objcpp" },
 			--     root_dir = util.root_pattern("compile_commands.json", ".ccls", ".git", ".vim", ".hg"),
@@ -249,11 +240,11 @@ return {
 			--     },
 			--     on_attach = enhance_attach,
 			--     capabilities = capabilities,
-			-- }
+			-- })
 
 			-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#lua_ls
 			-- https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/configs/lua_ls.lua
-			lspconfig.lua_ls.setup {
+			lspconfig.lua_ls.setup({
 				settings = {
 					Lua = {
 						runtime = {
@@ -280,7 +271,7 @@ return {
 				},
 				on_attach = enhance_attach,
 				capabilities = capabilities,
-			}
+			})
 		end,
 	}
 }
