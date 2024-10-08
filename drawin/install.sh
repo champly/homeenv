@@ -116,7 +116,7 @@ brew install lua-language-server
 # brew install rust
 # brew install rust-analyzer
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-rustup component add rls rust-analysis rust-src
+rustup component add rust-analyzer rust-src
 # https://rust-lang.github.io/rustup/concepts/components.html
 rustup toolchain install nightly --component rust-analyzer
 

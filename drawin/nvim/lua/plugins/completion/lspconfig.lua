@@ -148,6 +148,7 @@ return {
 			-- https://rust-analyzer.github.io/manual.html#nvim-lsp
 			lspconfig.rust_analyzer.setup({
 				-- rustup toolchain install nightly --component rust-analyzer
+				-- rustup component add rust-analyzer
 				-- cmd = { "rustup", "run", "nightly", "rust-analyzer" },
 				settings = {
 					["rust-analyzer"] = {
