@@ -22,7 +22,7 @@ return {
 			})
 
 			-- https://github.com/lewis6991/gitsigns.nvim/issues/430
-			vim.cmd [[ highlight gitsignscurrentlineblame guibg=None guifg=#756969]]
+			vim.cmd([[ highlight gitsignscurrentlineblame guibg=None guifg=#756969 ]])
 		end,
 	},
 	{

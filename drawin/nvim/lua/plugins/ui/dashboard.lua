@@ -4,21 +4,24 @@ return {
 	dependencies = "nvim-tree/nvim-web-devicons",
 	config = function()
 		if vim.g.color_theme == vim.g.color_theme_dark then
-			vim.cmd [[ hi DashboardHeader guifg=yellow ]]
-			vim.cmd [[ hi DashboardFooter guifg=gray ]]
-
-			vim.cmd [[ hi DashboardIcon guifg=yellow ]]
-			vim.cmd [[ hi DashboardDesc guifg=yellow ]]
-			vim.cmd [[ hi DashboardShotCut guifg=#1E90FF ]]
-			vim.cmd [[ hi DashboardKey guifg=#1E90FF ]]
+			vim.cmd([[
+				hi DashboardHeader guifg=yellow
+				hi DashboardFooter guifg=gray
+				hi DashboardIcon guifg=yellow
+				hi DashboardDesc guifg=yellow
+				hi DashboardShotCut guifg=#1E90FF
+				hi DashboardKey guifg=#1E90FF
+			]])
 		else
-			vim.cmd [[ hi DashboardHeader guifg=orange ]]
-			vim.cmd [[ hi DashboardFooter guifg=gray ]]
+			vim.cmd([[
+				hi DashboardHeader guifg=orange
+				hi DashboardFooter guifg=gray
 
-			vim.cmd [[ hi DashboardIcon guifg=orange ]]
-			vim.cmd [[ hi DashboardDesc guifg=orange ]]
-			vim.cmd [[ hi DashboardShotCut guifg=#1E90FF ]]
-			vim.cmd [[ hi DashboardKey guifg=#1E90FF ]]
+				hi DashboardIcon guifg=orange
+				hi DashboardDesc guifg=orange
+				hi DashboardShotCut guifg=#1E90FF
+				hi DashboardKey guifg=#1E90FF
+			]])
 		end
 
 		require("dashboard").setup({

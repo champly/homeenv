@@ -13,7 +13,7 @@ return {
 					wrap = true,
 				},
 			})
-			vim.cmd [[ hi OutlineCurrent gui=bold guifg=blue ]]
+			vim.cmd([[ hi OutlineCurrent gui=bold guifg=blue ]])
 		end,
 	}
 }

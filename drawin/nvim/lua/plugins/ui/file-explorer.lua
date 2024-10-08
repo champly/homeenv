@@ -67,7 +67,7 @@ return {
 				on_attach = on_attach,
 			}
 
-			vim.cmd [[ hi NvimTreeFolderIcon guifg=#DAA520 ]]
+			vim.cmd([[ hi NvimTreeFolderIcon guifg=#DAA520 ]])
 		end,
 	},
 	-- {

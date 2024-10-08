@@ -29,7 +29,7 @@ return {
 					}
 				}
 			})
-			vim.cmd("colorscheme github_light")
+			vim.cmd([[ colorscheme github_light ]])
 		end
 	},
 	{
