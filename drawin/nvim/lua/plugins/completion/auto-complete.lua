@@ -121,9 +121,11 @@ return {
 		"ray-x/lsp_signature.nvim",
 		event = "InsertCharPre",
 		dependencies = "nvim-lspconfig",
-		init = function()
+		config = function()
+			require("lsp_signature").setup({})
+
 			if vim.g.color_theme == vim.g.color_theme_light then
-				vim.cmd([[ hi LspSignatureActiveParameter guibg=grey ]])
+				vim.cmd([[ hi LspSignatureActiveParameter gui=bold guifg=black ]])
 			end
 		end
 	}
