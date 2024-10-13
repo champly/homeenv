@@ -1,9 +1,9 @@
 [plugin]
 deps = [
-  { use = "yazi-rs/plugins:full-border", rev = "35100e7" },
-  { use = "yazi-rs/plugins:max-preview", rev = "35100e7" },
+  { use = "yazi-rs/plugins:full-border", rev = "932b931" },
+  { use = "yazi-rs/plugins:max-preview", rev = "932b931" },
   { use = "Reledia/glow", rev = "d8b36ff" },
-  { use = "yazi-rs/plugins:git", rev = "35100e7" },
+  { use = "yazi-rs/plugins:git", rev = "932b931" },
 ]
 
 [flavor]
