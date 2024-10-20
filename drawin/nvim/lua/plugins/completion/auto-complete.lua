@@ -29,8 +29,8 @@ return {
 	-- },
 	-- https://github.com/neovim/nvim-lspconfig/wiki/Autocompletion#nvim-cmp
 	{
-		-- "hrsh7th/nvim-cmp",
-		"iguanacucumber/magazine.nvim",
+		"hrsh7th/nvim-cmp",
+		-- "iguanacucumber/magazine.nvim",
 		name = "nvim-cmp",
 		event = "InsertEnter",
 		dependencies = {
