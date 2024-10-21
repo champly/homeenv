@@ -21,11 +21,25 @@ return {
 	--         nerd_font_variant = "normal",
 
 	--         -- experimental auto-brackets support
-	--         -- accept = { auto_brackets = { enabled = true } }
+	--         accept = { auto_brackets = { enabled = true } },
 
 	--         -- experimental signature help support
-	--         -- trigger = { signature_help = { enabled = true } }
-	--     }
+	--         trigger = { signature_help = { enabled = true } },
+
+	--         windows = {
+	--             autocomplete = {
+	--                 selection = "auto_insert",
+	--             },
+	--             documentation = {
+	--                 auto_show = true,
+	--             }
+	--         },
+	--         keymap = {
+	-- --         https://github.com/Saghen/blink.cmp/issues/20
+	--             accept = { "<CR>" },
+	--             select_next = { "<Down>", "<C-n>", "<Tab>" },
+	--         }
+	--     },
 	-- },
 	-- https://github.com/neovim/nvim-lspconfig/wiki/Autocompletion#nvim-cmp
 	{
