@@ -8,7 +8,10 @@ vim.api.nvim_set_keymap("n", "gx", ":silent execute '!open ' . shellescape(expan
 	{ noremap = true, silent = true })
 
 -- Session
-vim.api.nvim_set_keymap("n", "<leader>sl", [[<cmd>lua require("persistence").load()<cr>]], {})
+vim.api.nvim_set_keymap("n", "<leader>sl", [[<cmd>lua require("persistence").load()<cr>]], { silent = true })
+
+-- Obsidian
+vim.api.nvim_set_keymap("n", "<leader>ot", [[<cmd>ObsidianToday<cr>]], { silent = true })
 
 -- loop set mouse mode
 vim.api.nvim_set_keymap("n", "<leader>sm", ":lua vim.opt.mouse = vim.opt.mouse._value == 'v' and 'a' or 'v'<CR>",
