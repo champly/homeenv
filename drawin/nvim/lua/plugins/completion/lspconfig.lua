@@ -7,8 +7,6 @@ return {
 		},
 		ft = { "go", "lua", "rust", "c", "cpp", "markdown" },
 		config = function()
-			local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
 			-- https://neovim.io/doc/user/lsp.html
 			-- https://neovim.io/doc/user/diagnostic.html#vim.diagnostic.config()
 			vim.diagnostic.config({
@@ -64,12 +62,12 @@ return {
 					]])
 				end
 
-				require("lsp_signature").on_attach({
-					bind = true, -- This is mandatory, otherwise border config won't get registered.
-					handler_opts = {
-						border = "rounded"
-					}
-				}, bufnr)
+				-- require("lsp_signature").on_attach({
+				--     bind = true, -- This is mandatory, otherwise border config won't get registered.
+				--     handler_opts = {
+				--         border = "rounded"
+				--     }
+				-- }, bufnr)
 
 				if vim.lsp.inlay_hint then
 					if client.server_capabilities.inlayHintProvider then
@@ -113,6 +111,7 @@ return {
 			})
 
 			local lspconfig = require("lspconfig")
+			-- local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 			-- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#custom-configuration
 			lspconfig.gopls.setup({
@@ -142,7 +141,7 @@ return {
 					}
 				},
 				on_attach = enhance_attach,
-				capabilities = capabilities,
+				-- capabilities = capabilities,
 			})
 
 			-- https://rust-analyzer.github.io/manual.html#nvim-lsp
@@ -180,7 +179,7 @@ return {
 					}
 				},
 				on_attach = enhance_attach,
-				capabilities = capabilities,
+				-- capabilities = capabilities,
 			})
 
 			-- lspconfig.yamlls.setup({
@@ -215,7 +214,7 @@ return {
 				filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
 				single_file_support = true,
 				on_attach = enhance_attach,
-				capabilities = capabilities,
+				-- capabilities = capabilities,
 			})
 
 			-- -- https://github.com/MaskRay/ccls/wiki/nvim-lspconfig
@@ -271,7 +270,7 @@ return {
 					}
 				},
 				on_attach = enhance_attach,
-				capabilities = capabilities,
+				-- capabilities = capabilities,
 			})
 		end,
 	}
