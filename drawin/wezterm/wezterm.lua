@@ -7,7 +7,7 @@ local config = wezterm.config_builder()
 -- This is where you actually apply your config choices
 
 config.font = wezterm.font("SauceCodePro Nerd Font")
-config.font_size = 16
+config.font_size = 15
 
 -- For example, changing the color scheme:
 config.color_scheme = "BlulocoLight"
