@@ -112,6 +112,7 @@ return {
 
 			local lspconfig = require("lspconfig")
 			-- local capabilities = require("cmp_nvim_lsp").default_capabilities()
+			local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 			-- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#custom-configuration
 			lspconfig.gopls.setup({
@@ -141,7 +142,7 @@ return {
 					}
 				},
 				on_attach = enhance_attach,
-				-- capabilities = capabilities,
+				capabilities = capabilities,
 			})
 
 			-- https://rust-analyzer.github.io/manual.html#nvim-lsp
@@ -179,7 +180,7 @@ return {
 					}
 				},
 				on_attach = enhance_attach,
-				-- capabilities = capabilities,
+				capabilities = capabilities,
 			})
 
 			-- lspconfig.yamlls.setup({
@@ -214,7 +215,7 @@ return {
 				filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
 				single_file_support = true,
 				on_attach = enhance_attach,
-				-- capabilities = capabilities,
+				capabilities = capabilities,
 			})
 
 			-- -- https://github.com/MaskRay/ccls/wiki/nvim-lspconfig
@@ -270,7 +271,7 @@ return {
 					}
 				},
 				on_attach = enhance_attach,
-				-- capabilities = capabilities,
+				capabilities = capabilities,
 			})
 		end,
 	}
