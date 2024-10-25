@@ -1,3 +1,64 @@
+-- https://github.com/nvim-lua/completion-nvim/issues/337#issuecomment-765563829
+-- TODO: use https://github.com/NvChad/NvChad/blob/v2.0/lua/plugins/configs/lspconfig.lua rewrite
+local enhance_attach = function(client, bufnr)
+	-- highlight
+	if client.server_capabilities.documentHighlightProvider then
+		if vim.g.color_theme == vim.g.color_theme_dark then
+			vim.cmd([[
+				hi LspReferenceRead guibg=#ff8600 guifg=black gui=NONE
+				hi LspReferenceText guibg=#ff8600 guifg=black gui=NONE
+				hi LspReferenceWrite guibg=#ff8600 guifg=black gui=NONE
+				hi NormalFloat guibg=#3e3e3e
+			]])
+		else
+			vim.cmd([[
+				hi LspReferenceRead guibg=#ffcc33 guifg=black gui=NONE
+				hi LspReferenceText guibg=#ffcc33 guifg=black gui=NONE
+				hi LspReferenceWrite guibg=#ffcc33 guifg=black gui=NONE
+				hi NormalFloat guibg=#d9d9d9
+				hi DiagnosticFloatingHint guifg=gray
+			]])
+		end
+	end
+	vim.cmd([[
+		augroup lsp_document_highlight
+		autocmd! * <buffer>
+			autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+			autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()
+			autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+		augroup END
+	]])
+
+	-- keymap
+	local opts = { buffer = bufnr, silent = true, noremap = true }
+	-- TODO: https://github.com/nvim-telescope/telescope.nvim/issues/1265
+	vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+	-- vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+	vim.keymap.set("n", "<leader>do", vim.diagnostic.open_float)
+	vim.keymap.set({ "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
+	-- https://github.com/nvim-telescope/telescope.nvim#neovim-lsp-pickers
+	vim.keymap.set("n", "<c-]>", ":Telescope lsp_definitions theme=get_cursor<CR>", opts)
+	vim.keymap.set("n", "<leader>td", ":Telescope lsp_type_definitions<CR>", opts)
+	vim.keymap.set("n", "<leader>im", ":Telescope lsp_implementations theme=ivy<CR>", opts)
+	vim.keymap.set("n", "<leader>rf", ":Telescope lsp_references theme=ivy<CR>", opts)
+	-- vim.keymap.set("n", "<leader>ds", ":Telescope diagnostics theme=ivy<CR>", opts)
+	vim.keymap.set("n", "<leader>bl", ":Telescope lsp_document_symbols<CR>", opts)
+
+	-- inlay hint
+	if vim.lsp.inlay_hint then
+		if client.server_capabilities.inlayHintProvider then
+			vim.lsp.inlay_hint.enable(true)
+		end
+	end
+
+	-- require("lsp_signature").on_attach({
+	--     bind = true, -- This is mandatory, otherwise border config won't get registered.
+	--     handler_opts = {
+	--         border = "rounded"
+	--     }
+	-- }, bufnr)
+end
+
 return {
 	{
 		"neovim/nvim-lspconfig",
@@ -17,7 +78,7 @@ return {
 					--     min = vim.diagnostic.severity.WARN
 					-- },
 					spacing = 4,
-					prefix = " ",
+					prefix = " ", --        
 				},
 				signs = {
 					priority = 20,
@@ -30,85 +91,6 @@ return {
 				local hl = "DiagnosticSign" .. type
 				vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 			end
-
-			-- https://github.com/nvim-lua/completion-nvim/issues/337#issuecomment-765563829
-			-- TODO: use https://github.com/NvChad/NvChad/blob/v2.0/lua/plugins/configs/lspconfig.lua rewrite
-			local enhance_attach = function(client, bufnr)
-				-- Set autocommands conditional on server_capabilities
-				if client.server_capabilities.documentHighlightProvider then
-					if vim.g.color_theme == vim.g.color_theme_dark then
-						vim.cmd([[
-							hi LspReferenceRead guibg=#ff8600 guifg=black gui=NONE
-							hi LspReferenceText guibg=#ff8600 guifg=black gui=NONE
-							hi LspReferenceWrite guibg=#ff8600 guifg=black gui=NONE
-							hi NormalFloat guibg=#3e3e3e
-						]])
-					else
-						vim.cmd([[
-							hi LspReferenceRead guibg=#ffcc33 guifg=black gui=NONE
-							hi LspReferenceText guibg=#ffcc33 guifg=black gui=NONE
-							hi LspReferenceWrite guibg=#ffcc33 guifg=black gui=NONE
-							hi NormalFloat guibg=#d9d9d9
-							hi DiagnosticFloatingHint guifg=gray
-						]])
-					end
-
-					vim.cmd([[
-						augroup lsp_document_highlight
-						autocmd! * <buffer>
-							autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-							autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-						augroup END
-					]])
-				end
-
-				-- require("lsp_signature").on_attach({
-				--     bind = true, -- This is mandatory, otherwise border config won't get registered.
-				--     handler_opts = {
-				--         border = "rounded"
-				--     }
-				-- }, bufnr)
-
-				if vim.lsp.inlay_hint then
-					if client.server_capabilities.inlayHintProvider then
-						vim.lsp.inlay_hint.enable(true)
-					end
-				end
-			end
-
-			-- -- Global mappings.
-			-- -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-			vim.keymap.set("n", "<leader>do", vim.diagnostic.open_float)
-			-- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
-			-- vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
-			-- vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
-
-			-- Use LspAttach autocommand to only map the following keys
-			-- after the language server attaches to the current buffer
-			-- https://github.com/neovim/nvim-lspconfig#suggested-configuration
-			vim.api.nvim_create_autocmd("LspAttach", {
-				group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-				callback = function(ev)
-					-- Enable completion triggered by <c-x><c-o>
-					vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
-
-					-- Buffer local mappings.
-					-- See `:help vim.lsp.*` for documentation on any of the below functions
-					local opts = { buffer = ev.buf, silent = true, noremap = true }
-
-					-- TODO: https://github.com/nvim-telescope/telescope.nvim/issues/1265
-					vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-					-- vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-					vim.keymap.set({ "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
-					-- https://github.com/nvim-telescope/telescope.nvim#neovim-lsp-pickers
-					vim.keymap.set("n", "<c-]>", ":Telescope lsp_definitions theme=get_cursor<CR>", opts)
-					vim.keymap.set("n", "<leader>td", ":Telescope lsp_type_definitions<CR>", opts)
-					vim.keymap.set("n", "<leader>im", ":Telescope lsp_implementations theme=ivy<CR>", opts)
-					vim.keymap.set("n", "<leader>rf", ":Telescope lsp_references theme=ivy<CR>", opts)
-					-- vim.keymap.set("n", "<leader>ds", ":Telescope diagnostics theme=ivy<CR>", opts)
-					vim.keymap.set("n", "<leader>bl", ":Telescope lsp_document_symbols<CR>", opts)
-				end,
-			})
 
 			local lspconfig = require("lspconfig")
 			-- local capabilities = require("cmp_nvim_lsp").default_capabilities()
