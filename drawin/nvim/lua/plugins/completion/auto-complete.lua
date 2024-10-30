@@ -23,17 +23,16 @@ return {
 				}
 			},
 			windows = {
-				autocomplete = {
-					selection = "auto_insert",
-				},
 				documentation = {
 					auto_show = true,
 					auto_show_delay_ms = 50,
 				}
 			},
 			keymap = {
-				accept = { "<CR>" },
-				select_next = { "<Down>", "<C-n>", "<Tab>" },
+				["<CR>"] = { "select_and_accept", "fallback" },
+				["<Tab>"] = { "select_next", "fallback" },
+				["<C-p>"] = { "select_prev", "fallback" },
+				["<C-n>"] = { "select_next", "fallback" },
 			},
 			sources = {
 				providers = {
