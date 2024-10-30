@@ -1,6 +1,9 @@
 return {
 	{
 		"williamboman/mason.nvim",
+		dependencies = {
+			"stevearc/dressing.nvim"
+		},
 		opts = {
 			ensure_installed = {
 				-- debug: rust/cpp
