@@ -30,7 +30,8 @@ return {
 			},
 			keymap = {
 				["<CR>"] = { "select_and_accept", "fallback" },
-				["<Tab>"] = { "select_next", "fallback" },
+				["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
+				["<S-Tab>"] = { "snippet_backward", "fallback" },
 				["<C-p>"] = { "select_prev", "fallback" },
 				["<C-n>"] = { "select_next", "fallback" },
 			},
