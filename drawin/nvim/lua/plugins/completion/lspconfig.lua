@@ -65,6 +65,7 @@ return {
 		event = "BufRead",
 		dependencies = {
 			"telescope.nvim",
+			"saghen/blink.cmp",
 		},
 		ft = { "go", "lua", "rust", "c", "cpp", "markdown" },
 		config = function()
@@ -93,8 +94,13 @@ return {
 			end
 
 			local lspconfig = require("lspconfig")
-			-- local capabilities = require("cmp_nvim_lsp").default_capabilities()
-			local capabilities = vim.lsp.protocol.make_client_capabilities()
+			-- local capabilities = vim.tbl_deep_extend("force",
+			--     vim.lsp.protocol.make_client_capabilities(),
+			--     require("cmp_nvim_lsp").default_capabilities()
+			-- )
+			-- local capabilities = vim.lsp.protocol.make_client_capabilities()
+			local capabilities = require("blink.cmp").get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities())
+
 
 			-- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#custom-configuration
 			lspconfig.gopls.setup({
