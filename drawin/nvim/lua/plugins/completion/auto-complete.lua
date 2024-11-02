@@ -29,12 +29,8 @@ return {
 				}
 			},
 			keymap = {
-				["<CR>"] = { "select_and_accept", "fallback" },
-				["<C-e>"] = { "hide" },
+				preset = "enter",
 				["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
-				["<S-Tab>"] = { "snippet_backward", "fallback" },
-				["<C-p>"] = { "select_prev", "fallback" },
-				["<C-n>"] = { "select_next", "fallback" },
 			},
 			sources = {
 				providers = {
