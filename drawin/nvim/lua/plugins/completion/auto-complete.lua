@@ -10,6 +10,7 @@ return {
 		opts = {
 			keymap = {
 				preset = "enter",
+				["<C-e>"] = { "hide", "fallback" },
 				["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
 			},
 			highlight = {
@@ -26,6 +27,9 @@ return {
 				}
 			},
 			windows = {
+				autocomplete = {
+					draw = "reversed",
+				},
 				documentation = {
 					auto_show = true,
 					auto_show_delay_ms = 50,
