@@ -27,9 +27,6 @@ return {
 				}
 			},
 			windows = {
-				autocomplete = {
-					draw = "reversed",
-				},
 				documentation = {
 					auto_show = true,
 					auto_show_delay_ms = 50,
