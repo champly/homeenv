@@ -15,7 +15,7 @@ vim.api.nvim_set_keymap("n", "<leader>ot", [[<cmd>ObsidianToday<cr>]], { silent 
 
 -- loop set mouse mode
 vim.api.nvim_set_keymap("n", "<leader>sm", ":lua vim.opt.mouse = vim.opt.mouse._value == 'v' and 'a' or 'v'<CR>",
-	{ noremap = true })
+	{ noremap = true, silent = true })
 
 -- Call figlet
 -- brew install figlet
