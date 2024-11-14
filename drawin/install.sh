@@ -24,10 +24,12 @@ rm -rf ~/.zshrc
 rm -rf ~/.zsh_history
 ln -s ${DropboxInstallPath}/config/zsh/zshrc ~/.zshrc
 ln -s ${DropboxInstallPath}/config/zsh/zsh_history ~/.zsh_history
-git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/plugins/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/plugins/zsh-syntax-highlighting
-git clone https://github.com/zsh-users/zsh-history-substring-search.git ~/.oh-my-zsh/plugins/zsh-history-substring-search
-git clone https://github.com/zsh-users/zsh-completions.git ~/.oh-my-zsh/plugins/zsh-completions
+git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+git clone https://github.com/zsh-users/zsh-history-substring-search.git ~/.oh-my-zsh/custom/plugins/zsh-history-substring-search
+git clone https://github.com/zsh-users/zsh-completions.git ~/.oh-my-zsh/custom/plugins/zsh-completions
+git clone https://github.com/Pilaton/OhMyZsh-full-autoupdate.git ~/.oh-my-zsh/custom/plugins/plugins/ohmyzsh-full-autoupdate
+
 source ~/.zshrc
 
 echo "###### install fzf"
