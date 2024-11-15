@@ -82,7 +82,7 @@ plugins=(
   zsh-syntax-highlighting
   zsh-history-substring-search
   zsh-completions
-  ohmyzsh-full-autoupdate
+  autoupdate
 )
 
 source $ZSH/oh-my-zsh.sh
