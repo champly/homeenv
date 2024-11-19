@@ -99,8 +99,7 @@ return {
 			--     require("cmp_nvim_lsp").default_capabilities()
 			-- )
 			-- local capabilities = vim.lsp.protocol.make_client_capabilities()
-			local capabilities = require("blink.cmp").get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities())
-
+			local capabilities = require("blink.cmp").get_lsp_capabilities(nil)
 
 			-- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#custom-configuration
 			lspconfig.gopls.setup({
