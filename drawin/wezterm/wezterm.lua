@@ -30,7 +30,7 @@ config.colors = {
 		},
 	},
 	-- the background color of selected text
-	selection_bg = '#b3b3b3',
+	selection_bg = "#b3b3b3",
 }
 
 config.scrollback_lines = 100000

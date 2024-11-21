@@ -6,42 +6,34 @@ M.icon_styles = {
 		right = " ",
 		main_icon = "  ",
 		vi_mode_icon = " ",
-		position_icon = " ",
+		position_icon = "󰟾 ",
 	},
 	arrow = {
 		left = "",
 		right = "",
-		main_icon = "  ",
-		vi_mode_icon = " ",
-		position_icon = " ",
+		position_icon = "󰟾 ",
 	},
 	block = {
 		left = " ",
 		right = " ",
-		main_icon = "   ",
-		vi_mode_icon = "  ",
-		position_icon = "  ",
+		position_icon = "󰟾 ",
 	},
 	round = {
 		left = "",
 		right = "",
-		main_icon = "  ",
-		vi_mode_icon = " ",
-		position_icon = " ",
+		position_icon = "󰟾 ",
 	},
 	slant = {
 		left = " ",
 		right = " ",
-		main_icon = "  ",
-		vi_mode_icon = " ",
-		position_icon = " ",
+		position_icon = "󰟾 ",
 	},
 }
 
 M.system_icons = {
-	Linux = ' ',
-	Darwin = ' ',
-	Windows = ' ',
+	Linux = " ",
+	Darwin = " ",
+	Windows = " ",
 }
 
 M.theme_color = {
@@ -159,7 +151,7 @@ M.get_diagnostic_info = function()
 	if vim.fn.exists('*coc#rpc#start_server') == 1 then
 		return M.get_coc_lsp()
 	end
-	return ''
+	return ""
 end
 
 return M
