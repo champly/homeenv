@@ -11,7 +11,6 @@ return {
 			---@diagnostic disable-next-line: missing-fields
 			require("nvim-treesitter.configs").setup({
 				-- ensure_installed = "all",
-				-- ignore_install = { "swift", "wgsl", "phpdoc" },
 				ensure_installed = {
 					"lua",
 					"go",
@@ -31,7 +30,8 @@ return {
 					"yaml",
 					"bash",
 					"html",
-					"nickel"
+					"nix",
+					"nickel",
 				},
 				highlight = {
 					enable = true, -- false will disable the whole extension
