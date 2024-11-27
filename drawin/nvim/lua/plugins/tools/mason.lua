@@ -24,8 +24,6 @@ return {
 				"delve",
 				-- toml
 				"taplo",
-				-- nix
-				"nil",
 			},
 		},
 		config = function(_, opts)

@@ -260,8 +260,6 @@ return {
 				on_attach = enhance_attach,
 				capabilities = capabilities,
 			})
-
-			lspconfig.nil_ls.setup({})
 		end,
 	}
 }
