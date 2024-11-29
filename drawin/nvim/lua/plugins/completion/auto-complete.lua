@@ -13,29 +13,27 @@ return {
 				["<C-e>"] = { "hide", "fallback" },
 				["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
 			},
-			highlight = {
+			appearance = {
 				use_nvim_cmp_as_default = true,
 			},
-			accept = {
-				auto_brackets = {
-					enabled = true
-				}
-			},
-			trigger = {
-				signature_help = {
-					enabled = true
-				}
-			},
-			windows = {
-				autocomplete = {
+			completion = {
+				accept = {
+					auto_brackets = {
+						enabled = true,
+					}
+				},
+				menu = {
 					draw = {
 						columns = { { "label", "label_description", gap = 1 }, { "kind_icon" }, { "kind" } },
-					},
+					}
 				},
 				documentation = {
 					auto_show = true,
 					auto_show_delay_ms = 50,
-				}
+				},
+			},
+			signature = {
+				enabled = true,
 			},
 			sources = {
 				providers = {
