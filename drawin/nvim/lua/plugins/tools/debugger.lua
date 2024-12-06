@@ -7,12 +7,13 @@ return {
 			vim.fn.sign_define("DapBreakpointRejected", { text = "🚫", texthl = "Normal", linehl = "", numhl = "" })
 			vim.fn.sign_define("DapStopped", { text = "👉", texthl = "Normal", linehl = "", numhl = "" })
 
-			vim.keymap.set("n", "<F5>", function() require("dap").continue() end)
-			vim.keymap.set("n", "<F9>", function() require("dap").toggle_breakpoint() end)
-			vim.keymap.set("n", "<F10>", function() require("dap").step_over() end)
-			vim.keymap.set("n", "<F11>", function() require("dap").step_into() end)
-			vim.keymap.set("n", "<F12>", function() require("dap").step_out() end)
-			vim.keymap.set("n", "<S-s>", function() require("dap").terminate() end)
+			local opts = { silent = true }
+			vim.keymap.set("n", "<F5>", function() require("dap").continue() end, opts)
+			vim.keymap.set("n", "<F9>", function() require("dap").toggle_breakpoint() end, opts)
+			vim.keymap.set("n", "<F10>", function() require("dap").step_over() end, opts)
+			vim.keymap.set("n", "<F11>", function() require("dap").step_into() end, opts)
+			vim.keymap.set("n", "<F12>", function() require("dap").step_out() end, opts)
+			vim.keymap.set("n", "<S-s>", function() require("dap").terminate() end, opts)
 
 			local dap = require("dap")
 
