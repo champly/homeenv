@@ -115,6 +115,7 @@ return {
 							-- https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md
 							fieldalignment = true
 						},
+						pullDiagnostics = true,
 						-- ["local"] = "github.com/champly",
 						-- https://github.com/golang/tools/blob/master/gopls/doc/inlayHints.md
 						-- hints = {

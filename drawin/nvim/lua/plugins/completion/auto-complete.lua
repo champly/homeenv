@@ -36,13 +36,16 @@ return {
 				enabled = true,
 			},
 			sources = {
+				default = { "lsp", "path", "snippets", "buffer" },
+				-- optionally disable cmdline completions
+				cmdline = {},
 				providers = {
 					snippets = {
 						opts = {
 							search_paths = { vim.fn.stdpath("config") .. "/external/snippets/" },
 						}
 					}
-				}
+				},
 			}
 		},
 		init = function()
