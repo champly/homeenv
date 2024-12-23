@@ -111,10 +111,9 @@ return {
 						},
 						staticcheck = true,
 						gofumpt = true,
-						analyses = {
-							-- https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md
-							fieldalignment = true
-						},
+						-- analyses = {
+						--     -- https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md
+						-- },
 						pullDiagnostics = true,
 						-- ["local"] = "github.com/champly",
 						-- https://github.com/golang/tools/blob/master/gopls/doc/inlayHints.md
