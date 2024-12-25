@@ -21,7 +21,6 @@ return {
 				vim.keymap.set("n", "s", api.node.open.horizontal, opts("Open: Horizontal Split"))
 			end
 
-			-- vim.api.nvim_set_keymap("n", "ff", ":NvimTreeToggle<CR>", { noremap = true })
 			vim.api.nvim_set_keymap("n", "ff", ":NvimTreeFindFile<CR>", { noremap = true, silent = true })
 
 			-- https://github.com/nvim-tree/nvim-tree.lua/pull/603
@@ -37,8 +36,7 @@ return {
 						},
 						glyphs = {
 							git = {
-								-- renamed = "➜",
-								-- deleted = "",
+								unstaged = "●",
 								renamed = "≫",
 								deleted = "≠",
 							},
