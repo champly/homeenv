@@ -37,6 +37,13 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 		vim.cmd([[set filetype=nickel]])
 	end
 })
+-- set BUCK filetype
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+	pattern = { "*.bxl", "BUCK", "TARGETS" },
+	callback = function()
+		vim.cmd([[set filetype=bzl]])
+	end
+})
 
 -- https://github.com/mhinz/vim-grepper/issues/117
 -- FIXME: auto close when quickfix is last window
