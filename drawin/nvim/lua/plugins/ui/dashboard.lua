@@ -51,44 +51,46 @@ return {
 				},
 				center = {
 					{
-						icon = "  ",
-						desc = "Recently laset session                  ",
+						icon = "󰦛  ",
+						desc = "Restore Session",
 						key = "<leader>sl",
 						action = [[ lua require("persistence").load() ]]
 					},
 					{
 						icon = "  ",
-						desc = "Recently opened files                   ",
+						-- icon = "  ",
+						desc = "Recent Files",
 						key = "<leader>fh",
 						action = "Telescope oldfiles"
 					},
 					{
-						icon = "  ",
-						desc = "Find  File                              ",
+						icon = "  ",
+						desc = "Find  File",
 						key = "<leader>ff",
 						action = "Telescope find_files"
 					},
 					{
+						-- icon = "  ",
 						icon = "  ",
-						desc = "Find  word                              ",
+						desc = "Find  word",
 						key = "<leader>fw",
 						action = "Telescope live_grep"
 					},
 					{
 						icon = "  ",
-						desc = "Create new buffer                       ",
+						desc = "Create new buffer",
 						key = "<leader> n",
 						action = "enew"
 					},
 					{
-						icon = "  ",
-						desc = "Open Personal dotfiles                  ",
+						icon = "  ",
+						desc = "Open Personal dotfiles",
 						key = "<leader>fd",
 						action = "Telescope dotfiles"
 					},
 					{
 						icon = "  ",
-						desc = "Find Go Source Code                     ",
+						desc = "Find Go Source Code",
 						key = "<leader>fs",
 						action = "Telescope gosource"
 					},
