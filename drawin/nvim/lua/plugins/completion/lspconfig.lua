@@ -9,7 +9,6 @@ local enhance_attach = function(client, bufnr)
 				hi LspReferenceText guibg=#ff8600 guifg=black gui=NONE
 				hi LspReferenceWrite guibg=#ff8600 guifg=black gui=NONE
 				hi NormalFloat guibg=#3e3e3e
-				hi FloatBorder guibg=#3e3e3e guifg=white
 			]])
 		else
 			vim.cmd([[
@@ -17,7 +16,6 @@ local enhance_attach = function(client, bufnr)
 				hi LspReferenceText guibg=#ffcc33 guifg=black gui=NONE
 				hi LspReferenceWrite guibg=#ffcc33 guifg=black gui=NONE
 				hi NormalFloat guibg=#d9d9d9
-				hi FloatBorder guibg=#d9d9d9 guifg=black
 				hi DiagnosticFloatingHint guifg=gray
 			]])
 		end
@@ -91,11 +89,6 @@ return {
 				}
 			})
 
-			local handlers = {
-				["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
-				["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" }),
-			}
-
 			-- local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 			local signs = { Error = "✘", Warn = "▲", Hint = "⚑", Info = "»" }
 			for type, icon in pairs(signs) do
@@ -140,7 +133,6 @@ return {
 				},
 				on_attach = enhance_attach,
 				capabilities = capabilities,
-				handlers = handlers,
 			})
 
 			-- https://rust-analyzer.github.io/manual.html#nvim-lsp
@@ -179,7 +171,6 @@ return {
 				},
 				on_attach = enhance_attach,
 				capabilities = capabilities,
-				handlers = handlers,
 			})
 
 			-- lspconfig.yamlls.setup({
@@ -215,7 +206,6 @@ return {
 				single_file_support = true,
 				on_attach = enhance_attach,
 				capabilities = capabilities,
-				handlers = handlers,
 			})
 
 			-- -- https://github.com/MaskRay/ccls/wiki/nvim-lspconfig
@@ -272,7 +262,6 @@ return {
 				},
 				on_attach = enhance_attach,
 				capabilities = capabilities,
-				handlers = handlers,
 			})
 		end,
 	}

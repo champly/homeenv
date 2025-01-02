@@ -23,7 +23,6 @@ return {
 					}
 				},
 				menu = {
-					border = "rounded",
 					draw = {
 						columns = { { "label", "label_description", gap = 1 }, { "kind_icon" }, { "kind" } },
 					}
@@ -31,16 +30,10 @@ return {
 				documentation = {
 					auto_show = true,
 					auto_show_delay_ms = 50,
-					window = {
-						border = "rounded",
-					}
 				},
 			},
 			signature = {
 				enabled = true,
-				window = {
-					border = "rounded",
-				}
 			},
 			sources = {
 				default = { "lsp", "path", "snippets", "buffer" },
