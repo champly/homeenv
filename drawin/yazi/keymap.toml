@@ -170,8 +170,8 @@ keymap = [
   { on = ["o", "f"], run = "shell 'open .' --confirm --block", desc = "Open finder here" },
 
   # plugin
-  { on = "<Enter>", run = "plugin smart-enter", desc = "Enter the child directory" },
-  { on = "l", run = "plugin smart-enter", desc = "Enter the child directory" },
+  { on = "<Enter>", run = "plugin smart-enter", desc = "Enter the child directory, or open the file" },
+  { on = "l", run = "plugin smart-enter", desc = "Enter the child directory, or open the file" },
   { on = "T", run = "plugin max-preview", desc = "Maximize or restore preview" },
 ]
 
