@@ -3,6 +3,11 @@ theme = BlulocoLight
 font-family = "SauceCodePro Nerd Font"
 font-size = 15
 
+shell-integration-features = no-cursor
 cursor-style = block
 
 scrollback-limit = 20480
+
+macos-option-as-alt = true
+
+# https://ghostty.org/docs/help/terminfo
