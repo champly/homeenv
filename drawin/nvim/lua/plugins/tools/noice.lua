@@ -26,7 +26,10 @@ return {
 				signature = {
 					-- https://github.com/folke/noice.nvim/issues/370
 					enabled = false
-				}
+				},
+				hover = {
+					enabled = false,
+				},
 			},
 			-- you can enable a preset for easier configuration
 			presets = {

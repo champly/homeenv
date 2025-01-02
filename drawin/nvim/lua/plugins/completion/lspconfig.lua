@@ -79,12 +79,20 @@ return {
 					--     min = vim.diagnostic.severity.WARN
 					-- },
 					spacing = 4,
-					prefix = " ", --        
+					prefix = " ", --         ■ ● ▎x
 				},
 				signs = {
 					priority = 20,
 				},
+				float = {
+					border = "rounded", -- none,single,double
+				}
 			})
+
+			local handlers = {
+				["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
+				["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" }),
+			}
 
 			-- local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 			local signs = { Error = "✘", Warn = "▲", Hint = "⚑", Info = "»" }
@@ -130,6 +138,7 @@ return {
 				},
 				on_attach = enhance_attach,
 				capabilities = capabilities,
+				handlers = handlers,
 			})
 
 			-- https://rust-analyzer.github.io/manual.html#nvim-lsp
@@ -168,6 +177,7 @@ return {
 				},
 				on_attach = enhance_attach,
 				capabilities = capabilities,
+				handlers = handlers,
 			})
 
 			-- lspconfig.yamlls.setup({
@@ -203,6 +213,7 @@ return {
 				single_file_support = true,
 				on_attach = enhance_attach,
 				capabilities = capabilities,
+				handlers = handlers,
 			})
 
 			-- -- https://github.com/MaskRay/ccls/wiki/nvim-lspconfig
@@ -259,6 +270,7 @@ return {
 				},
 				on_attach = enhance_attach,
 				capabilities = capabilities,
+				handlers = handlers,
 			})
 		end,
 	}
