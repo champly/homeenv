@@ -58,5 +58,6 @@ return {
 		vim.api.nvim_set_keymap("n", "<leader>fs", ":Telescope gosource<cr>", opts)
 		vim.api.nvim_set_keymap("n", "<leader>dt", ":Telescope nvimdap<cr>", opts)
 		vim.api.nvim_set_keymap("n", "<leader>gl", ":Telescope git_bcommits<cr>", opts)
+		vim.api.nvim_set_keymap("n", "<leader>ml", ":Telescope marks<cr>", opts)
 	end
 }

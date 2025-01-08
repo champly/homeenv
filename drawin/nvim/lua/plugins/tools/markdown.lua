@@ -23,5 +23,15 @@ return {
 			"nvim-tree/nvim-web-devicons"
 		},
 		ft = { "markdown" },
-	}
+	},
+	{
+		"hedyhli/markdown-toc.nvim",
+		ft = "markdown",
+		cmd = { "Mtoc" },
+		opts = {
+			fences = {
+				enabled = false,
+			}
+		},
+	},
 }
