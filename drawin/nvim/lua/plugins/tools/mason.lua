@@ -24,6 +24,8 @@ return {
 				"delve",
 				-- toml
 				"taplo",
+				-- markdown
+				"markdownlint-cli2",
 			},
 		},
 		config = function(_, opts)

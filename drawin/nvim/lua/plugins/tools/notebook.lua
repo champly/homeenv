@@ -26,7 +26,7 @@ return {
 				daily_notes = {
 					folder = "Daily/Tencent",
 					date_format = "%Y年%m月%d日"
-				}
+				},
 			}
 		end,
 	},
