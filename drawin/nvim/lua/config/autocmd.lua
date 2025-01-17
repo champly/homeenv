@@ -1,11 +1,33 @@
--- 文件打开的时候光标停留在上次关闭时候的位置
+-- Restore cursor to file position in previous editing session
 vim.api.nvim_create_autocmd("BufReadPost", {
-	callback = function()
-		local line = vim.fn.line('\'"')
-		if line > 1 and line <= vim.fn.line('$') then
-			vim.cmd.normal('g\'"')
+	callback = function(args)
+		local mark = vim.api.nvim_buf_get_mark(args.buf, '"')
+		local line_count = vim.api.nvim_buf_line_count(args.buf)
+		if mark[1] > 0 and mark[1] <= line_count then
+			vim.cmd('normal! g`"zz')
 		end
-	end
+	end,
+})
+
+-- https://github.com/folke/dot/blob/master/nvim/lua/config/autocmds.lua
+-- show cursor line only in active window
+vim.api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
+	callback = function()
+		if vim.w.auto_cursorline then
+			vim.wo.cursorline = true
+			---@diagnostic disable-next-line: inject-field
+			vim.w.auto_cursorline = nil
+		end
+	end,
+})
+vim.api.nvim_create_autocmd({ "InsertEnter", "WinLeave" }, {
+	callback = function()
+		if vim.wo.cursorline then
+			---@diagnostic disable-next-line: inject-field
+			vim.w.auto_cursorline = true
+			vim.wo.cursorline = false
+		end
+	end,
 })
 
 -- https://github.com/nvim-tree/nvim-tree.lua/wiki/Auto-Close
