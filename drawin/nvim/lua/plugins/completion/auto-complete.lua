@@ -8,6 +8,11 @@ return {
 		-- version = "v0.*",
 		build = "cargo build --release",
 		opts = {
+			enabled = function()
+				return not vim.list_contains({ "NvimTree" }, vim.bo.filetype)
+					and vim.bo.buftype ~= "prompt"
+					and vim.b.completion ~= false
+			end,
 			keymap = {
 				preset = "enter",
 				["<C-e>"] = { "hide", "fallback" },
