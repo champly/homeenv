@@ -17,34 +17,41 @@ return {
 
 			local dap = require("dap")
 
-			dap.adapters.delve = {
-				type = "server",
-				port = "${port}",
-				executable = {
-					command = "dlv",
-					args = { "dap", "-l", "127.0.0.1:${port}" },
-				}
-			}
+			dap.adapters.delve = function(callback, config)
+				if config.mode == "remote" and config.request == "attach" then
+					callback({
+						type = "server",
+						host = config.host or "127.0.0.1",
+						port = config.port or "38697"
+					})
+				else
+					callback({
+						type = "server",
+						port = "${port}",
+						executable = {
+							command = "dlv",
+							args = { "dap", "-l", "127.0.0.1:${port}", "--log", "--log-output=dap" },
+							detached = vim.fn.has("win32") == 0,
+						}
+					})
+				end
+			end
 			dap.adapters.codelldb = {
-				type = "server",
-				port = "${port}",
-				executable = {
-					command = "codelldb",
-					args = { "--port", "${port}" },
-				}
+				type = "executable",
+				command = "codelldb",
 			}
 
 			-- https://github.com/go-delve/delve/blob/master/Documentation/usage/dlv_dap.md
 			dap.configurations.go = {
 				{
 					type = "delve",
-					name = "Debug (Default)",
+					name = "Debug",
 					request = "launch",
 					program = "${file}"
 				},
 				{
 					type = "delve",
-					name = "Debug test (Default)", -- configuration for debugging test files
+					name = "Debug test", -- configuration for debugging test files
 					request = "launch",
 					mode = "test",
 					program = "${file}"
@@ -52,7 +59,7 @@ return {
 				-- works with go.mod packages and sub packages
 				{
 					type = "delve",
-					name = "Debug test (go.mod Default)",
+					name = "Debug test (go.mod)",
 					request = "launch",
 					mode = "test",
 					program = "./${relativeFileDirname}"
@@ -82,18 +89,6 @@ return {
 				},
 			}
 			dap.configurations.c = dap.configurations.cpp
-
-			-- auto reload .vscode/launch.json
-			local type_to_filetypes = { codelldb = { "rust" }, delve = { "go" } }
-			require("dap.ext.vscode").load_launchjs(nil, type_to_filetypes)
-
-			local pattern = "*/.vscode/launch.json"
-			vim.api.nvim_create_autocmd("BufWritePost", {
-				pattern = pattern,
-				callback = function(args)
-					require("dap.ext.vscode").load_launchjs(args.file, type_to_filetypes)
-				end
-			})
 		end,
 	},
 	{
