@@ -9,26 +9,26 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 	end,
 })
 
--- https://github.com/folke/dot/blob/master/nvim/lua/config/autocmds.lua
--- show cursor line only in active window
-vim.api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
-	callback = function()
-		if vim.w.auto_cursorline then
-			vim.wo.cursorline = true
-			---@diagnostic disable-next-line: inject-field
-			vim.w.auto_cursorline = nil
-		end
-	end,
-})
-vim.api.nvim_create_autocmd({ "InsertEnter", "WinLeave" }, {
-	callback = function()
-		if vim.wo.cursorline then
-			---@diagnostic disable-next-line: inject-field
-			vim.w.auto_cursorline = true
-			vim.wo.cursorline = false
-		end
-	end,
-})
+-- -- https://github.com/folke/dot/blob/master/nvim/lua/config/autocmds.lua
+-- -- show cursor line only in active window
+-- vim.api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
+--     callback = function()
+--         if vim.w.auto_cursorline then
+--             vim.wo.cursorline = true
+--             ---@diagnostic disable-next-line: inject-field
+--             vim.w.auto_cursorline = nil
+--         end
+--     end,
+-- })
+-- vim.api.nvim_create_autocmd({ "InsertEnter", "WinLeave" }, {
+--     callback = function()
+--         if vim.wo.cursorline then
+--             ---@diagnostic disable-next-line: inject-field
+--             vim.w.auto_cursorline = true
+--             vim.wo.cursorline = false
+--         end
+--     end,
+-- })
 
 -- Auto resize splits when the terminal's window is resized
 vim.api.nvim_create_autocmd("VimResized", {
