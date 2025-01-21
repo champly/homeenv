@@ -4,9 +4,13 @@ return {
 		event = "BufReadPre",
 		dependencies = { "rcarriga/nvim-dap-ui" },
 		config = function()
-			vim.fn.sign_define("DapBreakpoint", { text = "🛑", texthl = "Normal", linehl = "", numhl = "" })
-			vim.fn.sign_define("DapBreakpointRejected", { text = "🚫", texthl = "Normal", linehl = "", numhl = "" })
-			vim.fn.sign_define("DapStopped", { text = "👉", texthl = "Normal", linehl = "", numhl = "" })
+			vim.cmd [[
+				hi DapBreakpoint gui=bold guifg=red
+				hi DapStopped gui=bold guifg=#ff9900
+			]]
+			vim.fn.sign_define("DapBreakpoint", { text = "●", texthl = "DapBreakpoint", linehl = "", numhl = "" })
+			vim.fn.sign_define("DapBreakpointRejected", { text = "", texthl = "DapBreakpoint", linehl = "", numhl = "" })
+			vim.fn.sign_define("DapStopped", { text = "󰔰", texthl = "DapStopped", linehl = "", numhl = "" })
 
 			local opts = { silent = true }
 			vim.keymap.set("n", "<F5>", function() require("dap").continue() end, opts)
