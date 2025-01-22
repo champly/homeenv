@@ -9,7 +9,7 @@ return {
 		build = "cargo build --release",
 		opts = {
 			enabled = function()
-				return not vim.list_contains({ "NvimTree" }, vim.bo.filetype)
+				return not vim.list_contains({ "NvimTree", "DressingInput" }, vim.bo.filetype)
 					and vim.bo.buftype ~= "prompt"
 					and vim.b.completion ~= false
 			end,
