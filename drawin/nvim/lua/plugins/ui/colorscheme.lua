@@ -70,7 +70,7 @@ return {
 		},
 		opts = {
 			options = {
-				theme = "tomorrow",
+				theme = "onelight",
 				component_separators = { left = "", right = "" },
 				section_separators = { left = "", right = "" },
 			},
