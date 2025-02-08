@@ -62,26 +62,50 @@ return {
 			end
 		end,
 	},
-	-- {
-	--     "nvim-lualine/lualine.nvim",
-	--     dependencies = { "nvim-tree/nvim-web-devicons" },
-	--     opts = {
-	--         options = {
-	--             theme = "onelight"
-	--         }
-	--     }
-	-- },
 	{
-		"freddiehaddad/feline.nvim",
+		"nvim-lualine/lualine.nvim",
 		event = "BufReadPre",
-		dependencies = "nvim-tree/nvim-web-devicons",
-		config = function()
-			if vim.g.color_theme == vim.g.color_theme_dark then
-				vim.cmd [[ hi StatusLineNC guibg=#696157 gui=none ]]
-			else
-				vim.cmd [[ hi StatusLineNC guibg=#fce5cd gui=none ]]
-			end
-			require("plugins.ui.statusline.layout")
-		end,
+		dependencies = {
+			"nvim-tree/nvim-web-devicons",
+		},
+		opts = {
+			options = {
+				theme = "tomorrow",
+				component_separators = { left = "", right = "" },
+				section_separators = { left = "", right = "" },
+			},
+			-- +-------------------------------------------------+
+			-- | A | B | C                             X | Y | Z |
+			-- +-------------------------------------------------+
+			sections = {
+				lualine_a = { "mode" },
+				lualine_b = { "branch", "diagnostics", },
+				lualine_c = {
+					{
+						"filename",
+						path = 1,
+					},
+					{
+						"filetype",
+						icon_only = true,
+					},
+				},
+				lualine_x = {
+					function()
+						local clients = vim.lsp.get_clients()
+						if next(clients) == nil then
+							return ""
+						end
+						local client_names = {}
+						for _, client in pairs(vim.lsp.get_clients()) do
+							table.insert(client_names, client.name)
+						end
+						return "  " .. table.concat(client_names, " ")
+					end
+				},
+				lualine_y = { "diff" },
+				lualine_z = { "progress" },
+			}
+		}
 	}
 }
