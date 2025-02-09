@@ -1,4 +1,5 @@
 return {
+	-- MagicDuck/grug-far.nvim
 	-- search and replace
 	{
 		"windwp/nvim-spectre",
