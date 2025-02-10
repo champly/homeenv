@@ -1,10 +1,27 @@
-[plugin]
-deps = [
-  { use = "yazi-rs/plugins:full-border", rev = "600614a" },
-  { use = "yazi-rs/plugins:max-preview", rev = "600614a" },
-  { use = "Reledia/glow", rev = "5ce76dc" },
-  { use = "yazi-rs/plugins:git", rev = "600614a" }, { use = "yazi-rs/plugins:smart-enter", rev = "600614a" },
-]
+[[plugin.deps]]
+use = "yazi-rs/plugins:full-border"
+rev = "8945e54"
+hash = "ae9e1d0c6bfd68cdebc98cc684c22b45"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:max-preview"
+rev = "8945e54"
+hash = "15b2ff7f6563c14d5b2e93b3e9da35de"
+
+[[plugin.deps]]
+use = "Reledia/glow"
+rev = "5ce76dc"
+hash = "52e5f5c602962e7cbf874da28f52ba45"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:git"
+rev = "8945e54"
+hash = "771f18427fb75fb19990ce602bb322f4"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:smart-enter"
+rev = "8945e54"
+hash = "aef2b1a805b80cce573bb766f1459d88"
 
 [flavor]
 deps = []
