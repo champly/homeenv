@@ -13,6 +13,7 @@ npm config set registry https://registry.npm.taobao.org
 
 # nvim
 wget https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+# wget https://github.com/neovim/neovim-releases/releases/latest/download/nvim-linux-x86_64.appimage
 chmod 755 ./nvim.appimage
 ./nvim.appimage --appimage-extract
 rm -rf /usr/local/nvim
