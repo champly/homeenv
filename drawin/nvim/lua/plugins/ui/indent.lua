@@ -1,30 +1,64 @@
 return {
 	{
-		"shellRaining/hlchunk.nvim",
+		"folke/snacks.nvim",
 		event = "BufReadPre",
-		config = function()
-			vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, { pattern = "*", command = "EnableHL", })
-			require("hlchunk").setup({
+		opts = {
+			indent = {
+				indent = {
+					priority = 1,
+					enabled = true, -- enable indent guides
+					char = "",
+					only_scope = false, -- only show indent guides of the scope
+					hl = "SnacksIndent", ---@type string|string[] hl groups for indent guides
+				},
+				animate = {
+					enabled = true,
+				},
 				chunk = {
-					enable = true,
-					use_treesitter = true,
-					style = {
-						{ fg = "blue" },
+					enabled = true,
+					char = {
+						corner_top = "╭",
+						corner_bottom = "╰",
+						horizontal = "─",
+						vertical = "│",
+						arrow = ">",
 					},
 				},
-				indent = {
-					chars = { "│", "¦", "┆", "┊", },
-					use_treesitter = false,
-				},
-				blank = {
-					enable = false,
-				},
-				line_num = {
-					use_treesitter = true,
-				},
-			})
-		end,
+			}
+		},
+		init = function()
+			vim.cmd([[
+				hi SnacksIndentChunk guifg=blue
+				hi SnacksIndentScope guifg=blue
+			]])
+		end
 	}
+	-- {
+	--     "shellRaining/hlchunk.nvim",
+	--     event = "BufReadPre",
+	--     config = function()
+	--         vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, { pattern = "*", command = "EnableHL", })
+	--         require("hlchunk").setup({
+	--             chunk = {
+	--                 enable = true,
+	--                 use_treesitter = true,
+	--                 style = {
+	--                     { fg = "blue" },
+	--                 },
+	--             },
+	--             indent = {
+	--                 chars = { "│", "¦", "┆", "┊", },
+	--                 use_treesitter = false,
+	--             },
+	--             blank = {
+	--                 enable = false,
+	--             },
+	--             line_num = {
+	--                 use_treesitter = true,
+	--             },
+	--         })
+	--     end,
+	-- }
 	-- -- Active indent guide and indent text objects. When you're browsing
 	-- -- code, this highlights the current level of indentation, and animates
 	-- -- the highlighting.
