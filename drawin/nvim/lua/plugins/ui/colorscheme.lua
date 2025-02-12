@@ -98,12 +98,13 @@ return {
 						end
 						local client_names = {}
 						for _, client in pairs(vim.lsp.get_clients()) do
+							---@diagnostic disable-next-line: undefined-field
 							table.insert(client_names, client.name)
 						end
 						return "  " .. table.concat(client_names, " ")
 					end
 				},
-				lualine_y = { "diff" },
+				lualine_y = { "diff", "searchcount" },
 				lualine_z = { "progress" },
 			}
 		}
