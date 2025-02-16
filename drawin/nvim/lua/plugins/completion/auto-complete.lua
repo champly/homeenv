@@ -1,12 +1,10 @@
 return {
 	{
 		"saghen/blink.cmp",
-		lazy = false, -- lazy loading handled internally
 		dependencies = {
 			"rafamadriz/friendly-snippets",
 		},
-		-- version = "v0.*",
-		build = "cargo build --release",
+		version = "*",
 		opts = {
 			enabled = function()
 				return not vim.list_contains({ "NvimTree", "DressingInput" }, vim.bo.filetype)
@@ -42,8 +40,6 @@ return {
 			},
 			sources = {
 				default = { "lsp", "path", "snippets", "buffer" },
-				-- optionally disable cmdline completions
-				cmdline = {},
 				providers = {
 					snippets = {
 						opts = {
@@ -51,7 +47,12 @@ return {
 						}
 					}
 				},
+			},
+			cmdline = {
+				-- optionally disable cmdline completions
+				sources = {}
 			}
+
 		},
 		init = function()
 			if vim.g.color_theme == vim.g.color_theme_light then
