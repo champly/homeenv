@@ -2,7 +2,13 @@ return {
 	{
 		"williamboman/mason.nvim",
 		dependencies = {
-			"stevearc/dressing.nvim"
+			{
+				"folke/snacks.nvim",
+				opts = {
+					input = {},
+					picker = {},
+				}
+			}
 		},
 		opts = {
 			ensure_installed = {
