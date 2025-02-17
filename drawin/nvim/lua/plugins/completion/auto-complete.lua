@@ -28,7 +28,7 @@ return {
 				menu = {
 					draw = {
 						columns = { { "label", "label_description", gap = 1 }, { "kind_icon" }, { "kind" } },
-					}
+					},
 				},
 				documentation = {
 					auto_show = true,
@@ -49,10 +49,8 @@ return {
 				},
 			},
 			cmdline = {
-				-- optionally disable cmdline completions
-				sources = {}
+				enabled = false,
 			}
-
 		},
 		init = function()
 			if vim.g.color_theme == vim.g.color_theme_light then
