@@ -33,7 +33,7 @@ local enhance_attach = function(client, bufnr)
 	local opts = { buffer = bufnr, silent = true, noremap = true }
 	-- TODO: https://github.com/nvim-telescope/telescope.nvim/issues/1265
 	vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-	-- vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+	vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
 	vim.keymap.set("n", "<leader>do", vim.diagnostic.open_float)
 	vim.keymap.set({ "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
 	-- https://github.com/nvim-telescope/telescope.nvim#neovim-lsp-pickers

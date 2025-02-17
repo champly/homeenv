@@ -5,7 +5,13 @@ return {
 			{
 				"folke/snacks.nvim",
 				opts = {
-					input = {},
+					input = {
+						win = {
+							relative = "cursor",
+							row = -3,
+							col = 0,
+						}
+					},
 					picker = {},
 				}
 			}
