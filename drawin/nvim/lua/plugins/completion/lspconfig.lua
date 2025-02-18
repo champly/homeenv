@@ -15,9 +15,12 @@ local enhance_attach = function(client, bufnr)
 				hi LspReferenceRead guibg=#ffcc33 guifg=black gui=NONE
 				hi LspReferenceText guibg=#ffcc33 guifg=black gui=NONE
 				hi LspReferenceWrite guibg=#ffcc33 guifg=black gui=NONE
-				hi NormalFloat guibg=#d9d9d9
-				hi DiagnosticFloatingHint guifg=gray
+				hi Pmenu guibg=None
+				hi NormalFloat guibg=None
+				hi FloatBorder gui=bold guifg=black
 			]])
+			-- hi NormalFloat guibg=#d9d9d9
+			-- hi DiagnosticFloatingHint guifg=gray
 		end
 	end
 	vim.cmd([[
@@ -50,6 +53,10 @@ local enhance_attach = function(client, bufnr)
 			vim.lsp.inlay_hint.enable(true)
 		end
 	end
+
+	-- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+	--     border = "rounded",
+	-- })
 
 	-- require("lsp_signature").on_attach({
 	--     bind = true, -- This is mandatory, otherwise border config won't get registered.
