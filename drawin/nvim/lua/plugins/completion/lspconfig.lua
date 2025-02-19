@@ -47,6 +47,13 @@ local enhance_attach = function(client, bufnr)
 	-- vim.keymap.set("n", "<leader>ds", ":Telescope diagnostics theme=ivy<CR>", opts)
 	vim.keymap.set("n", "<leader>bl", ":Telescope lsp_document_symbols<CR>", opts)
 
+	-- vim.keymap.set("n", "<c-]>", function() Snacks.picker.lsp_definitions() end, opts)
+	-- vim.keymap.set("n", "<leader>td", function() Snacks.picker.lsp_type_definitions() end, opts)
+	-- vim.keymap.set("n", "<leader>im", function() Snacks.picker.lsp_implementations() end, opts)
+	-- vim.keymap.set("n", "<leader>rf", function() Snacks.picker.lsp_references() end, opts)
+	-- -- vim.keymap.set("n", "<leader>ds", function() Snacks.picker.diagnostics() end, opts)
+	-- vim.keymap.set("n", "<leader>bl", function() Snacks.picker.lsp_symbols() end, opts)
+
 	-- inlay hint
 	if vim.lsp.inlay_hint then
 		if client.server_capabilities.inlayHintProvider then
@@ -71,6 +78,7 @@ return {
 		"neovim/nvim-lspconfig",
 		event = "BufRead",
 		dependencies = {
+			"folke/snacks.nvim",
 			"telescope.nvim",
 			"saghen/blink.cmp",
 		},
