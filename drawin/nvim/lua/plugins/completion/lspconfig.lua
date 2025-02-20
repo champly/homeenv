@@ -40,19 +40,21 @@ local enhance_attach = function(client, bufnr)
 	vim.keymap.set("n", "<leader>do", vim.diagnostic.open_float)
 	vim.keymap.set({ "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
 	-- https://github.com/nvim-telescope/telescope.nvim#neovim-lsp-pickers
-	vim.keymap.set("n", "<c-]>", ":Telescope lsp_definitions theme=get_cursor<CR>", opts)
-	vim.keymap.set("n", "<leader>td", ":Telescope lsp_type_definitions<CR>", opts)
-	vim.keymap.set("n", "<leader>im", ":Telescope lsp_implementations theme=ivy<CR>", opts)
-	vim.keymap.set("n", "<leader>rf", ":Telescope lsp_references theme=ivy<CR>", opts)
-	-- vim.keymap.set("n", "<leader>ds", ":Telescope diagnostics theme=ivy<CR>", opts)
-	vim.keymap.set("n", "<leader>bl", ":Telescope lsp_document_symbols<CR>", opts)
+	-- vim.keymap.set("n", "<c-]>", ":Telescope lsp_definitions theme=get_cursor<CR>", opts)
+	-- vim.keymap.set("n", "<leader>td", ":Telescope lsp_type_definitions<CR>", opts)
+	-- vim.keymap.set("n", "<leader>im", ":Telescope lsp_implementations theme=ivy<CR>", opts)
+	-- vim.keymap.set("n", "<leader>rf", ":Telescope lsp_references theme=ivy<CR>", opts)
+	-- -- vim.keymap.set("n", "<leader>ds", ":Telescope diagnostics theme=ivy<CR>", opts)
+	-- vim.keymap.set("n", "<leader>bl", ":Telescope lsp_document_symbols<CR>", opts)
 
-	-- vim.keymap.set("n", "<c-]>", function() Snacks.picker.lsp_definitions() end, opts)
-	-- vim.keymap.set("n", "<leader>td", function() Snacks.picker.lsp_type_definitions() end, opts)
-	-- vim.keymap.set("n", "<leader>im", function() Snacks.picker.lsp_implementations() end, opts)
-	-- vim.keymap.set("n", "<leader>rf", function() Snacks.picker.lsp_references() end, opts)
-	-- -- vim.keymap.set("n", "<leader>ds", function() Snacks.picker.diagnostics() end, opts)
-	-- vim.keymap.set("n", "<leader>bl", function() Snacks.picker.lsp_symbols() end, opts)
+	local preset_ivy = { layout = { preset = "ivy" } }
+	vim.keymap.set("n", "<c-]>", function() Snacks.picker.lsp_definitions() end, opts)
+	vim.keymap.set("n", "<leader>td", function() Snacks.picker.lsp_type_definitions() end, opts)
+	vim.keymap.set("n", "<leader>im", function() Snacks.picker.lsp_implementations(preset_ivy) end,
+		opts)
+	vim.keymap.set("n", "<leader>rf", function() Snacks.picker.lsp_references(preset_ivy) end, opts)
+	-- vim.keymap.set("n", "<leader>ds", function() Snacks.picker.diagnostics( preset_ivy ) end, opts)
+	vim.keymap.set("n", "<leader>bl", function() Snacks.picker.lsp_symbols() end, opts)
 
 	-- inlay hint
 	if vim.lsp.inlay_hint then
@@ -60,10 +62,6 @@ local enhance_attach = function(client, bufnr)
 			vim.lsp.inlay_hint.enable(true)
 		end
 	end
-
-	-- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-	--     border = "rounded",
-	-- })
 
 	-- require("lsp_signature").on_attach({
 	--     bind = true, -- This is mandatory, otherwise border config won't get registered.
@@ -78,9 +76,13 @@ return {
 		"neovim/nvim-lspconfig",
 		event = "BufRead",
 		dependencies = {
-			"folke/snacks.nvim",
-			"telescope.nvim",
 			"saghen/blink.cmp",
+			{
+				"folke/snacks.nvim",
+				opts = {
+					picker = {},
+				}
+			}
 		},
 		ft = { "go", "lua", "rust", "c", "cpp", "markdown" },
 		config = function()
