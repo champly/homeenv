@@ -125,15 +125,12 @@ return {
 			lspconfig.gopls.setup({
 				settings = {
 					gopls = {
-						usePlaceholders = false,
-						codelenses = {
-							gc_details = true,
-						},
 						staticcheck = true,
 						gofumpt = true,
 						-- analyses = {
 						--     -- https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md
 						-- },
+						-- https://github.com/golang/tools/blob/master/gopls/doc/features/diagnostics.md
 						pullDiagnostics = true,
 						-- ["local"] = "github.com/champly",
 						-- https://github.com/golang/tools/blob/master/gopls/doc/inlayHints.md
