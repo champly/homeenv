@@ -2,7 +2,6 @@ return {
 	{
 		"nvim-treesitter/nvim-treesitter",
 		event = "BufRead",
-		dependencies = "telescope.nvim",
 		build = ":TSUpdate",
 		config = function()
 			vim.api.nvim_command [[ set foldmethod=expr ]]

@@ -73,3 +73,47 @@ end
 
 -- toggle quickfix mapping
 vim.api.nvim_set_keymap("n", "<leader>q", ":lua ToggleQF()<CR>", { noremap = true, silent = true })
+
+-- nvimdap config
+function CopyDapConfig()
+	-- get all template
+	local template_dir = vim.fn.stdpath("config") .. "/external/nvimdap/"
+	local config_list = vim.fn.split(vim.fn.glob(template_dir .. "*"), '\n')
+	local files = {}
+	for _, file in ipairs(config_list) do
+		table.insert(files, { file = file, text = file })
+	end
+
+	local snacks_picker = require("snacks.picker")
+	snacks_picker.pick({
+		title = "Choice one nvim-dap configuration",
+		items = files,
+		actions = {
+			confirm = function(picker, item)
+				local launchPath = vim.fn.getcwd() .. "/.vscode/launch.json"
+				-- mkdir
+				local folder_path = launchPath:match("(.*/)")
+				vim.fn.mkdir(folder_path, "p")
+
+				-- copy file
+				---@diagnostic disable-next-line: undefined-field
+				vim.uv.fs_copyfile(item.text, launchPath, { excl = true }, function(err)
+					if err then
+						vim.notify("Create failed: " .. err, vim.log.levels.ERROR)
+					else
+						vim.notify("Create success " .. item.text .. " to current project!", vim.log.levels.INFO)
+					end
+				end)
+
+				-- close picker
+				picker:close()
+
+				-- edit launchPath
+				vim.api.nvim_command("edit " .. launchPath)
+			end
+		}
+	})
+end
+
+vim.cmd([[ hi NormalFloat guibg=None ]])
+vim.api.nvim_set_keymap("n", "<leader>dt", ":lua CopyDapConfig()<CR>", { noremap = true, silent = true })

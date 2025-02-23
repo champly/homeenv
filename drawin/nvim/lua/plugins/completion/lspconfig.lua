@@ -16,7 +16,6 @@ local enhance_attach = function(client, bufnr)
 				hi LspReferenceText guibg=#ffcc33 guifg=black gui=NONE
 				hi LspReferenceWrite guibg=#ffcc33 guifg=black gui=NONE
 				hi Pmenu guibg=None
-				hi NormalFloat guibg=None
 				hi FloatBorder gui=bold guifg=black
 			]])
 			-- hi NormalFloat guibg=#d9d9d9
@@ -62,13 +61,6 @@ local enhance_attach = function(client, bufnr)
 			vim.lsp.inlay_hint.enable(true)
 		end
 	end
-
-	-- require("lsp_signature").on_attach({
-	--     bind = true, -- This is mandatory, otherwise border config won't get registered.
-	--     handler_opts = {
-	--         border = "rounded"
-	--     }
-	-- }, bufnr)
 end
 
 return {

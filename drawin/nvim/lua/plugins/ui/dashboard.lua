@@ -1,7 +1,9 @@
 return {
 	"nvimdev/dashboard-nvim",
 	event = "VimEnter",
-	dependencies = "nvim-tree/nvim-web-devicons",
+	dependencies = {
+		"nvim-tree/nvim-web-devicons"
+	},
 	config = function()
 		if vim.g.color_theme == vim.g.color_theme_dark then
 			vim.cmd([[
@@ -61,20 +63,20 @@ return {
 						-- icon = "  ",
 						desc = "Recent Files",
 						key = "<leader>fh",
-						action = "Telescope oldfiles"
+						action = [[ lua Snacks.picker.recent() ]]
 					},
 					{
 						icon = "  ",
 						desc = "Find  File",
 						key = "<leader>ff",
-						action = "Telescope find_files"
+						action = [[ Snacks.picker.files() ]]
 					},
 					{
 						-- icon = "  ",
 						icon = "  ",
 						desc = "Find  word",
 						key = "<leader>fw",
-						action = "Telescope live_grep"
+						action = [[ Snacks.picker.grep() ]]
 					},
 					{
 						icon = "  ",
@@ -86,13 +88,13 @@ return {
 						icon = "  ",
 						desc = "Open Personal dotfiles",
 						key = "<leader>fd",
-						action = "Telescope dotfiles"
+						action = [[ lua Snacks.picker.files({ cwd = vim.fn.stdpath("config") })  ]]
 					},
 					{
 						icon = "  ",
 						desc = "Find Go Source Code",
 						key = "<leader>fs",
-						action = "Telescope gosource"
+						action = [[ lua Snacks.picker.projects() ]]
 					},
 				},
 				footer = {
