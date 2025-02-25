@@ -19,6 +19,15 @@ return {
 				-- custom mappings
 				vim.keymap.set("n", "v", api.node.open.vertical, opts("Open: Vertical Split"))
 				vim.keymap.set("n", "s", api.node.open.horizontal, opts("Open: Horizontal Split"))
+				vim.keymap.set("n", "<c-f>",
+					function()
+						Snacks.picker.grep({
+							-- https://github.com/nvim-tree/nvim-tree.lua/blob/master/doc/nvim-tree-lua.txt#L2447
+							cwd = Snacks.picker.util.dir(api.tree.get_node_under_cursor().absolute_path)
+						})
+					end,
+					-- function() print(api.fs.copy.relative_path()) end,
+					opts("Picker grep"))
 			end
 
 			vim.api.nvim_set_keymap("n", "ff", ":NvimTreeFindFile<CR>", { noremap = true, silent = true })
