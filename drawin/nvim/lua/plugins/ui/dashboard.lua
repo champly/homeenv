@@ -79,6 +79,12 @@ return {
 						action = [[ Snacks.picker.grep() ]]
 					},
 					{
+						icon = "  ",
+						desc = "Projects",
+						key = "<leader>fp",
+						action = [[ lua Snacks.picker.projects() ]]
+					},
+					{
 						icon = "  ",
 						desc = "Create new buffer",
 						key = "<leader> n",
@@ -89,12 +95,6 @@ return {
 						desc = "Open Personal dotfiles",
 						key = "<leader>fd",
 						action = [[ lua Snacks.picker.files({ cwd = vim.fn.stdpath("config") })  ]]
-					},
-					{
-						icon = "  ",
-						desc = "Find Go Source Code",
-						key = "<leader>fs",
-						action = [[ lua Snacks.picker.projects() ]]
 					},
 				},
 				footer = {

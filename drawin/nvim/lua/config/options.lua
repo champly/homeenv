@@ -9,7 +9,7 @@ vim.g.color_theme             = vim.g.color_theme_light -- dark or light if you 
 vim.o.guifont                 = "SauceCodePro Nerd Font"
 vim.g.neovide_cursor_vfx_mode = "railgun"
 vim.g.neovide_fullscreen      = "v:false"
-vim.g.neovide_transparency    = 0.9
+vim.g.neovide_transparency    = 1
 -- vim.g.transparency = 0.6
 
 vim.opt.encoding              = "utf-8"  -- scriptencoding utf-8
