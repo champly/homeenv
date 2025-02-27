@@ -100,8 +100,9 @@ brew install golangci-lint
 # lolcat
 brew install lolcat
 
-# rg
+# rg & fd
 brew install ripgrep
+brew install fd
 
 # c/c++
 brew install ccls

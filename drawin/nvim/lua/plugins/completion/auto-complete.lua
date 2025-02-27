@@ -56,12 +56,19 @@ return {
 				},
 			},
 			cmdline = {
-				enabled = false,
+				completion = {
+					ghost_text = {
+						enabled = true
+					}
+				}
 			}
 		},
 		init = function()
 			if vim.g.color_theme == vim.g.color_theme_light then
-				vim.cmd([[ hi BlinkCmpSignatureHelpActiveParameter gui=bold guifg=black ]])
+				vim.cmd([[
+					hi BlinkCmpSignatureHelpActiveParameter gui=bold guifg=black
+					hi BlinkCmpGhostText guifg=gray
+				]])
 			end
 		end
 	},
