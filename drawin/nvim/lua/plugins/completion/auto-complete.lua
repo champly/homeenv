@@ -56,6 +56,8 @@ return {
 				},
 			},
 			cmdline = {
+				enabled = false,
+				-- enable with fix <c-n>, <c-j> conflict
 				completion = {
 					ghost_text = {
 						enabled = true
