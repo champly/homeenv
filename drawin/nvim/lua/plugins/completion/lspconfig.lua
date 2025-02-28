@@ -55,12 +55,12 @@ local enhance_attach = function(client, bufnr)
 	-- vim.keymap.set("n", "<leader>ds", function() Snacks.picker.diagnostics( preset_ivy ) end, opts)
 	vim.keymap.set("n", "<leader>bl", function() Snacks.picker.lsp_symbols() end, opts)
 
-	-- inlay hint
-	if vim.lsp.inlay_hint then
-		if client.server_capabilities.inlayHintProvider then
-			vim.lsp.inlay_hint.enable(true)
-		end
-	end
+	-- -- disabled inlay hint
+	-- if vim.lsp.inlay_hint then
+	-- 	if client.server_capabilities.inlayHintProvider then
+	-- 		vim.lsp.inlay_hint.enable(true)
+	-- 	end
+	-- end
 end
 
 return {
@@ -127,13 +127,13 @@ return {
 						-- ["local"] = "github.com/champly",
 						-- https://github.com/golang/tools/blob/master/gopls/doc/inlayHints.md
 						-- hints = {
-						--     assignVariableTypes = true,
-						--     compositeLiteralFields = true,
-						--     compositeLiteralTypes = true,
-						--     constantValues = true,
-						--     functionTypeParameters = true,
-						--     parameterNames = true,
-						--     rangeVariableTypes = true,
+						-- 	assignVariableTypes = true,
+						-- 	compositeLiteralFields = true,
+						-- 	compositeLiteralTypes = true,
+						-- 	constantValues = true,
+						-- 	functionTypeParameters = true,
+						-- 	parameterNames = true,
+						-- 	rangeVariableTypes = true,
 						-- },
 					}
 				},
@@ -141,7 +141,7 @@ return {
 				capabilities = capabilities,
 			})
 
-			-- https://rust-analyzer.github.io/manual.html#nvim-lsp
+			-- https://rust-analyzer.github.io/book/other_editors.html#nvim-lsp
 			lspconfig.rust_analyzer.setup({
 				-- rustup toolchain install nightly --component rust-analyzer
 				-- rustup component add rust-analyzer
@@ -154,25 +154,6 @@ return {
 							},
 							prefix = "self",
 						},
-						cargo = {
-							buildScripts = {
-								enable = true,
-							},
-						},
-						procMacro = {
-							enable = true
-						},
-						-- inlayHints = {
-						--     enable = true,
-						--     chainingHints = true,
-						--     maxLength = 25,
-						--     parameterHints = true,
-						--     typeHints = true,
-						--     hideNamedConstructorHints = false,
-						--     typeHintsSeparator = "‣",
-						--     typeHintsWithVariable = true,
-						--     chainingHintsSeparator = "‣",
-						-- },
 					}
 				},
 				on_attach = enhance_attach,
