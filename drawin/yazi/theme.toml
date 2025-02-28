@@ -15,6 +15,7 @@ light = ""
 
 # : }}}
 
+
 # : Manager {{{
 
 [manager]
@@ -57,7 +58,6 @@ syntect_theme = ""
 # : Mode {{{
 
 [mode]
-
 normal_main = { bg = "blue", bold = true }
 normal_alt = { fg = "blue", bg = "gray" }
 
@@ -75,13 +75,9 @@ unset_alt = { fg = "red", bg = "gray" }
 # : Status bar {{{
 
 [status]
-separator_open = ""
-separator_close = ""
-
-# Progress
-progress_label = { bold = true }
-progress_normal = { fg = "blue", bg = "black" }
-progress_error = { fg = "red", bg = "black" }
+overall = {}
+sep_left = { open = "", close = "" }
+sep_right = { open = "", close = "" }
 
 # Permissions
 perm_sep = { fg = "darkgray" }
@@ -89,6 +85,11 @@ perm_type = { fg = "green" }
 perm_read = { fg = "yellow" }
 perm_write = { fg = "red" }
 perm_exec = { fg = "cyan" }
+
+# Progress
+progress_label = { bold = true }
+progress_normal = { fg = "blue", bg = "black" }
+progress_error = { fg = "red", bg = "black" }
 
 # : }}}
 
@@ -126,6 +127,10 @@ btn_labels = ["  [Y]es  ", "  (N)o  "]
 [spot]
 border = { fg = "blue" }
 title = { fg = "blue" }
+
+# Table
+tbl_col = { fg = "blue" }
+tbl_cell = { fg = "yellow", reversed = true }
 
 # : }}}
 
@@ -168,7 +173,7 @@ selected = { reversed = true }
 
 # : Completion {{{
 
-[completion]
+[cmp]
 border = { fg = "blue" }
 active = { reversed = true }
 inactive = {}
@@ -206,7 +211,6 @@ footer = { fg = "black", bg = "white" }
 # : File-specific styles {{{
 
 [filetype]
-
 rules = [
   # Images
   { mime = "image/*", fg = "yellow" },
@@ -242,7 +246,6 @@ rules = [
 # : Icons {{{
 
 [icon]
-
 globs = []
 dirs = [
   { name = ".config", text = "" },
