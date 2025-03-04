@@ -6,7 +6,7 @@ return {
 			{ "nvim-telescope/telescope.nvim" },
 		},
 		keys = {
-			{ "<leader>ca", function() require("tiny-code-action").code_action() end, mode = { "n", "v" }, desc = "Code Action" },
+			{ "<leader>ca", function() require("tiny-code-action").code_action() end, mode = { "n" }, desc = "Code Action" },
 		},
 		config = true,
 	}
