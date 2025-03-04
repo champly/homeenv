@@ -172,7 +172,7 @@ keymap = [
   # plugin
   { on = "<Enter>", run = "plugin smart-enter", desc = "Enter the child directory, or open the file" },
   { on = "l", run = "plugin smart-enter", desc = "Enter the child directory, or open the file" },
-  { on = "T", run = "plugin max-preview", desc = "Maximize or restore preview" },
+  { on = "T", run = "plugin toggle-pane max-preview", desc = "Maximize or restore the preview pane" },
 ]
 
 [tasks]
