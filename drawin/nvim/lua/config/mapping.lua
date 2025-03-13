@@ -19,7 +19,7 @@ vim.api.nvim_set_keymap("n", "<leader>sm", ":lua vim.opt.mouse = vim.opt.mouse._
 
 -- Call figlet
 -- brew install figlet
-vim.api.nvim_set_keymap("n", "fl", ":r !figlet ", { noremap = true })
+-- vim.api.nvim_set_keymap("n", "fl", ":r !figlet ", { noremap = true })
 
 -- Finial
 -- command line mode

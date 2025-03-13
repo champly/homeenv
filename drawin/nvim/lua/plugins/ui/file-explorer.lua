@@ -21,12 +21,20 @@ return {
 				vim.keymap.set("n", "s", api.node.open.horizontal, opts("Open: Horizontal Split"))
 				vim.keymap.set("n", "<c-f>",
 					function()
+						local absolute_dir = api.tree.get_node_under_cursor().absolute_path
+						if vim.fn.isdirectory(absolute_dir) == 0 then
+							-- is file, calc base dir
+							absolute_dir = vim.fn.fnamemodify(absolute_dir, ":p:h")
+						end
+
+						local cwd = vim.fn.getcwd()
+						local relative_path = "./" .. vim.fn.fnamemodify(absolute_dir, ":p:." .. cwd)
+
 						Snacks.picker.grep({
-							-- https://github.com/nvim-tree/nvim-tree.lua/blob/master/doc/nvim-tree-lua.txt#L2447
-							cwd = Snacks.picker.util.dir(api.tree.get_node_under_cursor().absolute_path)
+							cwd = Snacks.picker.util.dir(absolute_dir),
+							title = " Grep(" .. relative_path .. ")",
 						})
 					end,
-					-- function() print(api.fs.copy.relative_path()) end,
 					opts("Picker grep"))
 			end
 
