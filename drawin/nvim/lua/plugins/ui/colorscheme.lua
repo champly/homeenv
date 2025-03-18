@@ -79,7 +79,7 @@ return {
 			-- +-------------------------------------------------+
 			sections = {
 				lualine_a = { "mode" },
-				lualine_b = { "branch", "diagnostics", },
+				lualine_b = { "branch", },
 				lualine_c = {
 					{
 						"filename",
@@ -89,6 +89,9 @@ return {
 						"filetype",
 						icon_only = true,
 					},
+					{
+						"diagnostics",
+					}
 				},
 				lualine_x = {
 					function()
