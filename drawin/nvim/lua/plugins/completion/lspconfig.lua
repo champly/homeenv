@@ -47,7 +47,7 @@ local enhance_attach = function(client, bufnr)
 	-- vim.keymap.set("n", "<leader>bl", ":Telescope lsp_document_symbols<CR>", opts)
 
 	local preset_ivy = { layout = { preset = "ivy" } }
-	vim.keymap.set("n", "<c-]>", function() Snacks.picker.lsp_definitions() end, opts)
+	vim.keymap.set("n", "<c-]>", function() Snacks.picker.lsp_definitions({ jump = { reuse_win = false } }) end, opts)
 	vim.keymap.set("n", "<leader>td", function() Snacks.picker.lsp_type_definitions() end, opts)
 	vim.keymap.set("n", "<leader>im", function() Snacks.picker.lsp_implementations(preset_ivy) end,
 		opts)
