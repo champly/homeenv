@@ -91,7 +91,7 @@ return {
 					},
 					{
 						"diagnostics",
-					}
+					},
 				},
 				lualine_x = {
 					function()
@@ -107,7 +107,15 @@ return {
 						return "  " .. table.concat(client_names, " ")
 					end
 				},
-				lualine_y = { "diff", "searchcount" },
+				lualine_y = {
+					{
+						"diff"
+					},
+					{
+						"searchcount",
+						maxcount = 100000,
+					},
+				},
 				lualine_z = { "progress" },
 			}
 		}
