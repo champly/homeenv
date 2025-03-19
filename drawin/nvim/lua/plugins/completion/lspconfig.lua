@@ -46,15 +46,15 @@ local enhance_attach = function(client, bufnr)
 	-- -- vim.keymap.set("n", "<leader>ds", ":Telescope diagnostics theme=ivy<CR>", opts)
 	-- vim.keymap.set("n", "<leader>bl", ":Telescope lsp_document_symbols<CR>", opts)
 
-	local preset_ivy = { layout = { preset = "ivy" } }
-	vim.keymap.set("n", "<c-]>", function() Snacks.picker.lsp_definitions({ jump = { reuse_win = false } }) end, opts)
-	vim.keymap.set("n", "<leader>td", function() Snacks.picker.lsp_type_definitions() end, opts)
-	vim.keymap.set("n", "<leader>im", function() Snacks.picker.lsp_implementations(preset_ivy) end,
-		opts)
+	local preset_default = { jump = { reuse_win = false } }
+	local preset_ivy = { layout = { preset = "ivy" }, jump = { reuse_win = false } }
+	vim.keymap.set("n", "<c-]>", function() Snacks.picker.lsp_definitions(preset_default) end, opts)
+	vim.keymap.set("n", "<leader>td", function() Snacks.picker.lsp_type_definitions(preset_default) end, opts)
+	vim.keymap.set("n", "<leader>im", function() Snacks.picker.lsp_implementations(preset_ivy) end, opts)
 	vim.keymap.set("n", "<leader>rf", function() Snacks.picker.lsp_references(preset_ivy) end, opts)
 	vim.keymap.set("n", "<leader>dw", function() Snacks.picker.diagnostics(preset_ivy) end, opts)
 	vim.keymap.set("n", "<leader>db", function() Snacks.picker.diagnostics_buffer(preset_ivy) end, opts)
-	vim.keymap.set("n", "<leader>bl", function() Snacks.picker.lsp_symbols() end, opts)
+	vim.keymap.set("n", "<leader>bl", function() Snacks.picker.lsp_symbols(preset_default) end, opts)
 
 	-- -- disabled inlay hint
 	-- if vim.lsp.inlay_hint then
