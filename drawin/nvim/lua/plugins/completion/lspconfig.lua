@@ -120,6 +120,7 @@ return {
 					gopls = {
 						staticcheck = true,
 						gofumpt = true,
+						-- semanticTokens = true,
 						-- analyses = {
 						--     -- https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md
 						-- },
@@ -155,6 +156,25 @@ return {
 							},
 							prefix = "self",
 						},
+						-- -- https://rust-analyzer.github.io/book/configuration.html#configuration
+						-- semanticHighlighting = {
+						-- 	operator = {
+						-- 		specialization = {
+						-- 			enable = true,
+						-- 		}
+						-- 	},
+						-- 	punctuation = {
+						-- 		enable = true,
+						-- 		separate = {
+						-- 			macro = {
+						-- 				bang = true,
+						-- 			}
+						-- 		},
+						-- 		specialization = {
+						-- 			enable = true,
+						-- 		}
+						-- 	}
+						-- }
 					}
 				},
 				on_attach = enhance_attach,
