@@ -82,6 +82,9 @@ return {
 			-- https://neovim.io/doc/user/lsp.html
 			-- https://neovim.io/doc/user/diagnostic.html#vim.diagnostic.config()
 			vim.diagnostic.config({
+				underline = {
+					severity = vim.diagnostic.severity.ERROR,
+				},
 				-- Enable virtual text, override spacing to 4
 				virtual_text = {
 					severity = vim.diagnostic.severity.ERROR,
