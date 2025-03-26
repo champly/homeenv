@@ -2,7 +2,7 @@
 
 SourcePath=~/go/src/github.com/champly/homeenv/drawin
 
-Components="nvim joshuto gitui yazi starship.toml wezterm ghostty"
+Components="nvim joshuto gitui yazi starship.toml wezterm ghostty alacritty/alacritty.toml"
 
 for cmp in ${Components};
 do

@@ -1,0 +1,27 @@
+[general]
+# mkdir -p ~/.config/alacritty/themes
+# git clone https://github.com/alacritty/alacritty-theme ~/.config/alacritty/themes
+import = ["~/.config/alacritty/themes/themes/github_light.toml"]
+
+[window]
+# startup_mode = "Maximized"
+
+[scrolling]
+history = 100000
+
+[font]
+# fix: macos font is bold
+# https://github.com/alacritty/alacritty/pull/6186#issuecomment-1176513651
+# defaults write org.alacritty AppleFontSmoothing -int 0
+# remove: defaults delete org.alacritty AppleFontSmoothing
+normal = { family = "SauceCodePro Nerd Font", style = "Regular" }
+bold = { family = "SauceCodePro Nerd Font", style = "Bold" }
+italic = { family = "SauceCodePro Nerd Font", style = "Italic" }
+bold_italic = { family = "SauceCodePro Nerd Font", style = "Bold Italic" }
+size = 15
+
+[mouse]
+hide_when_typing = true
+
+[keyboard]
+bindings = [{ key = "Enter", mods = "SUPER", action = "ToggleMaximized" }]
