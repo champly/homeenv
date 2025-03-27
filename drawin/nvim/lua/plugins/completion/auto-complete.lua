@@ -16,20 +16,16 @@ return {
 				["<C-e>"] = { "hide", "fallback" },
 				["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
 			},
-			appearance = {
-				use_nvim_cmp_as_default = true,
+			cmdline = {
+				enabled = false,
 			},
 			completion = {
-				accept = {
-					auto_brackets = {
-						enabled = true,
-					}
-				},
 				menu = {
 					draw = {
 						columns = { { "label", "label_description", gap = 1 }, { "kind_icon" }, { "kind" } },
 					},
 					border = "rounded",
+
 				},
 				documentation = {
 					auto_show = true,
@@ -37,12 +33,6 @@ return {
 					window = {
 						border = "rounded"
 					},
-				},
-			},
-			signature = {
-				enabled = true,
-				window = {
-					border = "rounded"
 				},
 			},
 			sources = {
@@ -55,15 +45,12 @@ return {
 					}
 				},
 			},
-			cmdline = {
-				enabled = false,
-				-- enable with fix <c-n>, <c-j> conflict
-				completion = {
-					ghost_text = {
-						enabled = true
-					}
-				}
-			}
+			signature = {
+				enabled = true,
+				window = {
+					border = "rounded"
+				},
+			},
 		},
 		init = function()
 			if vim.g.color_theme == vim.g.color_theme_light then
