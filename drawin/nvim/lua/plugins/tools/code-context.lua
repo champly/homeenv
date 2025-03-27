@@ -4,7 +4,7 @@ return {
 		event = "BufReadPre",
 		opts = {},
 		init = function()
-			vim.cmd([[ hi TreesitterContextBottom gui=bold guibg=#e9e9e9 ]])
+			vim.api.nvim_set_hl(0, "TreesitterContextBottom", { bg = "#e9e9e9", bold = true })
 		end
 	}
 }

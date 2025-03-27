@@ -54,10 +54,8 @@ return {
 		},
 		init = function()
 			if vim.g.color_theme == vim.g.color_theme_light then
-				vim.cmd([[
-					hi BlinkCmpSignatureHelpActiveParameter gui=bold guifg=black
-					hi BlinkCmpGhostText guifg=gray
-				]])
+				vim.api.nvim_set_hl(0, "BlinkCmpSignatureHelpActiveParameter", { fg = "black", bold = true })
+				vim.api.nvim_set_hl(0, "BlinkCmpGhostText", { fg = "gray" })
 			end
 		end
 	},
@@ -161,7 +159,7 @@ return {
 	--         require("lsp_signature").setup({})
 
 	--         if vim.g.color_theme == vim.g.color_theme_light then
-	--             vim.cmd([[ hi LspSignatureActiveParameter gui=bold guifg=black ]])
+	--             vim.api.nvim_set_hl(0, "LspSignatureActiveParameter", { fg = "black", bold = true })
 	--         end
 	--     end
 	-- }

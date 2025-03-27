@@ -8,7 +8,7 @@ return {
 		config = function()
 			require("dropbar").setup({})
 			vim.keymap.set({ "n" }, "<C-p>", ":lua require('dropbar.api').pick()<cr>", { silent = true })
-			vim.cmd [[ hi DropBarIconKindFolder guifg=#DAA520 ]]
+			vim.api.nvim_set_hl(0, "DropBarIconKindFolder", { fg = "#daa520" })
 		end
 	}
 }

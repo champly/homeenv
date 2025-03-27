@@ -15,7 +15,7 @@ return {
 					wrap = true,
 				},
 			})
-			vim.cmd([[ hi OutlineCurrent gui=bold guifg=blue ]])
+			vim.api.nvim_set_hl(0, "OutlineCurrent", { fg = "blue", bold = true })
 		end,
 	}
 }

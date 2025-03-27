@@ -4,22 +4,18 @@ local enhance_attach = function(client, bufnr)
 	-- highlight
 	if client.server_capabilities.documentHighlightProvider then
 		if vim.g.color_theme == vim.g.color_theme_dark then
-			vim.cmd([[
-				hi LspReferenceRead guibg=#ff8600 guifg=black gui=NONE
-				hi LspReferenceText guibg=#ff8600 guifg=black gui=NONE
-				hi LspReferenceWrite guibg=#ff8600 guifg=black gui=NONE
-				hi NormalFloat guibg=#3e3e3e
-			]])
+			vim.api.nvim_set_hl(0, "LspReferenceRead", { bg = "#ff8600", fg = "black" })
+			vim.api.nvim_set_hl(0, "LspReferenceText", { bg = "#ff8600", fg = "black" })
+			vim.api.nvim_set_hl(0, "LspReferenceWrite", { bg = "#ff8600", fg = "black" })
+			vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#3e3e3e" })
 		else
-			vim.cmd([[
-				hi LspReferenceRead guibg=#ffcc33 guifg=black gui=NONE
-				hi LspReferenceText guibg=#ffcc33 guifg=black gui=NONE
-				hi LspReferenceWrite guibg=#ffcc33 guifg=black gui=NONE
-				hi Pmenu guibg=None
-				hi FloatBorder gui=bold guifg=black
-			]])
-			-- hi NormalFloat guibg=#d9d9d9
-			-- hi DiagnosticFloatingHint guifg=gray
+			vim.api.nvim_set_hl(0, "LspReferenceRead", { bg = "#ffcc33", fg = "black" })
+			vim.api.nvim_set_hl(0, "LspReferenceText", { bg = "#ffcc33", fg = "black" })
+			vim.api.nvim_set_hl(0, "LspReferenceWrite", { bg = "#ffcc33", fg = "black" })
+			vim.api.nvim_set_hl(0, "Pmenu", { bg = "None" })
+			vim.api.nvim_set_hl(0, "FloatBorder", { fg = "black", bold = true })
+			-- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#d9d9d9" })
+			-- vim.api.nvim_set_hl(0, "DiagnosticFloatingHint", { fg = "gray" })
 		end
 	end
 
@@ -27,7 +23,6 @@ local enhance_attach = function(client, bufnr)
 	vim.api.nvim_create_autocmd("CursorHold", { callback = vim.lsp.buf.document_highlight })
 	vim.api.nvim_create_autocmd("CursorHoldI", { callback = vim.lsp.buf.document_highlight })
 	vim.api.nvim_create_autocmd("CursorMoved", { callback = vim.lsp.buf.clear_references })
-
 
 	-- keymap
 	local opts = { buffer = bufnr, silent = true, noremap = true }

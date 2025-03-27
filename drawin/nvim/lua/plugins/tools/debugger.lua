@@ -4,10 +4,9 @@ return {
 		event = "BufReadPre",
 		dependencies = { "rcarriga/nvim-dap-ui" },
 		config = function()
-			vim.cmd [[
-				hi DapBreakpoint gui=bold guifg=red
-				hi DapStopped gui=bold guifg=#ff9900
-			]]
+			vim.api.nvim_set_hl(0, "DapBreakpoint", { fg = "red", bold = true })
+			vim.api.nvim_set_hl(0, "DapStopped", { fg = "#ff9900", bold = true })
+
 			vim.fn.sign_define("DapBreakpoint", { text = "●", texthl = "DapBreakpoint", linehl = "", numhl = "" })
 			vim.fn.sign_define("DapBreakpointRejected", { text = "", texthl = "DapBreakpoint", linehl = "", numhl = "" })
 			vim.fn.sign_define("DapStopped", { text = "󰔰", texthl = "DapStopped", linehl = "", numhl = "" })

@@ -82,7 +82,7 @@ return {
 				on_attach = on_attach,
 			}
 
-			vim.cmd([[ hi NvimTreeFolderIcon guifg=#DAA520 ]])
+			vim.api.nvim_set_hl(0, "NvimTreeFolderIcon", { fg = "#daa520" })
 		end,
 	},
 	-- {

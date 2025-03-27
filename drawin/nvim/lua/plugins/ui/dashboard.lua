@@ -6,24 +6,19 @@ return {
 	},
 	config = function()
 		if vim.g.color_theme == vim.g.color_theme_dark then
-			vim.cmd([[
-				hi DashboardHeader guifg=yellow
-				hi DashboardFooter guifg=gray
-				hi DashboardIcon guifg=yellow
-				hi DashboardDesc guifg=yellow
-				hi DashboardShotCut guifg=#1E90FF
-				hi DashboardKey guifg=#1E90FF
-			]])
+			vim.api.nvim_set_hl(0, "DashboardHeader", { fg = "yellow" })
+			vim.api.nvim_set_hl(0, "DashboardFooter", { fg = "gray" })
+			vim.api.nvim_set_hl(0, "DashboardIcon", { fg = "yellow" })
+			vim.api.nvim_set_hl(0, "DashboardDesc", { fg = "yellow" })
+			vim.api.nvim_set_hl(0, "DashboardShotCut", { fg = "#1e90ff" })
+			vim.api.nvim_set_hl(0, "DashboardKey", { fg = "#1e90ff" })
 		else
-			vim.cmd([[
-				hi DashboardHeader guifg=orange
-				hi DashboardFooter guifg=gray
-
-				hi DashboardIcon guifg=orange
-				hi DashboardDesc guifg=orange
-				hi DashboardShotCut guifg=#1E90FF
-				hi DashboardKey guifg=#1E90FF
-			]])
+			vim.api.nvim_set_hl(0, "DashboardHeader", { fg = "orange" })
+			vim.api.nvim_set_hl(0, "DashboardFooter", { fg = "gray" })
+			vim.api.nvim_set_hl(0, "DashboardIcon", { fg = "orange" })
+			vim.api.nvim_set_hl(0, "DashboardDesc", { fg = "orange" })
+			vim.api.nvim_set_hl(0, "DashboardShotCut", { fg = "#1e90ff" })
+			vim.api.nvim_set_hl(0, "DashboardKey", { fg = "#1e90ff" })
 		end
 
 		require("dashboard").setup({

@@ -27,10 +27,8 @@ return {
 			}
 		},
 		init = function()
-			vim.cmd([[
-				hi SnacksIndentChunk guifg=blue
-				hi SnacksIndentScope guifg=blue
-			]])
+			vim.api.nvim_set_hl(0, "SnacksIndentChunk", { fg = "blue" })
+			vim.api.nvim_set_hl(0, "SnacksIndentScope", { fg = "blue" })
 		end
 	}
 	-- {

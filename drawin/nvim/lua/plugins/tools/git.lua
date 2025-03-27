@@ -15,14 +15,14 @@ return {
 				current_line_blame      = true,
 				current_line_blame_opts = {
 					virt_text = true,
-					virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
+					virt_text_pos = "eol", -- 'eol' | 'overlay' | 'right_align'
 					delay = 500,
 					ignore_whitespace = true
 				},
 			})
 
 			-- https://github.com/lewis6991/gitsigns.nvim/issues/430
-			vim.cmd([[ highlight gitsignscurrentlineblame guibg=None guifg=#756969 ]])
+			vim.api.nvim_set_hl(0, "gitsignscurrentlineblame", { fg = "#756969" })
 		end,
 	},
 	{
