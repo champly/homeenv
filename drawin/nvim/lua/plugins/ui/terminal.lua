@@ -3,7 +3,7 @@ return {
 		"akinsho/toggleterm.nvim",
 		cmd = { "ToggleTerm" },
 		init = function()
-			vim.api.nvim_set_keymap("n", "<F3>", ":ToggleTerm<CR>", { noremap = true })
+			vim.api.nvim_set_keymap("n", "<F3>", ":ToggleTerm<CR>", { noremap = true, silent = true })
 		end,
 		opts = {
 			size = function(term)
