@@ -77,6 +77,7 @@ return {
 				}
 			}
 		},
+		enabled = false,
 		ft = { "go", "lua", "rust", "c", "cpp", "markdown" },
 		config = function()
 			-- https://neovim.io/doc/user/lsp.html
