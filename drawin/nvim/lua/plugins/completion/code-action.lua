@@ -1,13 +1,14 @@
 return {
 	{
-		"rachartier/tiny-code-action.nvim",
-		dependencies = {
-			{ "nvim-lua/plenary.nvim" },
-			{ "nvim-telescope/telescope.nvim" },
-		},
+		"aznhe21/actions-preview.nvim",
 		keys = {
-			{ "<leader>ca", function() require("tiny-code-action").code_action() end, mode = { "n" }, desc = "Code Action" },
+			{ "<leader>ca", function() require("actions-preview").code_actions() end, mode = { "n" }, desc = "Code Action" },
 		},
-		config = true,
+		opts = {
+			-- TODO: use snacks.picker, remove telescope
+			-- snacks = {
+			-- 	layout = { preset = "default" },
+			-- },
+		}
 	}
 }
