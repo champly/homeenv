@@ -4,6 +4,9 @@ return {
 	filetypes = { "go", "gomod", "gowork", "gotmpl" },
 	settings = {
 		gopls = {
+			codelenses = {
+				test = true,
+			},
 			staticcheck = true,
 			gofumpt = true,
 			-- semanticTokens = true,

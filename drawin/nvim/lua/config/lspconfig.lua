@@ -19,7 +19,7 @@ local enhance_attach = function(client, bufnr)
 		end
 	end
 
-	-- lsp_document_highlight
+	-- lsp document highlight
 	vim.api.nvim_create_autocmd("CursorHold", { callback = vim.lsp.buf.document_highlight })
 	vim.api.nvim_create_autocmd("CursorHoldI", { callback = vim.lsp.buf.document_highlight })
 	vim.api.nvim_create_autocmd("CursorMoved", { callback = vim.lsp.buf.clear_references })
@@ -29,14 +29,7 @@ local enhance_attach = function(client, bufnr)
 	-- TODO: https://github.com/nvim-telescope/telescope.nvim/issues/1265
 	vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 	vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-	vim.keymap.set("n", "<leader>do", vim.diagnostic.open_float)
-	-- vim.keymap.set("n", "<leader>do", function()
-	-- 	vim.diagnostic.config({
-	-- 		virtual_lines = {
-	-- 			current_line = true,
-	-- 		}
-	-- 	})
-	-- end, opts)
+	-- vim.keymap.set("n", "<leader>do", vim.diagnostic.open_float)
 	vim.keymap.set({ "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
 	-- https://github.com/nvim-telescope/telescope.nvim#neovim-lsp-pickers
 	-- vim.keymap.set("n", "<c-]>", ":Telescope lsp_definitions theme=get_cursor<CR>", opts)
@@ -69,11 +62,10 @@ local enhance_attach = function(client, bufnr)
 	})
 
 	-- -- disabled inlay hint
-	-- if vim.lsp.inlay_hint then
-	-- 	if client.server_capabilities.inlayHintProvider then
-	-- 		vim.lsp.inlay_hint.enable(true)
-	-- 	end
-	-- end
+	-- vim.lsp.inlay_hint.enable(true)
+
+	-- auto refresh codelens
+	-- vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, { callback = vim.lsp.codelens.refresh })
 end
 
 -- vim.api.nvim_create_autocmd("LspAttach", {
@@ -92,33 +84,25 @@ vim.diagnostic.config({
 		severity = vim.diagnostic.severity.ERROR,
 	},
 	virtual_lines = false,
-	-- virtual_lines = {
-	-- 	severity = vim.diagnostic.severity.ERROR,
-	-- 	current_line = true
-	-- },
-	-- Enable virtual text, override spacing to 4
 	virtual_text = {
 		severity = vim.diagnostic.severity.ERROR,
 		-- severity = {
 		--     min = vim.diagnostic.severity.WARN
 		-- },
+		-- Enable virtual text, override spacing to 4
 		spacing = 4,
 		prefix = " ", --         ■ ● ▎x
 	},
 	signs = {
 		priority = 20,
+		numhl = { "DiagnosticSignError", "DiagnosticSignWarn", "DiagnosticSignInfo", "DiagnosticSignHint" },
+		-- icon         
+		text = { "✘ ", "▲ ", "» ", "⚑ " }
 	},
 	float = {
 		border = "rounded", -- none,single,double
 	}
 })
-
--- local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
-local signs = { Error = "✘", Warn = "▲", Hint = "⚑", Info = "»" }
-for type, icon in pairs(signs) do
-	local hl = "DiagnosticSign" .. type
-	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-end
 
 vim.lsp.config("*", {
 	on_attach = enhance_attach,
@@ -131,5 +115,5 @@ vim.lsp.config("*", {
 	}
 })
 
-vim.lsp.enable({ "gopls", "lua_ls", "rust_analyzer", "clangd" })
 -- vim.o.winborder               = "rounded"
+vim.lsp.enable({ "gopls", "lua_ls", "rust_analyzer", "clangd" })
