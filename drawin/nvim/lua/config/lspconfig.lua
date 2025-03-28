@@ -64,8 +64,8 @@ local enhance_attach = function(client, bufnr)
 	-- -- disabled inlay hint
 	-- vim.lsp.inlay_hint.enable(true)
 
-	-- auto refresh codelens
-	-- vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, { callback = vim.lsp.codelens.refresh })
+	-- Setup CodeLens handling
+	require("config.codelens").setup(client, bufnr, opts)
 end
 
 -- vim.api.nvim_create_autocmd("LspAttach", {
