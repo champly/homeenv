@@ -68,16 +68,22 @@ local enhance_attach = function(client, bufnr)
 	require("config.codelens").setup(client, bufnr, opts)
 end
 
--- vim.api.nvim_create_autocmd("LspAttach", {
--- 	callback = function(ev)
--- 		local client = vim.lsp.get_client_by_id(ev.data.client_id)
--- 		---@diagnostic disable-next-line: need-check-nil
--- 		if client:supports_method("textDocument/completion") then
--- 			---@diagnostic disable-next-line: need-check-nil
--- 			vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
--- 		end
--- 	end,
--- })
+-- Prefer LSP folding if client supports it
+vim.api.nvim_create_autocmd("LspAttach", {
+	callback = function(args)
+		local client = vim.lsp.get_client_by_id(args.data.client_id)
+		---@diagnostic disable-next-line: need-check-nil
+		if client:supports_method("textDocument/foldingRange") then
+			local win = vim.api.nvim_get_current_win()
+			vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
+		end
+		-- ---@diagnostic disable-next-line: need-check-nil
+		-- if client:supports_method("textDocument/completion") then
+		-- 	---@diagnostic disable-next-line: need-check-nil
+		-- 	vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
+		-- end
+	end,
+})
 
 vim.diagnostic.config({
 	underline = {
