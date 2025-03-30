@@ -14,12 +14,11 @@ return {
 			"nvim-lua/plenary.nvim",
 		},
 		opts = {
-			-- add any opts here
-			-- for example
 			provider = "ollama",
 			ollama = {
 				model = "deepseek-r1:14b",
 			},
+			hints = { enabled = false },
 		},
 	},
 }
