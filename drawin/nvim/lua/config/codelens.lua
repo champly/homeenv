@@ -1,5 +1,38 @@
 local M = {}
 
+local function go_test(command)
+	if command.arguments and command.arguments[1] then
+		local arg = command.arguments[1]
+		if arg.URI then
+			-- Convert file:///path/to/file to /path/to/file
+			local filepath = arg.URI:gsub("^file://", "")
+			-- Get directory from filepath
+			local dir = filepath:match("(.*)/[^/]*$")
+
+			local cmd = ""
+			if arg.Benchmarks and #arg.Benchmarks > 0 then
+				cmd = string.format("go test -benchmem -bench ^%s$", arg.Benchmarks[1])
+			elseif arg.Tests and #arg.Tests > 0 then
+				cmd = string.format("go test -v -cover -run ^%s$", arg.Tests[1])
+			else
+				return false
+			end
+
+			local Terminal = require("toggleterm.terminal").Terminal
+			local gotest_term = Terminal:new({
+				cmd = cmd,
+				dir = dir,
+				auto_scroll = false,
+				close_on_exit = false,
+			})
+			gotest_term:toggle()
+
+			return true
+		end
+	end
+	return false
+end
+
 function M.setup(client, bufnr, opts)
 	if not client.server_capabilities.codeLensProvider then
 		return
@@ -58,6 +91,13 @@ function M.setup(client, bufnr, opts)
 	-- Helper to execute a command
 	local function execute_command(command)
 		if not command then return false end
+
+		if command.command == "gopls.run_tests" then
+			if go_test(command) then
+				return true
+			end
+		end
+
 		client:exec_cmd(command)
 		return true
 	end
