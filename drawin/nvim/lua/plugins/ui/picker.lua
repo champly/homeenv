@@ -21,4 +21,8 @@ return {
 		-- undo
 		{ "<leader>u",  function() Snacks.picker.undo() end,                                    desc = "Undo History" },
 	},
+	init = function()
+		vim.api.nvim_set_hl(0, "SnacksPickerSearch", { bg = "#ffcc33" })
+		vim.api.nvim_set_hl(0, "SnacksPickerMatch", { bold = true })
+	end
 }
