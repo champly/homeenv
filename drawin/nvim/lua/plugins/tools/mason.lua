@@ -34,6 +34,8 @@ return {
 				"gofumpt",
 				"gomodifytags",
 				"delve",
+				-- python
+				"pyright",
 				-- toml
 				"taplo",
 				-- markdown

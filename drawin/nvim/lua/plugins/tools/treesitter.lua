@@ -29,6 +29,7 @@ return {
 					"yaml",
 					"bash",
 					"html",
+					"python",
 					"kdl",
 					"nix",
 					"nickel",
