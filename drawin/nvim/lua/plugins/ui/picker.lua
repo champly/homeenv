@@ -24,5 +24,7 @@ return {
 	init = function()
 		vim.api.nvim_set_hl(0, "SnacksPickerSearch", { bg = "#ffcc33" })
 		vim.api.nvim_set_hl(0, "SnacksPickerMatch", { bold = true })
+		vim.api.nvim_set_hl(0, "SnacksIndentChunk", { fg = "blue" })
+		vim.api.nvim_set_hl(0, "SnacksIndentScope", { fg = "blue" })
 	end
 }

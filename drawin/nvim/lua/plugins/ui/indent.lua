@@ -26,10 +26,6 @@ return {
 				},
 			}
 		},
-		init = function()
-			vim.api.nvim_set_hl(0, "SnacksIndentChunk", { fg = "blue" })
-			vim.api.nvim_set_hl(0, "SnacksIndentScope", { fg = "blue" })
-		end
 	}
 	-- {
 	--     "shellRaining/hlchunk.nvim",
