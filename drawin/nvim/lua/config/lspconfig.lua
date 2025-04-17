@@ -75,7 +75,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		---@diagnostic disable-next-line: need-check-nil
 		if client:supports_method("textDocument/foldingRange") then
 			local win = vim.api.nvim_get_current_win()
-			vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
+			vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
 		end
 		-- ---@diagnostic disable-next-line: need-check-nil
 		-- if client:supports_method("textDocument/completion") then
@@ -121,5 +121,5 @@ vim.lsp.config("*", {
 	}
 })
 
--- vim.o.winborder               = "rounded"
+-- vim.o.winborder = "rounded"
 vim.lsp.enable({ "gopls", "lua_ls", "rust_analyzer", "clangd", "pyright" })
