@@ -1,14 +1,29 @@
 return {
+	-- {
+	-- 	"aznhe21/actions-preview.nvim",
+	-- 	keys = {
+	-- 		{ "<leader>ca", function() require("actions-preview").code_actions() end, mode = { "n" }, desc = "Code Action" },
+	-- 	},
+	-- 	opts = {
+	-- 		-- TODO: use snacks.picker, remove telescope
+	-- 		-- backend = { "snacks" },
+	-- 		-- snacks = {
+	-- 		-- 	layout = { preset = "dropdown" },
+	-- 		-- },
+	-- 	}
+	-- },
 	{
-		"aznhe21/actions-preview.nvim",
+		"rachartier/tiny-code-action.nvim",
+		dependencies = {
+			{ "nvim-lua/plenary.nvim" },
+		},
 		keys = {
-			{ "<leader>ca", function() require("actions-preview").code_actions() end, mode = { "n" }, desc = "Code Action" },
+			{ "<leader>ca", function() require("tiny-code-action").code_action() end, mode = { "n" }, desc = "Code Action" },
 		},
 		opts = {
-			-- TODO: use snacks.picker, remove telescope
-			-- snacks = {
-			-- 	layout = { preset = "default" },
-			-- },
-		}
+			picker = {
+				"snacks",
+			}
+		},
 	}
 }
