@@ -30,6 +30,7 @@ return {
 					"bash",
 					"html",
 					"python",
+					"diff", -- for aznhe21/actions-preview.nvim
 					"kdl",
 					"nix",
 					"nickel",
