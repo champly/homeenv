@@ -12,7 +12,7 @@ return {
 					disable_filetype = { "TelescopePrompt", "vim" },
 				})
 
-				local cmp = require "cmp"
+				local cmp = require("cmp")
 				cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 			else
 				autopairs.setup({
