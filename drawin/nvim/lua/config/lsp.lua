@@ -50,14 +50,15 @@ local enhance_attach = function(client, bufnr)
 	vim.keymap.set("n", "<leader>bl", function() Snacks.picker.lsp_symbols(preset_default) end, opts)
 
 	-- virtual_lines
+	local original_config = vim.diagnostic.config()
 	vim.api.nvim_set_keymap("n", "<leader>do", "", {
 		callback = function()
-			vim.diagnostic.config({ virtual_lines = { current_line = true } })
+			vim.diagnostic.config({ virtual_lines = { current_line = true }, virtual_text = false })
 		end,
 	})
 	vim.api.nvim_create_autocmd("CursorMoved", {
 		callback = function()
-			vim.diagnostic.config({ virtual_lines = false })
+			vim.diagnostic.config(original_config)
 		end,
 	})
 
@@ -109,6 +110,7 @@ vim.diagnostic.config({
 		border = "rounded", -- none,single,double
 	}
 })
+
 
 vim.lsp.config("*", {
 	on_attach = enhance_attach,
