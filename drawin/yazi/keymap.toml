@@ -1,6 +1,6 @@
 # default value: https://github.com/sxyazi/yazi/blob/shipped/yazi-config/preset/keymap-default.toml
 
-[manager]
+[mgr]
 prepend_keymap = [
   { on = "o", run = "noop", desc = "Open selected files" },
   { on = "Enter", run = "noop", desc = "Open selected files" },

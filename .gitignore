@@ -2,3 +2,4 @@
 .luarc.json
 packer_compiled.lua
 lazy-lock.json
+drawin/yazi/plugins

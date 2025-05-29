@@ -1,7 +1,7 @@
 [[plugin.deps]]
 use = "yazi-rs/plugins:full-border"
-rev = "b12a9ab"
-hash = "1f3dad061209081a6b04dd6ff2cb06c7"
+rev = "a54b96a"
+hash = "3996fc74044bc44144b323686f887e1"
 
 [[plugin.deps]]
 use = "Reledia/glow"
@@ -10,18 +10,18 @@ hash = "f9ee1436e3b853508d87f7d49dce56e6"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:git"
-rev = "b12a9ab"
-hash = "e0ada736ea676c2bbb3ec705a49526ef"
+rev = "a54b96a"
+hash = "bf6f074cd41ee33c3360341d168f9733"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:smart-enter"
-rev = "b12a9ab"
-hash = "7918aab6a71caf31b58411f789195677"
+rev = "a54b96a"
+hash = "a7ab702e1ef0c097defbc976ed34c186"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:toggle-pane"
-rev = "b12a9ab"
-hash = "5c9dda1a587b8f5b6f63e3d5375bda88"
+rev = "a54b96a"
+hash = "d5d4f3527592da5fbe77fd6f51815f80"
 
 [flavor]
 deps = []

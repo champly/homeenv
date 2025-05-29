@@ -4,8 +4,15 @@
 dark = ""
 light = ""
 
-[manager]
+[mgr]
 preview_hovered = { underline = false }
+
+[tabs]
+active = { bg = "lightblue", bold = true }
+inactive = { fg = "lightblue", bg = "gray" }
+
+[mode]
+normal_main = { bg = "lightblue", bold = true }
 
 [filetype]
 rules = [
