@@ -1,7 +1,20 @@
 return {
 	"folke/snacks.nvim",
 	opts = {
-		picker = {}
+		picker = {
+			win = {
+				input = {
+					keys = {
+						["<a-a>"] = { "select_all", mode = { "n", "i" } },
+						["<a-j>"] = { "preview_scroll_down", mode = { "i", "n" } },
+						["<a-k>"] = { "preview_scroll_up", mode = { "i", "n" } },
+						["<c-a>"] = false,
+						["<c-f>"] = false,
+						["<c-b>"] = false,
+					}
+				}
+			}
+		}
 	},
 	keys = {
 		-- find
