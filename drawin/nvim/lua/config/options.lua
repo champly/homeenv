@@ -3,6 +3,7 @@ local cache_dir               = os.getenv("HOME") .. "/.cache/nvim/"
 vim.g.color_theme_dark        = "dark"
 vim.g.color_theme_light       = "light"
 vim.g.color_theme             = vim.g.color_theme_light -- dark or light if you want light mode
+vim.g.go_import_without_local = true
 
 -- for neovide
 -- https://neovide.dev/configuration.html

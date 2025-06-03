@@ -25,6 +25,10 @@ return {
 			},
 			goimports = {
 				prepend_args = function()
+					if vim.g.go_import_without_local then
+						return {}
+					end
+
 					-- fix with issue: https://github.com/golang/go/issues/40660
 					local handle = io.popen("go list -m 2>/dev/null")
 					if not handle then
