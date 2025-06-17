@@ -3,8 +3,6 @@ return {
 		"saghen/blink.cmp",
 		dependencies = {
 			"rafamadriz/friendly-snippets",
-			-- { "samiulsami/cmp-go-deep", dependencies = { "kkharji/sqlite.lua" } },
-			-- { "saghen/blink.compat" },
 		},
 		version = "*",
 		opts = {
@@ -38,7 +36,6 @@ return {
 				},
 			},
 			sources = {
-				-- default = { "lsp", "path", "buffer", "go_deep", "snippets" },
 				default = { "lsp", "path", "buffer", "snippets" },
 				providers = {
 					snippets = {
@@ -46,13 +43,6 @@ return {
 							search_paths = { vim.fn.stdpath("config") .. "/external/snippets/" },
 						}
 					},
-					-- go_deep = {
-					-- 	name = "go_deep",
-					-- 	module = "blink.compat.source",
-					-- 	min_keyword_length = 3,
-					-- 	max_items = 5,
-					-- 	opts = {},
-					-- }
 				},
 			},
 			signature = {
