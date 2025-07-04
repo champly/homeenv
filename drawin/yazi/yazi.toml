@@ -13,6 +13,7 @@ max_height = 9000
 edit = [
   { run = '${EDITOR:-nvim} "$@"', desc = "$EDITOR", block = true, for = "unix" },
   { run = 'code "$@"', orphan = true, desc = "VSCode", for = "macos" },
+  { run = 'cd "$@" && neovide', block = true, orphan = true, desc = "Neovide", for = "macos" },
 ]
 
 [plugin]
