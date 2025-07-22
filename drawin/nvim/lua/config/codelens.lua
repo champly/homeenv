@@ -11,7 +11,7 @@ local function go_test(command)
 
 			local cmd = ""
 			if arg.Benchmarks and #arg.Benchmarks > 0 then
-				cmd = string.format("go test -benchmem -bench ^%s$", arg.Benchmarks[1])
+				cmd = string.format("go test -benchmem -bench ^%s$ -run=^$", arg.Benchmarks[1])
 			elseif arg.Tests and #arg.Tests > 0 then
 				cmd = string.format("go test -v -cover -run ^%s$", arg.Tests[1])
 			else
