@@ -42,7 +42,7 @@ vim.opt.smartcase                    = true
 vim.opt.cursorline                   = true
 vim.opt.hlsearch                     = true
 -- hit-enter
-vim.opt.cmdheight                    = 0
+-- vim.opt.cmdheight                    = 0
 -- 区分空格和缩进
 vim.opt.list                         = true
 vim.opt.showbreak                    = "↪ "

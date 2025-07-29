@@ -4,7 +4,7 @@ return {
 		version = "*",
 		lazy = true,
 		ft = "markdown",
-		cmd = "ObsidianToday",
+		cmd = "Obsidian",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 		},
@@ -27,6 +27,7 @@ return {
 					folder = "Daily/Tencent",
 					date_format = "%Y年%m月%d日"
 				},
+				legacy_commands = false,
 			}
 		end,
 	},
