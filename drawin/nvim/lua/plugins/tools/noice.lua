@@ -34,22 +34,22 @@ return {
 			},
 			messages = {
 				enabled = false,
-			}
+			},
 			-- cmdline center
-			-- views = {
-			--     cmdline_popup = {
-			--         position = {
-			--             row = "30%",
-			--             col = "50%",
-			--         },
-			--     },
-			--     cmdline_popupmenu = {
-			--         position = {
-			--             row = "36%",
-			--             col = "50%",
-			--         },
-			--     },
-			-- },
+			views = {
+				cmdline_popup = {
+					position = {
+						row = math.floor(vim.o.lines * 0.3),
+						col = "50%",
+					},
+				},
+				cmdline_popupmenu = {
+					position = {
+						row = math.floor(vim.o.lines * 0.3) + 3,
+						col = "50%",
+					},
+				},
+			},
 		},
 	},
 }
