@@ -12,6 +12,7 @@ return {
 		},
 		dependencies = {
 			"nvim-lua/plenary.nvim",
+			"MunifTanjim/nui.nvim",
 		},
 		opts = {
 			providers = {
