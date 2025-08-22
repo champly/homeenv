@@ -1,4 +1,4 @@
-local cache_dir                      = os.getenv("HOME") .. "/.cache/nvim/"
+local cache_dir                      = vim.fn.stdpath("state") .. "/"
 
 vim.g.color_theme_dark               = "dark"
 vim.g.color_theme_light              = "light"
@@ -14,12 +14,11 @@ vim.g.neovide_fullscreen             = false
 vim.g.neovide_opacity                = 1
 -- vim.g.transparency = 0.6
 
-vim.opt.encoding                     = "utf-8" -- scriptencoding utf-8
 vim.opt.termguicolors                = true
-vim.opt.relativenumber               = true    -- 显示相对行号
-vim.opt.foldmethod                   = "expr"  -- 设置折叠语法
+vim.opt.relativenumber               = true   -- 显示相对行号
+vim.opt.foldmethod                   = "expr" -- 设置折叠语法
 vim.o.foldexpr                       = "v:lua.vim.treesitter.foldexpr()"
-vim.opt.foldlevelstart               = 99      -- 默认不折叠
+vim.opt.foldlevelstart               = 99     -- 默认不折叠
 vim.opt.backup                       = false
 vim.opt.writebackup                  = false
 vim.opt.swapfile                     = false

@@ -1,21 +1,22 @@
--- vim map
-vim.api.nvim_set_keymap("n", "Y", "y$", { noremap = true })
-vim.api.nvim_set_keymap("n", "<leader>n", ":enew<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<leader>bd", ":bd!<CR>", { noremap = true })
+-- Basic editing
+vim.keymap.set("n", "Y", "y$", { desc = "Yank to end of line" })
+vim.keymap.set("n", "<leader>n", ":enew<CR>", { desc = "New buffer" })
+vim.keymap.set("n", "<leader>bd", ":bd!<CR>", { desc = "Force close buffer" })
 
--- -- https://www.reddit.com/r/neovim/comments/ro6oye/open_link_from_neovim/
-vim.api.nvim_set_keymap("n", "gx", ":silent execute '!open ' . shellescape(expand('<cfile>'), 1)<CR>",
-	{ noremap = true, silent = true })
+-- https://www.reddit.com/r/neovim/comments/ro6oye/open_link_from_neovim/
+-- Open URL or file under cursor (macOS: open)
+vim.keymap.set("n", "gx", ":silent execute '!open ' . shellescape(expand('<cfile>'), 1)<CR>", { silent = true })
 
 -- Session
-vim.api.nvim_set_keymap("n", "<leader>sl", [[<cmd>lua require("persistence").load()<cr>]], { silent = true })
+vim.keymap.set("n", "<leader>sl", function() require("persistence").load() end,
+	{ desc = "Load last session", silent = true })
 
 -- Obsidian
-vim.api.nvim_set_keymap("n", "<leader>ot", [[<cmd>Obsidian today<cr>]], { silent = true })
+vim.keymap.set("n", "<leader>ot", "<cmd>Obsidian today<cr>", { desc = "Obsidian Today", silent = true })
 
 -- loop set mouse mode
-vim.api.nvim_set_keymap("n", "<leader>sm", ":lua vim.opt.mouse = vim.opt.mouse._value == 'v' and 'a' or 'v'<CR>",
-	{ noremap = true, silent = true })
+vim.keymap.set("n", "<leader>sm", ":lua vim.opt.mouse = vim.opt.mouse._value == 'v' and 'a' or 'v'<CR>",
+	{ desc = "Toggle mouse mode", silent = true })
 
 -- Call figlet
 -- brew install figlet
@@ -23,45 +24,45 @@ vim.api.nvim_set_keymap("n", "<leader>sm", ":lua vim.opt.mouse = vim.opt.mouse._
 
 -- Finial
 -- command line mode
-vim.api.nvim_set_keymap("c", "<C-a>", "<Home>", { noremap = true })
-vim.api.nvim_set_keymap("c", "<C-e>", "<End>", { noremap = true })
-vim.api.nvim_set_keymap("c", "<C-b>", "<Left>", { noremap = true })
-vim.api.nvim_set_keymap("c", "<C-f>", "<Right>", { noremap = true })
+vim.keymap.set("c", "<C-a>", "<Home>")
+vim.keymap.set("c", "<C-e>", "<End>")
+vim.keymap.set("c", "<C-b>", "<Left>")
+vim.keymap.set("c", "<C-f>", "<Right>")
 -- insert mode
-vim.api.nvim_set_keymap("i", "<C-h>", "<Left>", { noremap = true })
-vim.api.nvim_set_keymap("i", "<C-j>", "<C-o>gj", { noremap = true })
-vim.api.nvim_set_keymap("i", "<C-k>", "<C-o>gk", { noremap = true })
-vim.api.nvim_set_keymap("i", "<C-l>", "<Right>", { noremap = true })
-vim.api.nvim_set_keymap("i", "<C-a>", "<Home>", { noremap = true })
-vim.api.nvim_set_keymap("i", "<C-e>", "<End>", { noremap = true })
-vim.api.nvim_set_keymap("i", "<C-b>", "<Left>", { noremap = true })
-vim.api.nvim_set_keymap("i", "<C-f>", "<Right>", { noremap = true })
+vim.keymap.set("i", "<C-h>", "<Left>")
+vim.keymap.set("i", "<C-j>", "<C-o>gj")
+vim.keymap.set("i", "<C-k>", "<C-o>gk")
+vim.keymap.set("i", "<C-l>", "<Right>")
+vim.keymap.set("i", "<C-a>", "<Home>")
+vim.keymap.set("i", "<C-e>", "<End>")
+vim.keymap.set("i", "<C-b>", "<Left>")
+vim.keymap.set("i", "<C-f>", "<Right>")
 
 -- force write
-vim.api.nvim_set_keymap("c", "w!!", "w !sudo tee % >/dev/null", { noremap = true })
+vim.keymap.set("c", "w!!", "w !sudo tee % >/dev/null", { desc = "Sudo write" })
 
 -- split
-vim.api.nvim_set_keymap("n", "sh", ":set splitright<CR>:vs<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "sl", ":set nosplitright<CR>:vs<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "sk", ":set splitbelow<CR>:sp<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "sj", ":set nosplitbelow<CR>:sp<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "ss", "<C-w>t<C-w>H", { noremap = true })
-vim.api.nvim_set_keymap("n", "sp", "<C-w>t<c-w>K", { noremap = true })
+vim.keymap.set("n", "sh", ":set splitright<CR>:vs<CR>", { desc = "Vertical split right" })
+vim.keymap.set("n", "sl", ":set nosplitright<CR>:vs<CR>", { desc = "Vertical split left" })
+vim.keymap.set("n", "sk", ":set splitbelow<CR>:sp<CR>", { desc = "Horizontal split below" })
+vim.keymap.set("n", "sj", ":set nosplitbelow<CR>:sp<CR>", { desc = "Horizontal split above" })
+vim.keymap.set("n", "ss", "<C-w>t<C-w>H", { desc = "Rotate to vertical" })
+vim.keymap.set("n", "sp", "<C-w>t<c-w>K", { desc = "Rotate to horizontal" })
 
 -- Tab
-vim.api.nvim_set_keymap("n", "<leader>tu", ":tabe<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<leader>tn", ":-tabnext<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<leader>tp", ":+tabnext<CR>", { noremap = true })
+vim.keymap.set("n", "<leader>tu", ":tabe<CR>", { desc = "New tab" })
+vim.keymap.set("n", "<leader>tn", ":tabprevious<CR>", { desc = "Prev tab" })
+vim.keymap.set("n", "<leader>tp", ":tabnext<CR>", { desc = "Next tab" })
 
 -- move window with cursor
-vim.api.nvim_set_keymap("n", "<C-j>", "<C-W>j", { noremap = true })
-vim.api.nvim_set_keymap("n", "<C-k>", "<C-W>k", { noremap = true })
-vim.api.nvim_set_keymap("n", "<C-h>", "<C-W>h", { noremap = true })
-vim.api.nvim_set_keymap("n", "<C-l>", "<C-W>l", { noremap = true })
+vim.keymap.set("n", "<C-j>", "<C-W>j", { desc = "Move to below window" })
+vim.keymap.set("n", "<C-k>", "<C-W>k", { desc = "Move to above window" })
+vim.keymap.set("n", "<C-h>", "<C-W>h", { desc = "Move to left window" })
+vim.keymap.set("n", "<C-l>", "<C-W>l", { desc = "Move to right window" })
 
 -- hightline
-vim.api.nvim_set_keymap("n", "<F2>", ":nohlsearch<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("i", "<F2>", "<C-O>:nohlsearch<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<F2>", ":nohlsearch<CR>", { desc = "Clear search highlight", silent = true })
+vim.keymap.set("i", "<F2>", "<C-O>:nohlsearch<CR>", { desc = "Clear search highlight", silent = true })
 
 -- cheat-sheet
 -- https://www.nerdfonts.com/cheat-sheet

@@ -1,6 +1,6 @@
 return {
 	"stevearc/conform.nvim",
-	event = "BufRead",
+	event = { "BufWritePre", "BufReadPost" },
 	opts = {
 		format_on_save = {
 			timeout_ms = 2000,
