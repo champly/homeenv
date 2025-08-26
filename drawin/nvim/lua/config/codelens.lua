@@ -1,36 +1,35 @@
 local M = {}
 
 local function go_test(command)
-	if command.arguments and command.arguments[1] then
-		local arg = command.arguments[1]
-		if arg.URI then
-			-- Convert file:///path/to/file to /path/to/file
-			local filepath = arg.URI:gsub("^file://", "")
-			-- Get directory from filepath
-			local dir = filepath:match("(.*)/[^/]*$")
+	if not (command.arguments and command.arguments[1]) then return false end
 
-			local cmd = ""
-			if arg.Benchmarks and #arg.Benchmarks > 0 then
-				cmd = string.format("go test -benchmem -bench ^%s$ -run=^$", arg.Benchmarks[1])
-			elseif arg.Tests and #arg.Tests > 0 then
-				cmd = string.format("go test -v -cover -run ^%s$", arg.Tests[1])
-			else
-				return false
-			end
+	local arg = command.arguments[1]
+	if not arg.URI then return false end
 
-			local Terminal = require("toggleterm.terminal").Terminal
-			local gotest_term = Terminal:new({
-				cmd = cmd,
-				dir = dir,
-				auto_scroll = false,
-				close_on_exit = false,
-			})
-			gotest_term:toggle()
+	-- Convert file:///path/to/file to /path/to/file
+	local filepath = arg.URI:gsub("^file://", "")
+	-- Get directory from filepath
+	local dir = filepath:match("(.*)/[^/]*$")
 
-			return true
-		end
+	local test_cmd = ""
+	if arg.Benchmarks and #arg.Benchmarks > 0 then
+		test_cmd = string.format("go test -benchmem -bench ^%s$ -run=^$", arg.Benchmarks[1])
+	elseif arg.Tests and #arg.Tests > 0 then
+		test_cmd = string.format("go test -v -cover -run ^%s$", arg.Tests[1])
+	else
+		return false
 	end
-	return false
+
+	local Terminal = require("toggleterm.terminal").Terminal
+	local gotest_term = Terminal:new({
+		cmd = test_cmd,
+		dir = dir,
+		auto_scroll = false,
+		close_on_exit = false,
+	})
+	gotest_term:toggle()
+
+	return true
 end
 
 function M.setup(client, bufnr, opts)

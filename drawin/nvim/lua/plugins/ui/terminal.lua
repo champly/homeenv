@@ -1,10 +1,9 @@
 return {
 	{
 		"akinsho/toggleterm.nvim",
-		cmd = { "ToggleTerm" },
-		init = function()
-			vim.api.nvim_set_keymap("n", "<F3>", ":ToggleTerm<CR>", { noremap = true, silent = true })
-		end,
+		keys = {
+			{ "<F3>", "<cmd>ToggleTerm<CR>", mode = { "n" }, desc = "Toggle Term" },
+		},
 		opts = {
 			size = function(term)
 				if term.direction == "horizontal" then
