@@ -24,7 +24,7 @@ return {
 				"biome",
 				"prettier",
 				-- lua
-				"lua-language-server",
+				"emmylua_ls",
 				-- c/c++
 				"clangd",
 				-- yaml

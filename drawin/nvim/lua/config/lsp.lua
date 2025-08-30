@@ -124,4 +124,4 @@ vim.lsp.config("*", {
 })
 
 -- vim.o.winborder = "rounded"
-vim.lsp.enable({ "gopls", "lua_ls", "rust_analyzer", "clangd", "pyright" })
+vim.lsp.enable({ "gopls", "emmylua_ls", "rust_analyzer", "clangd", "pyright" })
