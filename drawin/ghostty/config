@@ -5,6 +5,8 @@ font-size = 15
 
 shell-integration-features = no-cursor
 cursor-style = block
+# https://github.com/hackr-sh/ghostty-shaders
+# custom-shader = "./ghostty-shaders/cursor_blaze.glsl"
 
 scrollback-limit = 20480
 
