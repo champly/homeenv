@@ -11,7 +11,7 @@ return {
 		---@diagnostic disable-next-line: undefined-field
 		enabled = vim.uv.os_uname().sysname == "Darwin",
 		opts = function()
-			local path = os.getenv("HOME") .. "/Library/Mobile Documents/com~apple~CloudDocs/notebook"
+			local path = os.getenv("HOME") .. "/Documents/notebook"
 			---@diagnostic disable-next-line: undefined-field
 			if not vim.uv.fs_stat(path) then
 				path = os.getenv("HOME") .. "/Library/Mobile Documents/iCloud~md~obsidian/Documents/notebook"
