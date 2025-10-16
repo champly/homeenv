@@ -15,7 +15,7 @@ return {
 				}
 			})
 			vim.o.background = "dark"
-			vim.cmd([[ colorscheme gruvbox ]])
+			vim.cmd.colorscheme("gruvbox")
 		end
 	},
 	{
@@ -29,7 +29,7 @@ return {
 					}
 				}
 			})
-			vim.cmd([[ colorscheme github_light ]])
+			vim.cmd.colorscheme("github_light")
 		end
 	},
 	{

@@ -41,8 +41,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
 	pattern = "NvimTree_*",
 	callback = function()
 		local layout = vim.api.nvim_call_function("winlayout", {})
-		---@diagnostic disable-next-line: deprecated
-		if layout[1] == "leaf" and vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(layout[2]), "filetype") == "NvimTree" and layout[3] == nil then
+		if layout[1] == "leaf" and vim.bo[vim.api.nvim_win_get_buf(layout[2])].filetype == "NvimTree" and layout[3] == nil then
 			vim.cmd("confirm quit")
 		end
 	end

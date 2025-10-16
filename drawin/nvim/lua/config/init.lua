@@ -28,8 +28,8 @@ vim.g.loaded_ruby_provider     = 0
 -- vim.g.do_filetype_lua          = 1
 
 vim.g.mapleader                = ","
-vim.api.nvim_set_keymap("n", " ", "", { noremap = true })
-vim.api.nvim_set_keymap("x", " ", "", { noremap = true })
+vim.keymap.set("n", " ", "", { noremap = true })
+vim.keymap.set("x", " ", "", { noremap = true })
 
 require("config.options")
 require("config.autocmd")
