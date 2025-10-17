@@ -3,7 +3,6 @@ return {
 		"obsidian-nvim/obsidian.nvim",
 		version = "*",
 		lazy = true,
-		ft = "markdown",
 		cmd = "Obsidian",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
@@ -11,11 +10,19 @@ return {
 		---@diagnostic disable-next-line: undefined-field
 		enabled = vim.uv.os_uname().sysname == "Darwin",
 		opts = function()
-			local path = os.getenv("HOME") .. "/Documents/notebook"
-			---@diagnostic disable-next-line: undefined-field
-			if not vim.uv.fs_stat(path) then
-				path = os.getenv("HOME") .. "/Library/Mobile Documents/iCloud~md~obsidian/Documents/notebook"
+			local paths = {
+				os.getenv("HOME") .. "/Documents/notebook",
+				os.getenv("HOME") .. "/Library/Mobile Documents/iCloud~md~obsidian/Documents/notebook",
+			}
+			local path = "/tmp"
+			for _, p in ipairs(paths) do
+				---@diagnostic disable-next-line: undefined-field
+				if vim.uv.fs_stat(p) then
+					path = p
+					break
+				end
 			end
+
 			return {
 				workspaces = {
 					{
@@ -27,6 +34,7 @@ return {
 					folder = "Daily/Tencent",
 					date_format = "%Y年%m月%d日"
 				},
+				-- https://github.com/obsidian-nvim/obsidian.nvim/wiki/Commands
 				legacy_commands = false,
 			}
 		end,
