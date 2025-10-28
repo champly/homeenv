@@ -10,6 +10,7 @@ return {
 			{ "<leader>aa", "<cmd>Avante<cr>",      desc = "Ask Avante AI" },
 			{ "<leader>ac", "<cmd>AvanteClear<cr>", desc = "Clear the chat history" },
 		},
+		enabled = false,
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"MunifTanjim/nui.nvim",

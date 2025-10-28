@@ -127,3 +127,7 @@ alias k9s='LC_CTYPE="UTF-8" k9s'
 export FZF_CTRL_R_OPTS="--color=light"
 # export FZF_CTRL_R_OPTS="--color=dark"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+
+# Added by CodeBuddy CN
+export PATH="/Users/champly/.codebuddy/bin:$PATH"
