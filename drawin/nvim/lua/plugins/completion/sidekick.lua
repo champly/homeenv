@@ -4,12 +4,7 @@ return {
 		opts = {
 			cli = {
 				tools = {
-					["codebuddy-code"] = {
-						cmd = { "codebuddy-code" },
-						keys = {
-							submit = { "<leader>cd", function(t) t:send("\n") end },
-						},
-					},
+					codebuddy = { cmd = { "codebuddy" } },
 				},
 			},
 		},
