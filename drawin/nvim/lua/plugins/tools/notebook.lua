@@ -12,7 +12,7 @@ return {
 		opts = function()
 			local paths = {
 				os.getenv("HOME") .. "/Documents/notebook",
-				os.getenv("HOME") .. "/Library/Mobile Documents/iCloud~md~obsidian/Documents/notebook",
+				os.getenv("HOME") .. "/Library/Mobile Documents/com~apple~CloudDocs/notebook",
 			}
 			local path = "/tmp"
 			for _, p in ipairs(paths) do
