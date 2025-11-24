@@ -21,7 +21,7 @@ return {
 				desc = "Goto/Apply Next Edit Suggestion",
 			},
 			{
-				"<c-.>",
+				"<M-.>",
 				function() require("sidekick.cli").toggle() end,
 				desc = "Sidekick Toggle",
 				mode = { "n", "t", "i", "x" },
