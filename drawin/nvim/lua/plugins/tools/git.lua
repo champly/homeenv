@@ -25,17 +25,11 @@ return {
 		end,
 	},
 	{
-		"sindrets/diffview.nvim",
+		"esmuellert/vscode-diff.nvim",
+		dependencies = { "MunifTanjim/nui.nvim" },
 		cmd = {
-			"DiffviewOpen",
-			"DiffviewFileHistory",
+			"CodeDiff",
 		},
-		opts = {
-			view = {
-				merge_tool = {
-					layout = "diff3_mixed",
-				}
-			}
-		}
+		config = true
 	}
 }
