@@ -1,10 +1,24 @@
+-- Filetype overrides recommended by :help vim.filetype.add
+vim.filetype.add({
+	extension = {
+		ncl = "nickel",
+		nkl = "nickel",
+		bxl = "bzl",
+	},
+	filename = {
+		["BUCK"] = "bzl",
+		["TARGETS"] = "bzl",
+	},
+})
+
 -- Restore cursor to file position in previous editing session
 vim.api.nvim_create_autocmd("BufReadPost", {
-	callback = function(args)
-		local mark = vim.api.nvim_buf_get_mark(args.buf, '"')
-		local line_count = vim.api.nvim_buf_line_count(args.buf)
+	callback = function(event)
+		local mark = vim.api.nvim_buf_get_mark(event.buf, '"')
+		local line_count = vim.api.nvim_buf_line_count(event.buf)
 		if mark[1] > 0 and mark[1] <= line_count then
-			vim.cmd('normal! g`"zz')
+			pcall(vim.api.nvim_win_set_cursor, 0, { mark[1], mark[2] })
+			vim.cmd("normal! zz")
 		end
 	end,
 })
@@ -40,34 +54,10 @@ vim.api.nvim_create_autocmd("BufEnter", {
 	group = vim.api.nvim_create_augroup("NvimTreeClose", { clear = true }),
 	pattern = "NvimTree_*",
 	callback = function()
-		local layout = vim.api.nvim_call_function("winlayout", {})
+		local layout = vim.fn.winlayout()
 		if layout[1] == "leaf" and vim.bo[vim.api.nvim_win_get_buf(layout[2])].filetype == "NvimTree" and layout[3] == nil then
 			vim.cmd("confirm quit")
 		end
-	end
-})
-
--- auto spell
--- { "BufRead,BufNewFile", "*.md",        "setlocal spell" },
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-	pattern = { "*.md" },
-	callback = function()
-		vim.cmd([[setlocal spell]])
-	end
-})
-
--- set nickel filetype
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-	pattern = { "*.ncl", "*.nkl" },
-	callback = function()
-		vim.cmd([[set filetype=nickel]])
-	end
-})
--- set BUCK filetype
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-	pattern = { "*.bxl", "BUCK", "TARGETS" },
-	callback = function()
-		vim.cmd([[set filetype=bzl]])
 	end
 })
 
@@ -75,7 +65,12 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 -- FIXME: auto close when quickfix is last window
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "qf",
-	callback = function()
-		vim.cmd([[if mapcheck('<esc>', 'n') ==# '' | nnoremap <buffer><silent> <esc> :cclose<bar>lclose<cr> | endif]])
+	callback = function(event)
+		if vim.fn.mapcheck("<Esc>", "n") == "" then
+			vim.keymap.set("n", "<Esc>", function()
+				pcall(vim.cmd, "cclose")
+				pcall(vim.cmd, "lclose")
+			end, { buffer = event.buf, silent = true, desc = "Close quickfix" })
+		end
 	end
 })

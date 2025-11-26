@@ -72,7 +72,7 @@ function ToggleQF()
 end
 
 -- toggle quickfix mapping
-vim.api.nvim_set_keymap("n", "<leader>q", ":lua ToggleQF()<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>q", ToggleQF, { noremap = true, silent = true, desc = "Toggle quickfix" })
 
 -- nvimdap config
 function CopyDapConfig()
@@ -109,11 +109,11 @@ function CopyDapConfig()
 				picker:close()
 
 				-- edit launchPath
-				vim.api.nvim_command("edit " .. launchPath)
+				vim.cmd.edit(launchPath)
 			end
 		}
 	})
 end
 
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "None" })
-vim.api.nvim_set_keymap("n", "<leader>dt", ":lua CopyDapConfig()<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>dt", CopyDapConfig, { noremap = true, silent = true, desc = "Copy DAP template" })

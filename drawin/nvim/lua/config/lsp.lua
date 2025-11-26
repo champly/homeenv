@@ -1,7 +1,7 @@
 -- https://github.com/nvim-lua/completion-nvim/issues/337#issuecomment-765563829
 -- TODO: use https://github.com/NvChad/NvChad/blob/v2.0/lua/plugins/configs/lspconfig.lua rewrite
 local enhance_attach = function(client, bufnr)
-	-- highlight
+	-- highlight + document highlight
 	if client.server_capabilities.documentHighlightProvider then
 		if vim.g.color_theme == vim.g.color_theme_dark then
 			vim.api.nvim_set_hl(0, "LspReferenceRead", { bg = "#ff8600", fg = "black" })
@@ -17,12 +17,20 @@ local enhance_attach = function(client, bufnr)
 			-- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#d9d9d9" })
 			-- vim.api.nvim_set_hl(0, "DiagnosticFloatingHint", { fg = "gray" })
 		end
-	end
 
-	-- lsp document highlight
-	vim.api.nvim_create_autocmd("CursorHold", { callback = vim.lsp.buf.document_highlight })
-	vim.api.nvim_create_autocmd("CursorHoldI", { callback = vim.lsp.buf.document_highlight })
-	vim.api.nvim_create_autocmd("CursorMoved", { callback = vim.lsp.buf.clear_references })
+		local highlight_group = vim.api.nvim_create_augroup("lsp_document_highlight_" .. bufnr, { clear = true })
+
+		vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+			group = highlight_group,
+			buffer = bufnr,
+			callback = vim.lsp.buf.document_highlight,
+		})
+		vim.api.nvim_create_autocmd("CursorMoved", {
+			group = highlight_group,
+			buffer = bufnr,
+			callback = vim.lsp.buf.clear_references,
+		})
+	end
 
 	-- keymap
 	local opts = { buffer = bufnr, silent = true, noremap = true }
@@ -51,12 +59,14 @@ local enhance_attach = function(client, bufnr)
 
 	-- virtual_lines
 	local original_config = vim.diagnostic.config()
-	vim.api.nvim_set_keymap("n", "<leader>do", "", {
-		callback = function()
-			vim.diagnostic.config({ virtual_lines = { current_line = true }, virtual_text = false })
-		end,
-	})
+	vim.keymap.set("n", "<leader>do", function()
+		vim.diagnostic.config({ virtual_lines = { current_line = true }, virtual_text = false })
+	end, { buffer = bufnr, desc = "Show diagnostics inline" })
+
+	local diagnostics_group = vim.api.nvim_create_augroup("lsp_virtual_lines_" .. bufnr, { clear = true })
 	vim.api.nvim_create_autocmd("CursorMoved", {
+		group = diagnostics_group,
+		buffer = bufnr,
 		callback = function()
 			vim.diagnostic.config(original_config)
 		end,
@@ -76,7 +86,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		---@diagnostic disable-next-line: need-check-nil
 		if client:supports_method("textDocument/foldingRange") then
 			local win = vim.api.nvim_get_current_win()
-			vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
+			local win_opts = vim.wo[win]
+			win_opts.foldmethod = "expr"
+			win_opts.foldexpr = "v:lua.vim.lsp.foldexpr()"
 		end
 		-- ---@diagnostic disable-next-line: need-check-nil
 		-- if client:supports_method("textDocument/completion") then

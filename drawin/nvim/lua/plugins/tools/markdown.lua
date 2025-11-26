@@ -9,9 +9,9 @@ return {
 		},
 		init = function()
 			-- dhruvasagar/vim-table-mode
-			vim.api.nvim_set_keymap("n", "<leader>kv", ":MarkdownPrevie<CR>", { noremap = true })
+			vim.keymap.set("n", "<leader>kv", ":MarkdownPrevie<CR>", { noremap = true })
 
-			vim.api.nvim_set_keymap("n", "<leader>tm", ":TableModeToggle<cr>", {})
+			vim.keymap.set("n", "<leader>tm", ":TableModeToggle<cr>", {})
 			---@diagnostic disable-next-line: inject-field
 			vim.g.table_mode_cell_text_object_i_map = "k<Bar>"
 		end,

@@ -21,8 +21,8 @@ return {
 			}
 
 			-- Opt+h Opt+l 在多光标模式下 可以移动单个光标 而不是所有光标
-			vim.api.nvim_set_keymap("n", "<M-h>", "<Left>", {})
-			vim.api.nvim_set_keymap("n", "<M-l>", "<Right>", {})
+			vim.keymap.set("n", "<M-h>", "<Left>", {})
+			vim.keymap.set("n", "<M-l>", "<Right>", {})
 		end,
 	}
 }
