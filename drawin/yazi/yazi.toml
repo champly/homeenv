@@ -14,6 +14,7 @@ edit = [
   { run = '${EDITOR:-nvim} "$@"', desc = "$EDITOR", block = true, for = "unix" },
   { run = 'code "$@"', orphan = true, desc = "VSCode", for = "macos" },
   { run = 'cd "$@" && neovide', block = true, orphan = true, desc = "Neovide", for = "macos" },
+  { run = 'XDG_CONFIG_HOME=~/.config presenterm "$@"', block = true, desc = "Presenterm", for = "macos" },
 ]
 
 [plugin]

@@ -1,0 +1,4 @@
+defaults:
+  theme: gruvbox-dark
+  max_columns_alignment: center
+  max_rows_alignment: center

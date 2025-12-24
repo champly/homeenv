@@ -110,14 +110,7 @@ brew install ccls
 # k9s
 brew install k9s
 
-# lsp
-yarn global add yaml-language-server
-brew install lua-language-server
-# npm install --save vscode-json-languageservice
-
 # rust
-# brew install rust
-# brew install rust-analyzer
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 rustup component add rust-analyzer rust-src
 # https://rust-lang.github.io/rustup/concepts/components.html
@@ -125,6 +118,10 @@ rustup toolchain install nightly --component rust-analyzer
 
 # install rz sz
 brew install lrzsz
+
+# install presenterm
+brew install presenterm
+npm install -g @mermaid-js/mermaid-cli
 
 # graph easy
 # https://juejin.cn/post/6844903510987767815
