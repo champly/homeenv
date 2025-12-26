@@ -85,16 +85,25 @@ if vim.uv.os_uname().sysname == "Darwin" then
 		vim.g.python3_host_prog = "/usr/local/bin/python3"
 	end
 else
-	-- https://neovim.io/doc/user/provider.html#clipboard-osc52
+	local function osc52_copy(lines)
+		local s = table.concat(lines, "\n")
+		local osc = string.format("\27]52;c;%s\7", vim.base64.encode(s))
+		if vim.env.TMUX then
+			osc = string.format("\27Ptmux;%s\27\\", osc:gsub("\27", "\27\27"))
+		end
+		io.stdout:write(osc)
+	end
+
 	vim.g.clipboard = {
-		name = "OSC 52",
+		name = "OSC 52 (Custom)",
 		copy = {
-			["+"] = require("vim.ui.clipboard.osc52").copy("+"),
-			["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+			["+"] = osc52_copy,
+			["*"] = osc52_copy,
 		},
 		paste = {
-			["+"] = require("vim.ui.clipboard.osc52").paste("+"),
-			["*"] = require("vim.ui.clipboard.osc52").paste("*"),
+			["+"] = function() return {} end,
+			["*"] = function() return {} end,
 		},
+		cache_enabled = 1,
 	}
 end
