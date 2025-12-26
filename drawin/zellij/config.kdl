@@ -1,0 +1,58 @@
+// Zellij configuration based on tmux.conf
+
+// Theme matching tmux-gruvbox light
+theme "gruvbox-light"
+
+// Keybindings
+keybinds {
+    unbind "Ctrl b" // Unbind default tmux prefix
+
+    // Global binding to enter Tmux mode (like prefix M-`)
+    shared_except "locked" {
+        bind "Alt `" { SwitchToMode "Tmux"; }
+    }
+
+    // Tmux mode bindings
+    tmux {
+        bind "Esc" "Enter" { SwitchToMode "Normal"; }
+
+        // Split window
+        bind "-" { NewPane "Down"; SwitchToMode "Normal"; }
+        bind "_" { NewPane "Right"; SwitchToMode "Normal"; }
+
+        // Create new tab (window)
+        bind "c" { NewTab; SwitchToMode "Normal"; }
+
+        // Pane navigation (Repeatable)
+        bind "h" { MoveFocus "Left"; }
+        bind "j" { MoveFocus "Down"; }
+        bind "k" { MoveFocus "Up"; }
+        bind "l" { MoveFocus "Right"; }
+
+        // Pane resizing (Repeatable)
+        bind "H" { Resize "Increase Left"; }
+        bind "J" { Resize "Increase Down"; }
+        bind "K" { Resize "Increase Up"; }
+        bind "L" { Resize "Increase Right"; }
+
+        // Session management
+        // bind C-c new-session -> Detach or Switch to Session mode?
+        // Zellij doesn't support creating a new named session from within easily without plugins/cli
+        // Mapping to Detach for now as it exits the session
+        bind "Ctrl c" { Detach; }
+
+        // bind C-f find-session -> Session Manager
+        bind "Ctrl f" { SwitchToMode "Session"; }
+
+        // Other common tmux bindings
+        bind "n" { GoToNextTab; SwitchToMode "Normal"; }
+        bind "p" { GoToPreviousTab; SwitchToMode "Normal"; }
+        bind "x" { CloseFocus; SwitchToMode "Normal"; }
+        bind "z" { ToggleFocusFullscreen; SwitchToMode "Normal"; }
+
+        bind "d" { Detach; }
+
+        // Config reload (visual only, zellij auto-reloads)
+        bind "r" { SwitchToMode "Normal"; }
+    }
+}
