@@ -87,15 +87,28 @@ if vim.uv.os_uname().sysname == "Darwin" then
 else
 	local function osc52_copy(lines)
 		local s = table.concat(lines, "\n")
-		local osc = string.format("\27]52;c;%s\7", vim.base64.encode(s))
+		local b64 = vim.base64.encode(s)
+		local stderr = 2
+		-- 10kb 分块发送，防止单次写入过大导致 ssh/tty 缓冲区溢出或丢包
+		local chunk_size = 10240
+
+		local osc_start = "\27]52;c;"
+		local osc_end = "\27\\"
+
 		if vim.env.TMUX then
-			osc = string.format("\27Ptmux;%s\27\\", osc:gsub("\27", "\27\27"))
+			osc_start = "\27Ptmux;\27\27]52;c;"
+			osc_end = "\007\27\\"
 		end
-		io.stdout:write(osc)
+
+		vim.api.nvim_chan_send(stderr, osc_start)
+		for i = 1, #b64, chunk_size do
+			vim.api.nvim_chan_send(stderr, string.sub(b64, i, i + chunk_size - 1))
+		end
+		vim.api.nvim_chan_send(stderr, osc_end)
 	end
 
 	vim.g.clipboard = {
-		name = "OSC 52 (Custom)",
+		name = "OSC 52",
 		copy = {
 			["+"] = osc52_copy,
 			["*"] = osc52_copy,
