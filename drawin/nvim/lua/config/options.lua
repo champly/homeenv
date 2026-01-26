@@ -60,6 +60,17 @@ vim.opt.number                       = true -- 默认显示数字栏
 vim.o.timeoutlen                     = 300  --毫秒计的等待映射的键序列完成的时间
 vim.o.maxmempattern                  = 5000 -- maxmempattern规定了vim做字符串匹配时使用的最大内存，不是由每行字符数决定的。
 vim.o.conceallevel                   = 2
+-- https://github.com/folke/persistence.nvim/issues/80
+vim.opt.sessionoptions               = {
+	"buffers",
+	"curdir",
+	"tabpages",
+	"winsize",
+	"help",
+	"globals",
+	"skiprtp",
+	"folds"
+}
 
 ---@diagnostic disable-next-line: undefined-field
 if vim.uv.os_uname().sysname == "Darwin" then
