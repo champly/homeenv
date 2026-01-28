@@ -14,6 +14,10 @@ normal_main = { bg = "lightblue", bold = true }
 [indicator]
 preview = { underline = false }
 
+[which]
+cand = { fg = "lightblue" }
+desc = { fg = "lightyellow" }
+
 [filetype]
 rules = [
   # Fallback
