@@ -18,14 +18,6 @@ return {
 		event = "BufReadPre",
 	},
 	{
-		"duqcyxwd/stringbreaker.nvim",
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter"
-		},
-		cmd = "BreakString",
-		config = true
-	},
-	{
 		"nvim-mini/mini.splitjoin",
 		keys = {
 			"gS"
