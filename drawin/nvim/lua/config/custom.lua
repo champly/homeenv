@@ -117,3 +117,31 @@ end
 
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "None" })
 vim.keymap.set("n", "<leader>dt", CopyDapConfig, { noremap = true, silent = true, desc = "Copy DAP template" })
+
+-- format selected JSON content using biome via stdin
+-- works in any buffer (including temp/unsaved buffers)
+-- usage: visual select JSON text, then :'<,'>FormatJson
+local biome_config_path = vim.fn.stdpath("config") .. "/external/format"
+
+vim.api.nvim_create_user_command("FormatJson", function(opts)
+	local biome = vim.fn.exepath("biome")
+	if biome == "" then
+		vim.notify("biome not found in PATH", vim.log.levels.ERROR)
+		return
+	end
+
+	local lines = vim.api.nvim_buf_get_lines(0, opts.line1 - 1, opts.line2, false)
+	local result = vim.system({
+		biome, "format",
+		"--stdin-file-path", "dummy.json",
+		"--config-path", biome_config_path,
+	}, { stdin = table.concat(lines, "\n"), text = true }):wait()
+
+	if result.code ~= 0 then
+		vim.notify("biome format error: " .. (result.stderr or "unknown"), vim.log.levels.ERROR)
+		return
+	end
+
+	local formatted = (result.stdout or ""):gsub("\n$", "")
+	vim.api.nvim_buf_set_lines(0, opts.line1 - 1, opts.line2, false, vim.split(formatted, "\n"))
+end, { range = true, desc = "Format selected JSON with biome" })
