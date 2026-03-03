@@ -4,6 +4,13 @@ return {
 	priority = 1000,
 	lazy = false,
 	opts = {
+		input = {
+			win = {
+				relative = "cursor",
+				row = -3,
+				col = 0,
+			}
+		},
 		picker = {
 			win = {
 				input = {

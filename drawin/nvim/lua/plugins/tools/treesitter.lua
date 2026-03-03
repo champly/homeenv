@@ -4,9 +4,6 @@ return {
 		event = { "BufReadPost", "BufNewFile" },
 		build = ":TSUpdate",
 		config = function()
-			vim.opt.foldmethod = "expr"
-			vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-
 			---@diagnostic disable-next-line: missing-fields
 			require("nvim-treesitter.configs").setup({
 				-- ensure_installed = "all",

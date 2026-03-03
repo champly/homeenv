@@ -56,9 +56,10 @@ return {
 				}
 			}
 
-			local cmd = "nnoremap <silent><leader>%d <cmd>lua require('bufferline').go_to(%d, true)<cr>"
-			for i = 1, 9, 1 do
-				vim.cmd(string.format(cmd, i, i))
+			for i = 1, 9 do
+				vim.keymap.set("n", "<leader>" .. i, function()
+					require("bufferline").go_to(i, true)
+				end, { silent = true })
 			end
 		end,
 	},
@@ -95,13 +96,12 @@ return {
 				},
 				lualine_x = {
 					function()
-						local clients = vim.lsp.get_clients()
+						local clients = vim.lsp.get_clients({ bufnr = 0 })
 						if next(clients) == nil then
 							return ""
 						end
 						local client_names = {}
-						for _, client in pairs(vim.lsp.get_clients()) do
-							---@diagnostic disable-next-line: undefined-field
+						for _, client in ipairs(clients) do
 							table.insert(client_names, client.name)
 						end
 						return "  " .. table.concat(client_names, " ")

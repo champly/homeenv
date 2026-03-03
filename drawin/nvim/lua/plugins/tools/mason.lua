@@ -2,19 +2,7 @@ return {
 	{
 		"williamboman/mason.nvim",
 		dependencies = {
-			{
-				"folke/snacks.nvim",
-				opts = {
-					input = {
-						win = {
-							relative = "cursor",
-							row = -3,
-							col = 0,
-						}
-					},
-					picker = {},
-				}
-			}
+			"folke/snacks.nvim",
 		},
 		opts = {
 			ensure_installed = {

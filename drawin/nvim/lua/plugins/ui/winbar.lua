@@ -5,9 +5,11 @@ return {
 		dependencies = {
 			"nvim-tree/nvim-web-devicons"
 		},
-		config = function()
-			require("dropbar").setup({})
-			vim.keymap.set({ "n" }, "<C-p>", ":lua require('dropbar.api').pick()<cr>", { silent = true })
+		opts = {},
+		keys = {
+			{ "<C-p>", function() require("dropbar.api").pick() end, desc = "Dropbar pick", silent = true },
+		},
+		init = function()
 			vim.api.nvim_set_hl(0, "DropBarIconKindFolder", { fg = "#daa520" })
 		end
 	}

@@ -142,17 +142,12 @@ function M.setup(client, bufnr, opts)
 		return false
 	end
 
-	-- -- Override the built-in codelens refresh to use our display function
-	-- local orig_codelens_refresh = vim.lsp.codelens.refresh
-	---@diagnostic disable-next-line: duplicate-set-field
-	vim.lsp.codelens.refresh = function()
-		-- Don't call the original refresh to avoid double display
-		-- orig_codelens_refresh()
-
+	-- Buffer-local codelens refresh function (avoids overriding global vim.lsp.codelens.refresh)
+	local function refresh_codelens()
 		-- Clear any existing CodeLens first
 		vim.lsp.codelens.clear()
 
-		local params = { textDocument = vim.lsp.util.make_text_document_params() }
+		local params = { textDocument = vim.lsp.util.make_text_document_params(bufnr) }
 		client:request("textDocument/codeLens", params, function(err, result, _, _)
 			if not err and result then
 				display_codelens(result)
@@ -172,7 +167,7 @@ function M.setup(client, bufnr, opts)
 	-- Auto refresh codelens
 	vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
 		buffer = bufnr,
-		callback = vim.lsp.codelens.refresh
+		callback = refresh_codelens
 	})
 end
 

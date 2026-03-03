@@ -35,18 +35,5 @@ require("lazy").setup({
 	install = { colorscheme = { "habamax" } },
 	-- automatically check for plugin updates
 	-- checker = { enabled = true },
-	performance = {
-		rtp = {
-			disabled_plugins = {
-				"gzip",
-				"tarPlugin",
-				"zipPlugin",
-				"netrwPlugin",
-				"matchit",
-				"matchparen",
-				"tohtml",
-				"tutor",
-			}
-		},
-	},
+	-- disabled_plugins are already handled by vim.g.loaded_xxx in config/init.lua
 })

@@ -1,8 +1,15 @@
 return {
 	{
 		"mfussenegger/nvim-dap",
-		event = "BufReadPre",
 		dependencies = { "rcarriga/nvim-dap-ui" },
+		keys = {
+			{ "<F5>",  function() require("dap").continue() end,         desc = "DAP Continue" },
+			{ "<F9>",  function() require("dap").toggle_breakpoint() end, desc = "DAP Toggle Breakpoint" },
+			{ "<F10>", function() require("dap").step_over() end,        desc = "DAP Step Over" },
+			{ "<F11>", function() require("dap").step_into() end,        desc = "DAP Step Into" },
+			{ "<F12>", function() require("dap").step_out() end,         desc = "DAP Step Out" },
+			{ "<S-s>", function() require("dap").terminate() end,        desc = "DAP Terminate" },
+		},
 		config = function()
 			vim.api.nvim_set_hl(0, "DapBreakpoint", { fg = "red", bold = true })
 			vim.api.nvim_set_hl(0, "DapStopped", { fg = "#ff9900", bold = true })
@@ -10,14 +17,6 @@ return {
 			vim.fn.sign_define("DapBreakpoint", { text = "●", texthl = "DapBreakpoint", linehl = "", numhl = "" })
 			vim.fn.sign_define("DapBreakpointRejected", { text = "", texthl = "DapBreakpoint", linehl = "", numhl = "" })
 			vim.fn.sign_define("DapStopped", { text = "󰔰", texthl = "DapStopped", linehl = "", numhl = "" })
-
-			local opts = { silent = true }
-			vim.keymap.set("n", "<F5>", function() require("dap").continue() end, opts)
-			vim.keymap.set("n", "<F9>", function() require("dap").toggle_breakpoint() end, opts)
-			vim.keymap.set("n", "<F10>", function() require("dap").step_over() end, opts)
-			vim.keymap.set("n", "<F11>", function() require("dap").step_into() end, opts)
-			vim.keymap.set("n", "<F12>", function() require("dap").step_out() end, opts)
-			vim.keymap.set("n", "<S-s>", function() require("dap").terminate() end, opts)
 
 			local dap = require("dap")
 
@@ -97,7 +96,7 @@ return {
 	},
 	{
 		"rcarriga/nvim-dap-ui",
-		event = "BufReadPre",
+		lazy = true,
 		dependencies = {
 			"mfussenegger/nvim-dap",
 			"nvim-neotest/nvim-nio"

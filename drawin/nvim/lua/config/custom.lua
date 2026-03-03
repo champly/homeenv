@@ -1,61 +1,55 @@
 -- gomodifytags -file ~/Dropbox/go/src/demo/debug/interface.go -line 14,15 -add-tags json
-function AddTagsToSelection(start_line, end_line)
-	-- get filename
+local function add_tags_to_selection(start_line, end_line)
 	local filename = vim.api.nvim_buf_get_name(0)
 
-	-- exec gomodifytags
-	local command = string.format("gomodifytags -file %s -line %d,%d -add-tags json  -add-options json=omitempty",
-		filename,
-		start_line,
-		end_line
-	)
-	local output_file = io.popen(command)
-	if output_file == nil then
+	local result = vim.system({
+		"gomodifytags", "-file", filename,
+		"-line", start_line .. "," .. end_line,
+		"-add-tags", "json",
+		"-add-options", "json=omitempty",
+	}, { text = true }):wait()
+
+	if result.code ~= 0 then
+		vim.notify("gomodifytags error: " .. (result.stderr or "unknown"), vim.log.levels.ERROR)
 		return
 	end
-	local modified_text = output_file:read("*all")
-	output_file:close()
 
-	-- set modified text to buffer
-	local modified_lines = vim.split(modified_text, "\n")
+	local modified_lines = vim.split(result.stdout or "", "\n")
 	local total_lines = vim.api.nvim_buf_line_count(0)
 	vim.api.nvim_buf_set_lines(0, 0, total_lines, false, modified_lines)
-
-	-- save
 	vim.cmd("write")
 end
 
-function RemoveTagsFromSelection(start_line, end_line)
-	-- get filename
+local function remove_tags_from_selection(start_line, end_line)
 	local filename = vim.api.nvim_buf_get_name(0)
 
-	-- exec gomodifytags
-	local command = string.format("gomodifytags -file %s -line %d,%d -remove-tags json",
-		filename,
-		start_line,
-		end_line
-	)
-	local output_file = io.popen(command)
-	if output_file == nil then
+	local result = vim.system({
+		"gomodifytags", "-file", filename,
+		"-line", start_line .. "," .. end_line,
+		"-remove-tags", "json",
+	}, { text = true }):wait()
+
+	if result.code ~= 0 then
+		vim.notify("gomodifytags error: " .. (result.stderr or "unknown"), vim.log.levels.ERROR)
 		return
 	end
-	local modified_text = output_file:read("*all")
-	output_file:close()
 
-	-- set modified text to buffer
-	local modified_lines = vim.split(modified_text, "\n")
+	local modified_lines = vim.split(result.stdout or "", "\n")
 	local total_lines = vim.api.nvim_buf_line_count(0)
 	vim.api.nvim_buf_set_lines(0, 0, total_lines, false, modified_lines)
-
-	-- save
 	vim.cmd("write")
 end
 
-vim.cmd("command! -range AddTags lua AddTagsToSelection(<line1>, <line2>)")
-vim.cmd("command! -range RemoveTags lua RemoveTagsFromSelection(<line1>, <line2>)")
+vim.api.nvim_create_user_command("AddTags", function(opts)
+	add_tags_to_selection(opts.line1, opts.line2)
+end, { range = true, desc = "Add JSON tags to struct fields" })
+
+vim.api.nvim_create_user_command("RemoveTags", function(opts)
+	remove_tags_from_selection(opts.line1, opts.line2)
+end, { range = true, desc = "Remove JSON tags from struct fields" })
 
 -- toggle quickfix
-function ToggleQF()
+local function toggle_qf()
 	local qf_open = false
 	for _, win in pairs(vim.fn.getwininfo()) do
 		if win["quickfix"] == 1 then
@@ -72,10 +66,10 @@ function ToggleQF()
 end
 
 -- toggle quickfix mapping
-vim.keymap.set("n", "<leader>q", ToggleQF, { noremap = true, silent = true, desc = "Toggle quickfix" })
+vim.keymap.set("n", "<leader>q", toggle_qf, { noremap = true, silent = true, desc = "Toggle quickfix" })
 
 -- nvimdap config
-function CopyDapConfig()
+local function copy_dap_config()
 	-- get all template
 	local template_dir = vim.fn.stdpath("config") .. "/external/nvimdap/"
 	local config_list = vim.fn.split(vim.fn.glob(template_dir .. "*"), '\n')
@@ -116,7 +110,7 @@ function CopyDapConfig()
 end
 
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "None" })
-vim.keymap.set("n", "<leader>dt", CopyDapConfig, { noremap = true, silent = true, desc = "Copy DAP template" })
+vim.keymap.set("n", "<leader>dt", copy_dap_config, { noremap = true, silent = true, desc = "Copy DAP template" })
 
 -- format selected JSON content using biome via stdin
 -- works in any buffer (including temp/unsaved buffers)

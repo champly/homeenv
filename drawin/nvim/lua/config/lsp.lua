@@ -1,6 +1,8 @@
 ---@diagnostic disable: undefined-global
 -- https://github.com/nvim-lua/completion-nvim/issues/337#issuecomment-765563829
--- TODO: use https://github.com/NvChad/NvChad/blob/v2.0/lua/plugins/configs/lspconfig.lua rewrite
+-- Capture original diagnostic config once at file load time
+local original_diagnostic_config = nil
+
 local enhance_attach = function(client, bufnr)
 	-- highlight + document highlight
 	if client.server_capabilities.documentHighlightProvider then
@@ -59,7 +61,9 @@ local enhance_attach = function(client, bufnr)
 	vim.keymap.set("n", "<leader>bl", function() Snacks.picker.lsp_symbols(preset_default) end, opts)
 
 	-- virtual_lines
-	local original_config = vim.diagnostic.config()
+	if not original_diagnostic_config then
+		original_diagnostic_config = vim.diagnostic.config()
+	end
 	vim.keymap.set("n", "<leader>do", function()
 		vim.diagnostic.config({ virtual_lines = { current_line = true }, virtual_text = false })
 	end, { buffer = bufnr, desc = "Show diagnostics inline" })
@@ -69,7 +73,7 @@ local enhance_attach = function(client, bufnr)
 		group = diagnostics_group,
 		buffer = bufnr,
 		callback = function()
-			vim.diagnostic.config(original_config)
+			vim.diagnostic.config(original_diagnostic_config)
 		end,
 	})
 

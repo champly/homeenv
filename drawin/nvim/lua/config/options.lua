@@ -14,7 +14,6 @@ vim.g.neovide_fullscreen             = false
 vim.g.neovide_opacity                = 1
 -- vim.g.transparency = 0.6
 
-vim.opt.termguicolors                = true
 vim.opt.relativenumber               = true   -- 显示相对行号
 vim.opt.foldmethod                   = "expr" -- 设置折叠语法
 vim.o.foldexpr                       = "v:lua.vim.treesitter.foldexpr()"
@@ -73,29 +72,7 @@ vim.opt.sessionoptions               = {
 }
 
 ---@diagnostic disable-next-line: undefined-field
-if vim.uv.os_uname().sysname == "Darwin" then
-	vim.g.clipboard = {
-		name = "macOS-clipboard",
-		copy = {
-			["+"] = "pbcopy",
-			["*"] = "pbcopy",
-		},
-		paste = {
-			["+"] = "pbpaste",
-			["*"] = "pbpaste",
-		},
-		cache_enabled = 0
-	}
-
-	-- https://zhuanlan.zhihu.com/p/24484514
-	vim.g.python3_host_skip_check = 1
-	---@diagnostic disable-next-line: undefined-field
-	if not vim.uv.fs_stat("/usr/local/bin/python3") then
-		vim.g.python3_host_prog = "/usr/bin/python3"
-	else
-		vim.g.python3_host_prog = "/usr/local/bin/python3"
-	end
-else
+if vim.uv.os_uname().sysname ~= "Darwin" then
 	local function osc52_copy(lines)
 		local s = table.concat(lines, "\n")
 		local b64 = vim.base64.encode(s)
