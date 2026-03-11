@@ -55,6 +55,7 @@ vim.opt.laststatus                   = 3
 -- vim.opt.textwidth = 120 -- 设置自动加上换行符的长度
 vim.opt.colorcolumn                  = "120"
 vim.opt.number                       = true -- 默认显示数字栏
+vim.opt.fixeol                       = false -- 保存时不自动在文件末尾添加换行符
 
 vim.o.timeoutlen                     = 300  --毫秒计的等待映射的键序列完成的时间
 vim.o.maxmempattern                  = 5000 -- maxmempattern规定了vim做字符串匹配时使用的最大内存，不是由每行字符数决定的。
