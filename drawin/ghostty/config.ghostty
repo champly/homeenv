@@ -9,7 +9,10 @@ cursor-style = block
 # custom-shader = "./ghostty-shaders/cursor_blaze.glsl"
 
 scrollback-limit = 20480
-
 macos-option-as-alt = true
+macos-titlebar-style = tabs
+window-new-tab-position = end
+bell-features = no-attention
+mouse-hide-while-typing = true
 
 # https://ghostty.org/docs/help/terminfo
