@@ -14,7 +14,7 @@ return {
 					Operator = { link = "GruvboxFg1" },
 				}
 			})
-			vim.o.background = "dark"
+			vim.opt.background = "dark"
 			vim.cmd.colorscheme("gruvbox")
 		end
 	},

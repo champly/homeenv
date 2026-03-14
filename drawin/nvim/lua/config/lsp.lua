@@ -2,10 +2,11 @@
 -- https://github.com/nvim-lua/completion-nvim/issues/337#issuecomment-765563829
 -- Capture original diagnostic config once at file load time
 local original_diagnostic_config = nil
+local methods = vim.lsp.protocol.Methods
 
 local enhance_attach = function(client, bufnr)
 	-- highlight + document highlight
-	if client.server_capabilities.documentHighlightProvider then
+	if client:supports_method(methods.textDocument_documentHighlight) then
 		if vim.g.color_theme == vim.g.color_theme_dark then
 			vim.api.nvim_set_hl(0, "LspReferenceRead", { bg = "#ff8600", fg = "black" })
 			vim.api.nvim_set_hl(0, "LspReferenceText", { bg = "#ff8600", fg = "black" })
@@ -38,6 +39,7 @@ local enhance_attach = function(client, bufnr)
 	-- keymap
 	local opts = { buffer = bufnr, silent = true, noremap = true }
 	-- TODO: https://github.com/nvim-telescope/telescope.nvim/issues/1265
+	local diagnostics_group = vim.api.nvim_create_augroup("lsp_virtual_lines_" .. bufnr, { clear = true })
 	vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 	vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
 	-- vim.keymap.set("n", "<leader>do", vim.diagnostic.open_float)
@@ -66,19 +68,16 @@ local enhance_attach = function(client, bufnr)
 	end
 	vim.keymap.set("n", "<leader>do", function()
 		vim.diagnostic.config({ virtual_lines = { current_line = true }, virtual_text = false })
+		vim.api.nvim_clear_autocmds({ group = diagnostics_group, buffer = bufnr })
+		vim.api.nvim_create_autocmd("CursorMoved", {
+			group = diagnostics_group,
+			buffer = bufnr,
+			once = true,
+			callback = function()
+				vim.diagnostic.config(original_diagnostic_config)
+			end,
+		})
 	end, { buffer = bufnr, desc = "Show diagnostics inline" })
-
-	local diagnostics_group = vim.api.nvim_create_augroup("lsp_virtual_lines_" .. bufnr, { clear = true })
-	vim.api.nvim_create_autocmd("CursorMoved", {
-		group = diagnostics_group,
-		buffer = bufnr,
-		callback = function()
-			vim.diagnostic.config(original_diagnostic_config)
-		end,
-	})
-
-	-- -- disabled inlay hint
-	-- vim.lsp.inlay_hint.enable(true)
 
 	-- Setup CodeLens handling
 	require("config.codelens").setup(client, bufnr, opts)
@@ -89,17 +88,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(args)
 		local client = vim.lsp.get_client_by_id(args.data.client_id)
 		---@diagnostic disable-next-line: need-check-nil
-		if client:supports_method("textDocument/foldingRange") then
+		if client:supports_method(methods.textDocument_foldingRange) then
 			local win = vim.api.nvim_get_current_win()
 			local win_opts = vim.wo[win]
 			win_opts.foldmethod = "expr"
 			win_opts.foldexpr = "v:lua.vim.lsp.foldexpr()"
 		end
-		-- ---@diagnostic disable-next-line: need-check-nil
-		-- if client:supports_method("textDocument/completion") then
-		-- 	---@diagnostic disable-next-line: need-check-nil
-		-- 	vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
-		-- end
 	end,
 })
 

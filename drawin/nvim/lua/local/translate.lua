@@ -30,44 +30,32 @@ local function get_visual_selection()
 end
 
 local function translate(text, callback)
-	local body = vim.fn.json_encode({
+	local body = vim.json.encode({
 		model = "hy-mt",
 		prompt = "将以下文本翻译为中文，只输出翻译结果：\n\n" .. text,
 		stream = false,
 	})
 
-	local chunks = {}
-	vim.fn.jobstart({
+	vim.system({
 		"curl", "-s", "-X", "POST",
 		"http://localhost:11434/api/generate",
 		"-H", "Content-Type: application/json",
 		"-d", body,
-	}, {
-		stdout_buffered = true,
-		on_stdout = function(_, data)
-			if data then
-				for _, line in ipairs(data) do
-					if line ~= "" then
-						table.insert(chunks, line)
-					end
-				end
+	}, { text = true }, function(result)
+		vim.schedule(function()
+			if result.code ~= 0 then
+				callback((result.stderr ~= "" and result.stderr) or "Request failed")
+				return
 			end
-		end,
-		on_exit = function(_, code)
-			vim.schedule(function()
-				if code ~= 0 then
-					callback("Request failed")
-					return
-				end
-				local ok, resp = pcall(vim.fn.json_decode, table.concat(chunks, "\n"))
-				if ok and resp and resp.response then
-					callback(nil, vim.trim(resp.response))
-				else
-					callback("Parse failed")
-				end
-			end)
-		end,
-	})
+
+			local ok, resp = pcall(vim.json.decode, result.stdout or "")
+			if ok and resp and resp.response then
+				callback(nil, vim.trim(resp.response))
+			else
+				callback("Parse failed")
+			end
+		end)
+	end)
 end
 
 local function show_float(text, selection_start_row, selection_end_row)

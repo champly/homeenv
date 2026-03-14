@@ -1,4 +1,5 @@
 local M = {}
+local methods = vim.lsp.protocol.Methods
 
 local function go_test(command)
 	if not (command.arguments and command.arguments[1]) then return false end
@@ -6,8 +7,7 @@ local function go_test(command)
 	local arg = command.arguments[1]
 	if not arg.URI then return false end
 
-	-- Convert file:///path/to/file to /path/to/file
-	local filepath = arg.URI:gsub("^file://", "")
+	local filepath = vim.uri_to_fname(arg.URI)
 	-- Get directory from filepath
 	local dir = filepath:match("(.*)/[^/]*$")
 
@@ -33,7 +33,7 @@ local function go_test(command)
 end
 
 function M.setup(client, bufnr, opts)
-	if not client.server_capabilities.codeLensProvider then
+	if not client:supports_method(methods.textDocument_codeLens) then
 		return
 	end
 
@@ -97,7 +97,7 @@ function M.setup(client, bufnr, opts)
 			end
 		end
 
-		client:exec_cmd(command)
+		client:exec_cmd(command, { bufnr = bufnr })
 		return true
 	end
 
@@ -148,7 +148,7 @@ function M.setup(client, bufnr, opts)
 		vim.lsp.codelens.clear()
 
 		local params = { textDocument = vim.lsp.util.make_text_document_params(bufnr) }
-		client:request("textDocument/codeLens", params, function(err, result, _, _)
+		client:request(methods.textDocument_codeLens, params, function(err, result, _, _)
 			if not err and result then
 				display_codelens(result)
 			end
@@ -165,7 +165,7 @@ function M.setup(client, bufnr, opts)
 	end, opts)
 
 	-- Auto refresh codelens
-	vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
+	vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
 		buffer = bufnr,
 		callback = refresh_codelens
 	})

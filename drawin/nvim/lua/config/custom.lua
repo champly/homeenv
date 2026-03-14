@@ -72,11 +72,16 @@ vim.keymap.set("n", "<leader>q", toggle_qf, { noremap = true, silent = true, des
 local function copy_dap_config()
 	-- get all template
 	local template_dir = vim.fn.stdpath("config") .. "/external/nvimdap/"
-	local config_list = vim.fn.split(vim.fn.glob(template_dir .. "*"), '\n')
 	local files = {}
-	for _, file in ipairs(config_list) do
-		table.insert(files, { file = file, text = file })
+	for name, type in vim.fs.dir(template_dir) do
+		if type == "file" then
+			local file = template_dir .. name
+			table.insert(files, { file = file, text = file })
+		end
 	end
+	table.sort(files, function(left, right)
+		return left.file < right.file
+	end)
 
 	local snacks_picker = require("snacks.picker")
 	snacks_picker.pick({
@@ -85,8 +90,7 @@ local function copy_dap_config()
 		actions = {
 			confirm = function(picker, item)
 				local launchPath = vim.fn.getcwd() .. "/.vscode/launch.json"
-				-- mkdir
-				local folder_path = launchPath:match("(.*/)")
+				local folder_path = vim.fs.dirname(launchPath)
 				vim.fn.mkdir(folder_path, "p")
 
 				-- copy file
