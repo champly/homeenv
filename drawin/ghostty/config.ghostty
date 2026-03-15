@@ -3,16 +3,23 @@ theme = "Bluloco Light"
 font-family = "SauceCodePro Nerd Font"
 font-size = 15
 
-shell-integration-features = no-cursor
+shell-integration-features = no-cursor, ssh-env, ssh-terminfo, path
+
 cursor-style = block
+cursor-style-blink = false
+cursor-click-to-move = true
+
 # https://github.com/hackr-sh/ghostty-shaders
 # custom-shader = "./ghostty-shaders/cursor_blaze.glsl"
 
 scrollback-limit = 20480
+
 macos-option-as-alt = true
 macos-titlebar-style = tabs
+
 window-new-tab-position = end
-bell-features = no-attention
+
 mouse-hide-while-typing = true
+bell-features = no-attention
 
 # https://ghostty.org/docs/help/terminfo
