@@ -12,7 +12,8 @@ cursor-click-to-move = true
 # https://github.com/hackr-sh/ghostty-shaders
 # custom-shader = "./ghostty-shaders/cursor_blaze.glsl"
 
-scrollback-limit = 20480
+# unit: bytes ≈ 10_0000 lines
+scrollback-limit = 300_000_000
 
 macos-option-as-alt = true
 macos-titlebar-style = tabs
