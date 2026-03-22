@@ -3,7 +3,7 @@ theme = "Bluloco Light"
 font-family = "SauceCodePro Nerd Font"
 font-size = 15
 
-shell-integration-features = no-cursor, ssh-env, ssh-terminfo, path
+shell-integration-features = "no-cursor,sudo,ssh-env,ssh-terminfo,path"
 
 cursor-style = block
 cursor-style-blink = false
