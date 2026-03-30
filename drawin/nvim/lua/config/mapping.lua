@@ -1,11 +1,9 @@
+vim.keymap.set("n", "<leader>cc", "gcc", { remap = true, desc = "Toggle line comment" })
+vim.keymap.set("x", "<leader>cc", "gc", { remap = true, desc = "Toggle line comment" })
+
 -- Basic editing
-vim.keymap.set("n", "Y", "y$", { desc = "Yank to end of line" })
 vim.keymap.set("n", "<leader>n", ":enew<CR>", { desc = "New buffer" })
 vim.keymap.set("n", "<leader>bd", ":bd!<CR>", { desc = "Force close buffer" })
-
--- https://www.reddit.com/r/neovim/comments/ro6oye/open_link_from_neovim/
--- Open URL or file under cursor (macOS: open)
-vim.keymap.set("n", "gx", ":silent execute '!open ' . shellescape(expand('<cfile>'), 1)<CR>", { silent = true })
 
 -- Session
 vim.keymap.set("n", "<leader>sl", function() require("persistence").load() end,

@@ -3,6 +3,8 @@
 
 local M = {}
 
+local MAX_COL = 2 ^ 31 - 1
+
 local unescape_map = {
 	["\\\\"] = "\\",
 	["\\n"] = "\n",
@@ -47,7 +49,7 @@ local function get_selection(is_visual)
 	else
 		srow = vim.fn.line(".")
 		scol, erow = 1, srow
-		ecol = 2147483647
+		ecol = MAX_COL
 	end
 
 	local lines = vim.api.nvim_buf_get_lines(0, srow - 1, erow, false)
@@ -56,11 +58,23 @@ local function get_selection(is_visual)
 	end
 
 	-- Clamp ecol for visual-line mode or current-line mode
-	if ecol >= 2147483647 then
+	if ecol >= MAX_COL then
 		ecol = #lines[#lines]
 	end
 
 	return { lines = lines, srow = srow, scol = scol, erow = erow, ecol = ecol }
+end
+
+-- Extract selected text from lines using selection range
+local function extract_text(sel)
+	if #sel.lines == 1 then
+		return sel.lines[1]:sub(sel.scol, sel.ecol)
+	end
+
+	local lines = vim.deepcopy(sel.lines)
+	lines[1] = lines[1]:sub(sel.scol)
+	lines[#lines] = lines[#lines]:sub(1, sel.ecol)
+	return table.concat(lines, "\n")
 end
 
 -- Perform transform on selection and replace in-place
@@ -71,19 +85,10 @@ local function do_transform(transform_fn, is_visual)
 		return
 	end
 
-	-- Extract selected text
-	local lines = vim.deepcopy(sel.lines)
-	local prefix = lines[1]:sub(1, sel.scol - 1)
-	local suffix = lines[#lines]:sub(sel.ecol + 1)
-	lines[1] = lines[1]:sub(sel.scol)
-	lines[#lines] = lines[#lines]:sub(1, sel.ecol - (sel.srow == sel.erow and sel.scol - 1 or 0))
+	local prefix = sel.lines[1]:sub(1, sel.scol - 1)
+	local suffix = sel.lines[#sel.lines]:sub(sel.ecol + 1)
 
-	-- For single-line, sub range is [scol, ecol]
-	if #lines == 1 then
-		lines[1] = sel.lines[1]:sub(sel.scol, sel.ecol)
-	end
-
-	local text = table.concat(lines, "\n")
+	local text = extract_text(sel)
 	local result = transform_fn(text)
 
 	-- Replace: prepend prefix / append suffix

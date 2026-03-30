@@ -14,6 +14,7 @@ vim.g.neovide_fullscreen             = false
 vim.g.neovide_opacity                = 1
 -- vim.g.transparency = 0.6
 
+vim.opt.number                       = true -- 默认显示数字栏
 vim.opt.relativenumber               = true   -- 显示相对行号
 vim.opt.foldmethod                   = "expr" -- 设置折叠语法
 vim.o.foldexpr                       = "v:lua.vim.treesitter.foldexpr()"
@@ -36,7 +37,6 @@ vim.opt.smartcase                    = true
 -- 设置光标所在行、列高亮
 -- vim.opt.cursorcolumn      = true
 vim.opt.cursorline                   = true
-vim.opt.hlsearch                     = true
 -- hit-enter
 -- vim.opt.cmdheight                    = 0
 -- 区分空格和缩进
@@ -54,7 +54,6 @@ vim.opt.updatetime                   = 300
 vim.opt.laststatus                   = 3
 -- vim.opt.textwidth = 120 -- 设置自动加上换行符的长度
 vim.opt.colorcolumn                  = "120"
-vim.opt.number                       = true -- 默认显示数字栏
 vim.opt.fixeol                       = false -- 保存时不自动在文件末尾添加换行符
 
 vim.o.timeoutlen                     = 300  --毫秒计的等待映射的键序列完成的时间

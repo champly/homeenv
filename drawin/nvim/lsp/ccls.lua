@@ -2,7 +2,7 @@
 return {
 	cmd = { "ccls" },
 	filetypes = { "c", "cc", "cpp", "c++", "objc", "objcpp" },
-	signle_file_support = true,
+	single_file_support = true,
 	init_options = {
 		-- compilationDatabaseDirectory = "build",
 		-- index = {

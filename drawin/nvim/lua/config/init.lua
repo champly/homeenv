@@ -5,7 +5,6 @@ for _, sub in ipairs(data_subs) do
 end
 
 -- disable_distribution_plugins
-vim.g.loaded_matchparen        = 1
 vim.g.loaded_netrw             = 1
 vim.g.loaded_netrwPlugin       = 1
 vim.g.loaded_netrwSettings     = 1

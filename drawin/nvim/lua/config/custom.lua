@@ -113,7 +113,6 @@ local function copy_dap_config()
 	})
 end
 
-vim.api.nvim_set_hl(0, "NormalFloat", { bg = "None" })
 vim.keymap.set("n", "<leader>dt", copy_dap_config, { noremap = true, silent = true, desc = "Copy DAP template" })
 
 -- format selected JSON content using biome via stdin

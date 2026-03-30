@@ -4,84 +4,81 @@
 local original_diagnostic_config = nil
 local methods = vim.lsp.protocol.Methods
 
-local enhance_attach = function(client, bufnr)
-	-- highlight + document highlight
-	if client:supports_method(methods.textDocument_documentHighlight) then
-		if vim.g.color_theme == vim.g.color_theme_dark then
-			vim.api.nvim_set_hl(0, "LspReferenceRead", { bg = "#ff8600", fg = "black" })
-			vim.api.nvim_set_hl(0, "LspReferenceText", { bg = "#ff8600", fg = "black" })
-			vim.api.nvim_set_hl(0, "LspReferenceWrite", { bg = "#ff8600", fg = "black" })
-			vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#3e3e3e" })
-		else
-			vim.api.nvim_set_hl(0, "LspReferenceRead", { bg = "#ffcc33", fg = "black" })
-			vim.api.nvim_set_hl(0, "LspReferenceText", { bg = "#ffcc33", fg = "black" })
-			vim.api.nvim_set_hl(0, "LspReferenceWrite", { bg = "#ffcc33", fg = "black" })
-			vim.api.nvim_set_hl(0, "Pmenu", { bg = "None" })
-			vim.api.nvim_set_hl(0, "FloatBorder", { fg = "black", bold = true })
-			-- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#d9d9d9" })
-			-- vim.api.nvim_set_hl(0, "DiagnosticFloatingHint", { fg = "gray" })
+-- Document highlight colors (set once globally, not per-attach)
+if vim.g.color_theme == vim.g.color_theme_dark then
+	vim.api.nvim_set_hl(0, "LspReferenceRead", { bg = "#ff8600", fg = "black" })
+	vim.api.nvim_set_hl(0, "LspReferenceText", { bg = "#ff8600", fg = "black" })
+	vim.api.nvim_set_hl(0, "LspReferenceWrite", { bg = "#ff8600", fg = "black" })
+	vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#3e3e3e" })
+else
+	vim.api.nvim_set_hl(0, "LspReferenceRead", { bg = "#ffcc33", fg = "black" })
+	vim.api.nvim_set_hl(0, "LspReferenceText", { bg = "#ffcc33", fg = "black" })
+	vim.api.nvim_set_hl(0, "LspReferenceWrite", { bg = "#ffcc33", fg = "black" })
+	vim.api.nvim_set_hl(0, "Pmenu", { bg = "None" })
+	vim.api.nvim_set_hl(0, "NormalFloat", { bg = "None" })
+	vim.api.nvim_set_hl(0, "FloatBorder", { fg = "black", bold = true })
+end
+
+-- LspAttach: keymaps, document highlight, codelens
+vim.api.nvim_create_autocmd("LspAttach", {
+	group = vim.api.nvim_create_augroup("lsp_attach_enhance", { clear = true }),
+	callback = function(args)
+		local client = vim.lsp.get_client_by_id(args.data.client_id)
+		if not client then return end
+		local bufnr = args.buf
+		local opts = { buffer = bufnr, silent = true, noremap = true }
+
+		-- Document highlight
+		if client:supports_method(methods.textDocument_documentHighlight) then
+			local hl_group = vim.api.nvim_create_augroup("lsp_document_highlight_" .. bufnr, { clear = true })
+			vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+				group = hl_group,
+				buffer = bufnr,
+				callback = vim.lsp.buf.document_highlight,
+			})
+			vim.api.nvim_create_autocmd("CursorMoved", {
+				group = hl_group,
+				buffer = bufnr,
+				callback = vim.lsp.buf.clear_references,
+			})
 		end
 
-		local highlight_group = vim.api.nvim_create_augroup("lsp_document_highlight_" .. bufnr, { clear = true })
+		-- Keymaps
+		local diagnostics_group = vim.api.nvim_create_augroup("lsp_virtual_lines_" .. bufnr, { clear = true })
+		vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+		vim.keymap.set({ "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
 
-		vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-			group = highlight_group,
-			buffer = bufnr,
-			callback = vim.lsp.buf.document_highlight,
-		})
-		vim.api.nvim_create_autocmd("CursorMoved", {
-			group = highlight_group,
-			buffer = bufnr,
-			callback = vim.lsp.buf.clear_references,
-		})
-	end
+		local preset_default = { jump = { reuse_win = false } }
+		local preset_ivy = { layout = { preset = "ivy" }, jump = { reuse_win = false } }
+		vim.keymap.set("n", "<c-]>", function() Snacks.picker.lsp_definitions(preset_default) end, opts)
+		vim.keymap.set("n", "<leader>td", function() Snacks.picker.lsp_type_definitions(preset_default) end, opts)
+		vim.keymap.set("n", "<leader>im", function() Snacks.picker.lsp_implementations(preset_ivy) end, opts)
+		vim.keymap.set("n", "<leader>rf", function() Snacks.picker.lsp_references(preset_ivy) end, opts)
+		vim.keymap.set("n", "<leader>dw", function() Snacks.picker.diagnostics(preset_ivy) end, opts)
+		vim.keymap.set("n", "<leader>db", function() Snacks.picker.diagnostics_buffer(preset_ivy) end, opts)
+		vim.keymap.set("n", "<leader>bl", function() Snacks.picker.lsp_symbols(preset_default) end, opts)
 
-	-- keymap
-	local opts = { buffer = bufnr, silent = true, noremap = true }
-	-- TODO: https://github.com/nvim-telescope/telescope.nvim/issues/1265
-	local diagnostics_group = vim.api.nvim_create_augroup("lsp_virtual_lines_" .. bufnr, { clear = true })
-	vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-	vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-	-- vim.keymap.set("n", "<leader>do", vim.diagnostic.open_float)
-	vim.keymap.set({ "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
-	-- https://github.com/nvim-telescope/telescope.nvim#neovim-lsp-pickers
-	-- vim.keymap.set("n", "<c-]>", ":Telescope lsp_definitions theme=get_cursor<CR>", opts)
-	-- vim.keymap.set("n", "<leader>td", ":Telescope lsp_type_definitions<CR>", opts)
-	-- vim.keymap.set("n", "<leader>im", ":Telescope lsp_implementations theme=ivy<CR>", opts)
-	-- vim.keymap.set("n", "<leader>rf", ":Telescope lsp_references theme=ivy<CR>", opts)
-	-- -- vim.keymap.set("n", "<leader>ds", ":Telescope diagnostics theme=ivy<CR>", opts)
-	-- vim.keymap.set("n", "<leader>bl", ":Telescope lsp_document_symbols<CR>", opts)
+		-- Virtual lines (inline diagnostics)
+		if not original_diagnostic_config then
+			original_diagnostic_config = vim.diagnostic.config()
+		end
+		vim.keymap.set("n", "<leader>do", function()
+			vim.diagnostic.config({ virtual_lines = { current_line = true }, virtual_text = false })
+			vim.api.nvim_clear_autocmds({ group = diagnostics_group, buffer = bufnr })
+			vim.api.nvim_create_autocmd("CursorMoved", {
+				group = diagnostics_group,
+				buffer = bufnr,
+				once = true,
+				callback = function()
+					vim.diagnostic.config(original_diagnostic_config)
+				end,
+			})
+		end, { buffer = bufnr, desc = "Show diagnostics inline" })
 
-	local preset_default = { jump = { reuse_win = false } }
-	local preset_ivy = { layout = { preset = "ivy" }, jump = { reuse_win = false } }
-	vim.keymap.set("n", "<c-]>", function() Snacks.picker.lsp_definitions(preset_default) end, opts)
-	vim.keymap.set("n", "<leader>td", function() Snacks.picker.lsp_type_definitions(preset_default) end, opts)
-	vim.keymap.set("n", "<leader>im", function() Snacks.picker.lsp_implementations(preset_ivy) end, opts)
-	vim.keymap.set("n", "<leader>rf", function() Snacks.picker.lsp_references(preset_ivy) end, opts)
-	vim.keymap.set("n", "<leader>dw", function() Snacks.picker.diagnostics(preset_ivy) end, opts)
-	vim.keymap.set("n", "<leader>db", function() Snacks.picker.diagnostics_buffer(preset_ivy) end, opts)
-	vim.keymap.set("n", "<leader>bl", function() Snacks.picker.lsp_symbols(preset_default) end, opts)
-
-	-- virtual_lines
-	if not original_diagnostic_config then
-		original_diagnostic_config = vim.diagnostic.config()
-	end
-	vim.keymap.set("n", "<leader>do", function()
-		vim.diagnostic.config({ virtual_lines = { current_line = true }, virtual_text = false })
-		vim.api.nvim_clear_autocmds({ group = diagnostics_group, buffer = bufnr })
-		vim.api.nvim_create_autocmd("CursorMoved", {
-			group = diagnostics_group,
-			buffer = bufnr,
-			once = true,
-			callback = function()
-				vim.diagnostic.config(original_diagnostic_config)
-			end,
-		})
-	end, { buffer = bufnr, desc = "Show diagnostics inline" })
-
-	-- Setup CodeLens handling
-	require("config.codelens").setup(client, bufnr, opts)
-end
+		-- CodeLens
+		require("config.codelens").setup(client, bufnr, opts)
+	end,
+})
 
 -- Prefer LSP folding if client supports it
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -124,7 +121,6 @@ vim.diagnostic.config({
 
 
 vim.lsp.config("*", {
-	on_attach = enhance_attach,
 	capabilities = {
 		textDocument = {
 			semanticTokens = {
