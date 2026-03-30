@@ -1,6 +1,8 @@
 # If you come from bash you might have to change your $PATH.
 typeset -U PATH path
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH:$HOME/go/bin:$HOME/.cargo/bin:$HOME/.krew/bin
+export OLLAMA_FLASH_ATTENTION=1
+export OLLAMA_KV_CACHE_TYPE=q8_0
 
 # Path to your Oh My Zsh installation.
 export ZSH=$HOME/.oh-my-zsh
