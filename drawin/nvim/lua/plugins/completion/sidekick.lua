@@ -6,6 +6,12 @@ return {
 				tools = {
 					codebuddy = { cmd = { "codebuddy" } },
 				},
+				win = {
+					layout = "float",
+					float = {
+						border = "rounded"
+					}
+				}
 			},
 		},
 		keys = {
