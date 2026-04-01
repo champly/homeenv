@@ -8,25 +8,13 @@
 
 local M = {}
 
+local osc = require("local.osc")
+
 local function get_visual_selection()
 	local start_pos = vim.fn.getpos("'<")
 	local end_pos = vim.fn.getpos("'>")
-	local srow, scol = start_pos[2], start_pos[3]
-	local erow, ecol = end_pos[2], end_pos[3]
-
-	local lines = vim.api.nvim_buf_get_lines(0, srow - 1, erow, false)
-	if #lines == 0 then
-		return ""
-	end
-
-	if #lines == 1 then
-		lines[1] = string.sub(lines[1], scol, ecol)
-	else
-		lines[1] = string.sub(lines[1], scol)
-		lines[#lines] = string.sub(lines[#lines], 1, ecol)
-	end
-
-	return table.concat(lines, "\n")
+	local region = vim.fn.getregion(start_pos, end_pos, { type = vim.fn.visualmode() })
+	return table.concat(region, "\n"), start_pos[2], end_pos[2]
 end
 
 local function translate(text, callback)
@@ -49,7 +37,7 @@ local function translate(text, callback)
 			end
 
 			local ok, resp = pcall(vim.json.decode, result.stdout or "")
-			if ok and resp and resp.response then
+			if ok and resp.response then
 				callback(nil, vim.trim(resp.response))
 			else
 				callback("Parse failed")
@@ -63,7 +51,7 @@ local function show_float(text, selection_start_row, selection_end_row)
 
 	local editor_width = vim.o.columns
 	local editor_height = vim.o.lines - vim.o.cmdheight - 1
-	local width = 120
+	local width = math.min(120, editor_width - 4)
 
 	local wrapped_lines = 0
 	for _, line in ipairs(lines) do
@@ -97,10 +85,8 @@ local function show_float(text, selection_start_row, selection_end_row)
 
 	local buf = vim.api.nvim_create_buf(false, true)
 	vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
-	vim.bo[buf].bufhidden = "wipe"
-	vim.bo[buf].modifiable = false
 
-	local win = vim.api.nvim_open_win(buf, true, {
+	local win = vim.api.nvim_open_win(buf, false, {
 		relative = "editor",
 		row = row,
 		col = col,
@@ -112,30 +98,33 @@ local function show_float(text, selection_start_row, selection_end_row)
 		title_pos = "center",
 	})
 
-	local function close()
-		vim.api.nvim_win_close(win, true)
+	vim.bo[buf].bufhidden = "wipe"
+	vim.bo[buf].modifiable = false
+	vim.api.nvim_set_current_win(win)
+
+	for _, key in ipairs({ "q", "<Esc>" }) do
+		vim.keymap.set("n", key, function() vim.api.nvim_win_close(win, true) end, { buffer = buf })
 	end
-	vim.keymap.set("n", "q", close, { buffer = buf })
-	vim.keymap.set("n", "<Esc>", close, { buffer = buf })
 end
 
 function M.setup()
 	vim.api.nvim_create_user_command("Translate", function()
-		local text = get_visual_selection()
+		local text, selection_start_row, selection_end_row = get_visual_selection()
 		if text == "" then
 			vim.notify("No text selected", vim.log.levels.WARN)
 			return
 		end
 
-		local selection_start_row = vim.fn.getpos("'<")[2]
-		local selection_end_row = vim.fn.getpos("'>")[2]
+		-- Start indeterminate progress (blue bar sliding animation)
+		osc.progress(3)
 
-		vim.notify("Translating...", vim.log.levels.INFO)
 		translate(text, function(err, result)
 			if err then
-				vim.notify("Translation failed: " .. err, vim.log.levels.ERROR)
-			elseif result then
-				vim.fn.setreg("+", result)
+				-- Clear progress and show error
+				osc.progress(0)
+				vim.notify("Translate failed: " .. err, vim.log.levels.ERROR)
+			else
+				osc.progress(0)
 				show_float(result, selection_start_row, selection_end_row)
 			end
 		end)

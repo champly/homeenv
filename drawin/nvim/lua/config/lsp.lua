@@ -132,3 +132,27 @@ vim.lsp.config("*", {
 
 -- vim.o.winborder = "rounded"
 vim.lsp.enable({ "gopls", "emmylua_ls", "rust_analyzer", "clangd", "pyright" })
+
+-- LSP progress: indeterminate animation while any LSP server is working.
+do
+	local osc = require("local.osc")
+	local active_count = 0
+
+	vim.api.nvim_create_autocmd("LspProgress", {
+		group = vim.api.nvim_create_augroup("lsp_osc_progress", { clear = true }),
+		callback = function(ev)
+			local kind = ev.data.params.value.kind
+			if kind == "begin" then
+				active_count = active_count + 1
+				if active_count == 1 then
+					osc.progress(3)
+				end
+			elseif kind == "end" then
+				active_count = math.max(active_count - 1, 0)
+				if active_count == 0 then
+					osc.progress(0)
+				end
+			end
+		end,
+	})
+end
