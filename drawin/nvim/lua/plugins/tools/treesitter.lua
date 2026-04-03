@@ -1,44 +1,45 @@
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
-		event = { "BufReadPost", "BufNewFile" },
+		lazy = false,
 		build = ":TSUpdate",
 		config = function()
-			---@diagnostic disable-next-line: missing-fields
-			require("nvim-treesitter.configs").setup({
-				-- ensure_installed = "all",
-				ensure_installed = {
-					"lua",
-					"go",
-					"gomod",
-					"gosum",
-					"gowork",
-					"c",
-					"cpp",
-					"rust",
-					"vim",
-					"proto",
-					"dockerfile",
-					"markdown",
-					"markdown_inline",
-					"json",
-					"jsonc",
-					"yaml",
-					"bash",
-					"html",
-					"python",
-					"diff", -- for aznhe21/actions-preview.nvim
-					"kdl",
-					"nix",
-					"nickel",
-				},
-				highlight = {
-					enable = true, -- false will disable the whole extension
-					disable = function(_, buf)
-						return vim.api.nvim_buf_line_count(buf) > 6000
-					end,
-				},
+			require("nvim-treesitter").install({
+				"lua",
+				"go",
+				"gomod",
+				"gosum",
+				"gowork",
+				"c",
+				"cpp",
+				"rust",
+				"vim",
+				"vimdoc",
+				"proto",
+				"dockerfile",
+				"markdown",
+				"markdown_inline",
+				"json",
+				"yaml",
+				"bash",
+				"html",
+				"python",
+				"diff", -- for aznhe21/actions-preview.nvim
+				"kdl",
+				"nix",
+				"nickel",
+			})
+
+			-- Enable treesitter highlighting via FileType autocmd
+			vim.api.nvim_create_autocmd("FileType", {
+				callback = function(args)
+					local buf = args.buf
+					if vim.api.nvim_buf_line_count(buf) > 6000 then
+						return
+					end
+					pcall(vim.treesitter.start, buf)
+				end,
 			})
 		end,
-	}
+	},
 }
