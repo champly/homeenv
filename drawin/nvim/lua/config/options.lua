@@ -7,17 +7,17 @@ vim.g.go_import_without_local        = false
 
 -- for neovide
 -- https://neovide.dev/configuration.html
-vim.o.guifont                        = "SauceCodePro Nerd Font"
+vim.opt.guifont                      = "SauceCodePro Nerd Font"
 vim.g.neovide_cursor_vfx_mode        = "railgun"
 vim.g.neovide_hide_mouse_when_typing = true
 vim.g.neovide_fullscreen             = false
 vim.g.neovide_opacity                = 1
 -- vim.g.transparency = 0.6
 
-vim.opt.number                       = true -- 默认显示数字栏
+vim.opt.number                       = true   -- 默认显示数字栏
 vim.opt.relativenumber               = true   -- 显示相对行号
 vim.opt.foldmethod                   = "expr" -- 设置折叠语法
-vim.o.foldexpr                       = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldexpr                     = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldlevelstart               = 99     -- 默认不折叠
 vim.opt.writebackup                  = false
 vim.opt.swapfile                     = false
@@ -56,9 +56,11 @@ vim.opt.laststatus                   = 3
 vim.opt.colorcolumn                  = "120"
 vim.opt.fixeol                       = false -- 保存时不自动在文件末尾添加换行符
 
-vim.o.timeoutlen                     = 300  --毫秒计的等待映射的键序列完成的时间
-vim.o.maxmempattern                  = 5000 -- maxmempattern规定了vim做字符串匹配时使用的最大内存，不是由每行字符数决定的。
-vim.o.conceallevel                   = 2
+vim.opt.timeoutlen                   = 300   --毫秒计的等待映射的键序列完成的时间
+vim.opt.maxmempattern                = 5000  -- maxmempattern规定了vim做字符串匹配时使用的最大内存，不是由每行字符数决定的。
+vim.opt.conceallevel                 = 2
+vim.opt.completeopt                  = "menu,menuone,noselect,nearest"
+
 -- https://github.com/folke/persistence.nvim/issues/80
 vim.opt.sessionoptions               = {
 	"buffers",
