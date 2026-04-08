@@ -20,7 +20,7 @@ end
 local function translate(text, callback)
 	local body = vim.json.encode({
 		model = "hy-mt",
-		prompt = "将以下文本翻译为中文，只输出翻译结果：\n\n" .. text,
+		prompt = "将以下文本翻译为简体中文，只输出翻译结果：\n\n" .. text,
 		stream = false,
 	})
 
