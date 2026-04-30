@@ -125,7 +125,6 @@ vim.diagnostic.config({
 		},
 	},
 	float = {
-		border = "rounded", -- none,single,double
 		source = true
 	}
 })
@@ -141,7 +140,6 @@ vim.lsp.config("*", {
 	}
 })
 
--- vim.o.winborder = "rounded"
 vim.lsp.enable({ "gopls", "emmylua_ls", "rust_analyzer", "clangd", "pyright" })
 
 -- LSP progress: indeterminate animation while any LSP server is working.

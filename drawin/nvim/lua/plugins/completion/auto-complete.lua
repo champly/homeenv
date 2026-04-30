@@ -24,14 +24,10 @@ return {
 					draw = {
 						columns = { { "label", "label_description", gap = 1 }, { "kind_icon" }, { "kind" } },
 					},
-					border = "rounded",
 				},
 				documentation = {
 					auto_show = true,
 					auto_show_delay_ms = 50,
-					window = {
-						border = "rounded"
-					},
 				},
 			},
 			sources = {
@@ -50,9 +46,6 @@ return {
 			},
 			signature = {
 				enabled = true,
-				window = {
-					border = "rounded"
-				},
 			},
 		},
 		init = function()
