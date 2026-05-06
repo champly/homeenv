@@ -20,6 +20,6 @@ edit = [
 [plugin]
 prepend_fetchers = [
   # yazi-rs/plugins:git
-  { id = "git", url = "*", run = "git" },
-  { id = "git", url = "*/", run = "git" },
+  { url = "*", run = "git", group = "git" },
+  { url = "*/", run = "git", group = "git" },
 ]
