@@ -8,29 +8,18 @@ return {
 		["rust-analyzer"] = {
 			imports = {
 				granularity = {
-					group = "module",
+					group = "module"
 				},
-				prefix = "self",
+				prefix = "self"
 			},
-			-- -- https://rust-analyzer.github.io/book/configuration.html#configuration
-			-- semanticHighlighting = {
-			-- 	operator = {
-			-- 		specialization = {
-			-- 			enable = true,
-			-- 		}
-			-- 	},
-			-- 	punctuation = {
-			-- 		enable = true,
-			-- 		separate = {
-			-- 			macro = {
-			-- 				bang = true,
-			-- 			}
-			-- 		},
-			-- 		specialization = {
-			-- 			enable = true,
-			-- 		}
-			-- 	}
-			-- }
+			cargo = {
+				buildScripts = {
+					enable = true
+				}
+			},
+			procMacro = {
+				enable = true
+			}
 		}
-	},
+	}
 }
