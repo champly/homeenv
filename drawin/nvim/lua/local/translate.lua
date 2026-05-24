@@ -2,7 +2,7 @@
 -- https://huggingface.co/tencent/HY-MT1.5-1.8B-GGUF
 --
 -- Setup Ollama model:
--- echo 'FROM hf.co/tencent/HY-MT1.5-1.8B-GGUF:Q8_0
+-- echo 'FROM hf.co/tencent/Hy-MT2-1.8B-GGUF:Q8_0
 -- TEMPLATE """<｜hy_begin▁of▁sentence｜>{{ if .System }}{{ .System }}<｜hy_place▁holder▁no▁3｜>{{ end }}{{ if .Prompt }}<｜hy_User｜>{{ .Prompt }}{{ end }}<｜hy_Assistant｜>"""' > /tmp/Modelfile
 -- ollama create hy-mt -f /tmp/Modelfile
 
@@ -21,57 +21,63 @@ local function translate(text, callback)
 	local body = vim.json.encode({
 		model = "hy-mt",
 		prompt = "将以下文本翻译为简体中文，只输出翻译结果：\n\n" .. text,
-		stream = false,
+		stream = false
 	})
-
+	
 	vim.system({
-		"curl", "-s", "-X", "POST",
+		"curl",
+		"-s",
+		"-X",
+		"POST",
 		"http://localhost:11434/api/generate",
-		"-H", "Content-Type: application/json",
-		"-d", body,
-	}, { text = true }, function(result)
-		vim.schedule(function()
-			if result.code ~= 0 then
-				callback((result.stderr ~= "" and result.stderr) or "Request failed")
-				return
-			end
-
-			local ok, resp = pcall(vim.json.decode, result.stdout or "")
-			if ok and resp.response then
-				callback(nil, vim.trim(resp.response))
-			else
-				callback("Parse failed")
-			end
+		"-H",
+		"Content-Type: application/json",
+		"-d",
+		body
+	},
+		{ text = true }, function (result)
+			vim.schedule(function ()
+				if result.code ~= 0 then
+					callback((result.stderr ~= "" and result.stderr) or "Request failed")
+					return
+				end
+				
+				local ok, resp = pcall(vim.json.decode, result.stdout or "")
+				if ok and resp.response then
+					callback(nil, vim.trim(resp.response))
+				else
+					callback("Parse failed")
+				end
+			end)
 		end)
-	end)
 end
 
 local function show_float(text, selection_start_row, selection_end_row)
 	local lines = vim.split(text, "\n")
-
+	
 	local editor_width = vim.o.columns
 	local editor_height = vim.o.lines - vim.o.cmdheight - 1
 	local width = math.min(120, editor_width - 4)
-
+	
 	local wrapped_lines = 0
 	for _, line in ipairs(lines) do
 		local line_width = vim.fn.strdisplaywidth(line)
 		wrapped_lines = wrapped_lines + math.max(1, math.ceil(line_width / width))
 	end
-
+	
 	local height = math.min(wrapped_lines, math.floor(editor_height * 0.8))
 	local col = math.floor((editor_width - width) / 2)
-
+	
 	-- Calculate selection position on screen
 	local win_top = vim.fn.line("w0")
 	local sel_start_screen = selection_start_row - win_top
 	local sel_end_screen = selection_end_row - win_top
-
+	
 	-- Prefer below selection, fallback to above if not enough space
 	local row
 	local space_below = editor_height - sel_end_screen - 2
 	local space_above = sel_start_screen - 1
-
+	
 	if space_below >= height then
 		row = sel_end_screen + 2
 	elseif space_above >= height then
@@ -80,12 +86,12 @@ local function show_float(text, selection_start_row, selection_end_row)
 		-- Fallback to bottom of screen
 		row = editor_height - height - 1
 	end
-
+	
 	row = math.max(0, row)
-
+	
 	local buf = vim.api.nvim_create_buf(false, true)
 	vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
-
+	
 	local win = vim.api.nvim_open_win(buf, false, {
 		relative = "editor",
 		row = row,
@@ -95,30 +101,33 @@ local function show_float(text, selection_start_row, selection_end_row)
 		style = "minimal",
 		border = "rounded",
 		title = " Translation ",
-		title_pos = "center",
+		title_pos = "center"
 	})
-
+	
 	vim.bo[buf].bufhidden = "wipe"
 	vim.bo[buf].modifiable = false
 	vim.api.nvim_set_current_win(win)
-
+	
 	for _, key in ipairs({ "q", "<Esc>" }) do
-		vim.keymap.set("n", key, function() vim.api.nvim_win_close(win, true) end, { buffer = buf })
+		vim.keymap.set("n", key, function ()
+			vim.api.nvim_win_close(win, true)
+		end, { buffer = buf }
+		)
 	end
 end
 
 function M.setup()
-	vim.api.nvim_create_user_command("Translate", function()
+	vim.api.nvim_create_user_command("Translate", function ()
 		local text, selection_start_row, selection_end_row = get_visual_selection()
 		if text == "" then
 			vim.notify("No text selected", vim.log.levels.WARN)
 			return
 		end
-
+		
 		-- Start indeterminate progress (blue bar sliding animation)
 		osc.progress(3)
-
-		translate(text, function(err, result)
+		
+		translate(text, function (err, result)
 			if err then
 				-- Clear progress and show error
 				osc.progress(0)
@@ -128,7 +137,8 @@ function M.setup()
 				show_float(result, selection_start_row, selection_end_row)
 			end
 		end)
-	end, { range = true })
+	end, { range = true }
+	)
 end
 
 return M
