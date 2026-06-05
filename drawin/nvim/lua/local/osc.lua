@@ -35,7 +35,7 @@ end
 ---   2;N     = error (red) progress at N%
 ---   3       = indeterminate (blue bar sliding animation)
 ---   4;N     = warning (yellow) progress at N%
----@param state integer 0=clear, 1=determinate, 2=error, 3=indeterminate, 4=warning
+---@param state    integer 0=clear, 1=determinate, 2=error, 3=indeterminate, 4=warning
 ---@param percent? integer 0-100, used when state is 1, 2, or 4
 function M.progress(state, percent)
 	if percent and (state == 1 or state == 2 or state == 4) then
