@@ -1,3 +1,5 @@
+local module_cache = {}
+
 return {
 	"stevearc/conform.nvim",
 	event = { "BufWritePre", "BufReadPost" },
@@ -24,23 +26,19 @@ return {
 					vim.fn.stdpath("config") .. "/external/format" }
 			},
 			goimports = {
-				prepend_args = function()
+				prepend_args = function(self, ctx)
 					if vim.g.go_import_without_local then
 						return {}
 					end
 
 					-- fix with issue: https://github.com/golang/go/issues/40660
-					local handle = io.popen("go list -m 2>/dev/null")
-					if not handle then
-						return {}
+					local cwd = vim.fs.root(ctx.buf, { "go.mod" }) or vim.fn.getcwd()
+					if module_cache[cwd] == nil then
+						local r = vim.system({ "go", "list", "-m" }, { cwd = cwd, text = true }):wait()
+						module_cache[cwd] = (r.code == 0) and vim.trim(r.stdout or "") or ""
 					end
-					local result = handle:read("*a")
-					handle:close()
-					if result and result ~= "" then
-						local module_name = string.gsub(result, "\n", "")
-						return { "-local", module_name }
-					end
-					return {}
+					local m = module_cache[cwd]
+					return m ~= "" and { "-local", m } or {}
 				end
 			}
 		}

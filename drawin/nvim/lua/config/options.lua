@@ -60,7 +60,7 @@ vim.opt.timeoutlen                   = 300   --毫秒计的等待映射的键序
 vim.opt.maxmempattern                = 5000  -- maxmempattern规定了vim做字符串匹配时使用的最大内存，不是由每行字符数决定的。
 vim.opt.conceallevel                 = 2
 vim.opt.winborder                    = "rounded"
-vim.opt.completeopt                  = "menu,menuone,noselect,nearest"
+vim.opt.completeopt                  = { "menu", "menuone", "noselect", "fuzzy", "popup" }
 
 -- https://github.com/folke/persistence.nvim/issues/80
 vim.opt.sessionoptions               = {

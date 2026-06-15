@@ -28,16 +28,16 @@ local function go_test(command)
 		dir = dir,
 		auto_scroll = false,
 		close_on_exit = false,
-		on_exit = function(term)
-			vim.schedule(function()
+		on_exit = function (term)
+			vim.schedule(function ()
 				if term.bufnr and vim.api.nvim_buf_is_valid(term.bufnr) then
 					local wins = vim.fn.win_findbuf(term.bufnr)
 					for _, win in ipairs(wins) do
-						vim.api.nvim_win_call(win, function()
+						vim.api.nvim_win_call(win, function ()
 							vim.cmd("stopinsert")
 						end)
 					end
-					local close = function()
+					local close = function ()
 						if term.bufnr and vim.api.nvim_buf_is_valid(term.bufnr) then
 							vim.api.nvim_buf_delete(term.bufnr, { force = true })
 						end
@@ -46,11 +46,20 @@ local function go_test(command)
 					vim.keymap.set("n", "<Esc>", close, { buffer = term.bufnr, nowait = true })
 				end
 			end)
-		end,
+		end
 	})
 	gotest_term:toggle()
 
 	return true
+end
+
+-- Intercept gopls.run_tests via the official LSP command registry
+vim.lsp.commands = vim.lsp.commands or {}
+vim.lsp.commands["gopls.run_tests"] = function (cmd, ctx)
+	if go_test(cmd) then
+		return
+	end
+	-- fall back to default behavior if needed
 end
 
 function M.setup(client, bufnr, opts)
@@ -60,17 +69,6 @@ function M.setup(client, bufnr, opts)
 	end
 
 	vim.lsp.codelens.enable(true, { bufnr = bufnr })
-
-	-- Intercept gopls.run_tests to run in toggleterm
-	if client.name == "gopls" then
-		local original_exec_cmd = client.exec_cmd
-		client.exec_cmd = function(self, command, ctx)
-			if command.command == "gopls.run_tests" and go_test(command) then
-				return
-			end
-			return original_exec_cmd(self, command, ctx)
-		end
-	end
 
 	-- Add keybinding to run CodeLens at current line (built-in default is grx)
 	vim.keymap.set("n", "<leader>cl", vim.lsp.codelens.run, opts)
