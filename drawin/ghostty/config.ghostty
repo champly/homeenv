@@ -9,6 +9,11 @@ cursor-style = block
 cursor-style-blink = false
 cursor-click-to-move = true
 
+unfocused-split-opacity = 0.9
+unfocused-split-fill = #000000
+
+split-divider-color = #ff8800
+
 # https://github.com/hackr-sh/ghostty-shaders
 # custom-shader = "./ghostty-shaders/cursor_blaze.glsl"
 
