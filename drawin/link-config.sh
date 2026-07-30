@@ -14,6 +14,9 @@ done
 # tmux
 rm -rf ~/.tmux.conf
 ln -s ${SourcePath}/tmux/tmux.conf ~/.tmux.conf
+# zshrc
+rm -rf ~/.zshrc
+ln -s ${SourcePath}/zsh/zshrc ~/.zshrc
 
 # alacritty
 rm -rf ~/.config/alacritty/alacritty.toml
