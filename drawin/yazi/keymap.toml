@@ -4,6 +4,7 @@
 prepend_keymap = [
   { on = "o", run = "noop", desc = "Open selected files" },
   { on = "Enter", run = "noop", desc = "Open selected files" },
+  { on = ["g", "t"], run = "cd /tmp", desc = "Go to the tmp directory" },
 ]
 
 append_keymap = [
@@ -11,7 +12,6 @@ append_keymap = [
   { on = ["g", "s", "k"], run = "cd ~/go/src/git.woa.com/khaos", desc = "Go to the khaos directory" },
   { on = ["g", "s", "K"], run = "cd ~/go/src/k8s.io", desc = "Go to the Kubernetes directory" },
   { on = ["g", "s", "c"], run = "cd ~/go/src/github.com/champly", desc = "Go to the champly directory" },
-  { on = ["g", "t"], run = "cd /tmp", desc = "Go to the tmp directory" },
 
   # customer key
   { on = ["o", "z"], run = "shell '$SHELL' --confirm --block", desc = "Open shell here" },
