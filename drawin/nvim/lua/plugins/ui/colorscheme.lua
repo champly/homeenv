@@ -2,16 +2,16 @@ return {
 	{
 		"ellisonleao/gruvbox.nvim",
 		enabled = vim.g.color_theme == vim.g.color_theme_dark,
-		config = function()
+		config = function ()
 			require("gruvbox").setup({
 				-- https://github.com/ellisonleao/gruvbox.nvim/issues/220
 				italic = {
 					strings = true,
 					operators = true,
-					comments = true,
+					comments = true
 				},
 				overrides = {
-					Operator = { link = "GruvboxFg1" },
+					Operator = { link = "GruvboxFg1" }
 				}
 			})
 			vim.opt.background = "dark"
@@ -21,11 +21,16 @@ return {
 	{
 		"projekt0n/github-nvim-theme",
 		enabled = vim.g.color_theme == vim.g.color_theme_light,
-		config = function()
+		config = function ()
 			require("github-theme").setup({
 				options = {
 					styles = {
-						comments = "italic",
+						comments = "italic"
+					}
+				},
+				groups = {
+					github_light = {
+						Visual = { bg = "lightblue" }
 					}
 				}
 			})
@@ -35,11 +40,11 @@ return {
 	{
 		"akinsho/bufferline.nvim",
 		event = "BufReadPre",
-		config = function()
+		config = function ()
 			-- https://github.com/akinsho/bufferline.nvim#configuration
 			require("bufferline").setup {
 				options = {
-					numbers = function(opts)
+					numbers = function (opts)
 						return string.format("%s.", opts.ordinal)
 					end,
 					modified_icon = "✥",
@@ -57,45 +62,46 @@ return {
 			}
 
 			for i = 1, 9 do
-				vim.keymap.set("n", "<leader>" .. i, function()
+				vim.keymap.set("n", "<leader>" .. i, function ()
 					require("bufferline").go_to(i, true)
-				end, { silent = true })
+				end, { silent = true }
+				)
 			end
-		end,
+		end
 	},
 	{
 		"nvim-lualine/lualine.nvim",
 		event = "BufReadPre",
 		dependencies = {
-			"nvim-tree/nvim-web-devicons",
+			"nvim-tree/nvim-web-devicons"
 		},
 		opts = {
 			options = {
 				theme = "onelight",
 				component_separators = { left = "", right = "" },
-				section_separators = { left = "", right = "" },
+				section_separators = { left = "", right = "" }
 			},
 			-- +-------------------------------------------------+
 			-- | A | B | C                             X | Y | Z |
 			-- +-------------------------------------------------+
 			sections = {
 				lualine_a = { "mode" },
-				lualine_b = { "branch", },
+				lualine_b = { "branch" },
 				lualine_c = {
 					{
 						"filename",
-						path = 1,
+						path = 1
 					},
 					{
 						"filetype",
-						icon_only = true,
+						icon_only = true
 					},
 					{
-						"diagnostics",
-					},
+						"diagnostics"
+					}
 				},
 				lualine_x = {
-					function()
+					function ()
 						local clients = vim.lsp.get_clients({ bufnr = 0 })
 						if next(clients) == nil then
 							return ""
@@ -113,10 +119,10 @@ return {
 					},
 					{
 						"searchcount",
-						maxcount = 100000,
-					},
+						maxcount = 100000
+					}
 				},
-				lualine_z = { "progress" },
+				lualine_z = { "progress" }
 			}
 		}
 	}

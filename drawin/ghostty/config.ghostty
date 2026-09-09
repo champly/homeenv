@@ -1,4 +1,5 @@
 theme = "Bluloco Light"
+selection-background = lightblue
 
 font-family = "SauceCodePro Nerd Font"
 font-size = 15
