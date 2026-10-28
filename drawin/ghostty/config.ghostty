@@ -18,8 +18,7 @@ split-divider-color = #ff8800
 # https://github.com/hackr-sh/ghostty-shaders
 # custom-shader = "./ghostty-shaders/cursor_blaze.glsl"
 
-# unit: bytes ≈ 10_0000 lines
-scrollback-limit = 300_000_000
+scrollback-limit-lines = 100000
 
 macos-option-as-alt = true
 macos-titlebar-style = tabs
