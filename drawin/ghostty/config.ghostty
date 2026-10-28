@@ -30,6 +30,6 @@ mouse-hide-while-typing = true
 bell-features = no-attention
 
 # prerelease
-auto-update-channel = tip
+# auto-update-channel = tip
 
 # https://ghostty.org/docs/help/terminfo
