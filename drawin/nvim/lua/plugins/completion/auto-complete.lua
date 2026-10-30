@@ -23,6 +23,27 @@ return {
 				menu = {
 					draw = {
 						columns = { { "label", "label_description", gap = 1 }, { "kind_icon" }, { "kind" } },
+						components = {
+							label = {
+								width = { fill = true, max = 40 },
+								-- gopls 0.24 returns the full signature in labelDetails.detail, which misaligns the menu; show only the name
+								text = function(ctx)
+									return ctx.label
+								end,
+								highlight = function(ctx)
+									local highlights = {
+										{ 0, #ctx.label, group = ctx.deprecated and "BlinkCmpLabelDeprecated" or "BlinkCmpLabel" },
+									}
+									for _, idx in ipairs(ctx.label_matched_indices) do
+										table.insert(highlights, { idx, idx + 1, group = "BlinkCmpLabelMatch" })
+									end
+									return highlights
+								end,
+							},
+							label_description = {
+								width = { max = 20 },
+							},
+						},
 					},
 				},
 				documentation = {
