@@ -2,7 +2,8 @@
 
 SourcePath=~/go/src/github.com/champly/homeenv/drawin
 
-Components="nix nvim joshuto gitui yazi starship.toml wezterm ghostty presenterm zellij"
+# Components="nix nvim joshuto gitui yazi starship.toml wezterm ghostty presenterm alacritty zellij rex"
+Components="nvim yazi starship.toml ghostty rex"
 
 for cmp in ${Components};
 do
@@ -17,8 +18,3 @@ ln -s ${SourcePath}/tmux/tmux.conf ~/.tmux.conf
 # zshrc
 rm -rf ~/.zshrc
 ln -s ${SourcePath}/zsh/zshrc ~/.zshrc
-
-# alacritty
-rm -rf ~/.config/alacritty/alacritty.toml
-mkdir -p ~/.config/alacritty
-ln -s ${SourcePath}/alacritty/alacritty.toml ~/.config/alacritty/alacritty.toml
