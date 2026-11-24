@@ -30,7 +30,14 @@ function M.toggle(name, command, bounds)
 			local made, e = rex.session.new_layer {
 				bounds = bounds,
 				focus = true,
-				layout = rex.layout.block { flavor = SHELL, options = { command = command, cwd = cwd } }
+				layout = rex.layout.block {
+					flavor = SHELL,
+					options = {
+						command = command,
+						cwd = cwd,
+						interactive = true
+					}
+				}
 			}
 			if e then error(e, 0) end
 			rex.session.set_block_label { block_id = made.block_ids[1], label = name }
